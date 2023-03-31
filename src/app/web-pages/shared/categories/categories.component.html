@@ -1,0 +1,11 @@
+<page-loader [loading]="loading"></page-loader>
+<div class="row g-2" *ngIf="!loading">
+  <div class="col-12 col-sm-6 col-md-3 col-lg-2" *ngFor="let category of categories">
+    <div class="cat-card">
+      <div class="link" (click)="viewCategory(category.categoryId)">
+        <img [src]="category.imageUrl" [alt]="category.categoryName">
+        <span class="cat-name"> {{ category.categoryName }} </span>
+      </div>
+    </div>
+  </div>
+</div>

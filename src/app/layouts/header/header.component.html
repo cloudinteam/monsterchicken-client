@@ -1,0 +1,41 @@
+<div class="top-bar">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+        <a (click)="home()" class="d-inline-block clickable">
+          <img src="assets/images/Logo.png" class="" alt="" style="max-width: 115px">
+        </a>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+        <div class="clickable"> <!--[ngbTooltip]="address" placement="bottom"-->
+          <div class="loc-district">
+            <i class="pi pi-map-marker" style="font-size: 15px"></i>
+            <span class="fw-bold"> {{ district }} <i class="pi pi-angle-down" style="font-size: 12px"></i></span>
+          </div>
+          <div class="loc-address">
+            {{ trimAddress(address) }}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
+        <div class="p-input-icon-right w-100" (click)="launchSearch()">
+          <i class="pi pi-search fw-bold text-dark"></i>
+          <input type="text" class="form-control form-control-sm clickable" placeholder="Search for any product" style="background-color: #f0f0f0;" [readOnly]="true" />
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
+        <ul class="top-nav ">
+          <li class="top-nav-item">
+            <a class="top-nav-link"> <i class="pi pi-clone"></i> Categories </a>
+          </li>
+          <li class="top-nav-item">
+            <a class="top-nav-link"> <i class="pi pi-user"></i> Login </a>
+          </li>
+          <li class="top-nav-item">
+            <a class="top-nav-link"> <i class="pi pi-shopping-cart"></i> Cart </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

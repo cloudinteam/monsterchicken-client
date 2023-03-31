@@ -1,0 +1,38 @@
+.cat-card {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+
+  .link {
+    margin: auto;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      max-width: 120px;
+      border-radius: 65px;
+      box-shadow: 7px 7px 10px -6px rgba(0, 0, 0, 0.35);
+      -webkit-box-shadow: 7px 7px 10px -6px rgba(0, 0, 0, 0.35);
+      -moz-box-shadow: 7px 7px 10px -6px rgba(0, 0, 0, 0.35);
+      display: block;
+      margin: auto;
+      height: 120px;
+      cursor: pointer;
+    }
+
+    .cat-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000000;
+      line-height: 1;
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      text-transform: capitalize;
+      cursor: pointer;
+    }
+
+  }
+
+
+}

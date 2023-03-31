@@ -1,0 +1,194 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { catchError, map } from 'rxjs';
+import { NetworkService } from './network.service';
+import { EncryptService } from './encrypt.service';
+import { AlertService } from './alert.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiCallService {
+
+  constructor(
+    private http: HttpClient,
+    private es: EncryptService,
+    private router: Router,
+    private alert: AlertService
+  ) {}
+
+  hash(): any {
+    return localStorage.getItem('_h_key') || '';
+  }
+
+  lat(): any {
+    return localStorage.getItem('userLat') || '';
+  }
+
+  long(): any {
+    return localStorage.getItem('userLong') || '';
+  } 
+
+  postApiCallAuth(url: string, body: object) {
+    let hash = {
+      deviceId: this.hash(),
+      requestFrom: 'web',
+      userLat: this.lat(),
+      userLong: this.long(),
+    };
+    body = Object.assign(hash, body);
+    let obj = this.es.dataIn(body);
+    return this.http
+      .post(url, obj, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          if (result.status == true) {
+            return result;
+          } else {
+            this.alert.fireToastF(result.message[0]);
+            return result;
+          }
+        }),
+        catchError((err) => {
+          if (err.status == 401) {
+            this.router.navigate(['']);
+            localStorage.clear();
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            this.alert.fireToastF('Something went wrong');
+          }
+          let data: any = this.es.unmaskData(err.error);
+          this.alert.fireToastF(data.message[0]);
+          return '';
+        })
+      );
+  }
+
+  postApiCallNoAuth(url: string, body: object) {
+    let hash = {
+      deviceId: this.hash(),
+      requestFrom: 'web',
+      userLat: this.lat(),
+      userLong: this.long(),
+    };
+    body = Object.assign(hash, body);
+    let obj = this.es.dataIn(body);
+    return this.http
+      .post(url, obj, {
+        headers: NetworkService.getHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          if (result.status) {
+            return result;
+          } else {
+            this.alert.fireToastF(result.message[0]);
+            return result;
+          }
+        }),
+        catchError((err) => {
+          if (err.status == 401) {
+            this.router.navigate(['']);
+            localStorage.clear();
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            this.alert.fireToastF('Something went wrong');
+          }
+          let data: any = this.es.unmaskData(err.error);
+          this.alert.fireToastF(data.message[0]);
+          return '';
+        })
+      );
+  }
+
+  getApiCallAuth(url: string): any {
+    return this.http
+      .get(url, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          if (result.status == true) {
+            return result;
+          } else {
+            // alert('Failed to ' + errMsg + ' ' + result.response.message[0]);
+            this.alert.fireToastF(result.message[0]);
+          }
+        }),
+        catchError((err) => {
+          if (err.status == 401) {
+            this.router.navigate(['']);
+            localStorage.clear();
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            this.alert.fireToastF('Something went wrong');
+          }
+          return '';
+        })
+      );
+  }
+
+  postApiCallAuthNE(url: string, body: object) {
+    return this.http
+      .post(url, body, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          if (r.status == true) {
+            return r;
+          } else {
+            this.alert.fireToastF(r.message[0]);
+          }
+        }),
+        catchError((err) => {
+          if (err.status == 401) {
+            this.router.navigate(['']);
+            localStorage.clear();
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            this.alert.fireToastF('Something went wrong');
+          }
+          return '';
+        })
+      );
+  }
+
+  getApiCallAuthNE(url: string): any {
+    return this.http
+      .get(url, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          return r;
+        }),
+        catchError((err) => {
+          if (err.status == 401) {
+            this.router.navigate(['']);
+            localStorage.clear();
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            this.alert.fireToastF('Something went wrong');
+          }
+          return '';
+        })
+      );
+  }
+}

@@ -1,0 +1,46 @@
+.top-bar {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 8px 0;
+  color: #000;
+  background-color: #fff;
+
+  .loc-district {
+    font-size: 14px;
+  }
+
+  .loc-address {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 10px;
+  }
+
+  .top-nav {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    justify-content: space-between;
+
+    .top-nav-item {
+      .top-nav-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        font-size: 14px;
+        font-weight: 600;
+        color: #313131;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+  }
+}
