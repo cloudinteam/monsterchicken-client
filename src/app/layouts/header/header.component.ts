@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   address = '3, Lakshmi Nagar, Velandi Palayam, Coimbatore';
 
   disableSearch = true;
+  searchString = '';
 
   constructor(
     private authService: AuthService,
@@ -41,8 +42,13 @@ export class HeaderComponent implements OnInit {
 
   launchSearch() {
     this.router.navigate(['search']);
+    // this.router.navigateByUrl('/search');
     this.disableSearch = false;
     this.headerService.disableSearch.next(false);
+  }
+
+  searchFn() {
+    this.headerService.searchString.next(this.searchString);
   }
 
   home() {

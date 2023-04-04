@@ -12,7 +12,7 @@ export class ProductsListComponent implements OnInit {
 
   catId: string = '';
   loading = true;
-  productList: any[] = [];
+  productList: Product[] = [];
   categories = [];
 
 

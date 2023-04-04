@@ -14,7 +14,7 @@ export interface Product {
   wishlist: boolean;
   cartlist: boolean;
   cartProductQuantity: number;
-  imageUrl: [];
+  imageUrl: any[];
 
 }
 

@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     TooltipModule,
     InputTextModule,
-    NgbTooltip
+    NgbTooltip,
+    FormsModule
   ],
   exports: [
     HeaderComponent,
