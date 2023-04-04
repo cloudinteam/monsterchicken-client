@@ -1,9 +1,24 @@
-<page-loader [loading]="!loading" ></page-loader>
+<page-loader [loading]="loading"></page-loader>
 
 <div class="container py-5" *ngIf="!loading">
 
   <div class="row justify-content-center">
-    <div class="col-12 col-md-10">
+
+    <div class="col-12 col-md-11">
+      <p-carousel [value]="bannners" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="false">
+        <ng-template let-banner pTemplate="item">
+          <div class="banner-item">
+            <div class="banner-item-content">
+              <div class="mb-3">
+                <img [src]="banner.imgUrl" class="banner-image" />
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class="col-12 col-md-10 py-5">
       <div>
         <h4 class="fw-bold"> Shop by categories </h4>
         <p> Freshest meats and much more! </p>
@@ -13,18 +28,5 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-10 py-5">
-      <p-carousel [value]="bannners" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="false">
-        <ng-template let-banner pTemplate="item">
-            <div class="banner-item">
-                <div class="banner-item-content">
-                    <div class="mb-3">
-                        <img [src]="banner.imgUrl" class="banner-image" />
-                    </div>
-                </div>
-            </div>
-        </ng-template>
-    </p-carousel>
-    </div>
   </div>
 </div>

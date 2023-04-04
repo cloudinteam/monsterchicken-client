@@ -6,18 +6,22 @@ import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { CarouselModule } from 'primeng/carousel';
+import { ProductsListComponent } from './products-list/products-list.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
   declarations: [
     SearchComponent,
-    HomeComponent
+    HomeComponent,
+    ProductsListComponent
   ],
   imports: [
     CommonModule,
     WebPagesRoutingModule,
     SharedModule,
     CarouselModule,
+    TooltipModule
   ]
 })
 export class WebPagesModule { }

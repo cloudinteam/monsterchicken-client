@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/models/category.model';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -13,7 +14,8 @@ export class CategoriesComponent {
   categories: Category[] = [];
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,7 @@ export class CategoriesComponent {
   }
 
   viewCategory(id: string) {
-    console.log('Cat Id'+id);
+    // console.log('Cat Id' + id);
+    this.router.navigate(['/category/' + id]);
   }
 }

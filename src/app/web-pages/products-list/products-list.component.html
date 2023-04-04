@@ -1,0 +1,89 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-5" *ngIf="!loading">
+  <div class="row justify-content-center">
+
+    <!-- <div class="col-12">
+      <pre>
+        {{ productList | json }}
+      </pre>
+    </div> -->
+    <div class="col-12 col-md-10">
+
+      <div class="row g-4">
+
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let product of productList; let i = index;">
+          <!-- <div class="pro-card">
+            <pre>
+              {{product|json}}
+            </pre>
+          </div> -->
+
+          <div class="pro-card">
+            <div class="pro-img">
+              <img [src]="product.imageUrl[0]" alt="" />
+            </div>
+            <span class="pro-category"> {{ product.categoryName | titlecase }} </span>
+            <div class="pro-desc">
+              <span class="pro-title">
+                {{ product.productName }}
+              </span>
+              <span class="pro-short-desc" tooltipPosition="top" [pTooltip]="product.description"> {{ product.description.substring(0, 35) }}... </span>
+              <div class="pro-details">
+                <div class="pro-price">
+                  <!-- <span>{{ product.discountPrice }}</span> &nbsp; -->
+                  <span> {{ product.price }}</span>
+                </div>
+                <div class="pro-action">
+                  <button type="button"> <i class="pi pi-shopping-cart"></i> Add </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="pro-card">
+            <div class="product-img-action-wrap">
+              <div class="product-img product-img-zoom">
+                <a (click)="viewProduct(product.productId)">
+                  <img class="default-img" [src]="product.imageUrl[0]" alt="" />
+                  <img *ngIf="product.imageUrl.length > 1" class="hover-img" [src]="product.imageUrl[1]" alt="" />
+                </a>
+              </div>
+            <div class="product-action-1">
+                <a aria-label="Add To Wishlist" class="action-btn" (click)="addWishList(product.productId)"><i
+                    class="fi-rs-heart"></i></a>
+                <a aria-label="Quick view" class="action-btn" (click)="viewProduct(product.productId)">
+                  <i class="fi-rs-eye"></i></a>
+              </div>
+            </div>
+            <div class="product-content-wrap">
+              <div class="product-category">
+                <a>{{ product.categoryName }}</a>
+              </div>
+              <h2>
+                <a>{{ product.productName }}</a>
+              </h2>
+              <div class="product-card-bottom">
+                <div class="product-price">
+                  <span>₹{{ product.discountPrice }}</span>
+                  <span class="old-price">₹{{ product.price }}</span>
+                </div>
+                <div class="add-cart" *ngIf="product.cartQuantity == 0">
+                  <a class="add" (click)="addCart(product.productId)"><i class="fi-rs-shopping-cart mr-5"></i>Add
+                  </a>
+                </div>
+                <div class="add-cart" *ngIf="product.cartQuantity !== 0">
+                  <a class="add" (click)="addCart(product.productId)">Added! </a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

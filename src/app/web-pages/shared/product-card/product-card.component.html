@@ -1,0 +1,21 @@
+<div class="product-card">
+  <div class="pro-img">
+    <img class="default-img" [src]="product.imageUrl[0]" alt="" />
+    <img *ngIf="product.imageUrl.length > 1" class="hover-img" [src]="product.imageUrl[1]" alt="" />
+  </div>
+  <span class="pro-category"> {{ product.categoryName }} </span>
+  <div class="pro-desc">
+    <div class="pro-title">
+      {{ product.productName }}
+    </div>
+    <div class="pro-details">
+      <div class="pro-price">
+        <span>₹{{ product.discountPrice }}</span>
+        <del> ₹{{ product.price }}</del>
+      </div>
+      <div class="pro-action">
+        <button type="button"> <i class="pi pi-shopping-cart"></i> </button>
+      </div>
+    </div>
+  </div>
+</div>
