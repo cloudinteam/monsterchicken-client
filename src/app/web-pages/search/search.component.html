@@ -5,6 +5,10 @@
   <div class="row justify-content-center">
 
     <div class="col-12 col-md-10" *ngIf="productList.length > 0">
+      <div>
+        <h4 class="fw-bold"> Search Results </h4>
+        <p> Freshest meats and much more! </p>
+      </div>
       <div class="row g-4">
 
         <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let product of productList; let i = index;">
@@ -30,7 +34,7 @@
                   <span> {{ product.price }}</span>
                 </div>
                 <div class="pro-action">
-                  <button type="button"> <i class="pi pi-shopping-cart"></i> Add </button>
+                  <button type="button" (click)="addTocart(product)"> <i class="pi pi-shopping-cart"></i> Add </button>
                 </div>
               </div>
             </div>
@@ -41,9 +45,9 @@
       </div>
     </div>
 
-    <!-- <div class="col-12 col-md-10" *ngIf="productList.length == 0">
+    <div class="col-12 col-md-10" *ngIf="notFound">
       <not-found> </not-found>
-    </div> -->
+    </div>
 
     <div class="col-12 col-md-10 py-5" *ngIf="productList.length == 0">
       <div>

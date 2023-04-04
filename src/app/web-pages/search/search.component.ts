@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
   filter = {
     search: '',
   }
+  notFound = false;
 
   constructor(
     private router: Router,
@@ -52,21 +53,28 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = false;
+    this.notFound = false;
     this.headerService.disableSearch.next(false);
 
-    // this.headerService.searchString.subscribe((r: string) => {
-    //   this.filter.search = r;
-    //   this.getProducts();
-    // })
   }
 
   getProducts() {
     this.loading = true;
+    this.notFound = false;
     this.productService.getProducts(this.filter).subscribe((r: any) => {
       // console.log(r);
+      if (r.response.products.length == 0) {
+        this.productList = [];
+        this.filter.search = '';
+        this.notFound = true;
+      }
       this.productList = r.response.products;
       this.loading = false;
     });
+  }
+
+  addTocart(product: Product) {
+    console.log(product);
   }
 
 }
