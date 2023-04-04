@@ -1,5 +1,6 @@
-import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { HeaderService } from './../../services/header.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,16 +9,26 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   district = 'Coimbatore';
   address = '3, Lakshmi Nagar, Velandi Palayam, Coimbatore';
 
+  disableSearch = true;
+
   constructor(
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
+    private headerService: HeaderService
   ) {
+    this.headerService.disableSearch.subscribe((r) => {
+      this.disableSearch = r;
+    });
+  }
 
+  ngOnInit(): void {
+    // console.log(this.route.url);
   }
 
   logout() {
@@ -30,6 +41,8 @@ export class HeaderComponent {
 
   launchSearch() {
     this.router.navigate(['search']);
+    this.disableSearch = false;
+    this.headerService.disableSearch.next(false);
   }
 
   home() {
