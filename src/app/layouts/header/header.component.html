@@ -24,7 +24,7 @@
         </div>
         <div class="p-input-icon-right w-100" *ngIf="!disableSearch">
           <i class="pi pi-search fw-bold text-dark"></i>
-          <input type="text" class="form-control form-control-sm" [(ngModel)]="searchString" #searchInput placeholder="Search for any product" />
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="searchString" (keyup)="searchFn()" #searchInput placeholder="Search for any product" />
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">

@@ -34,14 +34,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.searchInput);
+    // console.log(this.searchInput);
     // console.log(this.route.url);
 
   }
 
   ngAfterViewInit() {
-    console.log(this.searchInput);
-    this.searchFilter();
+    // console.log(this.searchInput);
+    // this.searchFilter();
   }
 
   logout() {
@@ -60,7 +60,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   searchFn() {
-    this.headerService.searchString.next(this.searchString);
+    setTimeout(() => {
+      this.headerService.searchString.next(this.searchString);
+      console.log(this.searchString);
+    }, 1000);
   }
 
   private searchFilter() {
