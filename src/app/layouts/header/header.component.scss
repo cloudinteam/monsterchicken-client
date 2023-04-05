@@ -44,3 +44,26 @@
     }
   }
 }
+
+.offcanvas-header {
+  padding: 15px 20px;
+
+  .cart-close {
+    position: absolute;
+    left: -35px;
+    top: 10px;
+    cursor: pointer;
+
+    .pi {
+      font-size: 24px;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+  }
+
+  .offcanvas-title {
+    font-weight: 700;
+    font-size: 24px;
+    font-family: "Nunito Sans", sans-serif !important;
+  }
+}

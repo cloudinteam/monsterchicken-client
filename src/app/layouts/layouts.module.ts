@@ -6,6 +6,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../web-pages/shared/shared.module';
 
 
 
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     TooltipModule,
     InputTextModule,
     NgbTooltip,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   exports: [
     HeaderComponent,

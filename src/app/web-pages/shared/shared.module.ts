@@ -7,6 +7,11 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { CartComponent } from './cart/cart.component';
+import { CartProductComponent } from './cart-product/cart-product.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,17 +19,24 @@ import { NotFoundComponent } from './not-found/not-found.component';
     CategoriesComponent,
     PageLoaderComponent,
     ProductCardComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CartComponent,
+    CartProductComponent
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    TooltipModule,
+    InputNumberModule,
+    FormsModule
   ],
   exports: [
     CategoriesComponent,
     PageLoaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CartComponent,
+    ProductCardComponent
   ]
 })
 export class SharedModule { }

@@ -1,20 +1,57 @@
-<div class="product-card">
-  <div class="pro-img">
-    <img class="default-img" [src]="product.imageUrl[0]" alt="" />
-    <img *ngIf="product.imageUrl.length > 1" class="hover-img" [src]="product.imageUrl[1]" alt="" />
-  </div>
-  <span class="pro-category"> {{ product.categoryName }} </span>
-  <div class="pro-desc">
-    <div class="pro-title">
-      {{ product.productName }}
+<!-- <pre>
+  {{product|json}}
+</pre> -->
+<div class="pro-card">
+  <div class="ui-blocker" *ngIf="loading" fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+    <div>
+      <i class="pi pi-spin pi-spinner"></i>
     </div>
+  </div>
+
+  <div class="pro-img" (click)="viewProduct(product.productId)">
+    <img [src]="product.imageUrl[0]" alt="" />
+  </div>
+  <span class="pro-category" (click)="viewCat(product.categoryId)"> {{ product.categoryName | titlecase }} </span>
+  <div class="pro-desc">
+    <span class="pro-title" (click)="viewProduct(product.productId)">
+      {{ product.productName }}
+    </span>
+    <span class="pro-short-desc" tooltipPosition="top" [pTooltip]="product.description"> {{ product.description.substring(0, 35) }}... </span>
     <div class="pro-details">
       <div class="pro-price">
-        <span>₹{{ product.discountPrice }}</span>
-        <del> ₹{{ product.price }}</del>
+        <!-- <span>{{ product.discountPrice }}</span> &nbsp; -->
+        <span> {{ product.price }}</span>
       </div>
       <div class="pro-action">
-        <button type="button"> <i class="pi pi-shopping-cart"></i> </button>
+        <p-inputNumber
+            *ngIf="product.cartProductQuantity > 0"
+            [ngModel]="product.cartProductQuantity"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="cartProductCount"
+            spinnerMode="horizontal"
+            [step]="1"
+            [min]="0"
+            [max]="product.maxQuantity"
+            decrementButtonClass="btn-minus"
+            incrementButtonClass="btn-plus"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            mode="decimal"
+            (onInput)="cartNumber($event, product.productId)"
+        ></p-inputNumber>
+        <!-- <div *ngIf="product.cartProductQuantity > 0" class="cart-counter" fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center space-between">
+          <div>
+            <button type="button" class="btn-plus" > <i class="pi pi-plus"></i> </button>
+          </div>
+          <div class="cart-count">
+            {{product.cartProductQuantity}}
+          </div>
+          <div>
+            <button type="button" class="btn-minus" > <i class="pi pi-minus"></i> </button>
+          </div>
+        </div> -->
+        <button type="button" class="add-btn" (click)="addCart(product.productId)" *ngIf="product.cartProductQuantity == 0"> <i class="pi pi-shopping-cart"></i> Add </button>
       </div>
     </div>
   </div>

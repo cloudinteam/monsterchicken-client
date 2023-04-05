@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { Consts } from '../utils/consts';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NetworkService {
-
   constructor() {}
 
   static server_url(): string {
@@ -58,7 +57,6 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
 
-
   //Products
   static getProducts(): string {
     return this.server_url() + this.server_v() + '/product/list';
@@ -71,6 +69,20 @@ export class NetworkService {
   }
   static getSubCat(): string {
     return this.server_url() + this.server_v() + '/login';
+  }
+
+  //cart
+  static addToCart(): string {
+    return this.server_url() + this.server_v() + '/cart/store';
+  }
+  static clearCart(): string {
+    return this.server_url() + this.server_v() + '/login';
+  }
+  static viewCart(): string {
+    return this.server_url() + this.server_v() + '/cart/list';
+  }
+  static getCart(): string {
+    return this.server_url() + this.server_v() + '/cart/list';
   }
 
 }

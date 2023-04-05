@@ -5,7 +5,7 @@ export interface Product {
   stock: number;
   maxQuantity: number;
   categoryName: string;
-  categoryId: number;
+  categoryId: string;
   price: string;
   discountPrice: string;
   description: string;

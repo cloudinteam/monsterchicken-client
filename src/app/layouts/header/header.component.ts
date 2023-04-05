@@ -1,8 +1,10 @@
 import { HeaderService } from './../../services/header.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'monster-header',
@@ -17,6 +19,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   disableSearch = true;
   searchString: any;
+  cartCount: number = 0;
 
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
@@ -26,22 +29,39 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private offcanvasService: NgbOffcanvas,
+    private cartService: CartService,
   ) {
     this.headerService.disableSearch.subscribe((r) => {
       this.disableSearch = r;
     });
+    this.cartService.getCart({}).subscribe((r: any) => {
+      this.cartCount = r.response.cart.length;
+    })
   }
 
   ngOnInit(): void {
-    // console.log(this.searchInput);
-    // console.log(this.route.url);
-
+    this.headerService.disableSearch.subscribe((r) => {
+      this.disableSearch = r;
+    });
+    this.cartService.getCart({}).subscribe((r: any) => {
+      this.cartCount = r.response.cart.length;
+    })
   }
 
   ngAfterViewInit() {
     // console.log(this.searchInput);
     // this.searchFilter();
+  }
+
+  init() {
+    this.headerService.disableSearch.subscribe((r) => {
+      this.disableSearch = r;
+    });
+    this.cartService.getCart({}).subscribe((r: any) => {
+      this.cartCount = r.response.cart.length;
+    })
   }
 
   logout() {
@@ -77,6 +97,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.searchString = searchTerm;
       this.headerService.searchString.next(this.searchString);
     });
+  }
+
+  openCart(content: TemplateRef<any>) {
+		this.offcanvasService.open(content, { position: 'end' });
   }
 
   home() {
