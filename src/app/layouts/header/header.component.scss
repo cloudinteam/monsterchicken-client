@@ -26,6 +26,7 @@
     padding-left: 0;
     margin-bottom: 0;
     justify-content: space-between;
+    align-items: center;
 
     .top-nav-item {
       .top-nav-link {
@@ -65,5 +66,35 @@
     font-weight: 700;
     font-size: 24px;
     font-family: "Nunito Sans", sans-serif !important;
+  }
+}
+
+// cart ================================================================
+
+.cart-total {
+  border: 1px solid #e4002b;
+  border-radius: 8px;
+  padding: 9px 12px;
+  height: 50px;
+  transform: translateY(0);
+  display: flex;
+  font-size: 13px;
+  min-width: 90px;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+
+  .item-count {
+    font-size: 13px;
+    line-height: 13px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .item-total {
+    font-size: 13px;
+    line-height: 13px;
+    font-weight: 700;
+    color: #e4002b;
   }
 }

@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../web-pages/shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -21,7 +22,8 @@ import { SharedModule } from '../web-pages/shared/shared.module';
     InputTextModule,
     NgbTooltip,
     FormsModule,
-    SharedModule
+    SharedModule,
+    FlexLayoutModule
   ],
   exports: [
     HeaderComponent,

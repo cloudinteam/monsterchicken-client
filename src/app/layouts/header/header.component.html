@@ -35,11 +35,22 @@
           <li class="top-nav-item">
             <a class="top-nav-link"> <i class="pi pi-user"></i> Login </a>
           </li>
-          <li class="top-nav-item" *ngIf="cartCount == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
+          <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
             <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
           </li>
-          <li class="top-nav-item" *ngIf="cartCount > 0">
-            <a class="top-nav-link" (click)="openCart(cartArea)"> <i class="pi pi-shopping-cart"></i> Cart {{cartCount}}</a>
+          <li class="top-nav-item" *ngIf="cartCount.count > 0">
+            <a class="cart-total" (click)="openCart(cartArea)">
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px">
+                <div>
+                  <i class="pi pi-shopping-cart"></i>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
+                  <span class="item-count"> {{cartCount.count}} items </span>
+                  <span class="item-total"> {{cartCount.total | currency: '₹'}} </span>
+                </div>
+              </div>
+
+            </a>
           </li>
         </ul>
       </div>
@@ -54,16 +65,16 @@ cart sidebar
 
 <ng-template #cartArea let-offcanvas>
 	<div class="offcanvas-header">
-    <span class="cart-close" (click)="offcanvas.dismiss()"> <i class="pi pi-times-circle"></i> </span>
+    <span class="cart-close" (click)="closeCart(cartArea)"> <i class="pi pi-times-circle"></i> </span>
 		<h4 class="offcanvas-title">Order Summary</h4>
 	</div>
-	<div class="offcanvas-body p-1">
+	<div class="offcanvas-body p-2">
 
-    <div *ngIf="cartCount == 0">
+    <div *ngIf="cartCount.count == 0">
       No items in cart
     </div>
 
-    <div *ngIf="cartCount > 0">
+    <div *ngIf="cartCount.count > 0">
       <cart></cart>
     </div>
 

@@ -11,8 +11,8 @@ export class CartService {
   // cartCount: number = 0;
   cartProducts: any[] = [];
 
-  private _cartCount: number = 0;
-  public cartCount: BehaviorSubject<number> = new BehaviorSubject<number>(this._cartCount);
+  private _cartCount = {count:0, total: 0};
+  public cartCount: BehaviorSubject<any> = new BehaviorSubject<any>(this._cartCount);
 
   private _count: any = 0;
   public count$ = new Observable<any>(this._count);
@@ -40,15 +40,18 @@ export class CartService {
   addCartCount() {
     this.getCart({}).subscribe((r: any) => {
 
-      this._cartCount = r.response.cart.length;
+      this._cartCount.count = r.response.cart.length;
+      this._cartCount.total = r.response.totalCartPrice;
       this.cartCount.next(this._cartCount);
+
 
     })
   }
 
   reduceCartCount() {
     this.getCart({}).subscribe((r: any) => {
-      this._cartCount = r.response.cart.length;
+      this._cartCount.count = r.response.cart.length;
+      this._cartCount.total = r.response.totalCartPrice;
       this.cartCount.next(this._cartCount);
     })
   }
