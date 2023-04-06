@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
   selector: 'product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent {
 
@@ -35,7 +35,7 @@ export class ProductCardComponent {
     let data = { productId: id };
     this.cartService.addCart(data).subscribe((r: any) => {
       this.cartService.addCartCount();
-      this.alert.fireToastS(r.message[0]);
+      this.alert.fireToastS('Prooduct added to cart');
       // this.loaded.emit();
       this.afterCart(id);
       this.loading = false;
@@ -47,7 +47,7 @@ export class ProductCardComponent {
     this.productService.viewProduct(data).subscribe((r: any) => {
       // console.log(r.response.productDetail);
       this.product = r.response.productDetail;
-      this.cdRef.markForCheck();
+      // this.cdRef.markForCheck();
       // this.loading = false;
       // this.productDetails = r.response.productDetail;
     });

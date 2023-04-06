@@ -36,9 +36,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.headerService.disableSearch.subscribe((r) => {
       this.disableSearch = r;
     });
-    this.cartService.getCart({}).subscribe((r: any) => {
-      this.cartCount = r.response.cart.length;
+    this.cartService.cartCount.subscribe((r) => {
+      this.cartCount = r;
     })
+    // this.cartService.getCart({}).subscribe((r: any) => {
+    //   this.cartCount = r.response.cart.length;
+    //   console.log(this.cartCount)
+    // })
   }
 
   ngOnInit(): void {

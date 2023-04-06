@@ -35,8 +35,8 @@
           <li class="top-nav-item">
             <a class="top-nav-link"> <i class="pi pi-user"></i> Login </a>
           </li>
-          <li class="top-nav-item" *ngIf="cartCount == 0" placement="bottom" ngbTooltip="Cart is empty" >
-            <a class="top-nav-link" > <i class="pi pi-shopping-cart"></i> Cart </a>
+          <li class="top-nav-item" *ngIf="cartCount == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
+            <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
           </li>
           <li class="top-nav-item" *ngIf="cartCount > 0">
             <a class="top-nav-link" (click)="openCart(cartArea)"> <i class="pi pi-shopping-cart"></i> Cart {{cartCount}}</a>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,9 @@ export class CartService {
 
   private _cartCount: number = 0;
   public cartCount: BehaviorSubject<number> = new BehaviorSubject<number>(this._cartCount);
+
+  private _count: any = 0;
+  public count$ = new Observable<any>(this._count);
 
   constructor(
     private api: ApiCallService
@@ -36,8 +39,10 @@ export class CartService {
 
   addCartCount() {
     this.getCart({}).subscribe((r: any) => {
+
       this._cartCount = r.response.cart.length;
       this.cartCount.next(this._cartCount);
+
     })
   }
 

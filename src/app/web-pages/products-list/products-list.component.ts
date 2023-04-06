@@ -55,7 +55,8 @@ export class ProductsListComponent implements OnInit {
   addCart(id: any) {
     let data = { productId: id };
     this.cartService.addCart(data).subscribe((r: any) => {
-      this.alert.fireToastS(r.message[0]);
+      // this.alert.fireToastS(r.message[0]);
+      this.alert.fireToastS('Prooduct added to cart');
       this.cartService.addCartCount();
     });
   }
