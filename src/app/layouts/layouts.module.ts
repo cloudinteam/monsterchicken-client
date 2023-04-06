@@ -8,6 +8,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../web-pages/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { WebPagesModule } from '../web-pages/web-pages.module';
 
 
 
@@ -23,7 +24,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NgbTooltip,
     FormsModule,
     SharedModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    WebPagesModule
   ],
   exports: [
     HeaderComponent,

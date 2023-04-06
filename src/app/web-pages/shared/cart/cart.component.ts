@@ -9,6 +9,10 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
 
   loading = false;
+  itemsLoading = false;
+  billLoading = false;
+  footerLoading = false;
+
   cart: any[] = [];
   totalCount: number = 0;
   totalCartPrice: number = 0;
@@ -26,7 +30,7 @@ export class CartComponent implements OnInit {
   loadCart() {
     this.loading = true;
     this.cartService.getCart({}).subscribe((r: any) => {
-      console.log(r);
+      // console.log(r);
       this.cart = r.response.cart;
       this.totalCount = r.response.totalCount;
       this.totalCartPrice = r.response.totalCartPrice;
@@ -35,4 +39,16 @@ export class CartComponent implements OnInit {
       this.loading = false;
     });
   }
+
+  checkout() {
+
+  }
+
+  updated() {
+    this.loadCart();
+    // console.log('from cart');
+  }
+
+
+
 }

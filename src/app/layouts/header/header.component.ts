@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from 'src/app/services/cart.service';
+import { ProductsListComponent } from 'src/app/web-pages/products-list/products-list.component';
 
 @Component({
   selector: 'monster-header',
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private headerService: HeaderService,
     private offcanvasService: NgbOffcanvas,
     private cartService: CartService,
+    private productList: ProductsListComponent
   ) {
     // this.headerService.disableSearch.subscribe((r) => {
     //   this.disableSearch = r;
@@ -121,8 +123,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   closeCart(content: TemplateRef<any>) {
     this.offcanvasService.dismiss(content);
     this.loading = true;
+
+    this.productList.getProduct('');
     // reLoad(){
-      window.location.reload();
+      // window.location.reload();
     // }
   }
 

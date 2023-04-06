@@ -1,8 +1,50 @@
 <page-loader [loading]="loading"></page-loader>
 
-<div class="item-card">
-  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-    <cart-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem" [itemNo]="sn"></cart-product>
-  </div>
-</div>
+<div *ngIf="!loading">
 
+  <div class="item-card" *ngIf="!itemsLoading">
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+      <cart-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem" [itemNo]="sn" (update)="updated()"></cart-product>
+    </div>
+  </div>
+
+  <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!billLoading">
+    <div class="bill-heading"> Bill Details </div>
+
+    <div fxLayout="column" fxLayoutGap="10px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="items-title"> Subtotal </span>
+        <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="items-title"> Delivery Charge </span>
+        <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
+      </div>
+
+      <div>
+        <hr class="m-0">
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="items-grand-title"> Total </span>
+        <span class="items-grand-total"> {{grandTotal | currency:'₹'}} </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="sticky-footer" *ngIf="!footerLoading">
+    <div fxLayout="row" class="cart-footer">
+      <div fxFlex="50" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <span class="item-footer-title"> Total : </span>
+        <span class="item-footer-total"> {{grandTotal | currency:'₹'}} </span>
+      </div>
+      <div fxFlex="50">
+        <button type="button" class="btn-checkout" (click)="checkout()"> Proceed to Checkout </button>
+      </div>
+    </div>
+  </div>
+
+</div>

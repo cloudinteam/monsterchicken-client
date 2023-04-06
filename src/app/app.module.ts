@@ -19,7 +19,7 @@ import { FlexModule } from '@angular/flex-layout';
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
-    FlexModule
+    FlexModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

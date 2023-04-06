@@ -1,3 +1,106 @@
 .cart-item {
+  padding: 15px 10px;
 
+  .item-sn {
+    width: 22px;
+    padding: 5px 0;
+    line-height: 12px;
+    color: #202020;
+    background-color: #dbdbdb;
+    font-size: 12px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .item-name {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    vertical-align: middle;
+  }
+
+  .item-del {
+    cursor: pointer;
+
+    .pi {
+      font-size: 16px;
+      color: #9f9f9f;
+    }
+  }
+
+  .item-unit {
+    color: #6d6e71;
+    border-radius: 3px;
+    padding: 3px 9px;
+    border: 1px solid #6d6e71;
+    font-size: 13px;
+    margin-right: 8px;
+  }
+
+  .item-price {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 700;
+    color: #e4002b;
+  }
+}
+
+::ng-deep {
+  .item-action {
+    // max-width: 120px;
+
+    p-inputnumber {
+      // border-radius: 7px;
+      // overflow: hidden;
+      // border: 2px solid #eee;
+
+      .p-inputtext:enabled:focus {
+        box-shadow: 0 0 0;
+      }
+
+      .p-inputnumber-buttons-horizontal .p-inputnumber-input {
+        width: 32px;
+        text-align: center;
+        font-weight: 700;
+        font-family: "Nunito Sans", sans-serif !important;
+        color: #000;
+        border: 0;
+        font-size: 13px;
+        padding: 2px 5px;
+        height: 22px;
+      }
+
+      .p-component {
+        .btn-plus,
+        .btn-minus {
+          color: #e4002b;
+          background: #fff;
+          border: 0;
+          width: 22px;
+          height: 22px;
+          padding: 2px;
+          background-color: #ececec;
+          border-radius: 3px;
+        }
+
+        .btn-plus {
+          .pi {
+            font-size: 13px;
+          }
+        }
+        .btn-minus {
+          .pi {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
 }
