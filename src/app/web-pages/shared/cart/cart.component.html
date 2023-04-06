@@ -2,7 +2,7 @@
 
 <div class="item-card">
   <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-    <cart-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem"></cart-product>
+    <cart-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem" [itemNo]="sn"></cart-product>
   </div>
 </div>
 

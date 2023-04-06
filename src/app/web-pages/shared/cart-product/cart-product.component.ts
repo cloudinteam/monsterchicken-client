@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 export class CartProductComponent {
 
   @Input() cartItem: any;
+  @Input() itemNo: number = 1;
 
 }
