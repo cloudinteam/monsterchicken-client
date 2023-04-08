@@ -29,6 +29,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('searchInput', { static: true }) searchInput = {} as ElementRef;
 
+  @ViewChild('loginArea') loginArea!: TemplateRef<any>;
+  @ViewChild('cartArea') cartArea!: TemplateRef<any>;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -36,7 +39,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private headerService: HeaderService,
     private offcanvasService: NgbOffcanvas,
     private cartService: CartService,
-    private productList: ProductsListComponent
   ) {
     // this.headerService.disableSearch.subscribe((r) => {
     //   this.disableSearch = r;
@@ -81,6 +83,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     })
   }
 
+  openLogin() {
+    // this.closeCart();
+    this.offcanvasService.dismiss(this.cartArea);
+    this.offcanvasService.open(this.loginArea, { position: 'end' });
+  }
+
+  closeLogin() { // content: TemplateRef<any>
+    console.log('close login');
+    this.offcanvasService.dismiss('all')
+    this.offcanvasService.dismiss(this.loginArea);
+  }
+
   logout() {
     this.authService.logout();
   }
@@ -116,15 +130,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openCart(content: TemplateRef<any>) {
-		this.offcanvasService.open(content, { position: 'end' });
+  openCart() {
+		this.offcanvasService.open(this.cartArea, { position: 'end' });
   }
 
-  closeCart(content: TemplateRef<any>) {
-    this.offcanvasService.dismiss(content);
+  closeCart() {
+    this.offcanvasService.dismiss(this.cartArea);
     this.loading = true;
-
-    this.productList.getProduct('');
+    this.cartService.productLoad$.next(true);
     // reLoad(){
       // window.location.reload();
     // }
@@ -133,4 +146,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   home() {
     this.router.navigate(['/']);
   }
+
+
+
 }

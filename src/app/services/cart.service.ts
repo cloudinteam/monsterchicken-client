@@ -14,8 +14,8 @@ export class CartService {
   private _cartCount = {count:0, total: 0};
   public cartCount: BehaviorSubject<any> = new BehaviorSubject<any>(this._cartCount);
 
-  private _count: any = 0;
-  public count$ = new Observable<any>(this._count);
+  private _productLoad: boolean = false;
+  public productLoad$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this._productLoad);
 
   constructor(
     private api: ApiCallService

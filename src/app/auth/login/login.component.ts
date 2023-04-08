@@ -5,7 +5,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isSubmitted: boolean = false;
   showPwd: boolean = false;
+  btnLogin: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -30,10 +31,11 @@ export class LoginComponent implements OnInit {
 
   initLoginForm() {
     this.loginForm = this.fb.group({
-      userName: ['ranjith@cloudinlabs.com', [Validators.required, Validators.email]],
-      password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
-      googleUser: [false],
-      showPassword: [false],
+      // userName: ['ranjith@cloudinlabs.com', [Validators.required, Validators.email]],
+      // password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
+      // googleUser: [false],
+      // showPassword: [false],
+      number: [ null , [Validators.required]]
     });
   }
   get loginFormControl(): any {
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit {
       // console.error(this.loginForm.value);
       return;
     }
-    this.as.login(this.loginForm.value).subscribe((r: any) => {
+    this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
       // console.error(r);
       if (r.status) {
         this.alert.fireToastS(r.message[0]);
@@ -63,5 +65,10 @@ export class LoginComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  validateNumber($event: any) {
+    console.log($event);
+    this.btnLogin = false;
   }
 }

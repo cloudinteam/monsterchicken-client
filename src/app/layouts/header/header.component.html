@@ -33,13 +33,13 @@
             <a class="top-nav-link"> <i class="pi pi-clone"></i> Categories </a>
           </li>
           <li class="top-nav-item">
-            <a class="top-nav-link"> <i class="pi pi-user"></i> Login </a>
+            <a class="top-nav-link" (click)="openLogin()"> <i class="pi pi-user"></i> Login </a>
           </li>
           <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
             <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
           </li>
           <li class="top-nav-item" *ngIf="cartCount.count > 0">
-            <a class="cart-total" (click)="openCart(cartArea)">
+            <a class="cart-total" (click)="openCart()">
               <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px">
                 <div>
                   <i class="pi pi-shopping-cart"></i>
@@ -64,8 +64,9 @@ cart sidebar
 ============================================================================================================================ -->
 
 <ng-template #cartArea let-offcanvas>
+
 	<div class="offcanvas-header">
-    <span class="cart-close" (click)="closeCart(cartArea)"> <i class="pi pi-times-circle"></i> </span>
+    <span class="cart-close" (click)="closeCart()"> <i class="pi pi-times-circle"></i> </span>
 		<h4 class="offcanvas-title">Order Summary</h4>
 	</div>
 	<div class="offcanvas-body p-2" style="position: relative;">
@@ -75,8 +76,24 @@ cart sidebar
     </div>
 
     <div *ngIf="cartCount.count > 0">
-      <cart></cart>
+      <cart (login)="openLogin()"></cart>
     </div>
 
 	</div>
+
+</ng-template>
+
+
+<ng-template #loginArea let-offcanvas>
+
+	<div class="offcanvas-header">
+    <span class="cart-close" (click)="closeLogin()"> <i class="pi pi-times-circle"></i> </span>
+		<!-- <h4 class="offcanvas-title">Login/SignUp</h4> -->
+	</div>
+	<div class="offcanvas-body p-2" style="position: relative;">
+
+    <login></login>
+
+	</div>
+
 </ng-template>

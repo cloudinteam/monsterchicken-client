@@ -1,5 +1,5 @@
-<div class="container">
-    <form [formGroup]="loginForm" (submit)="login()">
+<div class="login-form-container">
+  <!-- <form [formGroup]="loginForm" (submit)="login()">
         <div class="form-group">
           <input type="text" required="" name="email" maxlength="35" formControlName="userName"
             placeholder="Username or Email *" />
@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="form-group">
-          <input required="" [type]="loginFormControl.showPassword.value ? 'text' : 'password'" 
+          <input required="" [type]="loginFormControl.showPassword.value ? 'text' : 'password'"
           name="password" maxlength="20" formControlName="password" placeholder="Your password *" />
           <div *ngIf="validateForm('password')" class="invalid-error">
             <span *ngIf="loginFormControl.password.errors.required">Password Id is Required</span>
@@ -32,5 +32,34 @@
             Log in
           </button>
         </div>
-      </form>
+      </form> -->
+
+  <div class="login-form-sticky">
+
+    <form [formGroup]="loginForm" (submit)="login()">
+
+      <h4 class="login-title">Login/SignUp</h4>
+
+      <div class="container login-mobile">
+        <span class="p-float-label">
+          <p-inputMask mask="999 999 9999" formControlName="number" (onComplete)="validateNumber($event)" id="number"></p-inputMask>
+          <label htmlFor="number">Mobile Number</label>
+        </span>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-login btn-block" [disabled]="btnLogin"> Proceed Via OTP </button>
+        </div>
+
+        <div class="mt-3 text-center">
+          <span class="login-terms"> By signing in you agree to our <a href="#" target="_blank">terms and conditions</a> </span>
+        </div>
+
+      </div>
+
+
+
+    </form>
+
+  </div>
+
 </div>

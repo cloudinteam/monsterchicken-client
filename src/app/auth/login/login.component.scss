@@ -1,0 +1,86 @@
+.login-form-container {
+  height: 100%;
+  display: flex;
+}
+
+.login-form-sticky {
+  min-height: 450px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  width: 100%;
+  position: sticky;
+  bottom: 5px;
+  align-self: flex-end;
+  z-index: 20;
+  background-color: #fff;
+}
+
+.login-title {
+  font-weight: 700;
+  font-size: 24px;
+  font-family: "Nunito Sans", sans-serif !important;
+  margin: 10px 10px 30px 10px;
+}
+
+::ng-deep {
+  .login-mobile {
+    padding-top: 20px;
+
+    .p-float-label .p-inputwrapper-focus ~ label {
+      font-size: 15px;
+      font-weight: 600;
+      left: 0px;
+    }
+    .p-float-label > label {
+      left: 0;
+      color: #9c9c9c;
+      transition-duration: 0.2s;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    p-inputMask {
+      width: 100%;
+      display: block;
+
+      .p-inputtext {
+        width: 100%;
+        display: block;
+        border-radius: 0;
+        font-size: 20px;
+        font-weight: 700;
+        font-family: "Nunito Sans", sans-serif !important;
+        color: #4d4d4d;
+        border-width: 0 0 1px 0;
+        padding: 7px 0;
+
+        &:enabled:focus {
+          box-shadow: 0 0 0;
+          border-color: #000;
+        }
+
+        &:enabled:hover {
+          border-color: #000;
+        }
+      }
+    }
+
+    .btn-login {
+      border-radius: 0;
+      background-color: #000;
+      color: #fff;
+      margin-top: 30px;
+    }
+
+    .login-terms {
+      font-size: 14px;
+      font-weight: 600;
+      color: #464646;
+
+      a {
+        color: #e4002b;
+        text-decoration: none;
+      }
+    }
+
+  }
+}

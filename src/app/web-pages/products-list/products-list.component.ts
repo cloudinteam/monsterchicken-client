@@ -29,11 +29,22 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.cartService.productLoad$.subscribe((r) => {
+      if (r == true) {
+        this.init();
+      } else {
+        this.init();
+      }
+    })
+
+    // this.loading = false;
+  }
+
+  init() {
     this.loading = true;
 
     this.catId = this.route.snapshot.paramMap.get('id') || '';
     this.getProduct(this.catId);
-    // this.loading = false;
   }
 
   getProduct(catId: any) {

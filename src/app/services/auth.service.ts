@@ -15,6 +15,10 @@ export class AuthService {
     return this.api.postApiCallAuth(NetworkService.login(), body);
   }
 
+  verifyNumber(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.verifyNumber(), body);
+  }
+
   signup(body: any): any {
     return this.api.postApiCallAuth(NetworkService.Signup(), body);
   }
@@ -39,5 +43,14 @@ export class AuthService {
     localStorage.clear();
     sessionStorage.clear();
   }
-  
+
+  isLoggedIn() {
+    if ( localStorage.getItem('accessToken') == undefined || localStorage.getItem('accessToken') == '' ) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
 }
