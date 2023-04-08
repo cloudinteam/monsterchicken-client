@@ -38,6 +38,9 @@ export class NetworkService {
   static login(): string {
     return this.server_url() + this.server_v() + '/login';
   }
+  static verifyNumber(): string {
+    return this.server_url() + this.server_v() + '/login/number-verify';
+  }
   static Signup(): string {
     return this.server_url() + this.server_v() + '/register';
   }
