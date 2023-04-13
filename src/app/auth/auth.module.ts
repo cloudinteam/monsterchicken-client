@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    InputMaskModule
+    InputNumberModule
   ],
   exports: [
     LoginComponent

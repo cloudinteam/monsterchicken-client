@@ -1,0 +1,27 @@
+<!-- <div id="map" style="height: 650px;">
+
+</div> -->
+
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="true" [scrollwheel]="false"
+  [gestureHandling]="'cooperative'" [zoomControl]="true" (mapClick)="mapClicked($event)">
+  <agm-marker (markerClick)="clickedMarker($event)" [latitude]="mapMarker.lat" [longitude]="mapMarker.lng"
+     [markerDraggable]="mapMarker.draggable" (dragEnd)="markerDragEnd(mapMarker, $event)">
+    <agm-info-window>
+      <b>Drag me!</b>
+    </agm-info-window>
+  </agm-marker>
+</agm-map>
+
+<ng-template #locationAllow role="document" let-modal>
+
+  <div class="modal-body">
+    <div class="text-center">
+      <div class="alert alert-danger text-center" role="alert">
+        Allow location permission in your browser.
+      </div>
+      <button type="button" (click)="closeBlocker()" class="btn btn-dark btn-sm px-3" id="btn-save-event"> Close
+      </button>
+    </div>
+  </div>
+
+</ng-template>

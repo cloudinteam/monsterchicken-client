@@ -45,11 +45,11 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.invalid) {
       this.isSubmitted = true;
-      // console.error(this.loginForm.value);
+      console.log(this.loginForm.value);
       return;
     }
     this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
-      // console.error(r);
+      console.log(r);
       if (r.status) {
         this.alert.fireToastS(r.message[0]);
         localStorage.setItem('accessToken', r.response.accessToken);
@@ -72,3 +72,5 @@ export class LoginComponent implements OnInit {
     this.btnLogin = false;
   }
 }
+
+

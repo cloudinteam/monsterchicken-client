@@ -12,6 +12,10 @@ import { CartProductComponent } from './cart-product/cart-product.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
+import { LocationComponent } from './location/location.component';
+import { AgmCoreModule } from '@agm/core';
+
+
 
 
 @NgModule({
@@ -21,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     ProductCardComponent,
     NotFoundComponent,
     CartComponent,
-    CartProductComponent
+    CartProductComponent,
+    LocationComponent,
   ],
   imports: [
     CommonModule,
@@ -29,14 +34,21 @@ import { FormsModule } from '@angular/forms';
     FlexLayoutModule,
     TooltipModule,
     InputNumberModule,
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      // please get your own API key here:
+      // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
+      apiKey: 'AIzaSyA5hHeRt5t1M4irYLCh95a0mcaqu8_MFjc'
+    }),
   ],
   exports: [
     CategoriesComponent,
     PageLoaderComponent,
     NotFoundComponent,
     CartComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    LocationComponent,
+    AgmCoreModule
   ]
 })
 export class SharedModule { }

@@ -38,9 +38,13 @@
       font-weight: 700;
       font-size: 18px;
     }
-    p-inputMask {
+    p-inputNumber {
       width: 100%;
       display: block;
+
+      .p-inputnumber {
+        width: 100%;
+      }
 
       .p-inputtext {
         width: 100%;

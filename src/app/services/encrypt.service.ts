@@ -42,7 +42,8 @@ export class EncryptService {
   //unmask encryption to JSON
   unmaskData(data: any): any {
     let output = this.decrypt(data.data);
+    // console.log(output);
     return output;
   }
-  
+
 }

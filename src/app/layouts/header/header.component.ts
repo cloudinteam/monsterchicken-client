@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsListComponent } from 'src/app/web-pages/products-list/products-list.component';
 
@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('loginArea') loginArea!: TemplateRef<any>;
   @ViewChild('cartArea') cartArea!: TemplateRef<any>;
+  @ViewChild('locationModal') locationModal!: TemplateRef<any>;
 
   constructor(
     private authService: AuthService,
@@ -39,6 +40,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private headerService: HeaderService,
     private offcanvasService: NgbOffcanvas,
     private cartService: CartService,
+    private ngbModal: NgbModal,
   ) {
     // this.headerService.disableSearch.subscribe((r) => {
     //   this.disableSearch = r;
@@ -90,7 +92,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   closeLogin() { // content: TemplateRef<any>
-    console.log('close login');
+    // console.log('close login');
     this.offcanvasService.dismiss('all')
     this.offcanvasService.dismiss(this.loginArea);
   }
@@ -146,6 +148,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   home() {
     this.router.navigate(['/']);
   }
+
+  openLocation() {
+		this.ngbModal.open(this.locationModal, { fullscreen: true });
+	}
 
 
 
