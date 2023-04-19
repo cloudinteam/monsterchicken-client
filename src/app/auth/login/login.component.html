@@ -1,5 +1,5 @@
 <div class="login-form-container">
-  <!-- <form [formGroup]="loginForm" (submit)="login()">
+  <form [formGroup]="loginForm" (submit)="login()">
         <div class="form-group">
           <input type="text" required="" name="email" maxlength="35" formControlName="userName"
             placeholder="Username or Email *" />
@@ -32,19 +32,22 @@
             Log in
           </button>
         </div>
-      </form> -->
+      </form>
 
-  <div class="login-form-sticky">
+  <!-- <div class="login-form-sticky">
 
-    <form [formGroup]="loginForm" (submit)="login()">
+    <form [formGroup]="loginForm" (submit)="login()" [ngClass]="otpSent? 'd-none': ''">
 
       <h4 class="login-title">Login/SignUp</h4>
 
       <div class="container login-mobile">
-        <span class="p-float-label">
-          <p-inputNumber mode="decimal" [useGrouping]="false" [maxlength]="10" formControlName="number" (onInput)="validateNumber($event)" id="number"></p-inputNumber>
-          <label htmlFor="number">Mobile Number</label>
-        </span>
+
+        <div class="mb-4">
+          <span class="p-float-label">
+            <p-inputNumber mode="decimal" [useGrouping]="false" [maxlength]="10" formControlName="number" (onInput)="validateNumber($event)" id="number"></p-inputNumber>
+            <label htmlFor="number">Mobile Number</label>
+          </span>
+        </div>
 
         <div class="d-grid">
           <button type="submit" class="btn btn-login btn-block" [disabled]="btnLogin"> Proceed Via OTP </button>
@@ -56,10 +59,33 @@
 
       </div>
 
+    </form>
 
+    <form [formGroup]="otpForm" (submit)="otpVerify()" [ngClass]="!otpSent? 'd-none': ''">
+
+      <h4 class="login-title">Login/SignUp</h4>
+
+      <div class="container login-mobile">
+        <pre> {{ otpForm.value | json }} </pre>
+        <div class="mb-4">
+          <span class="p-float-label">
+            <p-inputNumber mode="decimal" [useGrouping]="false" [maxlength]="6" formControlName="otp" (onInput)="validateOtp($event)" id="otp"></p-inputNumber>
+            <label htmlFor="otp">Enter OTP</label>
+          </span>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-login btn-block" [disabled]="btnOtp"> Submit OTP </button>
+        </div>
+
+        <div class="mt-3 text-center">
+          <span class="login-terms"> By signing in you agree to our <a href="#" target="_blank">terms and conditions</a> </span>
+        </div>
+
+      </div>
 
     </form>
 
-  </div>
+  </div> -->
 
 </div>

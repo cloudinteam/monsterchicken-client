@@ -115,7 +115,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   searchFn() {
     setTimeout(() => {
       this.headerService.searchString.next(this.searchString);
-      console.log(this.searchString);
+      // console.log(this.searchString);
     }, 1000);
   }
 
@@ -150,7 +150,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   openLocation() {
-		this.ngbModal.open(this.locationModal, { fullscreen: true });
+		this.ngbModal.open(this.locationModal, { fullscreen: false, size: 'xl' });
 	}
 
 

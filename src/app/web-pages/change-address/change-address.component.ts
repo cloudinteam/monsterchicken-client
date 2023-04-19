@@ -1,34 +1,16 @@
-import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-  NgZone,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
-import { Loader } from '@googlemaps/js-api-loader';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
-import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
-import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
-
-// declare const google: any;
 
 @Component({
-  selector: 'location',
-  templateUrl: './location.component.html',
-  styleUrls: ['./location.component.scss'],
+  selector: 'change-address',
+  templateUrl: './change-address.component.html',
+  styleUrls: ['./change-address.component.scss']
 })
-export class LocationComponent implements OnInit {
+export class ChangeAddressComponent implements OnInit, AfterViewInit {
+
   @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
   @ViewChild('searchInput') searchInput!: ElementRef;
-  // @ViewChild('searchInput') searchInput!: GooglePlaceDirective;
-  // @ViewChild("placesRef") placesRef: NgxGpAutocompleteDirective;
-  // autocompleteInputControl: FormControl = new FormControl<string>('');
 
   loading = false;
 
@@ -41,62 +23,35 @@ export class LocationComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {
     draggable: true,
   };
-
-  display: any;
   zoom = 17;
   geoResult: any;
+  display: any;
 
   searchString: string = '';
   searchAuto: google.maps.places.Autocomplete | undefined;
-
-  //Local Variable defined
-formattedaddress=" ";
-
-AddressChange(address: any) {
-//setting address from API to local variable
-this.formattedaddress=address.formatted_address
-}
+  formattedaddress=" ";
 
   constructor(
     private elementRef: ElementRef,
     private ngbModal: NgbModal,
-    private httpClient: HttpClient,
     private geocoder: MapGeocoder,
     private ngZone: NgZone
-  ) {}
+  ) {
 
-  ngOnInit(): void {}
 
-  ngAfterViewInit() {
-    this.handlePermission();
-
-    // this.geoCode();
   }
 
-  searchFn() {
-    setTimeout(() => {
-      // console.log(this.searchString);
-      if (this.searchString != '') {
+  ngOnInit(): void {
 
-        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+  }
 
-        this.searchAuto.addListener('place_changed', () => {
-          this.ngZone.run(() => {
-            const place: any = this.searchAuto?.getPlace();
+  ngAfterViewInit(): void {
+    this.handlePermission();
+  }
 
-            this.lat = place?.geometry?.location?.lat()
-            this.lng = place?.geometry?.location?.lat()
-
-            this.mapMarker = {
-              lat: place?.geometry?.location?.lat(),
-              lng: place?.geometry?.location?.lat(),
-            }
-            this.geoCode('address', this.searchInput.nativeElement.value);
-          })
-        })
-
-      }
-    }, 1500);
+  AddressChange(address: any) {
+    //setting address from API to local variable
+    this.formattedaddress=address.formatted_address
   }
 
   moveMap(event: google.maps.MapMouseEvent) {
@@ -215,4 +170,31 @@ this.formattedaddress=address.formatted_address
       });
     });
   }
+
+  searchFn() {
+    setTimeout(() => {
+      // console.log(this.searchString);
+      if (this.searchString != '') {
+
+        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+
+        this.searchAuto.addListener('place_changed', () => {
+          this.ngZone.run(() => {
+            const place: any = this.searchAuto?.getPlace();
+
+            this.lat = place?.geometry?.location?.lat()
+            this.lng = place?.geometry?.location?.lat()
+
+            this.mapMarker = {
+              lat: place?.geometry?.location?.lat(),
+              lng: place?.geometry?.location?.lat(),
+            }
+            this.geoCode('address', this.searchInput.nativeElement.value);
+          })
+        })
+
+      }
+    }, 1500);
+  }
+
 }

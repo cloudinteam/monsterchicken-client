@@ -11,11 +11,10 @@ import { CartComponent } from './cart/cart.component';
 import { CartProductComponent } from './cart-product/cart-product.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LocationComponent } from './location/location.component';
-import { AgmCoreModule } from '@agm/core';
-
-
+import { GoogleMapsModule } from '@angular/google-maps';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 
 @NgModule({
@@ -35,11 +34,18 @@ import { AgmCoreModule } from '@agm/core';
     TooltipModule,
     InputNumberModule,
     FormsModule,
-    AgmCoreModule.forRoot({
-      // please get your own API key here:
-      // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-      apiKey: 'AIzaSyA5hHeRt5t1M4irYLCh95a0mcaqu8_MFjc'
-    }),
+    GoogleMapsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    GooglePlaceModule
+    // NgxGpAutocompleteModule.forRoot({
+    //   loaderOptions: { apiKey: 'AIzaSyA26x9clnhzvqzHUOxbeuDyERIFvLrrFlI' }
+    // }),
+    // AgmCoreModule.forRoot({
+    //   // please get your own API key here:
+    //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
+    //   apiKey: 'AIzaSyA5hHeRt5t1M4irYLCh95a0mcaqu8_MFjc'
+    // }),
   ],
   exports: [
     CategoriesComponent,
@@ -48,7 +54,8 @@ import { AgmCoreModule } from '@agm/core';
     CartComponent,
     ProductCardComponent,
     LocationComponent,
-    AgmCoreModule
+    GooglePlaceModule
+    // AgmCoreModule
   ]
 })
 export class SharedModule { }

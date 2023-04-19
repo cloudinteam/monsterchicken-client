@@ -1,0 +1,54 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-5" *ngIf="!loading">
+
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <ul class="chk-menu-ul">
+
+        <li class="chk-menu-li active">
+          <div class="menu-card active">
+            <div class="title">
+              Choose Address
+            </div>
+            <div class="sub-title">
+              8th St Gandhipuram Rd, Sidhapudur, Coimbatore, Tamil Nadu 641012, India,
+            </div>
+
+          </div>
+        </li>
+
+        <!-- <li class="chk-menu-li ">
+          <div class="menu-card ">
+            <div class="title">
+              Delivery Summary
+            </div>
+            <div class="sub-title">
+              8th St Gandhipuram Rd, Sidhapudur, Coimbatore, Tamil Nadu 641012, India,
+            </div>
+
+          </div>
+        </li> -->
+
+        <li class="chk-menu-li ">
+          <div class="menu-card ">
+            <div class="title">
+              Payment Methods
+            </div>
+            <div class="sub-title">
+              <!-- 8th St Gandhipuram Rd, Sidhapudur, Coimbatore, Tamil Nadu 641012, India, -->
+            </div>
+
+          </div>
+        </li>
+
+      </ul>
+    </div>
+    <div class="col-12 col-md-9">
+      <div class="chk-content">
+        <change-address></change-address>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -11,9 +11,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  otpForm!: FormGroup;
   isSubmitted: boolean = false;
   showPwd: boolean = false;
   btnLogin: boolean = true;
+  btnOtp: boolean = true;
+  otpSent = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,19 +30,31 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.initLoginForm();
+    this.initOtpForm();
   }
 
   initLoginForm() {
     this.loginForm = this.fb.group({
-      // userName: ['ranjith@cloudinlabs.com', [Validators.required, Validators.email]],
-      // password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
-      // googleUser: [false],
-      // showPassword: [false],
-      number: [ null , [Validators.required]]
+      userName: ['ranjith@cloudinlabs.com', [Validators.required, Validators.email]],
+      password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
+      googleUser: [false],
+      showPassword: [false],
+      // number: [null, [Validators.required]]
     });
   }
   get loginFormControl(): any {
     return this.loginForm['controls'];
+  }
+
+
+  initOtpForm() {
+    this.otpForm = this.fb.group({
+      userId: [null, [Validators.required]],
+      otp: [null, [Validators.required]]
+    });
+  }
+  get otpFormControl(): any {
+    return this.otpForm['controls'];
   }
 
   login() {
@@ -48,14 +63,17 @@ export class LoginComponent implements OnInit {
       console.log(this.loginForm.value);
       return;
     }
-    this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
+    this.as.login(this.loginForm.value).subscribe((r: any) => {
       console.log(r);
       if (r.status) {
-        this.alert.fireToastS(r.message[0]);
-        localStorage.setItem('accessToken', r.response.accessToken);
-        if (localStorage.getItem('next_p') === 'cart') {
-          this.router.navigate(['/cart']);
-        } else this.router.navigate(['/']);
+        this.alert.fireToastS(r.message);
+        // this.otpSent = true;
+        // this.otpFormControl.userId.setValue(r.response.userId);
+
+        // localStorage.setItem('accessToken', r.response.accessToken);
+        // if (localStorage.getItem('next_p') === 'cart') {
+        //   this.router.navigate(['/cart']);
+        // } else this.router.navigate(['/']);
       }
     });
   }
@@ -69,7 +87,22 @@ export class LoginComponent implements OnInit {
 
   validateNumber($event: any) {
     console.log($event);
-    this.btnLogin = false;
+    console.log($event.value.toString().length);
+    if ($event.value != null && $event.value.toString().length == 10) {
+      this.btnLogin = false;
+    }
+  }
+
+  validateOtp($event: any) {
+    console.log($event);
+    console.log($event.value.toString().length);
+    if ($event.value != null && $event.value.toString().length == 6) {
+      this.btnOtp = false;
+    }
+  }
+
+  otpVerify() {
+
   }
 }
 
