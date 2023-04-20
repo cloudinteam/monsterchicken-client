@@ -12,10 +12,10 @@
       </div>
     </div>
     <google-map height="350px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
-  (mapMousemove)="move($event)">
-  <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
-    [options]="markerOptions"></map-marker>
-</google-map>
+      (mapMousemove)="move($event)">
+      <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
+        [options]="markerOptions"></map-marker>
+    </google-map>
   </div>
 
 </div>

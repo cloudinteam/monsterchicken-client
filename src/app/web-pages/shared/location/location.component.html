@@ -7,7 +7,6 @@
       <input type="text" class="form-control form-control-md" ngx-google-places-autocomplete (onAddressChange)="AddressChange($event)" [(ngModel)]="searchString" #searchInput
          placeholder=" Search for your location" (keyup)="searchFn()"/>
       <!-- #searchInput="ngx-places" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
-
     </div>
   </div>
 </div>
@@ -18,11 +17,11 @@
   <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
     [options]="markerOptions"></map-marker>
 </google-map>
-<!-- <div>Latitude: {{display?.lat}}</div>
+<div>Latitude: {{display?.lat}}</div>
 <div>Longitude: {{display?.lng}}</div>
 <pre>
   {{ geoResult | json }}
-</pre> -->
+</pre>
 
 <!-- </div> -->
 

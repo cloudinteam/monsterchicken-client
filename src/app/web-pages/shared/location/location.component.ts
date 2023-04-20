@@ -15,6 +15,7 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
 import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
+import { HeaderService } from 'src/app/services/header.service';
 
 // declare const google: any;
 
@@ -50,11 +51,11 @@ export class LocationComponent implements OnInit {
   searchAuto: google.maps.places.Autocomplete | undefined;
 
   //Local Variable defined
-formattedaddress=" ";
+  formattedaddress=" ";
 
 AddressChange(address: any) {
-//setting address from API to local variable
-this.formattedaddress=address.formatted_address
+  //setting address from API to local variable
+  this.formattedaddress=address.formatted_address
 }
 
   constructor(
@@ -62,7 +63,8 @@ this.formattedaddress=address.formatted_address
     private ngbModal: NgbModal,
     private httpClient: HttpClient,
     private geocoder: MapGeocoder,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private headerService: HeaderService,
   ) {}
 
   ngOnInit(): void {}
@@ -130,6 +132,15 @@ this.formattedaddress=address.formatted_address
 
     this.geocoder.geocode(data).subscribe(({ results }) => {
       this.geoResult = results[0];
+      this.searchString = results[0].formatted_address;
+      let currentAddress = { address: '', district: '' };
+      results[0].address_components.forEach((address) => {
+        if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
+          currentAddress.district = address.long_name;
+        }
+      });
+      currentAddress.address = this.searchString;
+      this.headerService.currentAddress.next(currentAddress);
 
       this.mapMarker = {
         lat: results[0].geometry.location.lat(),

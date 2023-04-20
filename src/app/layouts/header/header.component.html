@@ -7,7 +7,7 @@
         </a>
       </div>
       <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
-        <div class="clickable" (click)="openLocation()"> <!--[ngbTooltip]="address" placement="bottom"-->
+        <div class="clickable" (click)="openLocation()" *ngIf="locationShow"> <!--[ngbTooltip]="address" placement="bottom"-->
           <div class="loc-district">
             <i class="pi pi-map-marker" style="font-size: 15px"></i>
             <span class="fw-bold"> {{ district }} <i class="pi pi-angle-down" style="font-size: 12px"></i></span>
@@ -114,5 +114,19 @@ cart sidebar
     <location></location>
   </div>
 
+
+</ng-template>
+
+<ng-template #locationAllow role="document" let-modal>
+
+  <div class="modal-body">
+    <div class="text-center">
+      <div class="alert alert-danger text-center" role="alert">
+        Allow location permission in your browser.
+      </div>
+      <button type="button" (click)="closeBlocker()" class="btn btn-dark btn-sm px-3" id="btn-save-event"> Close
+      </button>
+    </div>
+  </div>
 
 </ng-template>
