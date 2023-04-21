@@ -1,9 +1,10 @@
 import { HomeComponent } from './home/home.component';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './search/search.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ProductViewComponent } from './product-view/product-view.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutComponent
+  },
+  {
+    path: 'product/:id',
+    component: ProductViewComponent
   }
 ];
 

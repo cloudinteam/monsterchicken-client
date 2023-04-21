@@ -1,0 +1,170 @@
+// Product Bruscrumps =====================================================================
+.product-trails {
+  padding: 20px 0;
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+
+    li {
+      color: #808080;
+      font-size: 11px;
+      display: inline;
+      margin-right: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+
+      a {
+        text-decoration: none;
+        color: #808080;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+
+    li:last-child {
+      color: #e4002b;
+    }
+
+    li:not(:last-child)::after {
+      content: '\f054';
+      font-family: "Font Awesome 6 Free";
+      font-size: 9px;
+      font-weight: 900;
+      position: relative;
+      left: 5px;
+    }
+  }
+}
+
+
+// Product View ==============================================================================
+
+.product-title {
+  color: #292929;
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.seperator {
+  margin: 15px 0;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.product-description {
+  color: #424242;
+  font-size: 15px;
+  line-height: 23px;
+  text-align: justify;
+  min-height: 200px;
+}
+
+
+::ng-deep {
+  .pro-details {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+
+    .pro-price {
+      color: #e4002b;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .pro-action {
+      max-width: 150px;
+
+      p-inputnumber {
+        border-radius: 7px;
+        overflow: hidden;
+        border: 2px solid #eee;
+
+        .p-inputnumber-buttons-horizontal .p-inputnumber-input {
+          width: 38px;
+          text-align: center;
+          font-weight: 700;
+          font-family: "Nunito Sans", sans-serif !important;
+          color: #000;
+          border: 0;
+        }
+
+        .p-component {
+
+          .btn-plus {
+            color: #e4002b;
+            background: #fff;
+            border: 0;
+          }
+          .btn-minus {
+            color: #e4002b;
+            background: #fff;
+            border: 0;
+          }
+        }
+      }
+
+      .cart-counter {
+        border-radius: 6px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+
+        .cart-count {
+          width:35px;
+          height:35px;
+          text-align: center;
+          line-height: 32px;
+          font-weight: 600;
+        }
+
+        .btn-plus {
+          background-color: #ffffff;
+          border: 0;
+          border-radius: 5px;
+          padding: 5px;
+          width: 35px;
+          height: 35px;
+
+          .pi {
+            color: #e4002b;
+            font-size: 15px;
+          }
+        }
+
+        .btn-minus {
+          background-color: #ffffff;
+          border: 0;
+          border-radius: 5px;
+          padding: 5px;
+          height: 35px;
+          height: 35px;
+
+          .pi {
+            color: #e4002b;
+            font-size: 15px;
+          }
+        }
+      }
+
+      .add-btn {
+        background-color: #e4002b;
+        border: 0;
+        border-radius: 6px;
+        padding: 10px 10px;
+        color: #fff;
+        line-height: 16px;
+        font-size: 16px;
+        width: 150px;
+        font-weight: 700;
+
+        .pi {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}

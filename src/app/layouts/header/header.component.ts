@@ -65,6 +65,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.handlePermission();
+    // let deviceID = MediaDeviceInfo.toJSON();
+    // console.log(deviceID)
   }
 
   init() {

@@ -88,4 +88,9 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/cart/list';
   }
 
+
+  // Location Check
+  static locationCheck(): string {
+    return this.server_url() + this.server_v() + '/location-checking';
+  }
 }

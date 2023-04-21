@@ -40,17 +40,6 @@
             mode="decimal"
             (onInput)="cartNumber($event, product.productId)"
         ></p-inputNumber>
-        <!-- <div *ngIf="product.cartProductQuantity > 0" class="cart-counter" fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="center space-between">
-          <div>
-            <button type="button" class="btn-plus" > <i class="pi pi-plus"></i> </button>
-          </div>
-          <div class="cart-count">
-            {{product.cartProductQuantity}}
-          </div>
-          <div>
-            <button type="button" class="btn-minus" > <i class="pi pi-minus"></i> </button>
-          </div>
-        </div> -->
         <button type="button" class="add-btn" (click)="addCart(product.productId)" *ngIf="product.cartProductQuantity == 0"> <i class="pi pi-shopping-cart"></i> Add </button>
       </div>
     </div>

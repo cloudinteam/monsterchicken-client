@@ -1,0 +1,74 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container" *ngIf="!loading">
+
+  <div class="product-trails">
+    <ul>
+      <li> <a routerLink="/" class="pointer"> Home </a> </li>
+      <li> <a [routerLink]="'/category/'+this.product.categoryId"> {{ this.product.categoryName }} </a> </li>
+      <li> {{ this.product.productName }} </li>
+    </ul>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-11 col-lg-11">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-6">
+          <p-carousel [value]="this.product.imageUrl" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="true" [showNavigators]="false">
+            <ng-template let-image pTemplate="item">
+              <img [src]="image" [alt]="this.product.productName" class="w-100">
+            </ng-template>
+          </p-carousel>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6">
+          <h1 class="product-title"> {{this.product.productName}} </h1>
+          <div class="seperator"></div>
+          <p class="product-description">
+            {{ this.product.description }}
+          </p>
+
+
+
+          <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+            <div class="pro-details">
+              <div class="pro-price">
+                <span> {{ product.price }}</span>
+              </div>
+              <div class="pro-action">
+                <p-inputNumber
+                    *ngIf="product.cartProductQuantity > 0"
+                    [ngModel]="product.cartProductQuantity"
+                    [showButtons]="true"
+                    buttonLayout="horizontal"
+                    inputId="cartProductCount"
+                    spinnerMode="horizontal"
+                    [step]="1"
+                    [min]="0"
+                    [max]="product.maxQuantity"
+                    decrementButtonClass="btn-minus"
+                    incrementButtonClass="btn-plus"
+                    incrementButtonIcon="pi pi-plus"
+                    decrementButtonIcon="pi pi-minus"
+                    mode="decimal"
+                    (onInput)="cartNumber($event, product.productId)"
+                ></p-inputNumber>
+                <button type="button" class="add-btn" (click)="addCart(product.productId)" *ngIf="product.cartProductQuantity == 0"> <i class="pi pi-shopping-cart"></i> Add to cart </button>
+              </div>
+            </div>
+          </div>
+          <div class="seperator"></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <div>
+    <pre>
+      {{this.product | json}}
+    </pre>
+  </div> -->
+
+</div>

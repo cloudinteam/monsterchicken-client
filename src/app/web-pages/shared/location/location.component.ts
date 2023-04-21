@@ -16,6 +16,7 @@ import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
 import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
 import { HeaderService } from 'src/app/services/header.service';
+import { MapService } from 'src/app/services/map.service';
 
 // declare const google: any;
 
@@ -50,8 +51,9 @@ export class LocationComponent implements OnInit {
   searchString: string = '';
   searchAuto: google.maps.places.Autocomplete | undefined;
 
-  //Local Variable defined
-  formattedaddress=" ";
+  formattedaddress = " ";
+  postCode!: number;
+  city!: string;
 
 AddressChange(address: any) {
   //setting address from API to local variable
@@ -65,6 +67,7 @@ AddressChange(address: any) {
     private geocoder: MapGeocoder,
     private ngZone: NgZone,
     private headerService: HeaderService,
+    private mapService: MapService,
   ) {}
 
   ngOnInit(): void {}
@@ -98,7 +101,7 @@ AddressChange(address: any) {
         })
 
       }
-    }, 1500);
+    }, 1000);
   }
 
   moveMap(event: google.maps.MapMouseEvent) {
@@ -138,6 +141,12 @@ AddressChange(address: any) {
         if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
           currentAddress.district = address.long_name;
         }
+        if (address.types.includes("locality") && address.types.includes("political")) {
+          this.city = address.long_name;
+        }
+        if (address.types.includes("postal_code")) {
+          this.postCode = Number(address.long_name);
+        }
       });
       currentAddress.address = this.searchString;
       this.headerService.currentAddress.next(currentAddress);
@@ -145,9 +154,15 @@ AddressChange(address: any) {
       this.mapMarker = {
         lat: results[0].geometry.location.lat(),
         lng: results[0].geometry.location.lng(),
-      };
+      }
+      console.log(this.postCode);
+      if (this.postCode) {
+        this.mapService.locationCheck({ cityId: this.city }).subscribe( (r: any) => {
+          console.log(r);
+        })
+      }
       this.loading = false;
-      // console.log(results);
+      // console.log(results); , pinCode: this.postCode, lat: this.mapMarker.lat, lng: this.mapMarker.lng
     });
   }
 

@@ -13,6 +13,8 @@ import { ChangeAddressComponent } from './change-address/change-address.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { ProductViewComponent } from './product-view/product-view.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     HomeComponent,
     ProductsListComponent,
     CheckoutComponent,
-    ChangeAddressComponent
+    ChangeAddressComponent,
+    ProductViewComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +35,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     GoogleMapsModule,
     FormsModule,
     ReactiveFormsModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    InputNumberModule,
     // AgmCoreModule.forRoot({
     //   // please get your own API key here:
     //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
