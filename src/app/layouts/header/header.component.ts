@@ -9,6 +9,7 @@ import { MapGeocoder } from '@angular/google-maps';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { ProductService } from 'src/app/services/product.service';
 import { Category } from 'src/app/models/category.model';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   district = '';
   address = '';
   locationShow = false;
+  logggedIn = false;
 
   disableSearch = true;
   searchString: any;
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('cartArea') cartArea!: TemplateRef<any>;
   @ViewChild('locationModal') locationModal!: TemplateRef<any>;
   @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
+  @ViewChild('profileEdit') profileEdit!: TemplateRef<any>;
 
   lat: number = 0;
   lng: number = 0;
@@ -48,6 +51,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   };
 
   categories: Category[] = [];
+
+  profileItems: MenuItem[] = [];
 
   constructor(
     private authService: AuthService,
@@ -64,6 +69,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    // if (this.authService.isLoggedIn()) {
+    //   this.logggedIn = true;
+    // }
+    this.logggedIn = this.authService.isLoggedIn();
+
     this.init();
     this.loading = false;
   }
@@ -92,6 +102,30 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.productService.getCategories().subscribe((r: any) => {
       this.categories = r.categories;
     })
+    this.profileItems = [
+      {
+        label: 'Profile',
+        icon: 'fa-solid fa-user-pen',
+        command: () => {
+          this.openProfile();
+        }
+      },
+      {
+        label: 'Logout',
+        icon: 'fa-solid fa-arrow-right-from-bracket',
+        command: () => {
+          this.authService.logout();
+        }
+      }
+    ]
+  }
+
+  openProfile() {
+    this.ngbModal.open(this.profileEdit, { fullscreen: false, size: 'md' });
+  }
+
+  closeProfile() {
+    this.ngbModal.dismissAll(this.profileEdit);
   }
 
   openLogin() {

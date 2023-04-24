@@ -19,7 +19,8 @@ export class ApiCallService {
   ) {}
 
   hash(): any {
-    return localStorage.getItem('_h_key') || '';
+    // return localStorage.getItem('_h_key') || '';
+    return localStorage.getItem('userId') || '';
   }
 
   lat(): any {
@@ -28,7 +29,7 @@ export class ApiCallService {
 
   long(): any {
     return localStorage.getItem('userLong') || '';
-  } 
+  }
 
   postApiCallAuth(url: string, body: object) {
     let hash = {
@@ -164,6 +165,29 @@ export class ApiCallService {
             this.alert.fireToastF('Something went wrong');
           }
           return '';
+        })
+      );
+  }
+
+  postApiCallAuthNEE(url: string, body: object) {
+    return this.http
+      .post(url, body, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          return result;
+          // if (r.status == true) {
+          //   return r;
+          // } else {
+          //   this.alert.fireToastF(r.response.message[0]);
+          // }
+        }),
+        catchError((err) => {
+          let data: any = this.es.unmaskData(err.error);
+          this.alert.fireToastF(data.message[0]);
+          return "";
         })
       );
   }

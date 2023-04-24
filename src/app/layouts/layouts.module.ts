@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { WebPagesModule } from '../web-pages/web-pages.module';
 import { AuthModule } from '../auth/auth.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { MenuModule } from 'primeng/menu';
 
 
 
@@ -29,7 +30,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     FlexLayoutModule,
     WebPagesModule,
     AuthModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    MenuModule
   ],
   exports: [
     HeaderComponent,

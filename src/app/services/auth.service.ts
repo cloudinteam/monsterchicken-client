@@ -38,10 +38,19 @@ export class AuthService {
     return this.api.postApiCallAuth(NetworkService.resendOTP(), body);
   }
 
+  profile(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.profile(), body);
+  }
+
+  profileEdit(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.profileEdit(), body);
+  }
+
   logout(): any {
     // return this.api.postApiCallAuth(NetworkService.logout(), body);
     localStorage.clear();
     sessionStorage.clear();
+    window.location.reload();
   }
 
   isLoggedIn() {

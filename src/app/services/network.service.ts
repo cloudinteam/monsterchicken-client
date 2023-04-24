@@ -59,6 +59,12 @@ export class NetworkService {
   static logout(): string {
     return this.server_url() + this.server_v() + '/login';
   }
+  static profile(): string {
+    return this.server_url() + this.server_v() + '/profile';
+  }
+  static profileEdit(): string {
+    return this.server_url() + this.server_v() + '/profile-update';
+  }
 
   //Products
   static getProducts(): string {
@@ -92,5 +98,10 @@ export class NetworkService {
   // Location Check
   static locationCheck(): string {
     return this.server_url() + this.server_v() + '/location-checking';
+  }
+
+  //File upload
+  static upload(): string {
+    return this.server_url() + "/api/admin" + "/file/upload";
   }
 }

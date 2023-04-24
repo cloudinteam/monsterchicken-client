@@ -1,0 +1,75 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="row" *ngIf="!loading">
+  <div class="col-12" *ngIf="editImage">
+    <div class="custom-dropzone" ngx-dropzone [multiple]="false" [accept]="'image/*'" (change)="onSelect($event)">
+      <ngx-dropzone-label>
+        <div>
+          <span>Upload profile picture</span>
+        </div>
+      </ngx-dropzone-label>
+      <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+        [removable]="true" (removed)="onRemove(f)">
+        <!-- <ngx-dropzone-label> {{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+      </ngx-dropzone-image-preview>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="!editImage">
+    <div class="profile-container">
+      <img [src]="profileImage" [alt]="profileForm.value.name" class="profile-img-view">
+      <div class="profile-edit-btn" (click)="editImage = true"> edit </div>
+    </div>
+  </div>
+  <div class="col-12">
+
+    <form [formGroup]="profileForm" (submit)="submit()">
+
+      <div class="form-group mb-3">
+        <input type="text" required="" name="name" formControlName="name" placeholder="Full name" class="form-control" />
+        <div *ngIf="submitted && profileFormControl.name.errors" class="invalid-error">
+          <span *ngIf="profileFormControl.name.errors.required">Name is Required</span>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <input type="text" required="" name="email" formControlName="email" placeholder="Email" class="form-control" />
+        <div *ngIf="submitted && profileFormControl.email.errors" class="invalid-error">
+          <span *ngIf="profileFormControl.email.errors.required">Email Id is Required</span>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <input type="text" required="" name="number" formControlName="number" placeholder="Number" class="form-control" />
+        <div *ngIf="submitted && profileFormControl.number.errors" class="invalid-error">
+          <span *ngIf="profileFormControl.number.errors.required">Mobile number is Required</span>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="gender" type="radio" id="male" [value]="1">
+          <label class="form-check-label" for="male"> Male </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="gender" type="radio" id="female" [value]="2">
+          <label class="form-check-label" for="female"> Female </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="gender" type="radio" id="other" [value]="3">
+          <label class="form-check-label" for="other"> Other </label>
+        </div>
+        <div *ngIf="submitted && profileFormControl.gender.errors" class="invalid-error">
+          <span *ngIf="profileFormControl.gender.errors.required">Gender is Required</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-dark w-100">
+          Update
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

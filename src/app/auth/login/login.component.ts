@@ -67,13 +67,16 @@ export class LoginComponent implements OnInit {
       console.log(r);
       if (r.status) {
         this.alert.fireToastS(r.message);
+
         // this.otpSent = true;
         // this.otpFormControl.userId.setValue(r.response.userId);
 
-        // localStorage.setItem('accessToken', r.response.accessToken);
+        localStorage.setItem('accessToken', r.response.accessToken);
+        localStorage.setItem('userId', r.response.userId);
         // if (localStorage.getItem('next_p') === 'cart') {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
+        window.location.reload();
       }
     });
   }

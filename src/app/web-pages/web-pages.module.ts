@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { WebPagesRoutingModule } from './web-pages-routing.module';
 import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
@@ -15,6 +14,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ProductsListComponent,
     CheckoutComponent,
     ChangeAddressComponent,
-    ProductViewComponent
+    ProductViewComponent,
+    ProfileEditComponent
   ],
   imports: [
     CommonModule,
@@ -37,11 +40,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ReactiveFormsModule,
     GooglePlaceModule,
     InputNumberModule,
-    // AgmCoreModule.forRoot({
-    //   // please get your own API key here:
-    //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-    //   apiKey: 'AIzaSyA5hHeRt5t1M4irYLCh95a0mcaqu8_MFjc'
-    // }),
+    NgxDropzoneModule
+  ],
+  exports: [
+    ProfileEditComponent
   ]
 })
 export class WebPagesModule { }
