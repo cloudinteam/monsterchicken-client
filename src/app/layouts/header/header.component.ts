@@ -1,12 +1,15 @@
 import { HeaderService } from './../../services/header.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AfterViewInit, Component, ElementRef, NgZone, OnInit, QueryList, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from 'src/app/services/cart.service';
-import { ProductsListComponent } from 'src/app/web-pages/products-list/products-list.component';
 import { MapGeocoder } from '@angular/google-maps';
+import { OverlayPanel } from 'primeng/overlaypanel';
+import { ProductService } from 'src/app/services/product.service';
+import { Category } from 'src/app/models/category.model';
+
 
 @Component({
   selector: 'monster-header',
@@ -44,16 +47,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     lng: 0,
   };
 
+  categories: Category[] = [];
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
     private headerService: HeaderService,
     private offcanvasService: NgbOffcanvas,
     private cartService: CartService,
     private ngbModal: NgbModal,
     private geocoder: MapGeocoder,
-    private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
+    private productService: ProductService,
   ) {
 
   }
@@ -64,9 +69,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.handlePermission();
-    // let deviceID = MediaDeviceInfo.toJSON();
-    // console.log(deviceID)
+    // this.handlePermission();
   }
 
   init() {
@@ -76,6 +79,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.headerService.currentAddress.subscribe((r) => {
       this.address = r.address;
       this.district = r.district;
+      this.locationShow = r.show;
     });
     this.cartService.cartCount.subscribe((r) => {
       this.cartCount.count = r.count;
@@ -84,6 +88,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.cartService.getCart({}).subscribe((r: any) => {
       this.cartCount.count = r.response.cart.length;
       this.cartCount.total = r.response.totalCartPrice;
+    })
+    this.productService.getCategories().subscribe((r: any) => {
+      this.categories = r.categories;
     })
   }
 
@@ -104,7 +111,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   trimAddress(address: string) {
-    return address.slice(0, 30)+'...';
+    return address.slice(0, 23)+'...';
   }
 
   launchSearch() {
@@ -155,7 +162,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 		this.ngbModal.open(this.locationModal, { fullscreen: false, size: 'xl' });
 	}
 
+  showAddress() {
+    this.locationShow = true;
+    this.cdRef.markForCheck();
+  }
 
+  viewCategory(catpanel: OverlayPanel, id: string) {
+    catpanel.hide();
+    this.router.navigate(['/category/' + id]);
+  }
 
   // Geo Code ======================================================
   geoCode(type: string = 'location', address: string = '') {

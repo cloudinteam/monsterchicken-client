@@ -1,6 +1,11 @@
 <page-loader [loading]="loading"></page-loader>
 
 <div class="row" *ngIf="!loading">
+  <div class="col-12" *ngIf="errorAlert">
+    <div class="alert alert-danger" role="alert">
+      Service not available! Please Choose different location
+    </div>
+  </div>
   <div class="col-12">
     <div class="p-input-icon-right w-100 mb-3">
       <i class="pi pi-search fw-bold text-dark"></i>
@@ -9,10 +14,13 @@
       <!-- #searchInput="ngx-places" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
     </div>
   </div>
+  <div class="col-12 text-end">
+    <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
+  </div>
 </div>
 
 <!-- <div *ngIf="apiLoaded | async"> -->
-<google-map height="450px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
+<!-- <google-map height="450px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
   (mapMousemove)="move($event)">
   <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
     [options]="markerOptions"></map-marker>
@@ -21,7 +29,7 @@
 <div>Longitude: {{display?.lng}}</div>
 <pre>
   {{ geoResult | json }}
-</pre>
+</pre> -->
 
 <!-- </div> -->
 

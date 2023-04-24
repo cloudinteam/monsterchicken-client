@@ -7,6 +7,9 @@
         </a>
       </div>
       <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+        <div *ngIf="!locationShow">
+          <button type="button" (click)="openLocation()" class="btn btn-sm btn-outline-dark">Choose location</button>
+        </div>
         <div class="clickable" (click)="openLocation()" *ngIf="locationShow"> <!--[ngbTooltip]="address" placement="bottom"-->
           <div class="loc-district">
             <i class="pi pi-map-marker" style="font-size: 15px"></i>
@@ -14,6 +17,7 @@
           </div>
           <div class="loc-address">
             {{ trimAddress(address) }}
+            <!-- {{ address }} -->
           </div>
         </div>
       </div>
@@ -30,7 +34,19 @@
       <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
         <ul class="top-nav ">
           <li class="top-nav-item">
-            <a class="top-nav-link"> <i class="pi pi-clone"></i> Categories </a>
+            <a class="top-nav-link" (click)="catpanel.toggle($event)"> <i class="pi pi-clone"></i> Categories </a>
+            <p-overlayPanel #catpanel [style]="{'width': '350px'}" [showCloseIcon]="true">
+              <ng-template pTemplate="content">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item clickable" *ngFor="let category of categories">
+                    <div class="clickable" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" (click)="viewCategory(catpanel, category.categoryId)">
+                      <img [src]="category.imageUrl" [alt]="category.categoryName" width="30px">
+                      <span class="text-black fw-semibold"> {{ category.categoryName | titlecase }} </span>
+                    </div>
+                  </li>
+                </ul>
+              </ng-template>
+          </p-overlayPanel>
           </li>
           <li class="top-nav-item">
             <a class="top-nav-link" (click)="openLogin()"> <i class="pi pi-user"></i> Login </a>
@@ -100,9 +116,12 @@ cart sidebar
 
 
 <ng-template #locationModal let-modal>
-	<div class="modal-header">
+	<div class="p-3">
 		<!-- <h4 class="modal-title">Modal title</h4> -->
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+		<!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"> </button> -->
+    <p class="text-end mb-0">
+      <i class="fa-solid fa-circle-xmark fa-lg clickable" (click)="modal.dismiss()"></i>
+    </p>
 	</div>
 	<!-- <div class="modal-body">
 		<p>  </p>
@@ -111,7 +130,7 @@ cart sidebar
 		<button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
 	</div> -->
   <div class="modal-body">
-    <location></location>
+    <location (showAddress)="showAddress()"></location>
   </div>
 
 

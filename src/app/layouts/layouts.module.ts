@@ -10,6 +10,7 @@ import { SharedModule } from '../web-pages/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { WebPagesModule } from '../web-pages/web-pages.module';
 import { AuthModule } from '../auth/auth.module';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 
@@ -27,7 +28,8 @@ import { AuthModule } from '../auth/auth.module';
     SharedModule,
     FlexLayoutModule,
     WebPagesModule,
-    AuthModule
+    AuthModule,
+    OverlayPanelModule
   ],
   exports: [
     HeaderComponent,

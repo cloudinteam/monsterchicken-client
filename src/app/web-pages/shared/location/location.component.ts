@@ -6,6 +6,8 @@ import {
   TemplateRef,
   ViewChild,
   NgZone,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MapGeocoder } from '@angular/google-maps';
@@ -15,6 +17,7 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
 import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
+import { AlertService } from 'src/app/services/alert.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
 
@@ -31,6 +34,8 @@ export class LocationComponent implements OnInit {
   // @ViewChild('searchInput') searchInput!: GooglePlaceDirective;
   // @ViewChild("placesRef") placesRef: NgxGpAutocompleteDirective;
   // autocompleteInputControl: FormControl = new FormControl<string>('');
+
+  @Output() showAddress: EventEmitter<any> = new EventEmitter();
 
   loading = false;
 
@@ -55,6 +60,8 @@ export class LocationComponent implements OnInit {
   postCode!: number;
   city!: string;
 
+  errorAlert = false;
+
 AddressChange(address: any) {
   //setting address from API to local variable
   this.formattedaddress=address.formatted_address
@@ -68,12 +75,13 @@ AddressChange(address: any) {
     private ngZone: NgZone,
     private headerService: HeaderService,
     private mapService: MapService,
+    private alert: AlertService,
   ) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.handlePermission();
+    // this.handlePermission();
 
     // this.geoCode();
   }
@@ -136,7 +144,7 @@ AddressChange(address: any) {
     this.geocoder.geocode(data).subscribe(({ results }) => {
       this.geoResult = results[0];
       this.searchString = results[0].formatted_address;
-      let currentAddress = { address: '', district: '' };
+      let currentAddress = { address: '', district: '', show: false };
       results[0].address_components.forEach((address) => {
         if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
           currentAddress.district = address.long_name;
@@ -149,6 +157,7 @@ AddressChange(address: any) {
         }
       });
       currentAddress.address = this.searchString;
+      currentAddress.show = true;
       this.headerService.currentAddress.next(currentAddress);
 
       this.mapMarker = {
@@ -159,6 +168,14 @@ AddressChange(address: any) {
       if (this.postCode) {
         this.mapService.locationCheck({ cityId: this.city }).subscribe( (r: any) => {
           console.log(r);
+          if (r.serviceProvider) {
+            this.errorAlert = false;
+            this.alert.fireToastS(r.message[0])
+          }
+          if (!r.serviceProvider) {
+            this.errorAlert = true;
+            this.alert.fireToastF(r.message[0])
+          }
         })
       }
       this.loading = false;

@@ -12,7 +12,7 @@ export class HeaderService {
   private _searchString = '';
   public searchString: BehaviorSubject<string> = new BehaviorSubject<string>(this._searchString);
 
-  private _currentAddress = {address: '', district: ''};
+  private _currentAddress = {address: '', district: '', show: false};
   public currentAddress: BehaviorSubject<any> = new BehaviorSubject<any>(this._currentAddress);
 
   constructor() { }
