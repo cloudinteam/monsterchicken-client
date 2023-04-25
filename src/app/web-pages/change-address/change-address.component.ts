@@ -1,6 +1,10 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddressService } from 'src/app/services/address.service';
+import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'change-address',
@@ -29,24 +33,54 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
   searchString: string = '';
   searchAuto: google.maps.places.Autocomplete | undefined;
-  formattedaddress=" ";
+  formattedaddress = " ";
+
+  submitted = false;
+  addressForm!: FormGroup;
 
   constructor(
-    private elementRef: ElementRef,
+    private formBuilder: FormBuilder,
     private ngbModal: NgbModal,
     private geocoder: MapGeocoder,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private authService: AuthService,
+    private alert: AlertService,
+    private addressService: AddressService
   ) {
 
 
   }
 
   ngOnInit(): void {
-
+    this.initForm();
+    this.authService.profile({}).subscribe((r: any) => {
+      // console.log(r);
+      this.addressForm.patchValue({
+        number: r.response.userDetail.number,
+      });
+    })
   }
 
   ngAfterViewInit(): void {
     this.handlePermission();
+  }
+
+  initForm() {
+    this.addressForm = this.formBuilder.group({
+      userId: [localStorage.getItem('userId'), [Validators.required]],
+      area: ['', [Validators.required]],
+      streetName: ['', [Validators.required]],
+      landMark: [null, [Validators.required]],
+      number: [null, [Validators.maxLength(13), Validators.required]],
+      city: [null, [Validators.required]],
+      state: [null, [Validators.required]],
+      district: [null],
+      pincode: [null],
+      country: [null]
+    });
+  }
+  get addressFormControl(): any {
+    return this.addressForm['controls'];
   }
 
   AddressChange(address: any) {
@@ -85,11 +119,33 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
     this.geocoder.geocode(data).subscribe(({ results }) => {
       this.geoResult = results[0];
+      this.searchString = results[0].formatted_address;
+      this.addressForm.patchValue({ area: results[0].formatted_address })
+
+      // let currentAddress = { address: '', district: '', show: false };
+      results[0].address_components.forEach((address) => {
+        if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
+          this.addressForm.patchValue({ district: address.long_name })
+        }
+        if (address.types.includes("administrative_area_level_1") && address.types.includes("political")) {
+          this.addressForm.patchValue({ state: address.long_name })
+        }
+        if (address.types.includes("locality") && address.types.includes("political")) {
+          this.addressForm.patchValue({ city: address.long_name })
+        }
+        if (address.types.includes("country") && address.types.includes("political")) {
+          this.addressForm.patchValue({ country: address.long_name })
+        }
+        if (address.types.includes("postal_code")) {
+          this.addressForm.patchValue({ pincode: Number(address.long_name) })
+        }
+      });
+
 
       this.mapMarker = {
         lat: results[0].geometry.location.lat(),
         lng: results[0].geometry.location.lng(),
-      };
+      }
       this.loading = false;
       // console.log(results);
     });
@@ -195,6 +251,18 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
       }
     }, 1500);
+  }
+
+  submit() {
+    if (this.addressForm.invalid) {
+      this.submitted = true;
+    }
+    this.addressService.storeAdddress(this.addressForm.value).subscribe((r: any) => {
+      console.log(r);
+      if (r.status) {
+        this.alert.fireToastS(r.message[0]);
+      }
+    });
   }
 
 }

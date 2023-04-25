@@ -19,6 +19,10 @@ export class AuthService {
     return this.api.postApiCallAuth(NetworkService.verifyNumber(), body);
   }
 
+  verifyOtp(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.verifyOtp(), body);
+  }
+
   signup(body: any): any {
     return this.api.postApiCallAuth(NetworkService.Signup(), body);
   }

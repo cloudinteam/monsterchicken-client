@@ -13,6 +13,7 @@
         <!-- <ngx-dropzone-label> {{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
       </ngx-dropzone-image-preview>
     </div>
+    <div *ngIf="profileForm.value.image != ''" class="profile-edit-btn" (click)="editImage = false"> cancel </div>
   </div>
   <div class="col-12" *ngIf="!editImage">
     <div class="profile-container">
@@ -25,6 +26,7 @@
     <form [formGroup]="profileForm" (submit)="submit()">
 
       <div class="form-group mb-3">
+        <label> Name </label>
         <input type="text" required="" name="name" formControlName="name" placeholder="Full name" class="form-control" />
         <div *ngIf="submitted && profileFormControl.name.errors" class="invalid-error">
           <span *ngIf="profileFormControl.name.errors.required">Name is Required</span>
@@ -32,6 +34,7 @@
       </div>
 
       <div class="form-group mb-3">
+        <label> Email </label>
         <input type="text" required="" name="email" formControlName="email" placeholder="Email" class="form-control" />
         <div *ngIf="submitted && profileFormControl.email.errors" class="invalid-error">
           <span *ngIf="profileFormControl.email.errors.required">Email Id is Required</span>
@@ -39,6 +42,7 @@
       </div>
 
       <div class="form-group mb-3">
+        <label> Mobile </label>
         <input type="text" required="" name="number" formControlName="number" placeholder="Number" class="form-control" />
         <div *ngIf="submitted && profileFormControl.number.errors" class="invalid-error">
           <span *ngIf="profileFormControl.number.errors.required">Mobile number is Required</span>
@@ -46,6 +50,9 @@
       </div>
 
       <div class="form-group mb-3">
+        <div>
+          <label> Gender </label>
+        </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" formControlName="gender" type="radio" id="male" [value]="1">
           <label class="form-check-label" for="male"> Male </label>

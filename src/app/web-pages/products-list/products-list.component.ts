@@ -29,6 +29,11 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.route.params.subscribe((r) => {
+      this.catId = this.route.snapshot.paramMap.get('id') || '';
+      this.getProduct(this.catId);
+    })
+
     this.cartService.productLoad$.subscribe((r) => {
       if (r == true) {
         this.init();
@@ -48,6 +53,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   getProduct(catId: any) {
+    this.loading = true;
     let data = { category: catId };
     this.productService.getProducts(data).subscribe((r: any) => {
       this.productList = r.response.products;

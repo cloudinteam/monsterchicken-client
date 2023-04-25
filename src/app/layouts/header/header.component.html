@@ -131,12 +131,12 @@ cart sidebar
 
 
 <ng-template #profileEdit let-modal>
-	<div class="p-3">
+	<div class="p-3 pb-0">
     <p class="text-end mb-0">
       <i class="fa-solid fa-circle-xmark fa-lg clickable" (click)="modal.dismiss()"></i>
     </p>
 	</div>
-  <div class="modal-body">
+  <div class="modal-body pt-0">
     <profile-edit (closeModel)="closeProfile()"></profile-edit>
   </div>
 </ng-template>

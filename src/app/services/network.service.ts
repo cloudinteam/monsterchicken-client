@@ -41,6 +41,9 @@ export class NetworkService {
   static verifyNumber(): string {
     return this.server_url() + this.server_v() + '/login/number-verify';
   }
+  static verifyOtp(): string {
+    return this.server_url() + this.server_v() + '/login/otp-verify';
+  }
   static Signup(): string {
     return this.server_url() + this.server_v() + '/register';
   }
@@ -98,6 +101,9 @@ export class NetworkService {
   // Location Check
   static locationCheck(): string {
     return this.server_url() + this.server_v() + '/location-checking';
+  }
+  static storeAdddress(): string {
+    return this.server_url() + this.server_v() + '/address/store';
   }
 
   //File upload

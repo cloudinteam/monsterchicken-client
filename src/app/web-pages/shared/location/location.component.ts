@@ -9,14 +9,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MapGeocoder } from '@angular/google-maps';
-import { Loader } from '@googlemaps/js-api-loader';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
-import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
-import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
 import { AlertService } from 'src/app/services/alert.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
@@ -68,9 +62,7 @@ AddressChange(address: any) {
 }
 
   constructor(
-    private elementRef: ElementRef,
     private ngbModal: NgbModal,
-    private httpClient: HttpClient,
     private geocoder: MapGeocoder,
     private ngZone: NgZone,
     private headerService: HeaderService,
@@ -78,7 +70,9 @@ AddressChange(address: any) {
     private alert: AlertService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   ngAfterViewInit() {
     // this.handlePermission();
@@ -160,17 +154,20 @@ AddressChange(address: any) {
       currentAddress.show = true;
       this.headerService.currentAddress.next(currentAddress);
 
+      localStorage.setItem('current_address', JSON.stringify(currentAddress));
+
       this.mapMarker = {
         lat: results[0].geometry.location.lat(),
         lng: results[0].geometry.location.lng(),
       }
-      console.log(this.postCode);
+      // console.log(this.postCode);
       if (this.postCode) {
         this.mapService.locationCheck({ cityId: this.city }).subscribe( (r: any) => {
-          console.log(r);
+          // console.log(r);
           if (r.serviceProvider) {
             this.errorAlert = false;
             this.alert.fireToastS(r.message[0])
+            this.showAddress.emit()
           }
           if (!r.serviceProvider) {
             this.errorAlert = true;

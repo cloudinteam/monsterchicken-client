@@ -35,11 +35,11 @@ export class LoginComponent implements OnInit {
 
   initLoginForm() {
     this.loginForm = this.fb.group({
-      userName: ['ranjith@cloudinlabs.com', [Validators.required, Validators.email]],
-      password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
-      googleUser: [false],
-      showPassword: [false],
-      // number: [null, [Validators.required]]
+      // userName: ['ranjith@cloudinlabs.com', [Validators.required, Validators.email]],
+      // password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
+      // googleUser: [false],
+      // showPassword: [false],
+      number: [null, [Validators.required]]
     });
   }
   get loginFormControl(): any {
@@ -60,23 +60,23 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.invalid) {
       this.isSubmitted = true;
-      console.log(this.loginForm.value);
+      // console.log(this.loginForm.value);
       return;
     }
-    this.as.login(this.loginForm.value).subscribe((r: any) => {
-      console.log(r);
+    this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
+      // console.log(r);
       if (r.status) {
         this.alert.fireToastS(r.message);
 
-        // this.otpSent = true;
-        // this.otpFormControl.userId.setValue(r.response.userId);
+        this.otpSent = true;
+        this.otpFormControl.userId.setValue(r.response.userId);
 
-        localStorage.setItem('accessToken', r.response.accessToken);
-        localStorage.setItem('userId', r.response.userId);
+        // localStorage.setItem('accessToken', r.response.accessToken);
+        // localStorage.setItem('userId', r.response.userId);
         // if (localStorage.getItem('next_p') === 'cart') {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -89,23 +89,42 @@ export class LoginComponent implements OnInit {
   }
 
   validateNumber($event: any) {
-    console.log($event);
-    console.log($event.value.toString().length);
+    // console.log($event);
+    // console.log($event.value.toString().length);
     if ($event.value != null && $event.value.toString().length == 10) {
       this.btnLogin = false;
     }
   }
 
   validateOtp($event: any) {
-    console.log($event);
-    console.log($event.value.toString().length);
+    // console.log($event);
+    // console.log($event.value.toString().length);
     if ($event.value != null && $event.value.toString().length == 6) {
       this.btnOtp = false;
     }
   }
 
   otpVerify() {
+    if (this.otpForm.invalid) {
+      this.alert.fireToastF('Invalid OTP');
+    }
+    this.as.verifyOtp(this.otpForm.value).subscribe((r: any) => {
+      // console.log(r);
+      if (r.status) {
+        this.alert.fireToastS(r.message);
 
+        // this.otpSent = true;
+        // this.otpFormControl.userId.setValue(r.response.userId);
+
+        localStorage.setItem('accessToken', r.response.accessToken);
+        localStorage.setItem('userId', r.response.userId);
+        // this.router.navigate(['/']);
+        // if (localStorage.getItem('next_p') === 'cart') {
+        //   this.router.navigate(['/cart']);
+        // } else this.router.navigate(['/']);
+        window.location.reload();
+      }
+    });
   }
 }
 

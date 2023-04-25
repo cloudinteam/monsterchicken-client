@@ -75,6 +75,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.logggedIn = this.authService.isLoggedIn();
 
     this.init();
+
+    if (localStorage.getItem("current_address") !== null) {
+      let address: any = localStorage.getItem('current_address');
+      let currentAddress = JSON.parse(address);
+      // console.log(currentAddress);
+      this.address = currentAddress.address;
+      this.district = currentAddress.district;
+      this.locationShow = currentAddress.show;
+      this.cdRef.markForCheck();
+    }
+
     this.loading = false;
   }
 
@@ -197,6 +208,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 	}
 
   showAddress() {
+    this.ngbModal.dismissAll(this.locationModal);
     this.locationShow = true;
     this.cdRef.markForCheck();
   }

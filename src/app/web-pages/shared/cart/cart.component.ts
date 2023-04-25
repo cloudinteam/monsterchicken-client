@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
-    console.log(this.authService.isLoggedIn());
+    // console.log(this.authService.isLoggedIn());
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/checkout']);
     } else {

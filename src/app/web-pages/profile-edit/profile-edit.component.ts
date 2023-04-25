@@ -37,7 +37,10 @@ export class ProfileEditComponent implements OnInit {
         name: r.response.userDetail.name,
         number: r.response.userDetail.number,
       });
-      if (r.response.userDetail.image) {
+      if (r.response.userDetail.previewUrl == '') {
+        this.editImage = true;
+      }
+      if (r.response.userDetail.previewUrl != '' || r.response.userDetail.previewUrl != null) {
         this.profileImage = r.response.userDetail.previewUrl;
       }
     })
