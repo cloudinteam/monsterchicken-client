@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LocationComponent } from './location/location.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { AddressCardComponent } from './address-card/address-card.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     CartComponent,
     CartProductComponent,
     LocationComponent,
+    AddressCardComponent,
   ],
   imports: [
     CommonModule,
@@ -54,8 +56,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     CartComponent,
     ProductCardComponent,
     LocationComponent,
-    GooglePlaceModule
-    // AgmCoreModule
+    GooglePlaceModule,
+    AddressCardComponent
   ]
 })
 export class SharedModule { }

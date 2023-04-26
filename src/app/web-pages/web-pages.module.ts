@@ -16,6 +16,7 @@ import { ProductViewComponent } from './product-view/product-view.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { AddressListComponent } from './address-list/address-list.component';
 
 
 
@@ -27,7 +28,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     CheckoutComponent,
     ChangeAddressComponent,
     ProductViewComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    AddressListComponent
   ],
   imports: [
     CommonModule,

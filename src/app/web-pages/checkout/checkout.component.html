@@ -18,35 +18,34 @@
           </div>
         </li>
 
-        <!-- <li class="chk-menu-li ">
+        <li class="chk-menu-li ">
           <div class="menu-card ">
             <div class="title">
               Delivery Summary
             </div>
             <div class="sub-title">
-              8th St Gandhipuram Rd, Sidhapudur, Coimbatore, Tamil Nadu 641012, India,
             </div>
-
           </div>
-        </li> -->
+        </li>
 
         <li class="chk-menu-li ">
           <div class="menu-card ">
             <div class="title">
-              Payment Methods
+              Payment
             </div>
             <div class="sub-title">
-              <!-- 8th St Gandhipuram Rd, Sidhapudur, Coimbatore, Tamil Nadu 641012, India, -->
             </div>
-
           </div>
         </li>
 
       </ul>
     </div>
     <div class="col-12 col-md-9">
-      <div class="chk-content">
-        <change-address></change-address>
+      <div class="chk-content" *ngIf="!editAddress">
+        <address-list (addAddress)="editAddress = true"></address-list>
+      </div>
+      <div class="chk-content" *ngIf="editAddress">
+        <change-address (backToList)="editAddress = false"></change-address>
       </div>
     </div>
   </div>

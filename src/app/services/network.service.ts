@@ -105,6 +105,12 @@ export class NetworkService {
   static storeAdddress(): string {
     return this.server_url() + this.server_v() + '/address/store';
   }
+  static listAdddress(): string {
+    return this.server_url() + this.server_v() + '/address/list';
+  }
+  static deleteAdddress(): string {
+    return this.server_url() + this.server_v() + '/address/delete';
+  }
 
   //File upload
   static upload(): string {

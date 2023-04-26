@@ -1,0 +1,23 @@
+.add-address-button {
+  border: 1px solid #e4002b;
+  border-radius: 8px;
+  color: #e4002b;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  width: 100%;
+  background: transparent;
+  padding: 20px 10px;
+  max-width: 550px;
+}
+
+.address-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 10px;
+  margin-bottom: 15px;
+}

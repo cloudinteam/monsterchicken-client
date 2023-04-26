@@ -1,0 +1,23 @@
+<div class="row mb-3 justify-content-center">
+  <div class="col-12 col-md-10 text-center">
+    <button type="button" (click)="addNewAddres()" class="add-address-button">  <i class="fa-solid fa-plus fa-xs"></i> Add New Address </button>
+  </div>
+</div>
+
+<!-- <pre> {{ this.address | json }} </pre> -->
+
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10">
+    <div class="address-card" *ngFor="let address of address">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="selectAddress" [id]="address.id" (change)="onSelect($event)" [(ngModel)]="selectedAddress" [value]="address.id" >
+      </div>
+      <label [for]="address.id" style="width: 100%;">
+        <address-card (removeAddress)="deleteAddress($event)" [address]="address"></address-card>
+      </label>
+    </div>
+
+  </div>
+</div>
+
+

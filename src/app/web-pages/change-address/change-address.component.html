@@ -1,18 +1,32 @@
-<div class="row">
+<page-loader [loading]="loading"></page-loader>
+<div class="row" *ngIf="!loading">
+
+  <div class="col-12 text-end">
+    <b class="text-danger fw-bold fs-5 clickable border rounded-pill border-danger px-2" (click)="backToList.emit()"> <i class="pi pi-angle-double-left mr-1"></i> Back </b>
+  </div>
 
   <div class="col-12 col-md-6">
     <div class="row">
+      <div class="col-12" *ngIf="!serviceAvailable">
+        <div class="alert alert-danger" role="alert">
+          Service not available! Please Choose different location
+        </div>
+      </div>
+      <div class="col-12 mb-2">
+        <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark w-100"><i
+            class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
+      </div>
       <div class="col-12">
         <div class="p-input-icon-right w-100 mb-3">
           <i class="pi pi-search fw-bold text-dark"></i>
-          <input type="text" class="form-control form-control-md" ngx-google-places-autocomplete (onAddressChange)="AddressChange($event)" [(ngModel)]="searchString" #searchInput
-             placeholder="Search for your location" (keyup)="searchFn()"/>
+          <input type="text" class="form-control form-control-md" ngx-google-places-autocomplete
+            (onAddressChange)="AddressChange($event)" [(ngModel)]="searchString" #searchInput
+            placeholder="Search for your location" (keyup)="searchFn()" />
           <!-- #searchInput="ngx-places" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
-
         </div>
       </div>
     </div>
-    <google-map height="470px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
+    <google-map height="600px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
       (mapMousemove)="move($event)">
       <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
         [options]="markerOptions"></map-marker>
@@ -25,7 +39,8 @@
 
       <div class="form-group mb-3">
         <label> Area/Locality </label>
-        <input type="text" required="" name="area" formControlName="area" placeholder="Search for Area/Locality" class="form-control" />
+        <input type="text" required="" name="area" formControlName="area" placeholder="Search for Area/Locality"
+          class="form-control" />
         <div *ngIf="submitted && addressFormControl.area.errors" class="invalid-error">
           <span *ngIf="addressFormControl.area.errors.required">Area is Required</span>
         </div>
@@ -33,7 +48,8 @@
 
       <div class="form-group mb-3">
         <label> Flat no / Building name / Street name </label>
-        <input type="text" name="streetName" formControlName="streetName" placeholder="Flat no / Building name / Street name" class="form-control" />
+        <input type="text" name="streetName" formControlName="streetName"
+          placeholder="Flat no / Building name / Street name" class="form-control" />
         <div *ngIf="submitted && addressFormControl.streetName.errors" class="invalid-error">
           <span *ngIf="addressFormControl.streetName.errors.required">* Required</span>
         </div>
@@ -64,28 +80,79 @@
       </div>
 
       <div class="form-group mb-3">
+        <label> Postal Code </label>
+        <input type="text" required="" name="pinCode" formControlName="pinCode" placeholder="Pincode"
+          class="form-control" />
+        <div *ngIf="submitted && addressFormControl.pinCode.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.pinCode.errors.required">* Required</span>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
         <label> Mobile Number </label>
-        <input type="text" required="" name="number" formControlName="number" placeholder="Number" class="form-control" />
+        <input type="text" required="" name="number" formControlName="number" placeholder="Number"
+          class="form-control" />
         <div *ngIf="submitted && addressFormControl.number.errors" class="invalid-error">
           <span *ngIf="addressFormControl.number.errors.required">* Required</span>
         </div>
       </div>
 
+      <div class="form-group mb-3">
+        <div>
+          <label> Type </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="type" type="radio" id="home" value="home">
+          <label class="form-check-label" for="home"> Home </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="type" type="radio" id="work" value="work">
+          <label class="form-check-label" for="work"> Work </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" formControlName="type" type="radio" id="other" value="other">
+          <label class="form-check-label" for="other"> Other </label>
+        </div>
+        <div *ngIf="submitted && addressFormControl.type.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.type.errors.required">* Required</span>
+        </div>
+      </div>
+
+      <div class="form-group mb-3" *ngIf="addressForm.value.type == 'other'">
+        <input type="text" required="" name="others" formControlName="others" placeholder="Enter address type"
+          class="form-control" [required]="addressForm.value.type == 'other'" />
+        <div *ngIf="submitted && addressFormControl.number.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.number.errors.required">* Required</span>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label> Nickname </label>
+        <input type="text" required="" name="nickName" formControlName="nickName" placeholder="Nickname"
+          class="form-control" />
+        <div *ngIf="submitted && addressFormControl.nickName.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.nickName.errors.required">* Required</span>
+        </div>
+      </div>
+
       <div class="form-group">
-        <button type="submit" class="btn btn-dark w-100">
-          Submit
-        </button>
+        <button type="submit" class="btn btn-dark w-100" [disabled]="!serviceAvailable"> Submit </button>
       </div>
 
     </form>
-<!-- <pre>
-  {{ this.geoResult | json }}
-</pre>
-    <pre> {{this.addressForm.value | json}} </pre>
 
-  </div> -->
+
+
+    <!-- <pre>
+        {{ this.geoResult | json }}
+      </pre>
+          <pre> {{this.addressForm.value | json}} </pre> -->
+
+  </div>
 
 </div>
+
+
 
 
 <ng-template #locationAllow role="document" let-modal>
@@ -101,4 +168,3 @@
   </div>
 
 </ng-template>
-
