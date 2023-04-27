@@ -1,0 +1,103 @@
+<!-- <pre *ngIf="!loading">
+  {{ data | json }}
+</pre> -->
+
+<page-loader [loading]="loading"></page-loader>
+
+<div class="row g-3" *ngIf="!loading">
+  <div class="col-12">
+
+    <div class="items-bill">
+      <div class="bill-heading mb-3"> Products </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-6" *ngFor="let cartItem of orderSummary.cartData; let sn = index">
+          <div class="cart-item ">
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+              <div>
+                <span class="item-sn">{{sn+1}}</span>
+              </div>
+              <div fxLayout="column" fxFlex="auto" fxLayoutGap="12px">
+                <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+                  <div fxFlex="auto" class="item-name">{{cartItem.productName}}</div>
+                </div>
+                <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+                  <div fxFlex="auto"> <span class="item-unit"> {{cartItem.unit}} </span> <span class="item-price"> {{cartItem.totalPrice | currency: '₹'}} </span> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-12">
+    <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!loading">
+      <div class="bill-heading"> Bill Details </div>
+
+      <div fxLayout="column" fxLayoutGap="10px">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="items-title"> Subtotal </span>
+          <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="items-title"> Delivery Charge </span>
+          <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
+        </div>
+
+        <div>
+          <hr class="m-0">
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="items-grand-title"> Total </span>
+          <span class="items-grand-total"> {{grandTotal | currency:'₹'}} </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!loading">
+      <div class="bill-heading"> Shipping Address </div>
+
+      <div fxLayout="column" fxLayoutGap="10px">
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <span class="items-price"> {{ shippingAddress.address.area }}  </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <!-- <span class="items-price"> Street Name:  </span> -->
+          <span class="items-price"> {{ shippingAddress.address.streetName }}, </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <!-- <span class="items-price"> Landmark: </span> -->
+          <span class="items-price"> {{ shippingAddress.address.landMark }}, </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <span class="items-price"> {{ shippingAddress.address.city.name }}, {{ shippingAddress.address.state.name }} {{ shippingAddress.address.pinCode }}  </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <span class="items-title"> Type: </span>
+          <span class="items-price"> {{  ( (shippingAddress.address.type == 'other') ? shippingAddress.address.others: shippingAddress.address.type ) | titlecase }} </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <span class="items-title"> Nickname: </span>
+          <span class="items-price"> {{  shippingAddress.address.nickName | titlecase }} </span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

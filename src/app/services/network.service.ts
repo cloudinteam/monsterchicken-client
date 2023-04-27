@@ -20,7 +20,7 @@ export class NetworkService {
     let header = new HttpHeaders({
       Accept: 'application/json',
       Authorization: 'Bearer ' + this.authToken(),
-      // deviceKey: this.hash(),
+      deviceId: this.hash(),
     });
     return header;
   }
@@ -32,6 +32,9 @@ export class NetworkService {
 
   static authToken(): any {
     return localStorage.getItem('accessToken') || undefined;
+  }
+  static hash(): any {
+    return localStorage.getItem('_h_key') || undefined;
   }
 
   // Authentication
@@ -97,6 +100,12 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/cart/list';
   }
 
+  //Checkout
+  static getCheckout(): string {
+    return this.server_url() + this.server_v() + '/checkout/data';
+  }
+
+
 
   // Location Check
   static locationCheck(): string {
@@ -110,6 +119,9 @@ export class NetworkService {
   }
   static deleteAdddress(): string {
     return this.server_url() + this.server_v() + '/address/delete';
+  }
+  static setDefault(): string {
+    return this.server_url() + this.server_v() + '/address/default';
   }
 
   //File upload

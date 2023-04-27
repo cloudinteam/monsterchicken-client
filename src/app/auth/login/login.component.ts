@@ -122,7 +122,17 @@ export class LoginComponent implements OnInit {
         // if (localStorage.getItem('next_p') === 'cart') {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
-        window.location.reload();
+        // window.location.reload();
+        if (localStorage.getItem('next_url') && localStorage.getItem('next_url') != 'undefined') {
+          this.router.navigate([localStorage.getItem('next_url')]);
+          localStorage.removeItem('next_url');
+          setTimeout(() => {
+            window.location.reload();
+          }, 100)
+
+        } else {
+          window.location.reload();
+        }
       }
     });
   }

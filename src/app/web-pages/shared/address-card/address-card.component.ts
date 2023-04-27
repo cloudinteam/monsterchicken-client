@@ -17,12 +17,13 @@ export class AddressCardComponent {
     private addressService: AddressService
   ) { }
 
-  edit(address: any) {
+  edit($event: MouseEvent, address: any) {
+    $event.stopPropagation();
     let data = {
       location: address,
       action: 'edit'
     }
-    // this.editAddress.emit(data);
+    this.editAddress.emit();
     this.addressService.updateAddress.next(data);
   }
 
@@ -30,7 +31,8 @@ export class AddressCardComponent {
     this.makeAddressDefault.emit(address);
   }
 
-  deleteAddress(address: any) {
+  deleteAddress($event: MouseEvent, address: any) {
+    $event.stopPropagation();
     this.removeAddress.emit(address.id);
   }
 }

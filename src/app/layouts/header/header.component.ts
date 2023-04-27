@@ -102,14 +102,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.district = r.district;
       this.locationShow = r.show;
     });
-    this.cartService.cartCount.subscribe((r) => {
-      this.cartCount.count = r.count;
-      this.cartCount.total = r.total;
-    })
-    this.cartService.getCart({}).subscribe((r: any) => {
-      this.cartCount.count = r.response.cart.length;
-      this.cartCount.total = r.response.totalCartPrice;
-    })
+    // if(this.logggedIn) {
+      this.cartService.cartCount.subscribe((r) => {
+        this.cartCount.count = r.count;
+        this.cartCount.total = r.total;
+      })
+      this.cartService.getCart({}).subscribe((r: any) => {
+        this.cartCount.count = r.response.cart.length;
+        this.cartCount.total = r.response.totalCartPrice;
+      })
+    // }
     this.productService.getCategories().subscribe((r: any) => {
       this.categories = r.categories;
     })
@@ -129,6 +131,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       }
     ]
+    this.headerService.openLogin.subscribe((r) => {
+      if (!this.logggedIn && r == true) {
+        this.openLogin();
+        this.headerService.openLogin.next(false);
+      }
+
+    })
   }
 
   openProfile() {
@@ -140,14 +149,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   openLogin() {
-    // this.closeCart();
-    this.offcanvasService.dismiss(this.cartArea);
-    this.offcanvasService.open(this.loginArea, { position: 'end' });
+    this.closeCart();
+    // this.offcanvasService.dismiss(this.cartArea);
+    setTimeout(() => {
+      this.offcanvasService.open(this.loginArea, { position: 'end' });
+    }, 300);
+
   }
 
   closeLogin() { // content: TemplateRef<any>
     // console.log('close login');
-    this.offcanvasService.dismiss('all')
+    // this.offcanvasService.dismiss('all')
     this.offcanvasService.dismiss(this.loginArea);
   }
 

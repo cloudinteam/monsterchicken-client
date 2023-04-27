@@ -5,6 +5,7 @@ import { SearchComponent } from './search/search.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductViewComponent } from './product-view/product-view.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -23,9 +24,14 @@ const routes: Routes = [
     path: 'category/:id',
     component: ProductsListComponent
   },
+  // {
+  //   path: 'checkout',
+  //   component: CheckoutComponent
+  // },
   {
     path: 'checkout',
-    component: CheckoutComponent
+    loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'product/:id',

@@ -25,17 +25,7 @@ import {  GooglePlaceModule } from 'ngx-google-places-autocomplete';
     NgbModule,
     FlexModule,
     GoogleMapsModule,
-    // GooglePlaceDirective,
     GooglePlaceModule
-
-    // AgmCoreModule.forRoot({
-    //   // please get your own API key here:
-    //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-    //   apiKey: 'AIzaSyA5hHeRt5t1M4irYLCh95a0mcaqu8_MFjc'
-    // }),
-    // NgxGpAutocompleteModule.forRoot({
-    //   loaderOptions: { apiKey: 'AIzaSyA26x9clnhzvqzHUOxbeuDyERIFvLrrFlI' }
-    // }),
   ],
   exports: [
     GooglePlaceModule

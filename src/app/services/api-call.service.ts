@@ -19,8 +19,8 @@ export class ApiCallService {
   ) {}
 
   hash(): any {
-    // return localStorage.getItem('_h_key') || '';
-    return localStorage.getItem('userId') || '';
+    return localStorage.getItem('_h_key') || '';
+    // return localStorage.getItem('userId') || '';
   }
 
   lat(): any {

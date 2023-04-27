@@ -6,20 +6,19 @@
     <div class="col-12 col-md-3">
       <ul class="chk-menu-ul">
 
-        <li class="chk-menu-li active">
-          <div class="menu-card active">
+        <li class="chk-menu-li" [ngClass]="this.active == 'address' ? 'active' : ''">
+          <div class="menu-card" [ngClass]="this.active == 'address'? 'active' : ''">
             <div class="title">
               Choose Address
             </div>
             <div class="sub-title">
               {{address}}
             </div>
-
           </div>
         </li>
 
-        <li class="chk-menu-li ">
-          <div class="menu-card ">
+        <li class="chk-menu-li " [ngClass]="this.active == 'summary' ? 'active' : ''">
+          <div class="menu-card " [ngClass]="this.active == 'summary'? 'active' : ''">
             <div class="title">
               Delivery Summary
             </div>
@@ -28,8 +27,8 @@
           </div>
         </li>
 
-        <li class="chk-menu-li ">
-          <div class="menu-card ">
+        <li class="chk-menu-li " [ngClass]="this.active == 'payment' ? 'active' : ''">
+          <div class="menu-card " [ngClass]="this.active == 'payment'? 'active' : ''">
             <div class="title">
               Payment
             </div>
@@ -41,12 +40,15 @@
       </ul>
     </div>
     <div class="col-12 col-md-9">
-      <div class="chk-content" *ngIf="!editAddress">
+      <div class="chk-content">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- <div class="chk-content" *ngIf="!editAddress">
         <address-list (addAddress)="editAddress = true"></address-list>
       </div>
       <div class="chk-content" *ngIf="editAddress">
         <change-address (backToList)="editAddress = false"></change-address>
-      </div>
+      </div> -->
     </div>
   </div>
 

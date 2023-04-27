@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -22,11 +23,13 @@ export class CartComponent implements OnInit {
   grandTotal: number = 0;
 
   @Output() login: EventEmitter<any> = new EventEmitter();
+  @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private cartService: CartService,
     private authService: AuthService,
     private router: Router,
+    private alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -42,17 +45,24 @@ export class CartComponent implements OnInit {
       this.totalCartPrice = r.response.totalCartPrice;
       this.deliveryCharge = r.response.deliveryCharge;
       this.grandTotal = r.response.grandTotal;
-      this.cartService.cartCount.next({count: this.totalCount, total: this.totalCartPrice})
+      this.cartService.cartCount.next({ count: this.totalCount, total: this.totalCartPrice })
+      // console.log(this.cart);
+      // this.cartItems();
       this.loading = false;
     });
   }
 
   checkout() {
-    // console.log(this.authService.isLoggedIn());
-    if (this.authService.isLoggedIn()) {
+    //if (this.authService.isLoggedIn() && localStorage.getItem('accessToken') != '') {
+    if (this.authService.isLoggedIn() && this.cart != null) {
+      this.close.emit();
       this.router.navigate(['/checkout']);
     } else {
-      this.login.emit();
+      if (!this.authService.isLoggedIn()) {
+        this.login.emit();
+      } else if (this.cart == null) {
+        this.alert.fireToastF('Cart is empty');
+      }
     }
   }
 
@@ -61,5 +71,15 @@ export class CartComponent implements OnInit {
     // console.log('from cart');
   }
 
+  cartItems() {
+    // localStorage.removeItem('cartIds');
+    let cartIds: any[] = [];
+    this.cart.forEach(item => {
+      cartIds.push(item.cartId);
+    })
+
+    // let idString = JSON.stringify(cartIds);
+    // localStorage.setItem('cartIds', idString);
+  }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressService } from './services/address.service';
+import { CommonService } from './services/common.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private addressService: AddressService,
-  ) { }
+    private commonService: CommonService
+  ) {
+    this.commonService.epicFunction();
+  }
 
   ngOnInit(): void {
     this.addressService.getPosition().then((pos: any) => {

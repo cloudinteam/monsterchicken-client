@@ -47,4 +47,8 @@ export class AddressService {
     return this.api.postApiCallAuth(NetworkService.deleteAdddress(), body);
   }
 
+  setDefault(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.setDefault(), body);
+  }
+
 }

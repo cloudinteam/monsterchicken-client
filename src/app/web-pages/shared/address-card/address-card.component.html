@@ -11,12 +11,15 @@
   <div class="street"> {{address.city.name}}, {{address.state.name}} {{address.pinCode}} </div>
 
   <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutGap="15px">
-      <div> <b class="text-secondary clickable" (click)="edit(address)">  <i class="fa-regular fa-pen-to-square"></i> Edit </b> </div>
-      <div> <b class="text-secondary clickable" (click)="deleteAddress(address)">  <i class="fa-regular fa-trash-can"></i> Delete </b> </div>
-    </div>
+    <!-- <div fxLayout="row" fxLayoutGap="15px">
 
-    <div> <b class="text-mred clickable" (click)="makeDefault(address)"> <i class="fa-solid fa-house-user"></i> Make Default </b> </div>
+
+    </div> -->
+    <div> <b class="text-mred clickable" (click)="edit($event, address)">  <i class="fa-regular fa-pen-to-square"></i> Edit </b> </div>
+
+    <div> <b class="text-mred clickable" (click)="deleteAddress($event, address)">  <i class="fa-regular fa-trash-can"></i> Delete </b> </div>
+
+    <!-- <div> <b class="text-mred clickable" (click)="makeDefault(address)"> <i class="fa-solid fa-house-user"></i> Make Default </b> </div> -->
 
   </div>
 </div>

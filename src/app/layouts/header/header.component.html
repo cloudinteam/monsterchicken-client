@@ -92,7 +92,7 @@ cart sidebar
       No items in cart
     </div>
     <div *ngIf="cartCount.count > 0">
-      <cart (login)="openLogin()"></cart>
+      <cart (close)="closeCart()" (login)="openLogin()"></cart>
     </div>
 	</div>
 </ng-template>

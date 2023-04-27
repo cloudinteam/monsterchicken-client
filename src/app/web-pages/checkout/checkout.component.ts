@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AddressService } from 'src/app/services/address.service';
 import { HeaderService } from 'src/app/services/header.service';
 
@@ -15,10 +16,12 @@ export class CheckoutComponent implements OnInit {
 
   editAddress = false;
   addressAction: any;
+  active = '';
 
   constructor(
     private headerService: HeaderService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private activeMenu: ActiveMenuService,
   ){}
 
   ngOnInit(): void {
@@ -30,6 +33,9 @@ export class CheckoutComponent implements OnInit {
       this.address = r.address;
       this.district = r.district;
     });
+    this.activeMenu.checkoutMenu.subscribe((menu) => {
+      this.active = menu;
+    })
   }
 
   updateAddress(data: any) {

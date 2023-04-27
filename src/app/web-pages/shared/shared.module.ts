@@ -57,7 +57,7 @@ import { AddressCardComponent } from './address-card/address-card.component';
     ProductCardComponent,
     LocationComponent,
     GooglePlaceModule,
-    AddressCardComponent
+    AddressCardComponent,
   ]
 })
 export class SharedModule { }
