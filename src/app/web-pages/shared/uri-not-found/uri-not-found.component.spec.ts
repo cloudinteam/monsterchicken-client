@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UrlNotFoundComponent } from './url-not-found.component';
+import { UriNotFoundComponent } from './uri-not-found.component';
 
-describe('UrlNotFoundComponent', () => {
-  let component: UrlNotFoundComponent;
-  let fixture: ComponentFixture<UrlNotFoundComponent>;
+describe('UriNotFoundComponent', () => {
+  let component: UriNotFoundComponent;
+  let fixture: ComponentFixture<UriNotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UrlNotFoundComponent ]
+      declarations: [ UriNotFoundComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UrlNotFoundComponent);
+    fixture = TestBed.createComponent(UriNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

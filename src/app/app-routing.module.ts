@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlNotFoundComponent } from './common-components/url-not-found/url-not-found.component';
+import { UriNotFoundComponent } from './web-pages/shared/uri-not-found/uri-not-found.component';
 
 const routes: Routes = [
   {
@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    component: UrlNotFoundComponent
+    component: UriNotFoundComponent
   },
   // {
   //   path: '',
