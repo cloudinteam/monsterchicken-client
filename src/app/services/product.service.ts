@@ -27,6 +27,10 @@ export class ProductService {
     return this.api.postApiCallAuth(NetworkService.getSubCat(), body);
   }
 
+  getBanners(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getBanners(), body);
+  }
+
   // search(body: any): any {
   //   return this.api.postApiCallAuth(NetworkService.search(), body);
   // }

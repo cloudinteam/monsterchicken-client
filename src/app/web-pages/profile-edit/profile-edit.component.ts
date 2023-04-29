@@ -29,7 +29,7 @@ export class ProfileEditComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.authService.profile({}).subscribe((r: any) => {
-      console.log(r);
+      // console.log(r);
       this.profileForm.patchValue({
         email: r.response.userDetail.email,
         image: r.response.userDetail.image,

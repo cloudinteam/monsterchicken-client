@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -14,6 +15,7 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 export class OrderSummaryComponent implements OnInit {
 
   loading = false;
+  submitted = false;
   cart: any;
   cartIds: any[] = [];
 
@@ -25,6 +27,8 @@ export class OrderSummaryComponent implements OnInit {
   deliveryCharge: number = 0;
   grandTotal: number = 0;
 
+  couponForm!: FormGroup;
+
   constructor(
     private cartService: CartService,
     private checkoutService: CheckoutService,
@@ -32,11 +36,33 @@ export class OrderSummaryComponent implements OnInit {
     private router: Router,
     private alert: AlertService,
     private activeMenu: ActiveMenuService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.loadCart();
+    this.initCouponForm();
     this.activeMenu.checkoutMenu.next('summary');
+    this.activeMenu.addressSuccess.next(true);
+    this.activeMenu.summarySuccess.next(false);
+    this.cartService.cartCount.subscribe(() => {
+      this.init();
+    })
+  }
+
+  init() {
+    this.loadCart();
+    this.initCouponForm();
+  }
+
+  initCouponForm() {
+    this.couponForm = this.formBuilder.group({
+      couponCode: ['', [Validators.required]],
+      userId: [localStorage.getItem('userId'), [Validators.required]],
+    })
+  }
+  get couponFormControls(): any {
+    return this.couponForm['controls'];
   }
 
   loadCart() {
@@ -62,7 +88,7 @@ export class OrderSummaryComponent implements OnInit {
   loadSummary(ids: any = []) {
     this.loading = true;
     this.checkoutService.getCheckout({ cartId: ids }).subscribe((r: any) => {
-      this.data = r.response;
+      this.data = r;
       this.shippingAddress = r.response.isAddressAvailable;
       this.orderSummary = r.response.checkOutData;
       this.totalCount = r.response.totalCount;
@@ -72,6 +98,14 @@ export class OrderSummaryComponent implements OnInit {
       this.loading = false;
       this.cdRef.markForCheck();
     })
+  }
+
+  applyCoupon() {
+    if (this.couponForm.invalid) {
+      this.submitted = true;
+    }
+
+
   }
 
 }

@@ -5,6 +5,30 @@
 <page-loader [loading]="loading"></page-loader>
 
 <div class="row g-3" *ngIf="!loading">
+
+  <div class="col-12">
+    <div class="items-bill">
+      <div class="bill-heading mb-3"> Do you have a coupon ? </div>
+      <form [formGroup]="couponForm" (submit)="applyCoupon()">
+        <div class="row g-2">
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="form-group">
+              <input type="text" required="" name="couponCode" formControlName="couponCode" placeholder="Enter Coupon Code"
+                class="form-control rounded-0" />
+              <div *ngIf="submitted && couponFormControls.couponCode.errors" class="invalid-error">
+                <span *ngIf="couponFormControls.couponCode.errors.required">Coupon Code is Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-2">
+            <button type="submit" class="btn btn-danger w-100 rounded-0"> Apply </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
   <div class="col-12">
 
     <div class="items-bill">
@@ -20,8 +44,13 @@
                 <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
                   <div fxFlex="auto" class="item-name">{{cartItem.productName}}</div>
                 </div>
-                <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
-                  <div fxFlex="auto"> <span class="item-unit"> {{cartItem.unit}} </span> <span class="item-price"> {{cartItem.totalPrice | currency: '₹'}} </span> </div>
+                <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+
+                  <div fxFlex="auto"> <span class="item-unit"> {{cartItem.unit}} </span> <span class="fw-bold text-black"> x{{cartItem.quantity}} </span>  </div>
+                  <div fxFlex="auto" fxLayoutAlign="end center">
+                    <span class="item-price"> {{cartItem.totalPrice | currency: '₹'}} </span>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -30,35 +59,6 @@
       </div>
     </div>
 
-  </div>
-
-  <div class="col-12">
-    <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!loading">
-      <div class="bill-heading"> Bill Details </div>
-
-      <div fxLayout="column" fxLayoutGap="10px">
-
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="items-title"> Subtotal </span>
-          <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="items-title"> Delivery Charge </span>
-          <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
-        </div>
-
-        <div>
-          <hr class="m-0">
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="items-grand-title"> Total </span>
-          <span class="items-grand-total"> {{grandTotal | currency:'₹'}} </span>
-        </div>
-
-      </div>
-    </div>
   </div>
 
   <div class="col-12">
@@ -98,6 +98,40 @@
       </div>
 
     </div>
+  </div>
+
+  <div class="col-12">
+    <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!loading">
+      <div class="bill-heading"> Bill Details </div>
+
+      <div fxLayout="column" fxLayoutGap="10px">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="items-title"> Subtotal </span>
+          <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="items-title"> Delivery Charge </span>
+          <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
+        </div>
+
+        <div>
+          <hr class="m-0">
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="items-grand-title"> Total </span>
+          <span class="items-grand-total"> {{grandTotal | currency:'₹'}} </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button type="button" class="btn btn-danger rounded-0 me-2"> Proceet to checkout </button>
+    <span class="text-secondary fw-semibold clickable" [routerLink]="'/checkout/address'"> Change Address </span>
   </div>
 
 </div>

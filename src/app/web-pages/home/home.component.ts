@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   ]
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +30,9 @@ export class HomeComponent implements OnInit {
   }
 
   loadData() {
-
+    // this.productService.getBanners({}).subscribe((r: any) => {
+    //   console.log(r);
+    // })
   }
 
 }

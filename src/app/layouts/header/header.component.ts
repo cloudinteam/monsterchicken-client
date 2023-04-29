@@ -118,14 +118,28 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.profileItems = [
       {
         label: 'Profile',
-        icon: 'fa-solid fa-user-pen',
+        icon: 'pi pi-user-edit',
         command: () => {
-          this.openProfile();
+          this.router.navigate(['/account/profile']);
+        }
+      },
+      {
+        label: 'My Orders',
+        icon: 'pi pi-shopping-bag',
+        command: () => {
+          this.router.navigate(['/account/orders']);
+        }
+      },
+      {
+        label: 'Bulk Order',
+        icon: 'pi pi-truck',
+        command: () => {
+          this.router.navigate(['/bulk-order']);
         }
       },
       {
         label: 'Logout',
-        icon: 'fa-solid fa-arrow-right-from-bracket',
+        icon: 'pi pi-sign-out',
         command: () => {
           this.authService.logout();
         }

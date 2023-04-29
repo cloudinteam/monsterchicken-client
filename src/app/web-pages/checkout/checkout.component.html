@@ -6,19 +6,19 @@
     <div class="col-12 col-md-3">
       <ul class="chk-menu-ul">
 
-        <li class="chk-menu-li" [ngClass]="this.active == 'address' ? 'active' : ''">
-          <div class="menu-card" [ngClass]="this.active == 'address'? 'active' : ''">
+        <li class="chk-menu-li" [ngClass]="this.active == 'address' ? 'active' : ''" [ngClass]="addressSuccess? 'active success':''">
+          <div class="menu-card" [ngClass]="this.active == 'address'? 'active' : ''" [ngClass]="addressSuccess? 'active success':''">
             <div class="title">
               Choose Address
             </div>
             <div class="sub-title">
-              {{address}}
+              <!-- {{address}} -->
             </div>
           </div>
         </li>
 
-        <li class="chk-menu-li " [ngClass]="this.active == 'summary' ? 'active' : ''">
-          <div class="menu-card " [ngClass]="this.active == 'summary'? 'active' : ''">
+        <li class="chk-menu-li " [ngClass]="this.active == 'summary' ? 'active' : ''" [ngClass]="summarySuccess? 'success':''">
+          <div class="menu-card " [ngClass]="this.active == 'summary'? 'active' : ''" [ngClass]="summarySuccess? 'success':''">
             <div class="title">
               Delivery Summary
             </div>

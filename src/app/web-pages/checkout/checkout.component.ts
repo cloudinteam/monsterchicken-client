@@ -16,7 +16,10 @@ export class CheckoutComponent implements OnInit {
 
   editAddress = false;
   addressAction: any;
+
   active = '';
+  addressSuccess = false;
+  summarySuccess = false;
 
   constructor(
     private headerService: HeaderService,
@@ -35,6 +38,12 @@ export class CheckoutComponent implements OnInit {
     });
     this.activeMenu.checkoutMenu.subscribe((menu) => {
       this.active = menu;
+    })
+    this.activeMenu.addressSuccess.subscribe((status) => {
+      this.addressSuccess = status;
+    })
+    this.activeMenu.summarySuccess.subscribe((status) => {
+      this.summarySuccess = status;
     })
   }
 

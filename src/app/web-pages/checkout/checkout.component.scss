@@ -34,6 +34,10 @@
       // -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
     }
 
+    &.success.active::after {
+      background-color: #008106;
+    }
+
     .menu-card {
       position: relative;
       min-height: 75px;

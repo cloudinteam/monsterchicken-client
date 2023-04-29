@@ -85,6 +85,10 @@ export class NetworkService {
   static getSubCat(): string {
     return this.server_url() + this.server_v() + '/login';
   }
+  static getBanners(): string {
+    return this.server_url() + this.server_v() + '/brand/list';
+  }
+
 
   //cart
   static addToCart(): string {

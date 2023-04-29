@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './search/search.component';
 import { ProductsListComponent } from './products-list/products-list.component';
-import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { AuthGuard } from '../guards/auth.guard';
 
@@ -24,10 +23,6 @@ const routes: Routes = [
     path: 'category/:id',
     component: ProductsListComponent
   },
-  // {
-  //   path: 'checkout',
-  //   component: CheckoutComponent
-  // },
   {
     path: 'checkout',
     loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),

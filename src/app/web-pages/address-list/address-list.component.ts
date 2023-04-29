@@ -28,7 +28,7 @@ export class AddressListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAddress();
-    this.activeMenu.checkoutMenu.next('address')
+    this.activeMenu.checkoutMenu.next('address');
   }
 
   getAddress() {
@@ -79,6 +79,7 @@ export class AddressListComponent implements OnInit {
   }
 
   goToSummary() {
+    this.activeMenu.addressSuccess.next(true);
     this.router.navigate(['/checkout/summary'])
   }
 

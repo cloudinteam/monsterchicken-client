@@ -11,7 +11,10 @@ export class ActiveMenuService {
   private _checkOut = '';
   public checkoutMenu: BehaviorSubject<string> = new BehaviorSubject<string>(this._checkOut);
 
-  private _checkSuccess = '';
-  public checkoutSuccess: BehaviorSubject<string> = new BehaviorSubject<string>(this._checkSuccess);
+  private _addressSuccess = false;
+  public addressSuccess: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this._addressSuccess);
+
+  private _summarySuccess = false;
+  public summarySuccess: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this._summarySuccess);
 
 }

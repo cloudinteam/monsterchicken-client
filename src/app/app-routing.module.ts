@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AuthGuard } from './guards/auth.guard';
+import { UrlNotFoundComponent } from './common-components/url-not-found/url-not-found.component';
 
 const routes: Routes = [
   {
@@ -11,6 +10,11 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./web-pages/web-pages.module').then(m => m.WebPagesModule),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: UrlNotFoundComponent
   },
   // {
   //   path: '',
