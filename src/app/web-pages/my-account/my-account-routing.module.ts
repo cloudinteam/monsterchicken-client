@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MyAccountComponent } from './my-account.component';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 import { SavedAddressComponent } from './saved-address/saved-address.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'order-history',
-        component: ProfileEditComponent,
+        component: OrderHistoryComponent,
       }
     ]
   }

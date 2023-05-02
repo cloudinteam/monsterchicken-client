@@ -66,7 +66,11 @@ export class BullkOrderFormComponent implements OnInit {
     })
   }
 
-  get productDataFormArray(): FormArray {
+  // get productFormArray(): FormArray {
+  //   return <FormArray>this.bulkOrderForm.get("productData") as FormArray<any>;
+  // }
+
+  get productFormArray() {
     return this.bulkOrderForm.get("productData") as FormArray;
   }
 
@@ -88,11 +92,11 @@ export class BullkOrderFormComponent implements OnInit {
     // });
     // const bulkOrder = <FormArray>this.bulkOrderForm.controls['productData'];
     // this.productArray = this.bulkOrderForm.get("productData") as FormArray;
-    this.productDataFormArray.push(this.productDataFormGroup);
+    this.productFormArray.push(this.productDataFormGroup);
   }
 
   delete(index: number): void {
-    this.productDataFormArray.removeAt(index);
+    this.productFormArray.removeAt(index);
   }
 
   getStates() {

@@ -51,5 +51,9 @@ export class ProductService {
     return this.api.postApiCallAuth(NetworkService.getProductOptions(), body);
   }
 
+  getOrderHistory() {
+    return this.api.getApiCallAuth(NetworkService.getOrderHistory());
+  }
+
 
 }

@@ -21,23 +21,23 @@
                 </div>
               </div>
               <div class="col-12 my-2" formArrayName="productData">
-                <div class="row g-2 mb-3" *ngFor="let productDataFormGroup of productDataFormArray.controls; let productDataFormGroupIndex = index"
+                <div class="row g-2 mb-3" *ngFor="let productForm of productFormArray.controls; let productDataFormGroupIndex = index"
                   [formGroupName]="productDataFormGroupIndex">
                   <div class="col-12 col-md-7">
                     <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
                     <p-dropdown [options]="productOptions" optionValue="id" optionLabel="name" [required]="true" formControlName="id" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Product"></p-dropdown>
-                    <pre> {{ productDataFormGroup.value | json}} </pre>
-                    <div *ngIf="submitted && productDataFormGroup.value.id == ''||null" class="invalid-feedback">
-                      <span *ngIf="productDataFormGroup.value.id == ''">Product is required.</span>
-                    </div>
+                    <!-- <pre> {{ productForm.controls.id.errors | json}} </pre>
+                    <div *ngIf="submitted && productForm.controls.id.errors" class="invalid-feedback">
+                      <span *ngIf="productForm.controls.id.errors.required">Product is required.</span>
+                    </div> -->
                   </div>
                   <div class="col-12 col-md-4">
                     <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Quantity*</label> -->
                     <input type="text" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
                       class="form-control rounded-2 bulk-input" placeholder="Quantity" [required]="true"/>
-                      <pre> {{ productDataFormGroup.value.quantity }} </pre>
-                    <div *ngIf="submitted && productDataFormGroup.value.quantity == ''||null" class="invalid-feedback">
-                      <span *ngIf="productDataFormGroup.value.quantity == ''||null">Quantity is required.</span>
+                      <!-- <pre> {{ productDataFormGroup.value.quantity }} </pre> -->
+                    <div *ngIf="submitted && productForm.value.quantity == ''||null" class="invalid-feedback">
+                      <span *ngIf="productForm.value.quantity == ''||null">Quantity is required.</span>
                     </div>
                   </div>
                   <div class="col-12 col-md-1 text-end">

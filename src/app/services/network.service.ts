@@ -92,6 +92,11 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/product/get-product';
   }
 
+  //Order History
+  static getOrderHistory(): string {
+    return this.server_url() + this.server_v() + '/order-history';
+  }
+
   //cart
   static addToCart(): string {
     return this.server_url() + this.server_v() + '/cart/store';
