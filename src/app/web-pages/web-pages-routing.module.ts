@@ -5,6 +5,7 @@ import { SearchComponent } from './search/search.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.component';
 
 const routes: Routes = [
   {
@@ -29,8 +30,17 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'account',
+    loadChildren: () => import('./my-account/my-account.module').then(m => m.MyAccountModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'product/:id',
     component: ProductViewComponent
+  },
+  {
+    path: 'bulk-order',
+    component: BullkOrderFormComponent
   }
 ];
 

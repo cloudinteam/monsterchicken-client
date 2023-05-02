@@ -17,6 +17,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AddressListComponent } from './address-list/address-list.component';
+import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -29,7 +32,8 @@ import { AddressListComponent } from './address-list/address-list.component';
     ChangeAddressComponent,
     ProductViewComponent,
     ProfileEditComponent,
-    AddressListComponent
+    AddressListComponent,
+    BullkOrderFormComponent
   ],
   imports: [
     CommonModule,
@@ -42,10 +46,13 @@ import { AddressListComponent } from './address-list/address-list.component';
     ReactiveFormsModule,
     GooglePlaceModule,
     InputNumberModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    NgSelectModule,
+    DropdownModule
   ],
   exports: [
-    ProfileEditComponent
+    ProfileEditComponent,
+    ChangeAddressComponent
   ]
 })
 export class WebPagesModule { }

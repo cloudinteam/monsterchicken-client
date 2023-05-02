@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   NgZone,
   OnInit,
   Output,
@@ -48,8 +49,8 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   submitted = false;
   addressForm!: FormGroup;
   serviceAvailable: boolean = true;
-  address: any;
 
+  @Input() address: any;
   @Output() backToList: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -71,12 +72,20 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
         number: r.response.userDetail.number,
       });
     });
-    this.addressService.updateAddress.subscribe((r) => {
-      this.address = r.location;
-      if (r.action == 'edit') {
+    if (this.address) {
+      this.addressService.viewAddress({addressId: this.address.id}).subscribe((r: any) => {
+        console.log(r);
         this.editAddress();
-      }
-    });
+      })
+    }
+
+
+    // this.addressService.updateAddress.subscribe((r) => {
+    //   this.address = r.location;
+    //   if (r.action == 'edit') {
+    //     this.editAddress();
+    //   }
+    // });
   }
 
   ngAfterViewInit(): void {

@@ -39,4 +39,17 @@ export class ProductService {
   //   return this.api.postApiCallAuth(NetworkService.dashboard(), body);
   // }
 
+  getBulkOrder() {
+    return this.api.getApiCallAuth(NetworkService.getBulkOrder());
+  }
+
+  bulkOrderSubmit(data: any) {
+    return this.api.postApiCallAuth(NetworkService.bulkOrderSubmit(), data);
+  }
+
+  getProductOptions(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getProductOptions(), body);
+  }
+
+
 }

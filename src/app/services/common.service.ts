@@ -51,4 +51,18 @@ export class CommonService {
     return this.api.postApiCallAuthNEE(NetworkService.upload(), data);
   }
 
+  getStates(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getState(), body);
+  }
+
+  getCity(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getCity(), body);
+  }
+
+  getCountry(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getCountry(), body);
+  }
+
+
+
 }

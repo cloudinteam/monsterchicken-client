@@ -10,6 +10,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { ProductService } from 'src/app/services/product.service';
 import { Category } from 'src/app/models/category.model';
 import { MenuItem } from 'primeng/api';
+import { ActiveMenuService } from 'src/app/services/active-menu.service';
 
 
 @Component({
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private geocoder: MapGeocoder,
     private cdRef: ChangeDetectorRef,
     private productService: ProductService,
+    private activeMenu: ActiveMenuService,
   ) {
 
   }
@@ -120,6 +122,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         label: 'Profile',
         icon: 'pi pi-user-edit',
         command: () => {
+          this.activeMenu.checkoutMenu.next('profile');
           this.router.navigate(['/account/profile']);
         }
       },
@@ -127,6 +130,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         label: 'My Orders',
         icon: 'pi pi-shopping-bag',
         command: () => {
+          this.activeMenu.checkoutMenu.next('order-history');
           this.router.navigate(['/account/orders']);
         }
       },

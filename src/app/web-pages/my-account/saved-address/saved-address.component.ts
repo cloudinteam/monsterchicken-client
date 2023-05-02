@@ -1,24 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AddressService } from 'src/app/services/address.service';
 import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
-  selector: 'address-list',
-  templateUrl: './address-list.component.html',
-  styleUrls: ['./address-list.component.scss']
+  selector: 'saved-address',
+  templateUrl: './saved-address.component.html',
+  styleUrls: ['./saved-address.component.scss']
 })
-export class AddressListComponent implements OnInit {
+export class SavedAddressComponent implements OnInit {
 
   loading = false;
   address: any[] = [];
   selectedId = '';
   selectedAddress: any;
   edit = false;
-
-  @Output() addAddress: EventEmitter<any> = new EventEmitter();
-  @Output() editAddress: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private addressService: AddressService,
@@ -29,7 +26,7 @@ export class AddressListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAddress();
-    this.activeMenu.checkoutMenu.next('address');
+    this.activeMenu.checkoutMenu.next('saved-address');
   }
 
   getAddress() {
@@ -48,6 +45,7 @@ export class AddressListComponent implements OnInit {
 
   addNewAddres() {
     // this.addAddress.emit()
+    this.selectedAddress = null;
     this.edit = true;
   }
 

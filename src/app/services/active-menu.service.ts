@@ -8,6 +8,7 @@ export class ActiveMenuService {
 
   constructor() { }
 
+  // order-history, saved-address, profile, address, summary, payment
   private _checkOut = '';
   public checkoutMenu: BehaviorSubject<string> = new BehaviorSubject<string>(this._checkOut);
 

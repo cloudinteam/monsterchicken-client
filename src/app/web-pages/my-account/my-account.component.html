@@ -1,0 +1,28 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-5" *ngIf="!loading">
+
+  <div class="row">
+
+    <div class="col-12 col-md-3">
+
+      <ul class="list-group">
+        <li class="list-group-item" (click)="goToProfile()" [ngClass]="this.active == 'profile' ? 'active' : ''">My Profile</li>
+        <li class="list-group-item" (click)="goToAdress()"  [ngClass]="this.active == 'saved-address' ? 'active' : ''">Saved Address</li>
+        <li class="list-group-item" (click)="goToOrders()"  [ngClass]="this.active == 'order-history' ? 'active' : ''">Order History</li>
+      </ul>
+
+    </div>
+
+    <div class="col-12 col-md-9">
+      <div class="shadow rounded-3 px-5 py-3">
+        <div class="row">
+          <div class="col-12"  [ngClass]="this.active == 'profile' ? 'col-md-7' : 'col-md-12'">
+              <router-outlet> </router-outlet>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

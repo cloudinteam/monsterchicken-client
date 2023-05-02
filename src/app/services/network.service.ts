@@ -88,7 +88,9 @@ export class NetworkService {
   static getBanners(): string {
     return this.server_url() + this.server_v() + '/brand/list';
   }
-
+  static getProductOptions(): string {
+    return this.server_url() + this.server_v() + '/product/get-product';
+  }
 
   //cart
   static addToCart(): string {
@@ -121,6 +123,9 @@ export class NetworkService {
   static listAdddress(): string {
     return this.server_url() + this.server_v() + '/address/list';
   }
+  static viewAdddress(): string {
+    return this.server_url() + this.server_v() + '/address/view';
+  }
   static deleteAdddress(): string {
     return this.server_url() + this.server_v() + '/address/delete';
   }
@@ -131,5 +136,25 @@ export class NetworkService {
   //File upload
   static upload(): string {
     return this.server_url() + "/api/admin" + "/file/upload";
+  }
+
+  static getState(): string {
+    return this.server_url() + this.server_v() + '/state/list';
+  }
+
+  static getCountry(): string {
+    return this.server_url() + this.server_v() + '/country/list';
+  }
+
+  static getCity(): string {
+    return this.server_url() + this.server_v() + '/city/list';
+  }
+
+  static getBulkOrder(): string {
+    return this.server_url() + this.server_v() + '/bulkOrder/category-list';
+  }
+
+  static bulkOrderSubmit(): string {
+    return this.server_url() + this.server_v() + '/bulkOrder/store';
   }
 }

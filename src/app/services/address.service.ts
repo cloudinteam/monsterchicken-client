@@ -43,6 +43,10 @@ export class AddressService {
     return this.api.postApiCallAuth(NetworkService.listAdddress(), body);
   }
 
+  viewAddress(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.viewAdddress(), body);
+  }
+
   deleteAddress(body: any): any {
     return this.api.postApiCallAuth(NetworkService.deleteAdddress(), body);
   }

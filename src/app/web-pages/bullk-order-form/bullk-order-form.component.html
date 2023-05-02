@@ -1,0 +1,206 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-3 px-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-12">
+    <form [formGroup]="bulkOrderForm" (ngSubmit)="bulkOrderSubmit()">
+        <div class="px-4 py-4 my-5 shadow">
+          <div class="card-title h4 fw-bold text-dark">
+            CONTACT US FOR BULK ORDERS
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <pre>
+                  {{ bulkOrderForm.value | json }}
+                </pre>
+              </div>
+              <div class="col-12">
+                <div class="text-end">
+                  <button type="button" class="btn btn-danger px-3" (click)="add()">Add product</button>
+                </div>
+              </div>
+              <div class="col-12 my-2" formArrayName="productData">
+                <div class="row g-2 mb-3" *ngFor="let productDataFormGroup of productDataFormArray.controls; let productDataFormGroupIndex = index"
+                  [formGroupName]="productDataFormGroupIndex">
+                  <div class="col-12 col-md-7">
+                    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
+                    <p-dropdown [options]="productOptions" optionValue="id" optionLabel="name" [required]="true" formControlName="id" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Product"></p-dropdown>
+                    <pre> {{ productDataFormGroup.value | json}} </pre>
+                    <div *ngIf="submitted && productDataFormGroup.value.id == ''||null" class="invalid-feedback">
+                      <span *ngIf="productDataFormGroup.value.id == ''">Product is required.</span>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Quantity*</label> -->
+                    <input type="text" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
+                      class="form-control rounded-2 bulk-input" placeholder="Quantity" [required]="true"/>
+                      <pre> {{ productDataFormGroup.value.quantity }} </pre>
+                    <div *ngIf="submitted && productDataFormGroup.value.quantity == ''||null" class="invalid-feedback">
+                      <span *ngIf="productDataFormGroup.value.quantity == ''||null">Quantity is required.</span>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-1 text-end">
+                    <button type="button" class="btn btn-danger px-3" (click)="delete(productDataFormGroupIndex)"> <i class="fa-regular fa-circle-xmark"></i> </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr>
+              </div>
+              <div class="col-sm-6 col-12 my-2">
+                <div>
+                  <label class="h5 fw-bold red-heading fs-6">Bulk Order*</label>
+                  <select class="form-select shadow-none bulk-input py-2" formControlName="bulkOrder" required>
+                    <option value="null">Order Menu</option>
+                    <option *ngFor="let b of bulkOrder" value="{{ b.value }}">
+                      {{ b.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="submitted && form['bulkOrder'].errors" class="invalid-feedback">
+                    <span *ngIf="form['bulkOrder'].errors.required">Category is required.</span>
+                  </div>
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="validate('bulkOrder')">value is empty</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-12 my-2">
+                <div>
+                  <label class="h5 fw-bold red-heading fs-6">Country*</label>
+                  <select class="form-select shadow-none bulk-input py-2" formControlName="country"
+                    aria-label="Default select example" required>
+                    <option value="null">Select Country</option>
+                    <option [ngValue]="c.value" *ngFor="let c of country" class="text-dark">
+                      {{ c.name }}
+                    </option>
+                  </select>
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="validate('country')">value is empty</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <div>
+                  <label class="h5 fw-bold red-heading fs-6">State*</label>
+                  <select class="form-select shadow-none bulk-input py-2" formControlName="state"
+                    (ngModelChange)="onChangeHandler($event)" [(ngModel)]="selectedState" required>
+                    <option value="null">Select State</option>
+                    <option value="{{ state.value }}" *ngFor="let state of states" class="text-dark">
+                      {{ state.name }}
+                    </option>
+                  </select>
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="validate('state')">value is empty</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-12 my-2">
+                <div>
+                  <label class="fw-bold red-heading fs-6">City*</label>
+                  <select class="form-select shadow-none bulk-input py-2" formControlName="city"
+                    aria-label="Default select example" required>
+                    <option value="null">Select City</option>
+                    <option *ngFor="let c of city" value="{{ c.value }}">
+                      {{ c.name }}
+                    </option>
+                  </select>
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="validate('city')">value is empty</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Pin code*</label>
+                <div>
+                  <input type="text" formControlName="pinCode" (keypress)="keyPressNumbers($event)"
+                    class="form-control rounded-2 bulk-input" required />
+                  <small class="text-danger ms-1" *ngIf="validate('pinCode')">Pincode is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Institution Name*</label>
+                <div>
+                  <input type="text" formControlName="institutionName" class="form-control rounded-2 bulk-input"
+                    required />
+                  <small class="text-danger ms-1" *ngIf="validate('institutionName')">Institution Name is
+                    Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Name*</label>
+                <div>
+                  <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" required />
+                  <small class="text-danger ms-1" *ngIf="validate('name')">Name is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Email Id*</label>
+                <div>
+                  <input type="text" formControlName="email" class="form-control rounded-2 bulk-input" required />
+                  <small class="text-danger ms-1" *ngIf="validate('email')">Email Id is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Your Address</label>
+                <div>
+                  <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="9"
+                    required></textarea>
+                  <small class="text-danger ms-1" *ngIf="validate('address')">Address is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Phone Number 1*</label>
+                <div>
+                  <input type="text" formControlName="number1" (keypress)="keyPressNumbers($event)" maxlength="10"
+                    class="form-control rounded-2 bulk-input" />
+                  <small class="text-danger ms-1" *ngIf="validate('number1')">Phone Number is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Phone Number 2*</label>
+                <div>
+                  <input type="text" formControlName="number2" (keypress)="keyPressNumbers($event)"
+                    class="form-control rounded-2 bulk-input" maxlength="10" required />
+                  <small class="text-danger ms-1" *ngIf="validate('number2')">Phone Number is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Quantity</label>
+                <div>
+                  <input type="text" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
+                    class="form-control rounded-2 bulk-input" />
+                  <small class="text-danger ms-1" *ngIf="validate('quantity')">Quantity is empty</small>
+                </div>
+              </div>
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Your Message</label>
+                <div>
+                  <textarea type="text" formControlName="messages" class="form-control rounded-2 bulk-text"
+                    rows="9"></textarea>
+                  <small class="text-danger ms-1" *ngIf="validate('messages')">Message is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-danger mt-3 px-5 rounded-0">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

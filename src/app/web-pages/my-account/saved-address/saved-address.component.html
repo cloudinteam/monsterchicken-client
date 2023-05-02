@@ -12,10 +12,7 @@
 <div class="row justify-content-center" *ngIf="!loading && !edit">
   <div class="col-12 col-md-10">
     <div class="address-card" *ngFor="let address of address">
-      <div class="form-check" >
-        <input class="form-check-input" type="radio" name="selectAddress" [id]="address.id" (change)="onSelect($event)"
-          [(ngModel)]="selectedId" [value]="address.id" />
-      </div>
+
       <!-- <label [for]="address.id" style="width: 100%;"> -->
         <address-card (editAddress)="addressEdit(address)" (removeAddress)="deleteAddress($event)" [address]="address" style="width: 100%;"></address-card>
       <!-- </label> -->
@@ -26,12 +23,6 @@
 <div class="row justify-content-center" *ngIf="!loading && edit">
   <div class="col-12 col-md-10">
     <change-address  [address]="selectedAddress" (backToList)="edit = false; getAddress();"></change-address>
-  </div>
-</div>
-
-<div class="row justify-content-center" *ngIf="!loading && this.selectedId != ''">
-  <div class="col-12 col-md-10">
-    <button type="button" (click)="goToSummary()" class="btn btn-danger rounded-0"> Proceed to Shipment </button>
   </div>
 </div>
 
