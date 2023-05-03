@@ -51,6 +51,7 @@ export class OrderSummaryComponent implements OnInit {
     this.cartService.cartCount.subscribe(() => {
       this.init();
     })
+    this.cdRef.markForCheck();
   }
 
   init() {

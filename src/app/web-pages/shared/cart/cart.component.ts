@@ -56,7 +56,7 @@ export class CartComponent implements OnInit {
     //if (this.authService.isLoggedIn() && localStorage.getItem('accessToken') != '') {
     if (this.authService.isLoggedIn() && this.cart != null) {
       let ids: any = localStorage.getItem('cartIds');
-       let cartIds = JSON.parse(ids)
+      let cartIds = JSON.parse(ids)
       // this.cartService.cartCheckout({cartId: cartIds, addressId: 1}).subscribe((r: any) => {
       //   console.log(r);
       // })

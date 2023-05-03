@@ -53,7 +53,7 @@ export class BullkOrderFormComponent implements OnInit {
       state: [null, [Validators.required]],
       city: [null, [Validators.required]],
       pinCode: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(6),] ],
-      institutionName: ['', [Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
+      institutionName: [''],
       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
       email: ['', [Validators.required, Validators.email]],
       number1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)] ],
@@ -178,7 +178,9 @@ export class BullkOrderFormComponent implements OnInit {
     this.productService.bulkOrderSubmit(obj.bulkOrderDetails).subscribe((r) => {
       if (r.status) {
         this.alert.fireToastS(r.message[0]);
+        this.submitted = false;
         this.bulkOrderForm.reset();
+        this.ngOnInit();
       } else this.alert.fireToastF(r.message[0]);
     });
   }

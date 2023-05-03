@@ -6,12 +6,14 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { SharedModule } from '../shared/shared.module';
 import { FlexModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaymentComponent } from './payment/payment.component';
 
 
 
 @NgModule({
   declarations: [
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    PaymentComponent
   ],
   imports: [
     CommonModule,

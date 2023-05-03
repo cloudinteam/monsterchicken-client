@@ -1,6 +1,6 @@
-<!-- <pre *ngIf="!loading">
+<pre *ngIf="!loading">
   {{ data | json }}
-</pre> -->
+</pre>
 
 <!-- <pre *ngIf="!loading">
   Cart IDs
@@ -141,9 +141,11 @@
     </div>
   </div>
 
-  <div class="col-12">
-    <button type="button" class="btn btn-danger rounded-0 me-2"> Proceet to checkout </button>
-    <span class="text-secondary fw-semibold clickable" [routerLink]="'/checkout/address'"> Change Address </span>
+  <div class="col-12 text-end">
+
+    <span class="text-secondary fw-semibold clickable me-2" [routerLink]="'/checkout/address'"> Change Address </span>
+    <button type="button" class="btn btn-danger rounded-0"> Proceet to checkout </button>
+
   </div>
 
 </div>

@@ -33,9 +33,10 @@ export class CommonService {
   getHash() {
     let now = new Date();
     let encString =
-      this.deviceService.getDeviceInfo().userAgent +
-      now.getTime().toString() +
-      Math.random();
+      this.deviceService.getDeviceInfo().userAgent;
+    // +
+    //   now.getTime().toString() +
+    //   Math.random();
     this.encMd5(encString);
   }
 

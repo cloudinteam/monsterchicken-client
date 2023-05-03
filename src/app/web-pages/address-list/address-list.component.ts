@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AddressService } from 'src/app/services/address.service';
@@ -7,7 +7,8 @@ import { AlertService } from 'src/app/services/alert.service';
 @Component({
   selector: 'address-list',
   templateUrl: './address-list.component.html',
-  styleUrls: ['./address-list.component.scss']
+  styleUrls: ['./address-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressListComponent implements OnInit {
 
@@ -25,6 +26,7 @@ export class AddressListComponent implements OnInit {
     private alert: AlertService,
     private activeMenu: ActiveMenuService,
     private router: Router,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class AddressListComponent implements OnInit {
         }
       })
       this.loading = false;
+      this.cdRef.markForCheck();
     })
   }
 
@@ -54,6 +57,7 @@ export class AddressListComponent implements OnInit {
   addressEdit(address: any) {
     this.selectedAddress = address;
     this.edit = true
+    this.cdRef.markForCheck();
   }
 
   onSelect($event: any) {
@@ -86,6 +90,7 @@ export class AddressListComponent implements OnInit {
 
   goToSummary() {
     this.activeMenu.addressSuccess.next(true);
+    this.cdRef.markForCheck();
     this.router.navigate(['/checkout/summary'])
   }
 
