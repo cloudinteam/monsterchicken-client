@@ -131,7 +131,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         icon: 'pi pi-shopping-bag',
         command: () => {
           this.activeMenu.checkoutMenu.next('order-history');
-          this.router.navigate(['/account/orders']);
+          this.router.navigate(['/account/order-history']);
         }
       },
       {

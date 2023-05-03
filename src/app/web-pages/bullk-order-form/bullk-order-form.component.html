@@ -10,35 +10,33 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <pre>
                   {{ bulkOrderForm.value | json }}
                 </pre>
-              </div>
+              </div> -->
               <div class="col-12">
                 <div class="text-end">
                   <button type="button" class="btn btn-danger px-3" (click)="add()">Add product</button>
                 </div>
               </div>
               <div class="col-12 my-2" formArrayName="productData">
-                <div class="row g-2 mb-3" *ngFor="let productForm of productFormArray.controls; let productDataFormGroupIndex = index"
+                <div class="row g-2 mb-3" *ngFor="let productForm of productFormArray.controls; index as productDataFormGroupIndex"
                   [formGroupName]="productDataFormGroupIndex">
                   <div class="col-12 col-md-7">
                     <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
-                    <p-dropdown [options]="productOptions" optionValue="id" optionLabel="name" [required]="true" formControlName="id" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Product"></p-dropdown>
-                    <!-- <pre> {{ productForm.controls.id.errors | json}} </pre>
-                    <div *ngIf="submitted && productForm.controls.id.errors" class="invalid-feedback">
-                      <span *ngIf="productForm.controls.id.errors.required">Product is required.</span>
-                    </div> -->
+                    <p-dropdown [options]="productOptions" optionValue="id" optionLabel="name" [required]="true" formControlName="product" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Product"></p-dropdown>
+                    <div>
+                      <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'product')">Product is required.</small>
+                    </div>
                   </div>
                   <div class="col-12 col-md-4">
                     <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Quantity*</label> -->
-                    <input type="text" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
+                    <input type="number" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
                       class="form-control rounded-2 bulk-input" placeholder="Quantity" [required]="true"/>
-                      <!-- <pre> {{ productDataFormGroup.value.quantity }} </pre> -->
-                    <div *ngIf="submitted && productForm.value.quantity == ''||null" class="invalid-feedback">
-                      <span *ngIf="productForm.value.quantity == ''||null">Quantity is required.</span>
-                    </div>
+                      <div>
+                        <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'quantity')">Quantity is required.</small>
+                      </div>
                   </div>
                   <div class="col-12 col-md-1 text-end">
                     <button type="button" class="btn btn-danger px-3" (click)="delete(productDataFormGroupIndex)"> <i class="fa-regular fa-circle-xmark"></i> </button>
@@ -57,11 +55,8 @@
                       {{ b.name }}
                     </option>
                   </select>
-                  <div *ngIf="submitted && form['bulkOrder'].errors" class="invalid-feedback">
-                    <span *ngIf="form['bulkOrder'].errors.required">Category is required.</span>
-                  </div>
                   <div>
-                    <small class="text-danger ms-1" *ngIf="validate('bulkOrder')">value is empty</small>
+                    <small class="text-danger ms-1" *ngIf="submitted && validate('bulkOrder')">Category is required.</small>
                   </div>
                 </div>
               </div>
@@ -76,7 +71,7 @@
                     </option>
                   </select>
                   <div>
-                    <small class="text-danger ms-1" *ngIf="validate('country')">value is empty</small>
+                    <small class="text-danger ms-1" *ngIf="submitted && validate('country')">value is empty</small>
                   </div>
                 </div>
               </div>
@@ -92,7 +87,7 @@
                     </option>
                   </select>
                   <div>
-                    <small class="text-danger ms-1" *ngIf="validate('state')">value is empty</small>
+                    <small class="text-danger ms-1" *ngIf="submitted && validate('state')">value is empty</small>
                   </div>
                 </div>
               </div>
@@ -107,7 +102,7 @@
                     </option>
                   </select>
                   <div>
-                    <small class="text-danger ms-1" *ngIf="validate('city')">value is empty</small>
+                    <small class="text-danger ms-1" *ngIf="submitted && validate('city')">value is empty</small>
                   </div>
                 </div>
               </div>
@@ -117,7 +112,7 @@
                 <div>
                   <input type="text" formControlName="pinCode" (keypress)="keyPressNumbers($event)"
                     class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="validate('pinCode')">Pincode is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('pinCode')">Pincode is Invalid</small>
                 </div>
               </div>
 
@@ -126,7 +121,7 @@
                 <div>
                   <input type="text" formControlName="institutionName" class="form-control rounded-2 bulk-input"
                     required />
-                  <small class="text-danger ms-1" *ngIf="validate('institutionName')">Institution Name is
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('institutionName')">Institution Name is
                     Invalid</small>
                 </div>
               </div>
@@ -135,7 +130,7 @@
                 <label class="fw-bold red-heading fs-6">Name*</label>
                 <div>
                   <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="validate('name')">Name is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('name')">Name is Invalid</small>
                 </div>
               </div>
 
@@ -143,7 +138,7 @@
                 <label class="fw-bold red-heading fs-6">Email Id*</label>
                 <div>
                   <input type="text" formControlName="email" class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="validate('email')">Email Id is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('email')">Email Id is Invalid</small>
                 </div>
               </div>
 
@@ -152,7 +147,7 @@
                 <div>
                   <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="9"
                     required></textarea>
-                  <small class="text-danger ms-1" *ngIf="validate('address')">Address is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('address')">Address is Invalid</small>
                 </div>
               </div>
 
@@ -161,7 +156,7 @@
                 <div>
                   <input type="text" formControlName="number1" (keypress)="keyPressNumbers($event)" maxlength="10"
                     class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="validate('number1')">Phone Number is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('number1')">Phone Number is Invalid</small>
                 </div>
               </div>
 
@@ -170,7 +165,7 @@
                 <div>
                   <input type="text" formControlName="number2" (keypress)="keyPressNumbers($event)"
                     class="form-control rounded-2 bulk-input" maxlength="10" required />
-                  <small class="text-danger ms-1" *ngIf="validate('number2')">Phone Number is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('number2')">Phone Number is Invalid</small>
                 </div>
               </div>
 
@@ -179,7 +174,7 @@
                 <div>
                   <input type="text" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
                     class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="validate('quantity')">Quantity is empty</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('quantity')">Quantity is empty</small>
                 </div>
               </div>
 
@@ -188,7 +183,7 @@
                 <div>
                   <textarea type="text" formControlName="messages" class="form-control rounded-2 bulk-text"
                     rows="9"></textarea>
-                  <small class="text-danger ms-1" *ngIf="validate('messages')">Message is Invalid</small>
+                  <small class="text-danger ms-1" *ngIf="submitted && validate('messages')">Message is Invalid</small>
                 </div>
               </div>
 

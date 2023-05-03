@@ -70,7 +70,7 @@ export class BullkOrderFormComponent implements OnInit {
   //   return <FormArray>this.bulkOrderForm.get("productData") as FormArray<any>;
   // }
 
-  get productFormArray() {
+  get productFormArray(): FormArray {
     return this.bulkOrderForm.get("productData") as FormArray;
   }
 
@@ -80,7 +80,7 @@ export class BullkOrderFormComponent implements OnInit {
 
   get productDataFormGroup(): FormGroup {
     return this.formBuilder.group({
-      id: [null, [Validators.required]],
+      product: [null, [Validators.required]],
       quantity: [null, [Validators.required]]
     });
   }
@@ -152,6 +152,17 @@ export class BullkOrderFormComponent implements OnInit {
     return false;
   }
 
+  validateProduct(productForm: any, field: any) {
+
+    if (
+      productForm.value[field] === null
+    ) {
+      return true;
+    }
+    return false
+
+  }
+
   bulkOrderSubmit() {
     this.submitted = true;
     if (this.bulkOrderForm.invalid) {
@@ -190,6 +201,7 @@ export class BullkOrderFormComponent implements OnInit {
     this.productService.getProductOptions(data).subscribe((r: any) => {
       this.productOptions = [];
       this.productOptions = r.response.products;
+      console.log(r)
       this.totalProductOptions = r.response.totalProducts;
       // this.role = r.role;
       // if(!this.edit) {
