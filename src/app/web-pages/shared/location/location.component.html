@@ -14,18 +14,19 @@
       <!-- #searchInput="ngx-places" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
     </div>
   </div>
-  <div class="col-12 text-end">
-    <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
+  <div class="col-12 text-end mb-3">
+    <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark me-1"><i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
+    <button type="button" *ngIf="confirmAddress" (click)="showAddress.emit()" class="btn btn-sm btn-outline-danger"> Confirm Location</button>
   </div>
 </div>
 
 <!-- <div *ngIf="apiLoaded | async"> -->
-<!-- <google-map height="450px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
+<google-map height="450px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
   (mapMousemove)="move($event)">
   <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
     [options]="markerOptions"></map-marker>
 </google-map>
-<div>Latitude: {{display?.lat}}</div>
+<!-- <div>Latitude: {{display?.lat}}</div>
 <div>Longitude: {{display?.lng}}</div>
 <pre>
   {{ geoResult | json }}

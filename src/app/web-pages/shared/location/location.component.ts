@@ -55,6 +55,7 @@ export class LocationComponent implements OnInit {
   city!: string;
 
   errorAlert = false;
+  confirmAddress = false;
 
 AddressChange(address: any) {
   //setting address from API to local variable
@@ -77,7 +78,14 @@ AddressChange(address: any) {
   ngAfterViewInit() {
     // this.handlePermission();
 
-    // this.geoCode();
+    if (localStorage.getItem('current_address') != null) {
+      let address: any = localStorage.getItem('current_address');
+      let currentAddress = JSON.parse(address);
+      // console.log(currentAddress);
+      this.geoCode('address', currentAddress.address);
+    }
+
+
   }
 
   searchFn() {
@@ -136,6 +144,7 @@ AddressChange(address: any) {
     }
 
     this.geocoder.geocode(data).subscribe(({ results }) => {
+      // console.log(results);
       this.geoResult = results[0];
       this.searchString = results[0].formatted_address;
       let currentAddress = { address: '', district: '', show: false };
@@ -160,6 +169,7 @@ AddressChange(address: any) {
         lat: results[0].geometry.location.lat(),
         lng: results[0].geometry.location.lng(),
       }
+      // console.log(this.mapMarker);
       // console.log(this.postCode);
       if (this.postCode) {
         this.mapService.locationCheck({ cityId: this.city }).subscribe( (r: any) => {
@@ -167,7 +177,8 @@ AddressChange(address: any) {
           if (r.serviceProvider) {
             this.errorAlert = false;
             this.alert.fireToastS(r.message[0])
-            this.showAddress.emit()
+            // this.showAddress.emit()
+            this.confirmAddress = true;
           }
           if (!r.serviceProvider) {
             this.errorAlert = true;
@@ -254,5 +265,9 @@ AddressChange(address: any) {
         console.log(result.state);
       });
     });
+  }
+
+  confirmLocation() {
+    this.showAddress.emit();
   }
 }

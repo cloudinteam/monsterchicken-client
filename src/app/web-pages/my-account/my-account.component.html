@@ -7,9 +7,9 @@
     <div class="col-12 col-md-3">
 
       <ul class="list-group">
-        <li class="list-group-item" (click)="goToProfile()" [ngClass]="this.active == 'profile' ? 'active' : ''">My Profile</li>
-        <li class="list-group-item" (click)="goToAdress()"  [ngClass]="this.active == 'saved-address' ? 'active' : ''">Saved Address</li>
-        <li class="list-group-item" (click)="goToOrders()"  [ngClass]="this.active == 'order-history' ? 'active' : ''">Order History</li>
+        <li class="list-group-item list-group-item-action" (click)="goToProfile()" [ngClass]="this.active == 'profile' ? 'active' : ''">My Profile</li>
+        <li class="list-group-item list-group-item-action" (click)="goToAdress()"  [ngClass]="this.active == 'saved-address' ? 'active' : ''">Saved Address</li>
+        <li class="list-group-item list-group-item-action" (click)="goToOrders()"  [ngClass]="this.active == 'order-history' ? 'active' : ''">Order History</li>
       </ul>
 
     </div>
