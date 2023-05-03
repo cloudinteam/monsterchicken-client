@@ -122,7 +122,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         label: 'Profile',
         icon: 'pi pi-user-edit',
         command: () => {
-          this.activeMenu.checkoutMenu.next('profile');
+          // this.activeMenu.checkoutMenu.next('profile');
           this.router.navigate(['/account/profile']);
         }
       },
@@ -130,8 +130,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         label: 'My Orders',
         icon: 'pi pi-shopping-bag',
         command: () => {
-          this.activeMenu.checkoutMenu.next('order-history');
+          // this.activeMenu.checkoutMenu.next('order-history');
           this.router.navigate(['/account/order-history']);
+        }
+      },
+      {
+        label: 'Saved Address',
+        icon: 'pi pi-home',
+        command: () => {
+          this.router.navigate(['/account/saved-address']);
         }
       },
       {

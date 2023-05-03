@@ -9,17 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   loading = false;
-  bannners = [
-    {
-      imgUrl: 'assets/images/banner/banner-1.jpg'
-    },
-    {
-      imgUrl: 'assets/images/banner/banner-2.jpg'
-    },
-    {
-      imgUrl: 'assets/images/banner/banner-3.jpg'
-    }
-  ]
+  banners = [];
 
   constructor(
     private productService: ProductService,
@@ -30,9 +20,10 @@ export class HomeComponent implements OnInit {
   }
 
   loadData() {
-    // this.productService.getBanners({}).subscribe((r: any) => {
-    //   console.log(r);
-    // })
+    this.productService.getBanners({}).subscribe((r: any) => {
+      // console.log(r);
+      this.banners = r.response.banners;
+    })
   }
 
 }

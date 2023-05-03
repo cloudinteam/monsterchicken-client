@@ -86,7 +86,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
   static getBanners(): string {
-    return this.server_url() + this.server_v() + '/brand/list';
+    return this.server_url() + this.server_v() + '/banner/list';
   }
   static getProductOptions(): string {
     return this.server_url() + this.server_v() + '/product/get-product';
@@ -95,6 +95,9 @@ export class NetworkService {
   //Order History
   static getOrderHistory(): string {
     return this.server_url() + this.server_v() + '/order-history';
+  }
+  static getOrderInvoice(id: string): string {
+    return this.server_url() + '/api/admin/order/'+ id +'/generate-pdf';
   }
 
   //cart
@@ -109,6 +112,9 @@ export class NetworkService {
   }
   static getCart(): string {
     return this.server_url() + this.server_v() + '/cart/list';
+  }
+  static cartCheckout(): string {
+    return this.server_url() + this.server_v() + '/cart/checkout';
   }
 
   //Checkout

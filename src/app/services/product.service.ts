@@ -55,5 +55,10 @@ export class ProductService {
     return this.api.getApiCallAuth(NetworkService.getOrderHistory());
   }
 
+  getOrderInvoice(id: string): string {
+    // return this.api.getApiCallAuth(NetworkService.getOrderInvoice(id));
+    return NetworkService.getOrderInvoice(id)
+  }
+
 
 }

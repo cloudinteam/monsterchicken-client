@@ -5,12 +5,12 @@
   <div class="row justify-content-center">
 
     <div class="col-12 col-md-11">
-      <p-carousel [value]="bannners" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="false">
+      <p-carousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="false">
         <ng-template let-banner pTemplate="item">
           <div class="banner-item">
             <div class="banner-item-content">
               <div class="mb-3">
-                <img [src]="banner.imgUrl" class="banner-image" />
+                <img [src]="banner.image[0].previewUrl" class="banner-image" />
               </div>
             </div>
           </div>

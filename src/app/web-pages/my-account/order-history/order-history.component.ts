@@ -9,24 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class OrderHistoryComponent implements OnInit {
 
   loading = false;
-  orders: any[] = [
-    {
-        order_id: "yVEeJhDttf2vE7Z4p8RhSw==",
-        order_number: "MCO1",
-        total_price: 64,
-        created_at: "2023-04-20T12:49:12.000000Z",
-        status: "Packing for Delivery",
-        status_code: 2
-    },
-    {
-        order_id: "LzBk_IDmI5f6yuhu5S1LUw==",
-        order_number: "MCO2",
-        total_price: 500,
-        created_at: "2023-04-20T12:49:30.000000Z",
-        status: "Packing for Delivery",
-        status_code: 2
-    }
-];
+  orders: any[] = [];
 
   constructor(
     private productService: ProductService
@@ -40,13 +23,19 @@ export class OrderHistoryComponent implements OnInit {
     this.loading = true;
 
     this.productService.getOrderHistory().subscribe((r: any) => {
-      console.log(r);
+      console.log(r.response);
+      this.orders = r.response
       this.loading = false;
     })
   }
 
-  viewOrder(id: string) {
-    console.log(id);
+  viewInvoice(id: string) {
+    // /order/{ orderId } /generate-pdf
+
+    this.productService.getOrderInvoice(id)
+    window.open(this.productService.getOrderInvoice(id), '_blank')
+    // console.log(this.productService.getOrderInvoice(id))
+
   }
 
 }

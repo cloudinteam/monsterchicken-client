@@ -9,8 +9,7 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 @Component({
   selector: 'order-summary',
   templateUrl: './order-summary.component.html',
-  styleUrls: ['./order-summary.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./order-summary.component.scss']
 })
 export class OrderSummaryComponent implements OnInit {
 
@@ -24,10 +23,13 @@ export class OrderSummaryComponent implements OnInit {
   shippingAddress: any;
   totalCount: number = 0;
   totalCartPrice: number = 0;
+  discountPrice: number = 0;
   deliveryCharge: number = 0;
   grandTotal: number = 0;
 
+
   couponForm!: FormGroup;
+  promoCode: string = '';
 
   constructor(
     private cartService: CartService,
@@ -40,7 +42,8 @@ export class OrderSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadCart();
+    // this.loadCart();
+    this.loadSummary();
     this.initCouponForm();
     this.activeMenu.checkoutMenu.next('summary');
     this.activeMenu.addressSuccess.next(true);
@@ -51,13 +54,13 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   init() {
-    this.loadCart();
+    // this.loadCart();
     this.initCouponForm();
   }
 
   initCouponForm() {
     this.couponForm = this.formBuilder.group({
-      couponCode: ['', [Validators.required]],
+      promoCode: ['', [Validators.required]],
       userId: [localStorage.getItem('userId'), [Validators.required]],
     })
   }
@@ -65,29 +68,44 @@ export class OrderSummaryComponent implements OnInit {
     return this.couponForm['controls'];
   }
 
-  loadCart() {
-    this.loading = true;
-    this.cartService.getCart({}).subscribe((r: any) => {
-      this.cart = r.response.cart;
-      let cartId: any[] = [];
-      this.cart.forEach( (item: any) => {
-        this.cartIds.push(item.cartId);
-        cartId.push(item.cartId)
-        this.cdRef.markForCheck();
-      });
-      if (this.cartIds.length = 0) {
-        this.alert.fireToastF('Cart Empty!');
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 100);
-      }
-      this.loadSummary(cartId)
-    });
-  }
+  // loadCart() {
+  //   this.loading = true;
+  //   this.cartService.getCart({}).subscribe((r: any) => {
+  //     this.cart = r.response.cart;
+  //     let cartId: any[] = [];
+  //     this.cart.forEach( (item: any) => {
+  //       // this.cartIds.push(item.cartId);
+  //       cartId.push(item.cartId)
+  //       this.cdRef.markForCheck();
+  //     })
+  //     // console.log(cartId);
+  //     this.cartIds = cartId;
+  //     if (this.cartIds.length = 0) {
+  //       this.alert.fireToastF('Cart Empty!');
+  //       setTimeout(() => {
+  //         this.router.navigate(['/']);
+  //       }, 100);
+  //     }
+  //     this.loadSummary();
+  //   });
+  // }
 
-  loadSummary(ids: any = []) {
+  loadSummary() {
+    // console.log(this.cartIds);
+
+    let id: any = localStorage.getItem('cartIds');
+    let cartIds = JSON.parse(id)
+
     this.loading = true;
-    this.checkoutService.getCheckout({ cartId: ids }).subscribe((r: any) => {
+    let data = {
+      cartId: cartIds
+    }
+    console.log(data);
+    // let data = {
+    //   cartId: ids,
+    //   promoCode: this.couponForm.value.promoCode
+    // }
+    this.checkoutService.getCheckout(data).subscribe((r: any) => {
       this.data = r;
       this.shippingAddress = r.response.isAddressAvailable;
       this.orderSummary = r.response.checkOutData;
@@ -101,11 +119,52 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   applyCoupon() {
-    if (this.couponForm.invalid) {
-      this.submitted = true;
+    // console.log(this.couponForm.value);
+    console.log(this.promoCode)
+    // if (this.couponForm.invalid) {
+    //   this.submitted = true;
+    // }
+
+    this.submitted = true;
+
+    if (this.promoCode !== '') {
+      let id: any = localStorage.getItem('cartIds');
+      let cartIds = JSON.parse(id)
+      let data = {
+        cartId: cartIds,
+        promoCode: this.promoCode
+      }
+      console.log(data);
+      this.loading = true;
+      this.checkoutService.getCheckout(data).subscribe((r: any) => {
+        this.data = r;
+        this.shippingAddress = r.response.isAddressAvailable;
+        this.orderSummary = r.response.checkOutData;
+        this.totalCount = r.response.totalCount;
+        this.totalCartPrice = r.response.totalCartPrice;
+        this.discountPrice = r.response.discountPrice;
+        this.deliveryCharge = r.response.deliveryCharge;
+        this.grandTotal = r.response.grandTotal;
+        this.loading = false;
+        this.cdRef.markForCheck();
+      })
+    } else {
+      this.alert.fireToastF('Invalid Promocode')
     }
 
+  }
 
+  validate(field: any) {
+    if (
+      ((this.couponForm.controls[field].invalid) ||
+        (this.couponForm.controls[field].invalid &&
+          (this.couponForm.controls[field].dirty ||
+            this.couponForm.controls[field].touched))) &&
+      this.couponForm.controls[field].errors
+    ) {
+      return true;
+    }
+    return false;
   }
 
 }

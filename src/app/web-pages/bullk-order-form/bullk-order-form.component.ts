@@ -53,7 +53,7 @@ export class BullkOrderFormComponent implements OnInit {
       state: [null, [Validators.required]],
       city: [null, [Validators.required]],
       pinCode: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(6),] ],
-      institutionName: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
+      institutionName: ['', [Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
       email: ['', [Validators.required, Validators.email]],
       number1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)] ],
@@ -80,7 +80,7 @@ export class BullkOrderFormComponent implements OnInit {
 
   get productDataFormGroup(): FormGroup {
     return this.formBuilder.group({
-      product: [null, [Validators.required]],
+      id: [null, [Validators.required]],
       quantity: [null, [Validators.required]]
     });
   }

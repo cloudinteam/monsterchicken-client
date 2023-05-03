@@ -2,6 +2,11 @@
   {{ data | json }}
 </pre> -->
 
+<!-- <pre *ngIf="!loading">
+  Cart IDs
+  {{ this.cartIds | json }}
+</pre> -->
+
 <page-loader [loading]="loading"></page-loader>
 
 <div class="row g-3" *ngIf="!loading">
@@ -9,22 +14,24 @@
   <div class="col-12">
     <div class="items-bill">
       <div class="bill-heading mb-3"> Do you have a coupon ? </div>
-      <form [formGroup]="couponForm" (submit)="applyCoupon()">
+      <form>
         <div class="row g-2">
           <div class="col-12 col-sm-6 col-md-4">
-            <div class="form-group">
-              <input type="text" required="" name="couponCode" formControlName="couponCode" placeholder="Enter Coupon Code"
+            <div class="form-group"> <!--  (submit)="applyCoupon()" [formGroup]="couponForm"  formControlName="promoCode" [(ngModel)]="promoCode" -->
+              <input type="text" name="promoCode" [(ngModel)]="promoCode" placeholder="Enter Coupon Code"
                 class="form-control rounded-0" />
-              <div *ngIf="submitted && couponFormControls.couponCode.errors" class="invalid-error">
-                <span *ngIf="couponFormControls.couponCode.errors.required">Coupon Code is Required</span>
+              <!-- <div *ngIf="submitted && couponFormControls.promoCode.errors" class="invalid-error">
+                <span *ngIf="couponFormControls.promoCode.errors.required">Coupon Code is Required</span>
+              </div> -->
+              <div *ngIf="submitted && promoCode == null||''" class="invalid-error">
+                <span *ngIf="promoCode == null||''">Coupon Code is Required</span>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-2">
-            <button type="submit" class="btn btn-danger w-100 rounded-0"> Apply </button>
+            <button type="button" (click)="applyCoupon()" class="btn btn-danger w-100 rounded-0"> Apply </button>
           </div>
         </div>
-
       </form>
     </div>
   </div>
@@ -109,6 +116,11 @@
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <span class="items-title"> Subtotal </span>
           <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="discountPrice !== 0">
+          <span class="items-title"> Discount Price </span>
+          <span class="items-price"> {{discountPrice | currency:'₹'}} </span>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="space-between center">

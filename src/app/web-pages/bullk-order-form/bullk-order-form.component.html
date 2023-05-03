@@ -25,9 +25,9 @@
                   [formGroupName]="productDataFormGroupIndex">
                   <div class="col-12 col-md-7">
                     <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
-                    <p-dropdown [options]="productOptions" optionValue="id" optionLabel="name" [required]="true" formControlName="product" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Product"></p-dropdown>
+                    <p-dropdown [options]="productOptions" optionValue="id" optionLabel="name" [required]="true" formControlName="id" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Product"></p-dropdown>
                     <div>
-                      <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'product')">Product is required.</small>
+                      <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'id')">Product is required.</small>
                     </div>
                   </div>
                   <div class="col-12 col-md-4">
@@ -117,7 +117,7 @@
               </div>
 
               <div class="col-sm-6 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Institution Name*</label>
+                <label class="fw-bold red-heading fs-6">Institution Name</label>
                 <div>
                   <input type="text" formControlName="institutionName" class="form-control rounded-2 bulk-input"
                     required />
@@ -169,14 +169,14 @@
                 </div>
               </div>
 
-              <div class="col-12 my-2">
+              <!-- <div class="col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Quantity</label>
                 <div>
                   <input type="text" formControlName="quantity" (keypress)="keyPressNumbers($event)" maxlength="10"
                     class="form-control rounded-2 bulk-input" />
                   <small class="text-danger ms-1" *ngIf="submitted && validate('quantity')">Quantity is empty</small>
                 </div>
-              </div>
+              </div> -->
 
               <div class="col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Your Message</label>
