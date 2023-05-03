@@ -45,4 +45,8 @@ export class OrderHistoryComponent implements OnInit {
     })
   }
 
+  viewOrder(id: string) {
+    console.log(id);
+  }
+
 }
