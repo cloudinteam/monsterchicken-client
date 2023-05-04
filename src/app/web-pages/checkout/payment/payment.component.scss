@@ -1,0 +1,48 @@
+.pay-opt {
+  padding-left: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.items-bill {
+  padding: 10px 16px 16px;
+  // margin: 20px 0 10px;
+  border: 1px dashed #9b9b9b;
+  background: #fff;
+  font-family: "Nunito Sans", sans-serif !important;
+
+  .bill-heading {
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 19px;
+    color: #000;
+  }
+
+  .items-title {
+    font-size: 13px;
+    color: #5c5c5c;
+    font-weight: 600;
+    line-height: 14px;
+  }
+  .items-price {
+    font-size: 13px;
+    color: #1f1f1f;
+    font-weight: 600;
+    line-height: 14px;
+  }
+
+  .items-grand-title {
+    font-size: 14px;
+    color: #000000;
+    font-weight: 700;
+    line-height: 14px;
+  }
+  .items-grand-total {
+    font-size: 14px;
+    color: #e4002b;
+    font-weight: 900;
+    line-height: 14px;
+  }
+}

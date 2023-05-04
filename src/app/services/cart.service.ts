@@ -29,9 +29,6 @@ export class CartService {
     return this.api.postApiCallAuth(NetworkService.addToCart(), body);
   }
 
-  cartCheckout(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.cartCheckout(), body);
-  }
 
   getCartCount() {
     return this.cartCount;

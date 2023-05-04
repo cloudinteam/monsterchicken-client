@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { CheckoutComponent } from './checkout.component';
 import { AddressListComponent } from '../address-list/address-list.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'address',
         component: AddressListComponent
+      },
+      {
+        path: 'payment/:orderId',
+        component: PaymentComponent
       }
     ],
   },

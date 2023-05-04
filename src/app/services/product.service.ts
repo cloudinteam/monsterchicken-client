@@ -60,5 +60,12 @@ export class ProductService {
     return NetworkService.getOrderInvoice(id)
   }
 
+  // getOrderDetail(id: string) {
+  //   return this.api.postApiCallAuth(NetworkService.getOrderDetail(id), {orderId: id});
+  // }
+
+  getOrderDetail(id: string) {
+    return this.api.getApiCallAuth(NetworkService.getOrderDetail(id));
+  }
 
 }

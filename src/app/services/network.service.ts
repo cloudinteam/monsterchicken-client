@@ -99,6 +99,10 @@ export class NetworkService {
   static getOrderInvoice(id: string): string {
     return this.server_url() + '/api/admin/order/'+ id +'/generate-pdf';
   }
+  static getOrderDetail(id: string): string {
+    return this.server_url() + this.server_v()+ '/order-history/' + id;
+  }
+
 
   //cart
   static addToCart(): string {
@@ -113,13 +117,17 @@ export class NetworkService {
   static getCart(): string {
     return this.server_url() + this.server_v() + '/cart/list';
   }
-  static cartCheckout(): string {
-    return this.server_url() + this.server_v() + '/cart/checkout';
-  }
+
 
   //Checkout
   static getCheckout(): string {
     return this.server_url() + this.server_v() + '/checkout/data';
+  }
+  static cartCheckout(): string {
+    return this.server_url() + this.server_v() + '/cart/checkout';
+  }
+  static payment(): string {
+    return this.server_url() + this.server_v() + '/payment';
   }
 
 

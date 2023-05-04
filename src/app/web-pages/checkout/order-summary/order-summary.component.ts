@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
@@ -9,7 +9,7 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 @Component({
   selector: 'order-summary',
   templateUrl: './order-summary.component.html',
-  styleUrls: ['./order-summary.component.scss']
+  styleUrls: ['./order-summary.component.scss'],
 })
 export class OrderSummaryComponent implements OnInit {
 
@@ -27,7 +27,6 @@ export class OrderSummaryComponent implements OnInit {
   deliveryCharge: number = 0;
   grandTotal: number = 0;
 
-
   couponForm!: FormGroup;
   promoCode: string = '';
 
@@ -42,6 +41,14 @@ export class OrderSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let id: any = localStorage.getItem('cartIds');
+    this.cartIds = JSON.parse(id);
+
+    if (this.cartIds == null) {
+      this.alert.fireToastF('Cart empty');
+      this.router.navigate(['/']);
+    }
+
     // this.loadCart();
     this.loadSummary();
     this.initCouponForm();
@@ -95,45 +102,52 @@ export class OrderSummaryComponent implements OnInit {
     // console.log(this.cartIds);
 
     let id: any = localStorage.getItem('cartIds');
-    let cartIds = JSON.parse(id)
+    var cartIds = JSON.parse(id);
+    console.log(this.cartIds.length);
+    if (this.cartIds.length == 0 || this.cartIds == null) {
+      this.alert.fireToastF('Cart empty');
+      this.router.navigate(['/']);
+    } else {
+      this.loading = true;
+      let data = {
+        cartId: this.cartIds
+      }
+      console.log(data);
+      // let data = {
+      //   cartId: ids,
+      //   promoCode: this.couponForm.value.promoCode
+      // }
+      this.checkoutService.getCheckout(data).subscribe( (r: any) => {
+        this.data = r;
+        this.shippingAddress = r.response.isAddressAvailable;
+        this.orderSummary = r.response.checkOutData;
+        this.totalCount = r.response.totalCount;
+        this.totalCartPrice = r.response.totalCartPrice;
+        this.deliveryCharge = r.response.deliveryCharge;
+        this.grandTotal = r.response.grandTotal;
+        this.loading = false;
+        this.cdRef.markForCheck();
+      })
+     }
 
-    this.loading = true;
-    let data = {
-      cartId: cartIds
-    }
-    console.log(data);
-    // let data = {
-    //   cartId: ids,
-    //   promoCode: this.couponForm.value.promoCode
-    // }
-    this.checkoutService.getCheckout(data).subscribe((r: any) => {
-      this.data = r;
-      this.shippingAddress = r.response.isAddressAvailable;
-      this.orderSummary = r.response.checkOutData;
-      this.totalCount = r.response.totalCount;
-      this.totalCartPrice = r.response.totalCartPrice;
-      this.deliveryCharge = r.response.deliveryCharge;
-      this.grandTotal = r.response.grandTotal;
-      this.loading = false;
-      this.cdRef.markForCheck();
-    })
+
   }
 
   applyCoupon() {
-    // console.log(this.couponForm.value);
-    console.log(this.promoCode)
-    // if (this.couponForm.invalid) {
-    //   this.submitted = true;
-    // }
-
+    console.log(this.couponForm.value.promoCode);
+    // console.log(this.promoCode)
     this.submitted = true;
+    if (this.couponForm.invalid) {
+      this.submitted = true;
+    }
 
-    if (this.promoCode !== '') {
+
+    if (this.couponForm.value.promoCode !== '') {
       let id: any = localStorage.getItem('cartIds');
       let cartIds = JSON.parse(id)
       let data = {
         cartId: cartIds,
-        promoCode: this.promoCode
+        promoCode: this.couponForm.value.promoCode
       }
       console.log(data);
       this.loading = true;
@@ -166,6 +180,26 @@ export class OrderSummaryComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  checkout() {
+    this.loading = true;
+    let id: any = localStorage.getItem('cartIds');
+    let cartIds = JSON.parse(id)
+    let data = {
+      cartId: cartIds,
+      addressId: this.shippingAddress.address.id,
+      userId: localStorage.getItem('userId')
+    }
+    this.checkoutService.cartCheckout(data).subscribe((r: any) => {
+
+      if (r.status) {
+        localStorage.removeItem('cartIds');
+        this.router.navigate(['/checkout/payment/' + r.response.orderId]);
+      }
+
+    })
+    this.loading = false;
   }
 
 }

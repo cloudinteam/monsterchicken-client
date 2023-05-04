@@ -32,11 +32,13 @@ export class AddressListComponent implements OnInit {
   ngOnInit(): void {
     this.getAddress();
     this.activeMenu.checkoutMenu.next('address');
+    this.activeMenu.addressSuccess.next(false);
+    this.activeMenu.summarySuccess.next(false);
   }
 
   getAddress() {
     this.loading = true;
-    this.addressService.listAddress({}).subscribe((r: any) => {
+    this.addressService.listAddress({ userId: localStorage.getItem('userId') }).subscribe((r: any) => {
       // console.log(r);
       this.address = r.response.addresses;
       this.address.forEach(address => {

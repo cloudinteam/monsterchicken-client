@@ -31,7 +31,7 @@ export class SavedAddressComponent implements OnInit {
 
   getAddress() {
     this.loading = true;
-    this.addressService.listAddress({}).subscribe((r: any) => {
+    this.addressService.listAddress({userId: localStorage.getItem('userId')}).subscribe((r: any) => {
       // console.log(r);
       this.address = r.response.addresses;
       this.address.forEach(address => {

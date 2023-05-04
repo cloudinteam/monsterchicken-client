@@ -16,4 +16,12 @@ export class CheckoutService {
     return this.api.postApiCallAuth(NetworkService.getCheckout(), body);
   }
 
+  cartCheckout(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.cartCheckout(), body);
+  }
+
+  payment(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.payment(), body);
+  }
+
 }

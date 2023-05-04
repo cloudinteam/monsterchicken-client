@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class OrderHistoryComponent implements OnInit {
   orders: any[] = [];
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +26,7 @@ export class OrderHistoryComponent implements OnInit {
 
     this.productService.getOrderHistory().subscribe((r: any) => {
       console.log(r.response);
-      this.orders = r.response
+      this.orders = r.response.orders;
       this.loading = false;
     })
   }
@@ -36,6 +38,10 @@ export class OrderHistoryComponent implements OnInit {
     window.open(this.productService.getOrderInvoice(id), '_blank')
     // console.log(this.productService.getOrderInvoice(id))
 
+  }
+
+  pay(id: string) {
+    this.router.navigate(['/checkout/payment/' + id]);
   }
 
 }

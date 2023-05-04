@@ -1,6 +1,6 @@
-<pre *ngIf="!loading">
+<!-- <pre *ngIf="!loading">
   {{ data | json }}
-</pre>
+</pre> -->
 
 <!-- <pre *ngIf="!loading">
   Cart IDs
@@ -14,22 +14,22 @@
   <div class="col-12">
     <div class="items-bill">
       <div class="bill-heading mb-3"> Do you have a coupon ? </div>
-      <form>
+      <form (ngSubmit)="applyCoupon()" [formGroup]="couponForm">
         <div class="row g-2">
           <div class="col-12 col-sm-6 col-md-4">
-            <div class="form-group"> <!--  (submit)="applyCoupon()" [formGroup]="couponForm"  formControlName="promoCode" [(ngModel)]="promoCode" -->
-              <input type="text" name="promoCode" [(ngModel)]="promoCode" placeholder="Enter Coupon Code"
+            <div class="form-group" > <!--  (submit)="applyCoupon()" [formGroup]="couponForm"  formControlName="promoCode" [(ngModel)]="promoCode" -->
+              <input type="text" name="promoCode" formControlName="promoCode" placeholder="Enter Coupon Code"
                 class="form-control rounded-0" />
-              <!-- <div *ngIf="submitted && couponFormControls.promoCode.errors" class="invalid-error">
-                <span *ngIf="couponFormControls.promoCode.errors.required">Coupon Code is Required</span>
-              </div> -->
+              <div *ngIf="submitted && couponFormControls['promoCode'].errors" class="invalid-error">
+                <span *ngIf="couponFormControls['promoCode'].errors.required">Coupon Code is Required</span>
+              </div>
               <div *ngIf="submitted && promoCode == null||''" class="invalid-error">
                 <span *ngIf="promoCode == null||''">Coupon Code is Required</span>
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-2">
-            <button type="button" (click)="applyCoupon()" class="btn btn-danger w-100 rounded-0"> Apply </button>
+          <div class="col-12 col-sm-6 col-md-2"> <!-- (click)="applyCoupon()" -->
+            <button type="submit"  class="btn btn-danger w-100 rounded-0"> Apply </button>
           </div>
         </div>
       </form>
@@ -144,7 +144,7 @@
   <div class="col-12 text-end">
 
     <span class="text-secondary fw-semibold clickable me-2" [routerLink]="'/checkout/address'"> Change Address </span>
-    <button type="button" class="btn btn-danger rounded-0"> Proceet to checkout </button>
+    <button type="button" class="btn btn-danger rounded-0" (click)="checkout()"> Proceet to checkout </button>
 
   </div>
 

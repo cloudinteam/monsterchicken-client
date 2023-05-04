@@ -1,1 +1,77 @@
-<p>payment works!</p>
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container p-4" *ngIf="!loading">
+
+  <div class="row g-3">
+
+    <div class="col-12">
+      <div class="items-bill" fxLayout="column" fxLayoutGap="20px" >
+        <div class="bill-heading"> Bill Details </div>
+
+        <div fxLayout="column" fxLayoutGap="10px">
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="items-title"> Subtotal </span>
+            <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="discountPrice !== 0">
+            <span class="items-title"> Discount Price </span>
+            <span class="items-price"> {{discountPrice | currency:'₹'}} </span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="items-title"> Delivery Charge </span>
+            <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
+          </div>
+
+          <div>
+            <hr class="m-0">
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="items-grand-title"> Total </span>
+            <span class="items-grand-total"> {{grandTotal | currency:'₹'}} </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+
+      <div class="items-bill" fxLayout="column" fxLayoutGap="20px">
+
+        <div class="bill-heading"> Payment Method </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cash_on_delivery" [(ngModel)]="paymentMethod">
+          <label class="form-check-label pay-opt" for="cod">
+            <i class="fa-solid fa-money-bill-1-wave mx-2"></i> Cash On Delivery
+          </label>
+        </div>
+
+        <div>
+          <hr class="m-0">
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="payment_method" id="online" value="online_pay" [(ngModel)]="paymentMethod">
+          <label class="form-check-label pay-opt" for="online">
+            <i class="fa-solid fa-wifi mx-2"></i> Online
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-12 text-end">
+
+      <button type="button" class="btn btn-danger rounded-0" (click)="payment()"> Proceet to pay </button>
+
+    </div>
+
+  </div>
+
+</div>
