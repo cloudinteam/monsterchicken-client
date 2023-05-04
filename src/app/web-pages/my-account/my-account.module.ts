@@ -8,6 +8,8 @@ import { SavedAddressComponent } from './saved-address/saved-address.component';
 import { WebPagesModule } from '../web-pages.module';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { TableModule } from 'primeng/table';
+import { FlexModule } from '@angular/flex-layout';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { TableModule } from 'primeng/table';
     MyAccountRoutingModule,
     SharedModule,
     WebPagesModule,
-    TableModule
+    TableModule,
+    FlexModule,
+    TooltipModule
   ]
 })
 export class MyAccountModule { }

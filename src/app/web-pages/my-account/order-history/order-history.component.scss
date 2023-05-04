@@ -39,6 +39,24 @@
 
     cursor: pointer;
 
+  .head {
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 15px;
+  }
+
+  .order-status {
+    border: 1px solid rgb(230, 47, 64);
+    background-color: rgb(255, 232, 234);
+    color: rgb(206, 36, 52);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 12px;
+    border-radius: 7px;
+    line-height: 0;
+  }
+
   .area {
     font-size: 18px;
     font-weight: 700;
@@ -54,11 +72,16 @@
     padding: 3px 10px;
     border-radius: 15px;
     background: #f7f7f7;
+    margin-bottom: 10px;
   }
 
   .actions {
     margin-top: 10px;
     border-top: 1px solid #b9b9b9;
     padding-top: 10px;
+  }
+
+  .order-sep {
+    border: 1px solid #b9b9b9;
   }
 }

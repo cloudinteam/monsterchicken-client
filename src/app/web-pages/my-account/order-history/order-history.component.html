@@ -2,33 +2,76 @@
 
 <div class="container py-4" *ngIf="!loading">
   <div class="row">
+
     <div class="col-12 text-center mb-4">
       <h4> <b>Orders History</b> </h4>
     </div>
     <div class="col-12" *ngIf="orders.length > 0">
       <p-table [value]="orders" >
         <ng-template pTemplate="header">
-            <tr>
+            <!-- <tr>
                 <th>SN</th>
                 <th>Order Number</th>
                 <th>Price</th>
                 <th>Status</th>
                 <th>Created</th>
                 <th></th>
-            </tr>
+            </tr> -->
         </ng-template>
         <ng-template pTemplate="body" let-order let-rowIndex="rowIndex">
-            <tr>
+          <div class="address-card">
+            <!-- <pre>
+              {{ order | json }}
+            </pre> -->
+            <div class="a-card">
+
+              <div class="head">
+                <div fxLayout="row" class="mb-1" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+                  <p class="area"> <span class="item-sn me-2">{{ rowIndex+1 }}</span> #{{ order.order_number }}  </p>
+                  <div> <span class="order-status"> {{ order.status }} </span> </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+                  <span class="text-secondary" style="font-size: 13px;"> {{ order.created_at }} </span>
+                  <span> {{ order.supplier_name }} </span>
+                </div>
+              </div>
+
+
+              <div fxLayout="row wrap" fxLayoutGap="10px">
+                <div class="street" *ngFor="let product of order.products"> <b class="me-1">{{ product.quantity }}x</b>  {{ product.product_name }} </div>
+              </div>
+
+              <div>
+                <hr class="order-sep mt-2">
+              </div>
+
+              <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+                <div>
+                  <span class="text-secondary">Total:</span> <b> {{ order.total_price }} </b>
+                </div>
+                <div fxLayoutGap="10px">
+                  <span class="badge rounded-pill text-bg-secondary clickable" pTooltip="Download Invoice" tooltipPosition="top" (click)="viewInvoice(order.order_id)">
+                    <i class="fa-solid fa-download"></i> Invoice </span>
+                  <span class="badge rounded-pill text-bg-danger clickable" pTooltip="Proceed to pay" tooltipPosition="top" (click)="pay(order.order_id)">
+                    <i class="fa-regular fa-credit-card"></i> Proceed to pay </span>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+            <!-- <tr>
                 <td>{{ rowIndex+1 }}</td>
                 <td> <b>#{{ order.order_number }}</b></td>
-                <td> <span class="badge rounded-pill text-bg-dark">{{ order.total_price | currency:'₹' }}</span> </td>
+                <td> <span class="badge rounded-pill text-bg-dark">{{ order.total_price }}</span> </td>
                 <td>{{ order.status }}</td>
-                <td>{{ order.created_at | date:'medium' }}</td>
+                <td>{{ order.created_at }}</td>
                 <td>
-                  <!-- <button type="button" class="btn btn-outline-dark rounded-pill py-0 px-2 me-1" (click)="viewOrder(order.order_id)"> <i class="fa-regular fa-eye"></i> </button> -->
                   <button type="button" class="btn btn-outline-dark rounded-pill py-0 px-2" (click)="viewInvoice(order.order_id)"> <i class="fa-solid fa-download"></i> </button>
+                  <button type="button" class="btn btn-outline-danger rounded-pill py-0 px-2" (click)="pay(order.order_id)"> <i class="fa-regular fa-credit-card"></i> </button>
                 </td>
-            </tr>
+            </tr> -->
         </ng-template>
       </p-table>
     </div>
