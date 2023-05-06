@@ -55,7 +55,9 @@ export class PaymentComponent implements OnInit {
   getOrderDetail(orderId: string) {
     this.productService.getOrderDetail(orderId).subscribe((r: any) => {
       console.log(r);
-      this.grandTotal = r.response.total_amount;
+      this.totalCartPrice = r.response.total_amount;
+      this.deliveryCharge = r.response.order.delivery_charge;
+      this.grandTotal = r.response.order.grand_total;
     })
   }
 

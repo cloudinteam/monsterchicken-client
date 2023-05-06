@@ -40,6 +40,21 @@ export class OrderHistoryComponent implements OnInit {
 
   }
 
+  paymentBtn(order: any) {
+    if (order.payment == null) {
+      return true
+    }
+    if (order.payment != null) {
+      if (order.payment.captured == 0 && order.payment.method == 'cash_on_delivery') {
+        return false;
+      }
+      if (order.payment.captured == 0 && order.payment.method == 'online_pay') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   pay(id: string) {
     this.router.navigate(['/checkout/payment/' + id]);
   }

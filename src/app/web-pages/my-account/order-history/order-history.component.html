@@ -50,9 +50,9 @@
                   <span class="text-secondary">Total:</span> <b> {{ order.total_price }} </b>
                 </div>
                 <div fxLayoutGap="10px">
-                  <span class="badge rounded-pill text-bg-secondary clickable" pTooltip="Download Invoice" tooltipPosition="top" (click)="viewInvoice(order.order_id)">
+                  <span class="badge rounded-pill text-bg-secondary clickable" (click)="viewInvoice(order.order_id)"> <!-- pTooltip="Download Invoice" tooltipPosition="top" -->
                     <i class="fa-solid fa-download"></i> Invoice </span>
-                  <span class="badge rounded-pill text-bg-danger clickable" pTooltip="Proceed to pay" tooltipPosition="top" (click)="pay(order.order_id)">
+                  <span class="badge rounded-pill text-bg-danger clickable" *ngIf="paymentBtn(order)" (click)="pay(order.order_id)"> <!-- pTooltip="Proceed to pay" tooltipPosition="top"  -->
                     <i class="fa-regular fa-credit-card"></i> Proceed to pay </span>
                 </div>
               </div>
