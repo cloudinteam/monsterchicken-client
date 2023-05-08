@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   btnOtp: boolean = true;
   otpSent = false;
 
+  userId = '';
+
   constructor(
     private fb: FormBuilder,
     private as: AuthService,
@@ -70,6 +72,8 @@ export class LoginComponent implements OnInit {
 
         this.otpSent = true;
         this.otpFormControl.userId.setValue(r.response.userId);
+
+        this.userId = r.response.userId;
 
         // localStorage.setItem('accessToken', r.response.accessToken);
         // localStorage.setItem('userId', r.response.userId);
@@ -136,6 +140,21 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  resendOtp() {
+    let data = {
+      userId: this.userId
+    }
+    console.log(data);
+    this.as.resendOTP(data).subscribe((r: any) => {
+      // console.log(r);
+
+      if (r.status) {
+        this.alert.fireToastS(r.message[0]);
+      }
+    })
+  }
+
 }
 
 

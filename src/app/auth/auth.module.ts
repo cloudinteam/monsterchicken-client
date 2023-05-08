@@ -5,6 +5,10 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+
+
 
 
 @NgModule({
@@ -16,7 +20,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    InputNumberModule
+    InputNumberModule,
+    InputTextModule,
+    KeyFilterModule
   ],
   exports: [
     LoginComponent

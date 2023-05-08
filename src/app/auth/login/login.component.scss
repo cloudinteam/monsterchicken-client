@@ -68,6 +68,27 @@
       }
     }
 
+    .p-inputtext {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+      font-size: 20px;
+      font-weight: 700;
+      font-family: "Nunito Sans", sans-serif !important;
+      color: #4d4d4d;
+      border-width: 0 0 1px 0;
+      padding: 7px 0;
+
+      &:enabled:focus {
+        box-shadow: 0 0 0;
+        border-color: #000;
+      }
+
+      &:enabled:hover {
+        border-color: #000;
+      }
+    }
+
     .btn-login {
       border-radius: 0;
       background-color: #000;

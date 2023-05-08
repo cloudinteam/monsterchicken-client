@@ -47,6 +47,9 @@ export class NetworkService {
   static verifyOtp(): string {
     return this.server_url() + this.server_v() + '/login/otp-verify';
   }
+  static resendOtp(): string {
+    return this.server_url() + this.server_v() + '/login/resend-otp';
+  }
   static Signup(): string {
     return this.server_url() + this.server_v() + '/register';
   }
@@ -58,9 +61,6 @@ export class NetworkService {
   }
   static SetPassword(): string {
     return this.server_url() + this.server_v() + '/update-password';
-  }
-  static resendOTP(): string {
-    return this.server_url() + this.server_v() + '/resend-otp';
   }
   static logout(): string {
     return this.server_url() + this.server_v() + '/login';
