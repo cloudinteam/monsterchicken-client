@@ -114,9 +114,9 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   editAddress() {
-    console.log(this.address);
+    // console.log(this.address);
     // this.editAddress = true;
-
+    this.loading = true;
     this.geoCode('address', this.address.area);
     this.addressForm.addControl('addressId', new FormControl(this.address.id, Validators.required));
 
@@ -133,6 +133,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       type: this.address.type,
       others: this.address.others,
     });
+    this.loading = false;
   }
 
   AddressChange(address: any) {
