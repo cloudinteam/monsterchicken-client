@@ -23,6 +23,10 @@ export class AuthService {
     return this.api.postApiCallAuth(NetworkService.verifyOtp(), body);
   }
 
+  resendOtp(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.resendOtp(), body);
+  }
+
   signup(body: any): any {
     return this.api.postApiCallAuth(NetworkService.Signup(), body);
   }
@@ -39,7 +43,7 @@ export class AuthService {
   }
 
   resendOTP(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.resendOTP(), body);
+    return this.api.postApiCallAuth(NetworkService.resendOtp(), body);
   }
 
   profile(body: any): any {

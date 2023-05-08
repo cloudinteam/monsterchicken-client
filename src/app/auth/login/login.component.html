@@ -69,18 +69,25 @@
         <!-- <pre> {{ otpForm.value | json }} </pre> -->
         <div class="mb-4">
           <span class="p-float-label">
-            <p-inputNumber mode="decimal" [useGrouping]="false" [maxlength]="6" formControlName="otp" (onInput)="validateOtp($event)" id="otp"></p-inputNumber>
+            <!-- <p-inputNumber mode="decimal" [useGrouping]="false" [maxlength]="6" formControlName="otp" (onInput)="validateOtp($event)" [format]="false" [allowEmpty]="true" id="otp"></p-inputNumber> -->
+            <input input pInputText pKeyFilter="int" [maxlength]="6" formControlName="otp" (onInput)="validateOtp($event)" id="otp">
             <label htmlFor="otp">Enter OTP</label>
           </span>
         </div>
 
         <div class="d-grid">
-          <button type="submit" class="btn btn-login btn-block" [disabled]="btnOtp"> Submit OTP </button>
+          <button type="submit" class="btn btn-login btn-block"> Submit OTP </button> <!--  [disabled]="btnOtp" -->
+        </div>
+
+        <div class="mt-3 text-center" *ngIf="otpSent">
+          <span class="login-terms"> <button type="button" (click)="resendOtp()" class="btn btn-sm rounded-0 btn-danger w-100">Resend OTP</button> </span>
         </div>
 
         <div class="mt-3 text-center">
           <span class="login-terms"> By signing in you agree to our <a href="#" target="_blank">terms and conditions</a> </span>
         </div>
+
+
 
       </div>
 
