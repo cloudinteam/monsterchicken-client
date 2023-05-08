@@ -112,7 +112,7 @@ export class OrderSummaryComponent implements OnInit {
       let data = {
         cartId: this.cartIds
       }
-      console.log(data);
+      // console.log(data);
       // let data = {
       //   cartId: ids,
       //   promoCode: this.couponForm.value.promoCode
@@ -149,7 +149,7 @@ export class OrderSummaryComponent implements OnInit {
         cartId: cartIds,
         promoCode: this.couponForm.value.promoCode
       }
-      console.log(data);
+      // console.log(data);
       this.loading = true;
       this.checkoutService.getCheckout(data).subscribe((r: any) => {
         this.data = r;
@@ -189,7 +189,8 @@ export class OrderSummaryComponent implements OnInit {
     let data = {
       cartId: cartIds,
       addressId: this.shippingAddress.address.id,
-      userId: localStorage.getItem('userId')
+      userId: localStorage.getItem('userId'),
+      promoCode: this.couponForm.value.promoCode
     }
     this.checkoutService.cartCheckout(data).subscribe((r: any) => {
 

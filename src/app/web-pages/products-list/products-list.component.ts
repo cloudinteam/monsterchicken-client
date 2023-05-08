@@ -29,10 +29,10 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.params.subscribe((r) => {
-      this.catId = this.route.snapshot.paramMap.get('id') || '';
-      this.getProduct(this.catId);
-    })
+    // this.route.params.subscribe((r) => {
+    //   this.catId = this.route.snapshot.paramMap.get('id') || '';
+    //   this.getProduct(this.catId);
+    // })
 
     this.cartService.productLoad$.subscribe((r) => {
       if (r == true) {
@@ -47,7 +47,6 @@ export class ProductsListComponent implements OnInit {
 
   init() {
     this.loading = true;
-
     this.catId = this.route.snapshot.paramMap.get('id') || '';
     this.getProduct(this.catId);
   }
@@ -58,6 +57,7 @@ export class ProductsListComponent implements OnInit {
     this.productService.getProducts(data).subscribe((r: any) => {
       this.productList = r.response.products;
       this.categories = r.response.categories;
+      // console.debug(this.productList);
       this.loading = false;
     });
   }
