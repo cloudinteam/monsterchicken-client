@@ -40,7 +40,7 @@
               <ng-template pTemplate="content">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item clickable" *ngFor="let category of categories">
-                    <div class="clickable" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" (click)="viewCategory(catpanel, category.categoryId)">
+                    <div class="clickable" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" (click)="$event.stopPropagation();viewCategory(catpanel, category.categoryId)">
                       <img [src]="category.imageUrl" [alt]="category.categoryName" width="30px">
                       <span class="text-black fw-semibold"> {{ category.categoryName | titlecase }} </span>
                     </div>

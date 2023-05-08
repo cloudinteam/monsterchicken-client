@@ -253,6 +253,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   viewCategory(catpanel: OverlayPanel, id: string) {
     catpanel.hide();
     this.router.navigate(['/category/' + id]);
+    this.cdRef.markForCheck();
   }
 
   // Geo Code ======================================================
