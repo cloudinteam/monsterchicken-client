@@ -29,10 +29,10 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.route.params.subscribe((r) => {
-    //   this.catId = this.route.snapshot.paramMap.get('id') || '';
-    //   this.getProduct(this.catId);
-    // })
+    this.route.params.subscribe((r) => {
+      this.catId = this.route.snapshot.paramMap.get('id') || '';
+      this.getProduct(this.catId);
+    })
 
     this.cartService.productLoad$.subscribe((r) => {
       if (r == true) {
