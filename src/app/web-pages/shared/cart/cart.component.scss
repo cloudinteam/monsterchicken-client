@@ -11,7 +11,7 @@
 
 .items-bill {
   padding: 10px 16px 16px;
-  margin: 20px 0 60px;
+  margin: 20px 0 90px;
   border: 1px dashed #9b9b9b;
   background: #fff;
   font-family: "Nunito Sans", sans-serif !important;
@@ -87,10 +87,9 @@
 }
 
 .sticky-footer {
-  max-width: 100%;
-  position: sticky;
-  bottom: 5px;
-  align-self: flex-end;
+  width: 383px;
+  position: fixed;
+  bottom: 15px;
   z-index: 20;
   background-color: #fff;
 }

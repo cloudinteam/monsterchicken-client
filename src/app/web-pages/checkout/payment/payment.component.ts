@@ -56,7 +56,7 @@ export class PaymentComponent implements OnInit {
     this.productService.getOrderDetail(orderId).subscribe((r: any) => {
       console.log(r);
       this.totalCartPrice = r.response.total_amount;
-      this.discountPrice = r.response.order.offers.discount_amount;
+      this.discountPrice = r.response.order.offers?.discount_amount;
       this.deliveryCharge = r.response.order.delivery_charge;
       this.grandTotal = r.response.order.grand_total;
     })
