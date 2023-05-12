@@ -1,17 +1,17 @@
 <div class="top-bar">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+    <div class="row align-items-center g-3">
+      <div class="col-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
         <a (click)="home()" class="d-inline-block clickable">
           <img src="assets/images/Logo.png" class="" alt="" style="max-width: 115px">
         </a>
       </div>
-      <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
-        <div *ngIf="!locationShow">
+      <div class="col-8 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+        <div *ngIf="!locationShow" class="text-md-start text-end">
           <span class="clickable text-black" (click)="openLocation()"> <i class="pi pi-map-marker" style="font-size: 15px"></i> Choose location</span>
           <!-- <button type="button"  class="btn btn-sm btn-outline-dark">Choose location</button> -->
         </div>
-        <div class="clickable" (click)="openLocation()" *ngIf="locationShow"> <!--[ngbTooltip]="address" placement="bottom"-->
+        <div class="clickable text-md-start text-end" (click)="openLocation()" *ngIf="locationShow"> <!--[ngbTooltip]="address" placement="bottom"-->
           <div class="loc-district">
             <i class="pi pi-map-marker" style="font-size: 15px"></i>
             <span class="fw-bold"> {{ district }} <i class="pi pi-angle-down" style="font-size: 12px"></i></span>
@@ -34,9 +34,9 @@
       </div>
       <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
         <ul class="top-nav ">
-          <li class="top-nav-item">
+          <li class="top-nav-item" #categoryMenuId>
             <a class="top-nav-link" (click)="catpanel.toggle($event)"> <i class="pi pi-clone"></i> Categories </a>
-            <p-overlayPanel #catpanel [style]="{'width': '350px'}" [showCloseIcon]="true">
+            <p-overlayPanel #catpanel [style]="{'width': '300px'}" [showCloseIcon]="true" appendTo="body">
               <ng-template pTemplate="content">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item clickable" *ngFor="let category of categories">
@@ -47,12 +47,12 @@
                   </li>
                 </ul>
               </ng-template>
-          </p-overlayPanel>
+            </p-overlayPanel>
           </li>
-          <li class="top-nav-item">
+          <li class="top-nav-item" #profileMenuId>
             <a class="top-nav-link" *ngIf="!logggedIn" (click)="openLogin()"> <i class="pi pi-user"></i> Login </a>
             <a class="top-nav-link" *ngIf="logggedIn" (click)="profileMenu.toggle($event)"> <i class="pi pi-user"></i> Account </a>
-            <p-menu #profileMenu [model]="profileItems" [popup]="true"></p-menu>
+            <p-menu #profileMenu appendTo="body" [model]="profileItems" [popup]="true"></p-menu>
           </li>
           <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
             <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>

@@ -41,6 +41,7 @@ export class OrderSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     let id: any = localStorage.getItem('cartIds');
     this.cartIds = JSON.parse(id);
 

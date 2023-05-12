@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,8 @@ import { NetworkService } from './network.service';
 export class AuthService {
 
   constructor(
-    private api: ApiCallService
+    private api: ApiCallService,
+    private router: Router,
   ) { }
 
   login(body: any): any {
@@ -56,8 +58,10 @@ export class AuthService {
 
   logout(): any {
     // return this.api.postApiCallAuth(NetworkService.logout(), body);
+    this.router.navigate(['/']);
     localStorage.clear();
     sessionStorage.clear();
+
     window.location.reload();
   }
 
