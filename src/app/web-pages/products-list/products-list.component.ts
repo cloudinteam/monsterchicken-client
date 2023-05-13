@@ -15,7 +15,7 @@ export class ProductsListComponent implements OnInit {
   catId: string = '';
   loading = true;
   productList: Product[] = [];
-  categories = [];
+  categories: any[] = [];
 
   constructor(
     private router: Router,
@@ -57,7 +57,7 @@ export class ProductsListComponent implements OnInit {
     this.productService.getProducts(data).subscribe((r: any) => {
       this.productList = r.response.products;
       this.categories = r.response.categories;
-      // console.debug(this.productList);
+      // console.debug(r);
       this.loading = false;
     });
   }

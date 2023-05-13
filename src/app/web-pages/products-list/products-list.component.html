@@ -1,11 +1,22 @@
 <page-loader [loading]="loading"></page-loader>
 
-<div class="container py-5" *ngIf="!loading">
+<div class="container py-3" *ngIf="!loading">
+
+  <div class="product-trails">
+    <ul>
+      <li> <a routerLink="/" class="pointer"> Home </a> </li>
+      <!-- <li> <a [routerLink]="'/category/'+this.categories[0]?.categoryId"> {{ this.categories[0]?.categoryName }} </a> </li> -->
+      <li> {{ this.categories[0].categoryName }} </li>
+    </ul>
+  </div>
+
   <div class="row justify-content-center">
+
+
 
     <!-- <div class="col-12">
       <pre>
-        {{ productList | json }}
+        {{ categories[0] | json }}
       </pre>
     </div> -->
 

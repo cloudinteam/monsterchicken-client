@@ -9,8 +9,8 @@
   <div class="col-12">
     <div class="p-input-icon-right w-100 mb-3">
       <i class="pi pi-search fw-bold text-dark"></i>
-      <input type="text" class="form-control form-control-md" ngx-google-places-autocomplete (onAddressChange)="AddressChange($event)" [(ngModel)]="searchString" #searchInput
-         placeholder=" Search for your location" (keyup)="searchFn()"/>
+      <input type="text" class="form-control form-control-md" [options]="optionsPlaces" ngx-google-places-autocomplete (onAddressChange)="addressChange($event)" [(ngModel)]="searchString" #searchInput
+         placeholder="Enter your location" (keyup)="searchFn()"/>
       <!-- #searchInput="ngx-places" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
     </div>
   </div>
@@ -21,11 +21,13 @@
 </div>
 
 <!-- <div *ngIf="apiLoaded | async"> -->
+
 <google-map height="450px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
   (mapMousemove)="move($event)">
   <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
     [options]="markerOptions"></map-marker>
 </google-map>
+
 <!-- <div>Latitude: {{display?.lat}}</div>
 <div>Longitude: {{display?.lng}}</div>
 <pre>
@@ -48,3 +50,4 @@
   </div>
 
 </ng-template>
+

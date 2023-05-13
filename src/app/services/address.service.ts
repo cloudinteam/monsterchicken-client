@@ -24,7 +24,7 @@ export class AddressService {
           localStorage.setItem('userLong', resp.coords.longitude.toString());
         },
         (err) => {
-          // reject(err);
+          reject(err);
           console.error(err);
           if (err.code == 1) {
             localStorage.removeItem('userLat');
