@@ -29,6 +29,8 @@ export class BullkOrderFormComponent implements OnInit {
   totalProductOptions!: number;
   prOptLoaded = false;
 
+  categoryOptions: any[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private cs: CommonService,
@@ -39,16 +41,16 @@ export class BullkOrderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStates();
-    this.getCountry();
-    this.getBulkOrder();
-    this.getProductOptions();
+    // this.getCountry();
+    this.getCategoryOptions();
+    // this.getProductOptions();
     this.initForm();
     this.add();
   }
 
   initForm() {
     this.bulkOrderForm = this.formBuilder.group({
-      bulkOrder: [null, [Validators.required]],
+      // bulkOrder: [null, [Validators.required]],
       country: [103, [Validators.required]],
       state: [null, [Validators.required]],
       city: [null, [Validators.required]],
@@ -57,10 +59,8 @@ export class BullkOrderFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
       email: ['', [Validators.required, Validators.email]],
       number1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)] ],
-      number2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)] ],
-      address: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(100), Validators.pattern(/^[0-9a-zA-Z-()/,.&: ]+$/)] ],
-      quantity: [''],
-      messages: [''],
+      // number2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)] ],
+      address: ['', [Validators.required, Validators.minLength(15)] ],
       productData: this.formBuilder.array([]),
       // productData: new FormArray([ new FormControl("")])
     })
@@ -81,17 +81,12 @@ export class BullkOrderFormComponent implements OnInit {
   get productDataFormGroup(): FormGroup {
     return this.formBuilder.group({
       id: [null, [Validators.required]],
+      category: [null, [Validators.required]],
       quantity: [null, [Validators.required]]
     });
   }
 
   add() {
-    // const productDataFormGroup = this.formBuilder.group({
-    //   id: [null, [Validators.required]],
-    //   quantity: [null, [Validators.required]]
-    // });
-    // const bulkOrder = <FormArray>this.bulkOrderForm.controls['productData'];
-    // this.productArray = this.bulkOrderForm.get("productData") as FormArray;
     this.productFormArray.push(this.productDataFormGroup);
   }
 
@@ -122,6 +117,18 @@ export class BullkOrderFormComponent implements OnInit {
     this.productService.getBulkOrder().subscribe((r: any) => {
       this.bulkOrder = r.response.bulkOrders;
     });
+  }
+
+  getCategoryOptions() {
+    this.productService.getCategoryOptions({}).subscribe((r: any) => {
+      // console.debug(r);
+      this.categoryOptions = r.response.categories;
+    })
+  }
+
+  loadProductOptions($event: any) {
+    console.log($event);
+    this.getProductOptions($event.value);
   }
 
   onChangeHandler(selectedState: any) {
@@ -195,16 +202,41 @@ export class BullkOrderFormComponent implements OnInit {
     }
   }
 
+  optionsProduct(categoryId: string): [] {
+
+    let data = {
+      categoryId: categoryId,
+    };
+    this.productService.getProductOptions(data).subscribe((r: any) => {
+      // console.log(r)
+      this.totalProductOptions = r.response.totalProducts;
+
+      if (r.response.products.length == 0) {
+        this.alert.fireToastN('No products' ,'Category has no products', 'pi pi-exclamation-circle');
+      }
+
+      return r.response.products;
+    });
+    return [];
+  }
+
   // ================================================================================================
   // Product Options
   // ================================================================================================
-  getProductOptions() {
-    let data = {};
+  getProductOptions(categoryId: string) {
+    let data = {
+      categoryId: categoryId,
+    };
     this.productService.getProductOptions(data).subscribe((r: any) => {
       this.productOptions = [];
       this.productOptions = r.response.products;
-      console.log(r)
+      // console.log(r)
       this.totalProductOptions = r.response.totalProducts;
+
+      if (this.productOptions.length == 0) {
+        this.alert.fireToastN('No products' ,'Category has no products', 'pi pi-exclamation-circle');
+      }
+
       // this.role = r.role;
       // if(!this.edit) {
       //   this.initOptions(this.role);

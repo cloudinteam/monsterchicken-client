@@ -60,6 +60,10 @@ export class CommonService {
     return this.api.postApiCallAuth(NetworkService.getCity(), body);
   }
 
+  getDistrict(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getDistrict(), body);
+  }
+
   getCountry(body: any): any {
     return this.api.postApiCallAuth(NetworkService.getCountry(), body);
   }

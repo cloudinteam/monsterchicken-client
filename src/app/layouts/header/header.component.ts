@@ -86,13 +86,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.district = currentAddress.district;
       this.locationShow = currentAddress.show;
       this.cdRef.markForCheck();
-    }
+    } // else if (localStorage.getItem('current_address') == null) {
+     // this.openLocation();
+   // }
 
     this.loading = false;
   }
 
   ngAfterViewInit() {
     // this.handlePermission();
+    if (localStorage.getItem('current_address') == null) {
+      this.openLocation();
+    }
   }
 
   init() {

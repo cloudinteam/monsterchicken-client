@@ -1,6 +1,6 @@
 <page-loader [loading]="loading"></page-loader>
 
-<div class="container" *ngIf="!loading">
+<div class="container py-3" *ngIf="!loading">
 
   <div class="product-trails">
     <ul>
@@ -28,7 +28,11 @@
           </p>
           <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
             <div class="pro-details">
+
               <div class="pro-price">
+                <span class="pro-unit">
+                  {{ product.unit }}
+                </span>
                 <span> {{ product.price }}</span>
               </div>
               <div class="pro-action">

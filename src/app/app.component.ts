@@ -18,9 +18,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addressService.getPosition().then((pos: any) => {
-      console.log(`Positon: ${pos.lng} ${pos.lat}`);
-    });
+    if (localStorage.getItem('userLat') == null || localStorage.getItem('userLong') == null) {
+      this.addressService.getPosition().then((pos: any) => {
+        console.log(`Your positon: ${pos.lng} ${pos.lat}`);
+      });
+    }
+
   }
 
 }

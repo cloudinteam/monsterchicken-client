@@ -8,7 +8,7 @@ import { NetworkService } from './network.service';
 export class ProductService {
 
   constructor(
-    private api: ApiCallService
+    private api: ApiCallService,
   ) { }
 
   getProducts(body: any): any {
@@ -41,6 +41,10 @@ export class ProductService {
 
   getBulkOrder() {
     return this.api.getApiCallAuth(NetworkService.getBulkOrder());
+  }
+
+  getCategoryOptions(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getCategoryOptions(), body);
   }
 
   bulkOrderSubmit(data: any) {

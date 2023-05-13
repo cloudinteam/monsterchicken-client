@@ -4,7 +4,7 @@
 
   <div class="row justify-content-center">
 
-    <div class="col-12 col-md-11">
+    <div class="col-12 col-md-11" *ngIf="banners.length > 0">
       <p-carousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="false">
         <ng-template let-banner pTemplate="item">
           <div class="banner-item">

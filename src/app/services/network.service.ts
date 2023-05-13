@@ -21,7 +21,8 @@ export class NetworkService {
       Accept: 'application/json',
       Authorization: 'Bearer ' + this.authToken(),
       deviceId: this.hash(),
-    });
+    }).set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', 'http://localhost:4200');
     return header;
   }
 
@@ -90,6 +91,9 @@ export class NetworkService {
   }
   static getProductOptions(): string {
     return this.server_url() + this.server_v() + '/product/get-product';
+  }
+  static getCategoryOptions(): string {
+    return this.server_url() + this.server_v() + '/product/get-product-category';
   }
 
   //Order History
@@ -167,6 +171,10 @@ export class NetworkService {
 
   static getCity(): string {
     return this.server_url() + this.server_v() + '/city/list';
+  }
+
+  static getDistrict(): string {
+    return this.server_url() + this.server_v() + '/district/list';
   }
 
   static getBulkOrder(): string {

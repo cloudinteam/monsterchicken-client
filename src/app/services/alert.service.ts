@@ -31,7 +31,7 @@ const Toast2 = Swal.mixin({
 export class AlertService {
 
   constructor() { }
-  
+
   fireToastS(title: string) {
     Toast.fire({
       icon: 'success',
@@ -48,13 +48,26 @@ export class AlertService {
     });
   }
 
-  fireToastN(title: any, description: any, img: any) {
+  // fireToastN(title: any, description: any, img: any) {
+  //   Toast.fire({
+  //     // icon: 'error',
+  //     iconHtml:
+  //       '<img src="' +
+  //       img.toString() +
+  //       '" width="50px; border-color: #0000;"/>',
+  //     title: title,
+  //     // text:description,
+  //     color: '#333',
+  //   });
+  // }
+
+  fireToastN(title: any, description: any, icon: any) {
     Toast.fire({
       // icon: 'error',
       iconHtml:
-        '<img src="' +
-        img.toString() +
-        '" width="50px; border-color: #0000;"/>',
+        '<i class="' +
+        icon.toString() +
+        '" width="50px; border-color: #0000;"></i>',
       title: title,
       // text:description,
       color: '#333',

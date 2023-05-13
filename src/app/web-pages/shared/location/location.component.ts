@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { AlertService } from 'src/app/services/alert.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
@@ -23,6 +24,7 @@ import { MapService } from 'src/app/services/map.service';
   styleUrls: ['./location.component.scss'],
 })
 export class LocationComponent implements OnInit {
+
   @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
   @ViewChild('searchInput') searchInput!: ElementRef;
   // @ViewChild('searchInput') searchInput!: GooglePlaceDirective;
@@ -57,10 +59,18 @@ export class LocationComponent implements OnInit {
   errorAlert = false;
   confirmAddress = false;
 
-AddressChange(address: any) {
-  //setting address from API to local variable
-  this.formattedaddress=address.formatted_address
-}
+  optionsPlaces: Options = new Options({
+    componentRestrictions: {country: 'IN'}
+  })
+
+  // optionsPlaces: Options = {
+  //   componentRestrictions: { country: 'IN' },
+  //   types: [],
+  //   fields: [],
+  //   strictBounds: false,
+  // }
+
+
 
   constructor(
     private ngbModal: NgbModal,
@@ -76,16 +86,24 @@ AddressChange(address: any) {
   }
 
   ngAfterViewInit() {
-    // this.handlePermission();
+
 
     if (localStorage.getItem('current_address') != null) {
       let address: any = localStorage.getItem('current_address');
       let currentAddress = JSON.parse(address);
       // console.log(currentAddress);
-      this.geoCode('address', currentAddress.address);
+      // this.geoCode('address', currentAddress.address);
+      this.setFromLocal();
+    } else {
+      this.handlePermission();
     }
 
 
+  }
+
+  addressChange(address: any) {
+    //setting address from API to local variable
+    this.formattedaddress=address.formatted_address
   }
 
   searchFn() {
@@ -98,6 +116,7 @@ AddressChange(address: any) {
         this.searchAuto.addListener('place_changed', () => {
           this.ngZone.run(() => {
             const place: any = this.searchAuto?.getPlace();
+            console.debug(place);
 
             this.lat = place?.geometry?.location?.lat()
             this.lng = place?.geometry?.location?.lat()
@@ -125,6 +144,26 @@ AddressChange(address: any) {
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) {
       this.display = event.latLng.toJSON();
+    }
+  }
+
+  setFromLocal() {
+    if (localStorage.getItem('current_address') != null) {
+      let address: any = localStorage.getItem('current_address');
+      let currentAddress = JSON.parse(address);
+
+      this.searchString = currentAddress.address;
+      this.confirmAddress = true;
+    }
+    if (localStorage.getItem('current_address') == null) {
+      this.getCoords();
+    }
+
+    if (localStorage.getItem('lat_lng') != null) {
+      let position: any = localStorage.getItem('lat_lng');
+      let currentPosition = JSON.parse(position);
+
+      this.mapMarker = currentPosition;
     }
   }
 
@@ -165,12 +204,15 @@ AddressChange(address: any) {
 
       localStorage.setItem('current_address', JSON.stringify(currentAddress));
 
+
       this.mapMarker = {
         lat: results[0].geometry.location.lat(),
         lng: results[0].geometry.location.lng(),
       }
       // console.log(this.mapMarker);
+      localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
       // console.log(this.postCode);
+
       if (this.postCode) {
         this.mapService.locationCheck({ cityId: this.city }).subscribe( (r: any) => {
           // console.log(r);
@@ -194,9 +236,9 @@ AddressChange(address: any) {
   handlePermission() {
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
-        this.getCoords();
+        this.setFromLocal();
       } else if (result.state === 'prompt') {
-        this.getCoords();
+        this.setFromLocal();
       } else if (result.state === 'denied') {
         this.positionDenied();
       }

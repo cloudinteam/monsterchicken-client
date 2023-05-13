@@ -44,6 +44,7 @@ export class ProductViewComponent implements OnInit {
   getProduct(id: string) {
     let data = { productId: id };
     this.productService.viewProduct(data).subscribe((r: any) => {
+      // console.debug(r);
       this.product = r.response.productDetail;
       this.loading = false;
     });
