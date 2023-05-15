@@ -22,12 +22,14 @@ export class NetworkService {
       Authorization: 'Bearer ' + this.authToken(),
       deviceId: this.hash(),
     }).set('Content-Type', 'application/json')
-      .set('Access-Control-Allow-Origin', 'http://localhost:4200');
+      .set('Access-Control-Allow-Origin', '*');
     return header;
   }
 
   static getHeader(): HttpHeaders {
-    let header = new HttpHeaders();
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*');
     return header;
   }
 
@@ -75,7 +77,7 @@ export class NetworkService {
 
   //Products
   static getProducts(): string {
-    return this.server_url() + this.server_v() + '/product/list';
+    return this.server_url() + this.server_v() + '/web/product/list';
   }
   static viewProduct(): string {
     return this.server_url() + this.server_v() + '/product/view';
@@ -110,7 +112,7 @@ export class NetworkService {
 
   //cart
   static addToCart(): string {
-    return this.server_url() + this.server_v() + '/cart/store';
+    return this.server_url() + this.server_v() + '/web/cart/store';
   }
   static clearCart(): string {
     return this.server_url() + this.server_v() + '/login';
@@ -119,7 +121,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/cart/list';
   }
   static getCart(): string {
-    return this.server_url() + this.server_v() + '/cart/list';
+    return this.server_url() + this.server_v() + '/web/cart/list';
   }
 
 
@@ -138,7 +140,7 @@ export class NetworkService {
 
   // Location Check
   static locationCheck(): string {
-    return this.server_url() + this.server_v() + '/location-checking';
+    return this.server_url() + this.server_v() + '/web/location-checking';
   }
   static storeAdddress(): string {
     return this.server_url() + this.server_v() + '/address/store';

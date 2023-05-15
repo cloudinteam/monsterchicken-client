@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Category } from 'src/app/models/category.model';
 import { MenuItem } from 'primeng/api';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
+import { LocalcartService } from 'src/app/services/localcart.service';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private headerService: HeaderService,
     private offcanvasService: NgbOffcanvas,
     private cartService: CartService,
+    private localCartService: LocalcartService,
     private ngbModal: NgbModal,
     private geocoder: MapGeocoder,
     private cdRef: ChangeDetectorRef,
@@ -91,6 +93,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
    // }
 
     this.loading = false;
+
   }
 
   ngAfterViewInit() {
@@ -104,24 +107,31 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.headerService.disableSearch.subscribe((r) => {
       this.disableSearch = r;
     })
+
     this.headerService.currentAddress.subscribe((r) => {
       this.address = r.address;
       this.district = r.district;
       this.locationShow = r.show;
     });
-    // if(this.logggedIn) {
-      this.cartService.cartCount.subscribe((r) => {
-        this.cartCount.count = r.count;
-        this.cartCount.total = r.total;
-      })
-      this.cartService.getCart({}).subscribe((r: any) => {
+
+    this.cartService.cartCount.subscribe((r) => {
+      this.cartCount.count = r.count;
+      this.cartCount.total = r.total;
+    })
+
+    if(this.logggedIn) {
+      this.cartService.getCart().subscribe((r: any) => {
         this.cartCount.count = r.response.cart.length;
         this.cartCount.total = r.response.totalCartPrice;
       })
-    // }
+    } else {
+      this.localCartService.setCartTotal();
+    }
+
     this.productService.getCategories().subscribe((r: any) => {
       this.categories = r.categories;
     })
+
     this.profileItems = [
       {
         label: 'Profile',
@@ -161,13 +171,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       }
     ]
+
     this.headerService.openLogin.subscribe((r) => {
       if (!this.logggedIn && r == true) {
         this.openLogin();
         this.headerService.openLogin.next(false);
       }
-
     })
+
   }
 
   openProfile() {

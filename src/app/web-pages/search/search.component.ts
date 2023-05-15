@@ -7,6 +7,8 @@ import {
   Router,
 } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
+import { AlertService } from 'src/app/services/alert.service';
+import { CartService } from 'src/app/services/cart.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -55,7 +57,6 @@ export class SearchComponent implements OnInit {
     this.loading = false;
     this.notFound = false;
     this.headerService.disableSearch.next(false);
-
   }
 
   getProducts() {
@@ -73,8 +74,5 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  addTocart(product: Product) {
-    console.log(product);
-  }
 
 }

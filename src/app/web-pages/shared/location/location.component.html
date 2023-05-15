@@ -9,14 +9,13 @@
   <div class="col-12">
     <div class="p-input-icon-right w-100 mb-3">
       <i class="pi pi-search fw-bold text-dark"></i>
-      <input type="text" class="form-control form-control-md" [options]="optionsPlaces" ngx-google-places-autocomplete (onAddressChange)="addressChange($event)" [(ngModel)]="searchString" #searchInput
-         placeholder="Enter your location" (keyup)="searchFn()"/>
+      <input type="text" class="form-control form-control-md" [options]="optionsPlaces" ngx-google-places-autocomplete (onAddressChange)="addressChange($event)" [(ngModel)]="searchString" #searchInput placeholder="Enter your location" (keyup)="searchFn()"/>
       <!-- #searchInput="ngx-places" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
     </div>
   </div>
   <div class="col-12 text-end mb-3">
-    <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark me-1"><i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
-    <button type="button" *ngIf="confirmAddress" (click)="showAddress.emit()" class="btn btn-sm btn-outline-danger"> Confirm Location</button>
+    <button type="button" (click)="getCoords()" class="btn btn-sm btn-outline-dark me-1"><i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
+    <button type="button" *ngIf="confirmAddress" (click)="confirmLocation()" class="btn btn-sm btn-outline-danger"> Confirm Location</button>
   </div>
 </div>
 
