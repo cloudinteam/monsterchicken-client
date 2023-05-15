@@ -26,27 +26,39 @@ export class CheckoutComponent implements OnInit {
     private addressService: AddressService,
     private activeMenu: ActiveMenuService,
     private cdRef: ChangeDetectorRef,
-  ){}
+  ) {
+
+
+  }
 
   ngOnInit(): void {
     this.loading = true;
-      this.addressService.updateAddress.subscribe((r) => {
-        this.addressAction = r;
-        this.editAddress = true;
-      });
-      this.headerService.currentAddress.subscribe((r) => {
-        this.address = r.address;
-        this.district = r.district;
-      });
-      this.activeMenu.checkoutMenu.subscribe((menu) => {
-        this.menu = menu;
-      })
-      this.activeMenu.addressSuccess.subscribe((status) => {
-        this.addressSuccess = status;
-      })
-      this.activeMenu.summarySuccess.subscribe((status) => {
-        this.summarySuccess = status;
-      })
+
+    this.addressService.updateAddress.subscribe((r) => {
+      this.addressAction = r;
+      this.editAddress = true;
+    });
+    this.headerService.currentAddress.subscribe((r) => {
+      this.address = r.address;
+      this.district = r.district;
+    });
+    this.activeMenu.checkoutMenu.subscribe((menu) => {
+      this.menu = menu;
+      this.cdRef.markForCheck();
+    })
+    this.activeMenu.addressSuccess.subscribe((status) => {
+      this.addressSuccess = status;
+      this.cdRef.markForCheck();
+    })
+    this.activeMenu.summarySuccess.subscribe((status) => {
+      this.summarySuccess = status;
+      this.cdRef.markForCheck();
+    })
+
+      // this.activeMenu.checkoutMenu.next('summary');
+      // this.activeMenu.addressSuccess.next(false);
+      // this.activeMenu.summarySuccess.next(false);
+
     this.loading = false;
     this.cdRef.markForCheck();
   }

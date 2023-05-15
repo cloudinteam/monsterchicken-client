@@ -4,6 +4,13 @@
 
   <div class="row justify-content-center">
 
+    <div class="col-12 col-md-6 mb-3">
+      <div class="p-input-icon-right w-100" >
+        <i class="pi pi-search fw-bold text-dark"></i>
+        <input type="text" class="form-control form-control" [(ngModel)]="this.filter.search" (keyup)="searchFn()" #searchInput placeholder="Search for any product" />
+      </div>
+    </div>
+
     <div class="col-12 col-md-10" *ngIf="productList.length > 0">
       <div>
         <h4 class="fw-bold"> Search Results </h4>

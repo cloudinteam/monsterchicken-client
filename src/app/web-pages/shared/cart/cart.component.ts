@@ -38,6 +38,7 @@ export class CartComponent implements OnInit {
     this.loading = true;
 
     if (this.authService.isLoggedIn()) {
+      console.log(23)
       // Update Local_Cart to DB
       // this.localCartService.pushLocalCartToLive();
       this.loadCart();
@@ -65,10 +66,11 @@ export class CartComponent implements OnInit {
   loadCart() {
     this.loading = true;
     this.cartService.getCart().subscribe((r: any) => {
+      console.log(r);
       this.cart = r.response.cart;
-      this.totalCount = r.response.totalCount;
+      this.totalCount = r.response.totalCartCount;
       this.totalCartPrice = r.response.totalCartPrice;
-      this.deliveryCharge = r.response.deliveryCharge;
+      // this.deliveryCharge = r.response.deliveryCharge;
       this.grandTotal = r.response.grandTotal;
       this.cartService.cartCount.next({ count: this.totalCount, total: this.totalCartPrice })
       this.cartItems();
