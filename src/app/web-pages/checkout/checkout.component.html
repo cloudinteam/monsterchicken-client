@@ -7,8 +7,8 @@
 
       <ul class="chk-menu-ul">
 
-        <li class="chk-menu-li" [ngClass]="this.menu == 'address' ? 'active' : ''" [ngClass]="addressSuccess? 'active success':''">
-          <div class="menu-card" [ngClass]="this.menu == 'address'? 'active' : ''" [ngClass]="addressSuccess? 'active success':''">
+        <li class="chk-menu-li" [ngClass]="menu === 'address' ? 'active' : (addressSuccess? 'active success':'')" >
+          <div class="menu-card" [ngClass]="menu === 'address'? 'active' : (addressSuccess? 'active success':'')" >
             <div class="title">
               Choose Address
             </div>
@@ -18,8 +18,8 @@
           </div>
         </li>
 
-        <li class="chk-menu-li " [ngClass]="this.menu == 'summary' ? 'active' : ''" [ngClass]="summarySuccess? 'active success':''">
-          <div class="menu-card " [ngClass]="this.menu == 'summary'? 'active' : ''" [ngClass]="summarySuccess? 'active success':''">
+        <li class="chk-menu-li " [ngClass]="menu === 'summary' ? 'active' : summarySuccess? 'active success':''" >
+          <div class="menu-card " [ngClass]="menu === 'summary'? 'active' : summarySuccess? 'active success':''" >
             <div class="title">
               Delivery Summary
             </div>
@@ -28,7 +28,7 @@
           </div>
         </li>
 
-        <li class="chk-menu-li " [ngClass]="this.menu == 'payment' ? 'active' : ''">
+        <li class="chk-menu-li " [class]="menu === 'payment' ? 'active' : ''">
           <div class="menu-card "> <!--  [ngClass]="this.menu == 'payment'? 'active' : ''" -->
             <div class="title">
               Payment

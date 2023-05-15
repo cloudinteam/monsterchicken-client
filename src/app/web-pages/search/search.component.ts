@@ -59,6 +59,16 @@ export class SearchComponent implements OnInit {
     this.headerService.disableSearch.next(false);
   }
 
+  searchFn() {
+    setTimeout(() => {
+      if (this.filter.search != '') {
+        this.getProducts();
+      } else {
+        this.productList = [];
+      }
+    }, 1000);
+  }
+
   getProducts() {
     this.loading = true;
     this.notFound = false;

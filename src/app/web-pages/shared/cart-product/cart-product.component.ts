@@ -72,6 +72,7 @@ export class CartProductComponent implements OnInit {
   removeItem(productId: string) {
     let data = [{
       productId: productId,
+
       status: 'remove'
     }];
     this.cartService.addCart({carts: data}).subscribe((r: any) => {

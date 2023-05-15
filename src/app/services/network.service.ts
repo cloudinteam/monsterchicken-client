@@ -80,7 +80,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/product/list';
   }
   static viewProduct(): string {
-    return this.server_url() + this.server_v() + '/product/view';
+    return this.server_url() + this.server_v() + '/web/product/view';
   }
   static getCategory(): string {
     return this.server_url() + this.server_v() + '/product/category/list';

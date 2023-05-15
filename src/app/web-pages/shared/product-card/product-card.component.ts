@@ -60,7 +60,7 @@ export class ProductCardComponent implements OnInit {
         this.cartService.addCartCount();
         this.alert.fireToastS('Prooduct added to cart');
         // this.loaded.emit();
-        this.afterCart(product.productId);
+        this.afterCart(product);
         this.loading = false;
       });
     }
@@ -72,7 +72,6 @@ export class ProductCardComponent implements OnInit {
   }
 
   addLocalCart(product: Product) {
-    console.log(product);
 
     let localCart: any[] = [];
     let cartItem = {
@@ -121,10 +120,13 @@ export class ProductCardComponent implements OnInit {
 
 
 
-  afterCart(id: any) {
-    let data = { productId: id };
+  afterCart(product: Product) {
+    let data = {
+      productId: product.productId,
+      nearByBranch: product.nearByBranch,
+    };
     this.productService.viewProduct(data).subscribe((r: any) => {
-      // console.log(r.response.productDetail);
+      console.log(r.response.productDetail);
       this.product = r.response.productDetail;
     });
   }
@@ -152,7 +154,7 @@ export class ProductCardComponent implements OnInit {
         this.cartService.addCartCount();
         this.alert.fireToastS(r.message[0]);
         // this.loaded.emit();
-        this.afterCart(product.productId);
+        this.afterCart(product);
         this.loading = false;
       });
     }

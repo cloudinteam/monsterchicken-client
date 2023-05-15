@@ -9,7 +9,7 @@ export class ActiveMenuService {
   constructor() { }
 
   // order-history, saved-address, profile, address, summary, payment
-  private _checkOut = '';
+  private _checkOut = 'address';
   public checkoutMenu: BehaviorSubject<string> = new BehaviorSubject<string>(this._checkOut);
 
   private _addressSuccess = false;

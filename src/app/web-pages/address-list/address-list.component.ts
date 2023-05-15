@@ -92,8 +92,9 @@ export class AddressListComponent implements OnInit {
 
   goToSummary() {
     this.activeMenu.addressSuccess.next(true);
-    this.cdRef.markForCheck();
-    this.router.navigate(['/checkout/summary'])
+    setTimeout(() => {
+      this.router.navigate(['/checkout/summary'])
+    }, 100)
   }
 
 }
