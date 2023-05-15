@@ -96,11 +96,15 @@ cart sidebar
 	</div>
 </ng-template>
 
-<ng-template #loginArea let-offcanvas>
-	<div class="offcanvas-header">
-    <span class="cart-close" (click)="closeLogin()"> <i class="pi pi-times-circle"></i> </span>
-	</div>
-	<div class="offcanvas-body p-2" style="position: relative;">
+<ng-template #loginArea let-offcanvas class="login-side">
+
+	<div class="offcanvas-body p-2"  fxLayout="column" fxLayoutAlign="space-between stretch" style="position: relative; background-image: url(../../../assets/images/chicken-pattern-single-5.jpg); background-repeat: repeat; background-size: 25%;">
+    <div class="offcanvas-header">
+      <span class="cart-close" (click)="closeLogin()"> <i class="pi pi-times-circle"></i> </span>
+    </div>
+    <div class="login-image">
+      <img src="../../../assets/images/Logo.png" alt="" style="max-width: 150px;" class="d-block mb-5 mx-auto">
+    </div>
     <login></login>
 	</div>
 </ng-template>

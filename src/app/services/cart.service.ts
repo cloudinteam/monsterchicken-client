@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +19,17 @@ export class CartService {
   public productLoad$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this._productLoad);
 
   constructor(
-    private api: ApiCallService
+    private api: ApiCallService,
+    private authService: AuthService,
   ) { }
 
-  getCart(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getCart(), body);
+  getCart() {
+    return this.api.getApiCallAuth(NetworkService.getCart());
   }
 
   addCart(body: any): any {
     return this.api.postApiCallAuth(NetworkService.addToCart(), body);
   }
-
 
   getCartCount() {
     return this.cartCount;
@@ -39,22 +40,24 @@ export class CartService {
   }
 
   addCartCount() {
-    this.getCart({}).subscribe((r: any) => {
+    if (this.authService.isLoggedIn()) {
+      this.getCart().subscribe((r: any) => {
+        this._cartCount.count = r.response.cart.length;
+        this._cartCount.total = r.response.totalCartPrice;
+        this.cartCount.next(this._cartCount);
+      })
+    }
 
-      this._cartCount.count = r.response.cart.length;
-      this._cartCount.total = r.response.totalCartPrice;
-      this.cartCount.next(this._cartCount);
-
-
-    })
   }
 
   reduceCartCount() {
-    this.getCart({}).subscribe((r: any) => {
-      this._cartCount.count = r.response.cart.length;
-      this._cartCount.total = r.response.totalCartPrice;
-      this.cartCount.next(this._cartCount);
-    })
+    if (this.authService.isLoggedIn()) {
+      this.getCart().subscribe((r: any) => {
+        this._cartCount.count = r.response.cart.length;
+        this._cartCount.total = r.response.totalCartPrice;
+        this.cartCount.next(this._cartCount);
+      })
+    }
   }
   setCartProducts(products: any) {
     this.cartProducts = products;

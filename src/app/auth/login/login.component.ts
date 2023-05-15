@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalcartService } from 'src/app/services/localcart.service';
 
 @Component({
   selector: 'login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private as: AuthService,
     private alert: AlertService,
-    private router: Router
+    private router: Router,
+    private localCartService: LocalcartService,
   ) // private spinner: SpinnerVisibilityService
   {
     // spinner.hide();
@@ -122,11 +124,13 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('accessToken', r.response.accessToken);
         localStorage.setItem('userId', r.response.userId);
+        this.localCartService.pushLocalCartToLive();
         // this.router.navigate(['/']);
         // if (localStorage.getItem('next_p') === 'cart') {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
         // window.location.reload();
+
         if (localStorage.getItem('next_url') && localStorage.getItem('next_url') != 'undefined') {
           this.router.navigate([localStorage.getItem('next_url')]);
           localStorage.removeItem('next_url');
@@ -145,10 +149,7 @@ export class LoginComponent implements OnInit {
     let data = {
       userId: this.userId
     }
-    console.log(data);
     this.as.resendOTP(data).subscribe((r: any) => {
-      // console.log(r);
-
       if (r.status) {
         this.alert.fireToastS(r.message[0]);
       }

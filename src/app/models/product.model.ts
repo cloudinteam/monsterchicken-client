@@ -6,15 +6,18 @@ export interface Product {
   maxQuantity: number;
   categoryName: string;
   categoryId: string;
-  price: string;
-  discountPrice: string;
+  price: number;
+  discountPrice: number;
   description: string;
-  unit: string;
+  productUnit: number;
+  productUnitType: string;
   status: number;
   wishlist: boolean;
   cartlist: boolean;
   cartProductQuantity: number;
   imageUrl: any[];
-
+  nearByBranch: string;
+  brand: string;
+  brandId: string;
 }
 

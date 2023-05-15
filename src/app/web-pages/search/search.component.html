@@ -18,27 +18,7 @@
             </pre>
           </div> -->
 
-          <div class="pro-card">
-            <div class="pro-img">
-              <img [src]="product.imageUrl[0]" alt="" />
-            </div>
-            <span class="pro-category"> {{ product.categoryName | titlecase }} </span>
-            <div class="pro-desc">
-              <span class="pro-title">
-                {{ product.productName }}
-              </span>
-              <span class="pro-short-desc" tooltipPosition="top" [pTooltip]="product.description"> {{ product.description.substring(0, 35) }}... </span>
-              <div class="pro-details">
-                <div class="pro-price">
-                  <!-- <span>{{ product.discountPrice }}</span> &nbsp; -->
-                  <span> {{ product.price }} </span>
-                </div>
-                <div class="pro-action">
-                  <button type="button" (click)="addTocart(product)"> <i class="pi pi-shopping-cart"></i> Add </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <product-card [product]="product" (loaded)="ngOnInit()"></product-card>
 
         </div>
 

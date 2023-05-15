@@ -8,11 +8,15 @@ import {
   NgZone,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
+  AfterViewInit,
+  AfterContentChecked,
 } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { AlertService } from 'src/app/services/alert.service';
+import { CartService } from 'src/app/services/cart.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
 
@@ -23,7 +27,7 @@ import { MapService } from 'src/app/services/map.service';
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
 })
-export class LocationComponent implements OnInit {
+export class LocationComponent implements OnInit, AfterViewInit, AfterContentChecked {
 
   @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
   @ViewChild('searchInput') searchInput!: ElementRef;
@@ -79,14 +83,11 @@ export class LocationComponent implements OnInit {
     private headerService: HeaderService,
     private mapService: MapService,
     private alert: AlertService,
+    private cdRef: ChangeDetectorRef,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit() {
-
 
     if (localStorage.getItem('current_address') != null) {
       let address: any = localStorage.getItem('current_address');
@@ -98,8 +99,18 @@ export class LocationComponent implements OnInit {
       this.handlePermission();
     }
 
+    this.cdRef.markForCheck();
 
   }
+
+  ngAfterViewInit() {
+
+  }
+
+  ngAfterContentChecked(): void {
+
+  }
+
 
   addressChange(address: any) {
     //setting address from API to local variable
@@ -114,18 +125,22 @@ export class LocationComponent implements OnInit {
         this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
 
         this.searchAuto.addListener('place_changed', () => {
+        // this.searchAuto.addListener('blur', () => {
+        // this.searchAuto.addListener('keydown', () => {
           this.ngZone.run(() => {
             const place: any = this.searchAuto?.getPlace();
-            console.debug(place);
+            // console.log(place);
 
-            this.lat = place?.geometry?.location?.lat()
-            this.lng = place?.geometry?.location?.lat()
+            this.lat = place.geometry.location.lat()
+            this.lng = place.geometry.location.lng()
 
             this.mapMarker = {
-              lat: place?.geometry?.location?.lat(),
-              lng: place?.geometry?.location?.lat(),
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
             }
-            this.geoCode('address', this.searchInput.nativeElement.value);
+            // console.log(this.mapMarker);
+            // this.geoCode('address', this.searchInput.nativeElement.value);
+            this.geoCode('location')
           })
         })
 
@@ -214,7 +229,7 @@ export class LocationComponent implements OnInit {
       // console.log(this.postCode);
 
       if (this.postCode) {
-        this.mapService.locationCheck({ cityId: this.city }).subscribe( (r: any) => {
+        this.mapService.locationCheck({ cityId: this.city, pincode: this.postCode }).subscribe( (r: any) => {
           // console.log(r);
           if (r.serviceProvider) {
             this.errorAlert = false;
@@ -228,12 +243,14 @@ export class LocationComponent implements OnInit {
           }
         })
       }
+
       this.loading = false;
       // console.log(results); , pinCode: this.postCode, lat: this.mapMarker.lat, lng: this.mapMarker.lng
     });
   }
 
   handlePermission() {
+    console.log('handle');
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         this.setFromLocal();
@@ -257,8 +274,9 @@ export class LocationComponent implements OnInit {
     this.ngbModal.open(this.locationAllow, { centered: true, size: 'md' });
   }
 
+
   getCoords() {
-    console.log('getCoords Called');
+    // console.log('getCoords Called');
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         navigator.geolocation.getCurrentPosition(
@@ -310,6 +328,7 @@ export class LocationComponent implements OnInit {
   }
 
   confirmLocation() {
+    this.cartService.productLoad$.next(true);
     this.showAddress.emit();
   }
 }

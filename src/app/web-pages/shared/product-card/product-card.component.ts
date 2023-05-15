@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { LocalcartService } from 'src/app/services/localcart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-card.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit {
 
   @Input() product!: Product;
   @Output() loaded: EventEmitter<any> = new EventEmitter();
@@ -22,34 +24,108 @@ export class ProductCardComponent {
 
   constructor(
     private cartService: CartService,
+    private localCartService: LocalcartService,
     private alert: AlertService,
     private router: Router,
     private productService: ProductService,
     private cdRef: ChangeDetectorRef,
+    private authService: AuthService,
   ) {
 
   }
 
-  addCart(id: any) {
-    this.loading = true;
-    let data = { productId: id };
-    this.cartService.addCart(data).subscribe((r: any) => {
-      this.cartService.addCartCount();
-      this.alert.fireToastS('Prooduct added to cart');
-      // this.loaded.emit();
-      this.afterCart(id);
-      this.loading = false;
-    });
+  ngOnInit(): void {
+
+    if (localStorage.getItem('localCart') != null) {
+
+      let localCart = this.localCartService.getLocalCart
+      localCart.forEach((cartItem: any) => {
+        if (cartItem.productId == this.product.productId) {
+          this.product.cartProductQuantity = cartItem.quantity;
+        }
+      })
+    }
   }
+
+  addCart(product: Product) {
+    this.loading = true;
+
+    if (this.authService.isLoggedIn()) {
+      let data = {
+          productId: product.productId,
+          nearByBranch: product.nearByBranch,
+          quantity: 1,
+        };
+      this.cartService.addCart({carts:[data]}).subscribe((r: any) => {
+        this.cartService.addCartCount();
+        this.alert.fireToastS('Prooduct added to cart');
+        // this.loaded.emit();
+        this.afterCart(product.productId);
+        this.loading = false;
+      });
+    }
+
+    if (!this.authService.isLoggedIn()) {
+      this.addLocalCart(product);
+    }
+
+  }
+
+  addLocalCart(product: Product) {
+    console.log(product);
+
+    let localCart: any[] = [];
+    let cartItem = {
+      productId: product.productId,
+      productName: product.productName,
+      unit: product.productUnit + product.productUnitType,
+      maxQuantity: product.maxQuantity,
+      categoryId: product.categoryId,
+      nearByBranch: product.nearByBranch,
+      totalPrice: product.price,
+      quantity: (product.cartProductQuantity > 0) ? product.cartProductQuantity : 1,
+    }
+
+    if (localStorage.getItem('localCart') != null) {
+
+      let localCart = this.localCartService.getLocalCart
+
+      var status = localCart.some(function(el: any) {
+        return (el.productId === product.productId);
+      });
+
+      if (status) {
+        const index = localCart.findIndex( (cart: any) => {
+          return cart.productId === product.productId;
+        });
+        ++localCart[index].quantity;
+        this.product.cartProductQuantity = localCart[index].quantity;
+      } else if (!status) {
+        localCart.push(cartItem);
+        this.product.cartProductQuantity = cartItem.quantity;
+      }
+
+      localStorage.setItem('localCart', JSON.stringify(localCart));
+      this.localCartService.setCartTotal();
+      this.loading = false;
+    } else {
+      localCart.push(cartItem);
+      this.product.cartProductQuantity = cartItem.quantity;
+      localStorage.setItem('localCart', JSON.stringify(localCart));
+      this.localCartService.setCartTotal();
+      this.loading = false;
+    }
+
+
+  }
+
+
 
   afterCart(id: any) {
     let data = { productId: id };
     this.productService.viewProduct(data).subscribe((r: any) => {
       // console.log(r.response.productDetail);
       this.product = r.response.productDetail;
-      // this.cdRef.markForCheck();
-      // this.loading = false;
-      // this.productDetails = r.response.productDetail;
     });
   }
 
@@ -61,22 +137,56 @@ export class ProductCardComponent {
     this.router.navigate(['/category/' + id]);
   }
 
-  cartNumber($event: any, id: string) {
+  cartNumber($event: any, product: Product) {
     // console.log($event.value, id);
-
     this.loading = true;
-    let data = {
-      productId: id,
-      quantity: $event.value
-    };
-    this.cartService.addCart(data).subscribe((r: any) => {
-      this.cartService.addCartCount();
-      this.alert.fireToastS(r.message[0]);
-      // this.loaded.emit();
-      this.afterCart(id);
-      this.loading = false;
+
+
+    if (this.authService.isLoggedIn()) {
+      let data = [{
+        productId: product.productId,
+        quantity: $event.value,
+        nearByBranch: product.nearByBranch,
+      }];
+      this.cartService.addCart({carts:data}).subscribe((r: any) => {
+        this.cartService.addCartCount();
+        this.alert.fireToastS(r.message[0]);
+        // this.loaded.emit();
+        this.afterCart(product.productId);
+        this.loading = false;
+      });
+    }
+
+    if (!this.authService.isLoggedIn()) {
+      this.cartLocalCount($event, product);
+    }
+
+  }
+
+  cartLocalCount($event: any, product: Product) {
+
+    let localCart = this.localCartService.getLocalCart
+    const index = localCart.findIndex( (cart: any) => {
+      return cart.productId === product.productId;
     });
+
+    if ($event.value != 0) {
+      localCart[index].quantity = $event.value;
+    } else {
+      localCart.splice(index, 1);
+      this.product.cartProductQuantity = 0;
+    }
+
+    if (localCart.length > 0) {
+      localStorage.setItem('localCart', JSON.stringify(localCart));
+    } else {
+      localStorage.removeItem('localCart');
+    }
+
+    this.localCartService.setCartTotal();
+    this.loading = false;
 
   }
 
 }
+

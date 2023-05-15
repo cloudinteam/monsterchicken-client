@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { LocalcartService } from 'src/app/services/localcart.service';
 
 @Component({
   selector: 'cart',
@@ -27,39 +28,59 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
+    private localCartService: LocalcartService,
     private authService: AuthService,
     private router: Router,
     private alert: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.loadCart();
+    this.loading = true;
+
+    if (this.authService.isLoggedIn()) {
+      // Update Local_Cart to DB
+      // this.localCartService.pushLocalCartToLive();
+      this.loadCart();
+    } else {
+      this.loadLocalCart();
+    }
+
+  }
+
+  loadLocalCart() {
+    this.loading = true;
+
+    let cartData: any = localStorage.getItem('localCart');
+    let localCart = JSON.parse(cartData)
+
+    this.cart = localCart;
+    this.totalCount = localCart.length;
+    this.totalCartPrice = this.localCartService.getCartGrandTotal - this.deliveryCharge;
+    this.grandTotal = this.localCartService.getCartGrandTotal;
+
+    this.loading = false;
+
   }
 
   loadCart() {
     this.loading = true;
-    this.cartService.getCart({}).subscribe((r: any) => {
-      // console.log(r);
+    this.cartService.getCart().subscribe((r: any) => {
       this.cart = r.response.cart;
       this.totalCount = r.response.totalCount;
       this.totalCartPrice = r.response.totalCartPrice;
       this.deliveryCharge = r.response.deliveryCharge;
       this.grandTotal = r.response.grandTotal;
       this.cartService.cartCount.next({ count: this.totalCount, total: this.totalCartPrice })
-      // console.log(this.cart);
       this.cartItems();
       this.loading = false;
     });
   }
 
   checkout() {
-    //if (this.authService.isLoggedIn() && localStorage.getItem('accessToken') != '') {
     if (this.authService.isLoggedIn() && this.cart != null) {
       let ids: any = localStorage.getItem('cartIds');
       let cartIds = JSON.parse(ids)
-      // this.cartService.cartCheckout({cartId: cartIds, addressId: 1}).subscribe((r: any) => {
-      //   console.log(r);
-      // })
+
       this.close.emit();
       this.router.navigate(['/checkout']);
     } else {
@@ -72,8 +93,11 @@ export class CartComponent implements OnInit {
   }
 
   updated() {
-    this.loadCart();
-    // console.log('from cart');
+    if (this.authService.isLoggedIn()) {
+      this.loadCart();
+    } else {
+      this.loadLocalCart();
+    }
   }
 
   cartItems() {

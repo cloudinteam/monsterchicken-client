@@ -37,6 +37,8 @@ export class ApiCallService {
       requestFrom: 'web',
       userLat: this.lat(),
       userLong: this.long(),
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + NetworkService.authToken(),
     };
     body = Object.assign(hash, body);
     let obj = this.es.dataIn(body);

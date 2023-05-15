@@ -37,8 +37,6 @@ export class ProductsListComponent implements OnInit {
     this.cartService.productLoad$.subscribe((r) => {
       if (r == true) {
         this.init();
-      } else {
-        this.init();
       }
     })
 
@@ -53,11 +51,18 @@ export class ProductsListComponent implements OnInit {
 
   getProduct(catId: any) {
     this.loading = true;
-    let data = { category: catId };
+    let latLngData: any = localStorage.getItem('lat_lng');
+    let latLng = JSON.parse(latLngData)
+    let data = {
+      category: catId,
+      userLat: latLng.lat || '',
+      userLong: latLng.lng || '',
+    };
+    // console.log(data);
     this.productService.getProducts(data).subscribe((r: any) => {
       this.productList = r.response.products;
       this.categories = r.response.categories;
-      // console.debug(r);
+      console.debug(r);
       this.loading = false;
     });
   }
