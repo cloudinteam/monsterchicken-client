@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   loadData() {
     this.productService.getBanners({}).subscribe((r: any) => {
-      // console.log(r);
+      console.log(r);
       // this.banners = r.response.banners;
     })
   }

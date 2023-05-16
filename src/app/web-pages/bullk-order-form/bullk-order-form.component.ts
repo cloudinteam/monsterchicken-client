@@ -113,12 +113,6 @@ export class BullkOrderFormComponent implements OnInit {
     });
   }
 
-  getBulkOrder() {
-    this.productService.getBulkOrder().subscribe((r: any) => {
-      this.bulkOrder = r.response.bulkOrders;
-    });
-  }
-
   getCategoryOptions() {
     this.productService.getCategoryOptions({}).subscribe((r: any) => {
       // console.debug(r);

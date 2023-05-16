@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     private alert: AlertService,
     private router: Router,
     private localCartService: LocalcartService,
+    private cartService: CartService,
   ) // private spinner: SpinnerVisibilityService
   {
     // spinner.hide();
@@ -124,14 +126,16 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('accessToken', r.response.accessToken);
         localStorage.setItem('userId', r.response.userId);
-        this.localCartService.pushLocalCartToLive();
+
         // this.router.navigate(['/']);
         // if (localStorage.getItem('next_p') === 'cart') {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
         // window.location.reload();
+        this.localCartService.pushLocalCartToLive();
 
         if (localStorage.getItem('next_url') && localStorage.getItem('next_url') != 'undefined') {
+
           this.router.navigate([localStorage.getItem('next_url')]);
           localStorage.removeItem('next_url');
           setTimeout(() => {

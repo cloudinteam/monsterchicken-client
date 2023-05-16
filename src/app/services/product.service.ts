@@ -39,9 +39,6 @@ export class ProductService {
   //   return this.api.postApiCallAuth(NetworkService.dashboard(), body);
   // }
 
-  getBulkOrder() {
-    return this.api.getApiCallAuth(NetworkService.getBulkOrder());
-  }
 
   getCategoryOptions(body: any): any {
     return this.api.postApiCallAuth(NetworkService.getCategoryOptions(), body);

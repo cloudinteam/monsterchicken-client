@@ -6,29 +6,16 @@
     <ul>
       <li> <a routerLink="/" class="pointer"> Home </a> </li>
       <!-- <li> <a [routerLink]="'/category/'+this.categories[0]?.categoryId"> {{ this.categories[0]?.categoryName }} </a> </li> -->
-      <li> {{ this.categories[0].categoryName }} </li>
+      <li> {{ this.selectedCategory }} </li>
     </ul>
   </div>
 
   <div class="row justify-content-center">
 
-
-
-    <!-- <div class="col-12">
-      <pre>
-        {{ categories[0] | json }}
-      </pre>
-    </div> -->
-
     <div class="col-12 col-md-10" *ngIf="productList.length > 0">
       <div class="row g-4">
 
         <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let product of productList; let i = index;">
-          <!-- <div class="pro-card">
-            <pre>
-              {{product|json}}
-            </pre>
-          </div> -->
 
           <product-card [product]="product" (loaded)="ngOnInit()"></product-card>
 

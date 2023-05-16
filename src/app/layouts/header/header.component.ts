@@ -129,7 +129,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
 
     this.productService.getCategories().subscribe((r: any) => {
-      this.categories = r.categories;
+      this.categories = r.response.categories;
     })
 
     this.profileItems = [
