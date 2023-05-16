@@ -13,6 +13,7 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { AddressService } from 'src/app/services/address.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -49,6 +50,10 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   submitted = false;
   addressForm!: FormGroup;
   serviceAvailable: boolean = true;
+
+  optionsPlaces: Options = new Options({
+    componentRestrictions: {country: 'IN'}
+  })
 
   @Input() address: any;
   @Output() backToList: EventEmitter<any> = new EventEmitter();
@@ -141,6 +146,38 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     this.formattedaddress = address.formatted_address;
   }
 
+
+  searchFn() {
+    setTimeout(() => {
+      // console.log(this.searchString);
+      if (this.searchString != '') {
+
+        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+
+        this.searchAuto.addListener('place_changed', () => {
+        // this.searchAuto.addListener('blur', () => {
+        // this.searchAuto.addListener('keydown', () => {
+          this.ngZone.run(() => {
+            const place: any = this.searchAuto?.getPlace();
+            // console.log(place);
+
+            this.lat = place.geometry.location.lat()
+            this.lng = place.geometry.location.lng()
+
+            this.mapMarker = {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+            }
+            // console.log(this.mapMarker);
+            // this.geoCode('address', this.searchInput.nativeElement.value);
+            this.geoCode('location')
+          })
+        })
+
+      }
+    }, 1000);
+  }
+
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) {
       // console.log(event.latLng.toJSON());
@@ -213,7 +250,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
       if (this.addressForm.value.pinCode) {
         this.mapService
-          .locationCheck({ cityId: this.addressForm.value.city })
+          .locationCheck({ cityId: this.addressForm.value.city, pincode: this.addressForm.value.pinCode })
           .subscribe((r: any) => {
             // console.log(r);
             if (r.serviceProvider) {
@@ -306,32 +343,6 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
         console.log(result.state);
       });
     });
-  }
-
-  searchFn() {
-    setTimeout(() => {
-      // console.log(this.searchString);
-      if (this.searchString != '') {
-        this.searchAuto = new google.maps.places.Autocomplete(
-          this.searchInput.nativeElement
-        );
-
-        this.searchAuto.addListener('place_changed', () => {
-          this.ngZone.run(() => {
-            const place: any = this.searchAuto?.getPlace();
-
-            this.lat = place?.geometry?.location?.lat();
-            this.lng = place?.geometry?.location?.lat();
-
-            this.mapMarker = {
-              lat: place?.geometry?.location?.lat(),
-              lng: place?.geometry?.location?.lat(),
-            };
-            this.geoCode('address', this.searchInput.nativeElement.value);
-          });
-        });
-      }
-    }, 1500);
   }
 
   submit() {

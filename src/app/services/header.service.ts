@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { ApiCallService } from './api-call.service';
+import { NetworkService } from './network.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,17 @@ export class HeaderService {
   private _openLogin = false;
   public openLogin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this._openLogin);
 
-  constructor() { }
+  constructor(
+    private api: ApiCallService,
+  ) { }
 
+
+  notificationList(): any {
+    return this.api.getApiCallAuth(NetworkService.notificationList());
+  }
+
+  notificationUpdate(id: string): any {
+    return this.api.getApiCallAuth(NetworkService.notificationUpdate(id));
+  }
 
 }
