@@ -10,13 +10,15 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { TableModule } from 'primeng/table';
 import { FlexModule } from '@angular/flex-layout';
 import { TooltipModule } from 'primeng/tooltip';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
   declarations: [
     MyAccountComponent,
     SavedAddressComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,

@@ -19,7 +19,7 @@
           <div class="col-12 col-sm-6 col-md-4">
             <div class="form-group" > <!--  (submit)="applyCoupon()" [formGroup]="couponForm"  formControlName="promoCode" [(ngModel)]="promoCode" -->
               <input type="text" name="promoCode" formControlName="promoCode" placeholder="Enter Coupon Code"
-                class="form-control rounded-0" />
+                class="form-control rounded-0" required/>
               <div *ngIf="submitted && couponFormControls['promoCode'].errors" class="invalid-error">
                 <span *ngIf="couponFormControls['promoCode'].errors.required">Coupon Code is Required</span>
               </div>

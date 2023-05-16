@@ -148,21 +148,25 @@ export class OrderSummaryComponent implements OnInit {
       };
       // console.log(data);
       this.loading = true;
-      this.checkoutService.getCheckout(data).subscribe((r: any) => {
-        this.data = r;
-        this.shippingAddress = r.response.isAddressAvailable;
-        this.orderSummary = r.response.checkOutData;
-        this.totalCount = r.response.totalCount;
-        this.totalCartPrice = r.response.totalCartPrice;
-        this.discountPrice = r.response.discountPrice;
-        this.deliveryCharge = r.response.deliveryCharge;
-        this.grandTotal = r.response.grandTotal;
-        this.loading = false;
-        this.cdRef.markForCheck();
-      });
+      this.checkoutService.promoCode(this.couponForm.value).subscribe((r: any) => {
+        console.log(r);
+      })
+      // this.checkoutService.getCheckout(data).subscribe((r: any) => {
+      //   this.data = r;
+      //   this.shippingAddress = r.response.isAddressAvailable;
+      //   this.orderSummary = r.response.checkOutData;
+      //   this.totalCount = r.response.totalCount;
+      //   this.totalCartPrice = r.response.totalCartPrice;
+      //   this.discountPrice = r.response.discountPrice;
+      //   this.deliveryCharge = r.response.deliveryCharge;
+      //   this.grandTotal = r.response.grandTotal;
+      //   this.loading = false;
+      //   this.cdRef.markForCheck();
+      // });
     } else {
-      this.alert.fireToastF('Invalid Promocode');
+      // this.alert.fireToastF('Invalid Promocode');
     }
+    this.loading = false;
   }
 
   validate(field: any) {

@@ -135,6 +135,9 @@ export class NetworkService {
   static payment(): string {
     return this.server_url() + this.server_v() + '/payment';
   }
+  static promoCode(): string {
+    return this.server_url() + this.server_v() + '/web/check-promo-code';
+  }
 
 
 
@@ -185,5 +188,13 @@ export class NetworkService {
 
   static bulkOrderSubmit(): string {
     return this.server_url() + this.server_v() + '/bulkOrder/store';
+  }
+
+  // Notification
+  static notificationList(): string {
+    return this.server_url() + this.server_v() + '/notification/my-notifications';
+  }
+  static notificationUpdate(id: string): string {
+    return this.server_url() + this.server_v() + '/notification/update/'+id;
   }
 }

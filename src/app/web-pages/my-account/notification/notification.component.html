@@ -1,0 +1,31 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-4" *ngIf="!loading">
+  <div class="row">
+
+    <div class="col-12 text-center mb-4">
+      <h4> <b>Notifications</b> </h4>
+    </div>
+
+    <div class="col-12">
+
+      <div class="card p-3 mb-2" *ngFor="let message of notifications; let sn = index">
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-2">
+          <span class="badge rounded-pill text-bg-secondary">{{sn+1}}</span>
+          <span class="badge rounded-pill " [ngClass]="(message.is_read == 0) ? 'text-bg-danger' : 'text-bg-success'"> {{ (message.is_read == 0) ? 'Unread':'Read'}} </span>
+        </div>
+        <div>
+          <hr class="my-1">
+        </div>
+        <p> {{ message.notification }} </p>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="badge rounded-pill text-bg-dark">{{ message.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+          <span class="badge rounded-pill text-bg-secondary clickable" (click)="update(message.notification_id)"><i class="pi pi-times"></i></span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

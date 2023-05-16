@@ -150,6 +150,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       },
       {
+        label: 'Notifications',
+        icon: 'pi pi-bell',
+        command: () => {
+          // this.activeMenu.checkoutMenu.next('order-history');
+          this.router.navigate(['/account/notifications']);
+        }
+      },
+      {
         label: 'Saved Address',
         icon: 'pi pi-home',
         command: () => {
