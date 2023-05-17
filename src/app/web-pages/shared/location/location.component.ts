@@ -196,7 +196,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
     if (event.latLng != null) {
       // console.log(event.latLng.toJSON());
       this.mapMarker = event.latLng.toJSON();
-      this.geoCode();
+      this.geoCode('location');
     }
   }
 
@@ -270,11 +270,11 @@ export class LocationComponent implements OnInit, AfterViewInit {
       }
       // console.log(this.mapMarker);
       localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
-      // console.log(this.postCode);
+      console.log(this.postCode);
 
       if (this.postCode) {
-        this.mapService.locationCheck({ cityId: this.city, pincode: this.postCode }).subscribe( (r: any) => {
-          // console.log(r);
+        this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
+          console.log(r);
           if (r.serviceProvider) {
             this.errorAlert = false;
             this.alert.fireToastS(r.message[0])
@@ -283,6 +283,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
           }
           if (!r.serviceProvider) {
             this.errorAlert = true;
+            this.confirmAddress = false;
             this.alert.fireToastF(r.message[0])
           }
         })
@@ -294,7 +295,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   handlePermission() {
-    console.log('handle');
+    // console.log('handle');
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         this.setFromLocal();
@@ -332,7 +333,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
                 lat: this.lat,
                 lng: this.lng,
               };
-              this.geoCode();
+              this.geoCode('location');
             }
           },
           () => {
@@ -352,7 +353,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
                 lat: this.lat,
                 lng: this.lng,
               };
-              this.geoCode();
+              this.geoCode('location');
             }
           },
           () => {

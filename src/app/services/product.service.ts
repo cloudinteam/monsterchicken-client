@@ -27,8 +27,8 @@ export class ProductService {
     return this.api.postApiCallAuth(NetworkService.getSubCat(), body);
   }
 
-  getBanners(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getBanners(), body);
+  getBanners(): any {
+    return this.api.getApiCallAuth(NetworkService.getBanners());
   }
 
   // search(body: any): any {

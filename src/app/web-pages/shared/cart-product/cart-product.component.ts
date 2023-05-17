@@ -43,7 +43,6 @@ export class CartProductComponent implements OnInit {
         this.update.emit();
       });
     } else if (!this.authService.isLoggedIn()) {
-      console.log(1)
       let localCart = this.localCartService.getLocalCart
 
       const index = localCart.findIndex( (cart: any) => {

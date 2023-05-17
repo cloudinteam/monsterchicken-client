@@ -11,7 +11,7 @@
 
 <div class="row g-3" *ngIf="!loading">
 
-  <div class="col-12">
+  <div class="col-12" *ngIf="!outOfStock">
     <div class="items-bill">
       <div class="bill-heading mb-3"> Do you have a coupon ? </div>
       <form (ngSubmit)="applyCoupon()" [formGroup]="couponForm">
@@ -36,12 +36,18 @@
     </div>
   </div>
 
+  <div class="col-12" *ngIf="outOfStock">
+    <div class="alert alert-dark rounded-0 mb-0" role="alert">
+      <span>Some of the products are not available for your shipping location please <strong class="clickable text-danger" [routerLink]="'/checkout/address'"> change the location </strong> or <strong class="clickable text-danger" [routerLink]="'/'">choose other products</strong> </span>
+    </div>
+  </div>
+
   <div class="col-12">
 
     <div class="items-bill">
       <div class="bill-heading mb-3"> Products </div>
       <div class="row g-3">
-        <div class="col-12 col-md-6" *ngFor="let cartItem of orderSummary.cartData; let sn = index">
+        <div class="col-12 col-md-6" *ngFor="let cartItem of orderSummary; let sn = index">
           <div class="cart-item ">
             <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
               <div>
@@ -53,9 +59,10 @@
                 </div>
                 <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
 
-                  <div fxFlex="auto"> <span class="item-unit"> {{cartItem.unit}} </span> <span class="fw-bold text-black"> x{{cartItem.quantity}} </span>  </div>
+                  <div fxFlex="auto"> <span class="item-unit"> {{cartItem.unit}}&nbsp;{{ cartItem.unitType }} </span> <span class="fw-bold text-black"> x{{cartItem.quantity}} </span>  </div>
                   <div fxFlex="auto" fxLayoutAlign="end center">
-                    <span class="item-price"> {{cartItem.totalPrice | currency: '₹'}} </span>
+                    <span *ngIf="cartItem.totalPrice == 0" class="fw-bold px-2 text-white rounded-2 bg-danger">Out Of Stock</span>
+                    <span class="item-price" *ngIf="cartItem.totalPrice !== 0"> {{cartItem.totalPrice | currency: '₹'}} </span>
                   </div>
 
                 </div>
@@ -75,32 +82,38 @@
       <div fxLayout="column" fxLayoutGap="10px">
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <span class="items-price"> {{ shippingAddress.address.area }}  </span>
+          <span class="items-title"> Name: </span>
+          <span class="items-price"> {{  shippingAddress.nickName | titlecase }} </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <span class="items-title"> Phone: </span>
+          <span class="items-price"> {{  shippingAddress.number }} </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <span class="items-price"> {{ shippingAddress.area }}  </span>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <!-- <span class="items-price"> Street Name:  </span> -->
-          <span class="items-price"> {{ shippingAddress.address.streetName }}, </span>
+          <span class="items-price"> {{ shippingAddress.streetName }}, </span>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <!-- <span class="items-price"> Landmark: </span> -->
-          <span class="items-price"> {{ shippingAddress.address.landMark }}, </span>
+          <span class="items-price"> {{ shippingAddress.landMark }}, </span>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <span class="items-price"> {{ shippingAddress.address.city.name }}, {{ shippingAddress.address.state.name }} {{ shippingAddress.address.pinCode }}  </span>
+          <span class="items-price"> {{ shippingAddress.city.name }}, {{ shippingAddress.state.name }} {{ shippingAddress.pincode }}  </span>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <span class="items-title"> Type: </span>
-          <span class="items-price"> {{  ( (shippingAddress.address.type == 'other') ? shippingAddress.address.others: shippingAddress.address.type ) | titlecase }} </span>
+          <span class="items-price"> {{  ( (shippingAddress.type == 'other') ? (shippingAddress.others? shippingAddress.others:'-' ): shippingAddress.type ) | titlecase }} </span>
         </div>
 
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <span class="items-title"> Nickname: </span>
-          <span class="items-price"> {{  shippingAddress.address.nickName | titlecase }} </span>
-        </div>
 
       </div>
 
@@ -123,10 +136,10 @@
           <span class="items-price"> {{discountPrice | currency:'₹'}} </span>
         </div>
 
-        <div fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- <div fxLayout="row" fxLayoutAlign="space-between center">
           <span class="items-title"> Delivery Charge </span>
           <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
-        </div>
+        </div> -->
 
         <div>
           <hr class="m-0">
@@ -144,7 +157,8 @@
   <div class="col-12 text-end">
 
     <span class="text-secondary fw-semibold clickable me-2" [routerLink]="'/checkout/address'"> Change Address </span>
-    <button type="button" class="btn btn-danger rounded-0" (click)="checkout()"> Proceet to checkout </button>
+    <button type="button" class="btn btn-danger rounded-0" *ngIf="outOfStock" [routerLink]="'/'"> Browse Store </button>
+    <button type="button" class="btn btn-danger rounded-0" *ngIf="!outOfStock" (click)="checkout()"> Proceet to checkout </button>
 
   </div>
 

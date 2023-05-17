@@ -40,7 +40,6 @@ export class AddressListComponent implements OnInit {
   getAddress() {
     this.loading = true;
     this.addressService.listAddress({ userId: localStorage.getItem('userId') }).subscribe((r: any) => {
-      console.log(r);
       this.address = r.response.addresses;
       this.address.forEach(address => {
         if (address.defaultAddress) {
