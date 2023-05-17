@@ -4,6 +4,12 @@
 
   <div class="row g-3">
 
+    <!-- <div class="col-12">
+      <pre>
+        {{data|json}}
+      </pre>
+    </div> -->
+
     <div class="col-12">
       <div class="items-bill" fxLayout="column" fxLayoutGap="20px" >
         <div class="bill-heading"> Bill Details </div>
@@ -22,7 +28,7 @@
 
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <span class="items-title"> Delivery Charge </span>
-            <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
+            <span class="items-price"> {{ ((deliveryCharge == 0) ? 'Free' : (deliveryCharge | currency:'₹')) }} </span>
           </div>
 
           <div>

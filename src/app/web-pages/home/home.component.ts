@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
   }
 
   loadData() {
-    this.productService.getBanners({}).subscribe((r: any) => {
-      console.log(r);
-      // this.banners = r.response.banners;
+    this.productService.getBanners().subscribe((r: any) => {
+      // console.log(r);
+      this.banners = r.response.banners;
     })
   }
 

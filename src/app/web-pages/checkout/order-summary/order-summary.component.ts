@@ -28,6 +28,8 @@ export class OrderSummaryComponent implements OnInit {
 
   couponForm!: FormGroup;
   promoCode: string = '';
+  promoCodeId: string = '';
+  outOfStock: boolean = true;
 
   constructor(
     private cartService: CartService,
@@ -58,6 +60,11 @@ export class OrderSummaryComponent implements OnInit {
     this.cartService.cartCount.subscribe(() => {
       this.init();
     });
+    this.cartService.productLoad$.subscribe((r) => {
+      if (r == true) {
+        this.loadSummary()
+      }
+    })
     this.cdRef.markForCheck();
   }
 
@@ -69,6 +76,7 @@ export class OrderSummaryComponent implements OnInit {
   initCouponForm() {
     this.couponForm = this.formBuilder.group({
       promoCode: ['', [Validators.required]],
+      subTotal: [null, [Validators.required]],
       userId: [localStorage.getItem('userId'), [Validators.required]],
     });
   }
@@ -76,34 +84,9 @@ export class OrderSummaryComponent implements OnInit {
     return this.couponForm['controls'];
   }
 
-  // loadCart() {
-  //   this.loading = true;
-  //   this.cartService.getCart({}).subscribe((r: any) => {
-  //     this.cart = r.response.cart;
-  //     let cartId: any[] = [];
-  //     this.cart.forEach( (item: any) => {
-  //       // this.cartIds.push(item.cartId);
-  //       cartId.push(item.cartId)
-  //       this.cdRef.markForCheck();
-  //     })
-  //     // console.log(cartId);
-  //     this.cartIds = cartId;
-  //     if (this.cartIds.length = 0) {
-  //       this.alert.fireToastF('Cart Empty!');
-  //       setTimeout(() => {
-  //         this.router.navigate(['/']);
-  //       }, 100);
-  //     }
-  //     this.loadSummary();
-  //   });
-  // }
-
   loadSummary() {
-    // console.log(this.cartIds);
-
     let id: any = localStorage.getItem('cartIds');
     var cartIds = JSON.parse(id);
-    console.log(this.cartIds.length);
     if (this.cartIds.length == 0 || this.cartIds == null) {
       this.alert.fireToastF('Cart empty');
       this.router.navigate(['/']);
@@ -111,20 +94,23 @@ export class OrderSummaryComponent implements OnInit {
       this.loading = true;
       let data = {
         cartId: this.cartIds,
-      };
-      // console.log(data);
-      // let data = {
-      //   cartId: ids,
-      //   promoCode: this.couponForm.value.promoCode
-      // }
-      this.checkoutService.getCheckout(data).subscribe((r: any) => {
+      }
+
+      this.checkoutService.cartSummary().subscribe((r: any) => {
         this.data = r;
         this.shippingAddress = r.response.isAddressAvailable;
-        this.orderSummary = r.response.checkOutData;
+        this.orderSummary = r.response.cartData;
         this.totalCount = r.response.totalCount;
-        this.totalCartPrice = r.response.totalCartPrice;
+        this.totalCartPrice = r.response.grandTotal;
         this.deliveryCharge = r.response.deliveryCharge;
         this.grandTotal = r.response.grandTotal;
+        this.discountPrice = 0;
+        this.outOfStock = r.response.outOfStock;
+        this.submitted = false;
+        this.couponForm.patchValue({
+          subTotal: this.totalCartPrice
+        })
+
         this.loading = false;
         this.cdRef.markForCheck();
       });
@@ -132,8 +118,7 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   applyCoupon() {
-    console.log(this.couponForm.value.promoCode);
-    // console.log(this.promoCode)
+
     this.submitted = true;
     if (this.couponForm.invalid) {
       this.submitted = true;
@@ -143,28 +128,33 @@ export class OrderSummaryComponent implements OnInit {
       let id: any = localStorage.getItem('cartIds');
       let cartIds = JSON.parse(id);
       let data = {
-        cartId: cartIds,
         promoCode: this.couponForm.value.promoCode,
+        subTotal: this.totalCartPrice
       };
-      // console.log(data);
+      console.log(this.couponForm.value);
       this.loading = true;
-      this.checkoutService.promoCode(this.couponForm.value).subscribe((r: any) => {
-        console.log(r);
+      this.checkoutService.promoCode(data).subscribe((r: any) => {
+        console.log(r)
+        if (r.status) {
+          if (r.offer) {
+            this.alert.fireToastS(r.message[0]);
+            this.promoCodeId = r.offer.offer_id;
+            this.discountPrice = r.offer.cart_discount_amount;
+            this.grandTotal = this.totalCartPrice - r.offer.cart_discount_amount;
+          } else {
+            this.couponForm.patchValue({
+              promoCode: ''
+            })
+            this.alert.fireToastF(r.message[0]);
+          }
+        } else if (!r.status) {
+          this.loadSummary();
+        }
+      }, (error: any) => {
+        console.log(error);
       })
-      // this.checkoutService.getCheckout(data).subscribe((r: any) => {
-      //   this.data = r;
-      //   this.shippingAddress = r.response.isAddressAvailable;
-      //   this.orderSummary = r.response.checkOutData;
-      //   this.totalCount = r.response.totalCount;
-      //   this.totalCartPrice = r.response.totalCartPrice;
-      //   this.discountPrice = r.response.discountPrice;
-      //   this.deliveryCharge = r.response.deliveryCharge;
-      //   this.grandTotal = r.response.grandTotal;
-      //   this.loading = false;
-      //   this.cdRef.markForCheck();
-      // });
     } else {
-      // this.alert.fireToastF('Invalid Promocode');
+      this.alert.fireToastF('Invalid Promocode');
     }
     this.loading = false;
   }
@@ -187,17 +177,20 @@ export class OrderSummaryComponent implements OnInit {
     let id: any = localStorage.getItem('cartIds');
     let cartIds = JSON.parse(id);
     let data = {
-      cartId: cartIds,
-      addressId: this.shippingAddress.address.id,
-      userId: localStorage.getItem('userId'),
-      promoCode: this.couponForm.value.promoCode,
+      // cartId: cartIds,
+      // addressId: this.shippingAddress.address.id,
+      // userId: localStorage.getItem('userId'),
+      promoCodeId: this.promoCodeId,
     };
+    console.log(data)
     this.checkoutService.cartCheckout(data).subscribe((r: any) => {
+      console.log(r);
       if (r.status) {
         localStorage.removeItem('cartIds');
-        this.router.navigate(['/checkout/payment/' + r.response.orderId]);
+        this.router.navigate(['/checkout/payment/' + r.orderId]);
       }
     });
     this.loading = false;
   }
+
 }

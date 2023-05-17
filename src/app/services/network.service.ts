@@ -89,7 +89,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
   static getBanners(): string {
-    return this.server_url() + this.server_v() + '/banner/list';
+    return this.server_url() + this.server_v() + '/web/banner/list';
   }
   static getProductOptions(): string {
     return this.server_url() + this.server_v() + '/web/product/get-product';
@@ -100,13 +100,13 @@ export class NetworkService {
 
   //Order History
   static getOrderHistory(): string {
-    return this.server_url() + this.server_v() + '/order-history';
+    return this.server_url() + this.server_v() + '/web/order-history';
   }
   static getOrderInvoice(id: string): string {
     return this.server_url() + '/api/admin/order/'+ id +'/generate-pdf';
   }
   static getOrderDetail(id: string): string {
-    return this.server_url() + this.server_v()+ '/order-history/' + id;
+    return this.server_url() + this.server_v()+ '/web/order-history/' + id;
   }
 
 
@@ -123,11 +123,14 @@ export class NetworkService {
 
 
   //Checkout
+  static getCartSummary(): string {
+    return this.server_url() + this.server_v() + '/web/cart/summary';
+  }
   static getCheckout(): string {
     return this.server_url() + this.server_v() + '/checkout/data';
   }
   static cartCheckout(): string {
-    return this.server_url() + this.server_v() + '/cart/checkout';
+    return this.server_url() + this.server_v() + '/web/cart/checkout';
   }
   static payment(): string {
     return this.server_url() + this.server_v() + '/payment';
