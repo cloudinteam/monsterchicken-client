@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { AlertService } from 'src/app/services/alert.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -21,13 +22,20 @@ import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
 
 // declare const google: any;
+export interface PlaceSearchResult {
+  address: string;
+  location?: google.maps.LatLng;
+  imageUrl?: string;
+  iconUrl?: string;
+  name?: string;
+}
 
 @Component({
   selector: 'location',
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
 })
-export class LocationComponent implements OnInit, AfterViewInit, AfterContentChecked {
+export class LocationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
   @ViewChild('searchInput') searchInput!: ElementRef;
@@ -54,7 +62,7 @@ export class LocationComponent implements OnInit, AfterViewInit, AfterContentChe
   geoResult: any;
 
   searchString: string = '';
-  searchAuto: google.maps.places.Autocomplete | undefined;
+  searchAuto!: google.maps.places.Autocomplete;
 
   formattedaddress = " ";
   postCode!: number;
@@ -103,26 +111,10 @@ export class LocationComponent implements OnInit, AfterViewInit, AfterContentChe
 
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
+    // this.handlePermission();
 
-  }
-
-  ngAfterContentChecked(): void {
-
-  }
-
-
-  addressChange(address: any) {
-    //setting address from API to local variable
-    this.formattedaddress=address.formatted_address
-  }
-
-  searchFn() {
-    setTimeout(() => {
-      // console.log(this.searchString);
-      if (this.searchString != '') {
-
-        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+    this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
 
         this.searchAuto.addListener('place_changed', () => {
         // this.searchAuto.addListener('blur', () => {
@@ -144,8 +136,60 @@ export class LocationComponent implements OnInit, AfterViewInit, AfterContentChe
           })
         })
 
+
+  }
+
+  ngOnDestroy() {
+    if (this.searchAuto) {
+      google.maps.event.clearInstanceListeners(this.searchAuto);
+    }
+  }
+
+
+  addressChange(address: any) {
+    //setting address from API to local variable
+    this.formattedaddress=address.formatted_address
+  }
+
+  searchFn() {
+    // setTimeout(() => {
+      if (this.searchString != '') {
+
+        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+
+        this.searchAuto.addListener('place_changed', () => {
+          // this.searchAuto.addListener('blur', () => {
+          // this.searchAuto.addListener('keydown', () => {
+
+
+          this.ngZone.runTask(() => {
+            const place: any = this.searchAuto?.getPlace();
+            console.log(place);
+
+            this.lat = place.geometry.location.lat()
+            this.lng = place.geometry.location.lng()
+
+            this.mapMarker = {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+            }
+            // console.log(this.mapMarker);
+            // this.geoCode('address', this.searchInput.nativeElement.value);
+            this.geoCode('location')
+          })
+
+        })
+
       }
-    }, 1000);
+    // }, 1000);
+  }
+
+  getPhotoUrl(
+    place: google.maps.places.PlaceResult | undefined
+  ): string | undefined {
+    return place?.photos && place?.photos.length > 0
+      ? place?.photos[0].getUrl({ maxWidth: 500 })
+      : undefined;
   }
 
   moveMap(event: google.maps.MapMouseEvent) {

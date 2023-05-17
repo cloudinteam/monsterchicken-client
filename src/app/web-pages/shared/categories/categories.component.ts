@@ -26,7 +26,7 @@ export class CategoriesComponent {
   loadData() {
     this.productService.getCategories().subscribe((r: any) => {
       // console.log(r);
-      this.categories = r.categories;
+      this.categories = r.response.categories;
       this.loading = false;
     })
   }

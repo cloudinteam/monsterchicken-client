@@ -31,6 +31,7 @@ export class AddressListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAddress();
+    this.selectedAddress = null;
     this.activeMenu.checkoutMenu.next('address');
     this.activeMenu.addressSuccess.next(false);
     this.activeMenu.summarySuccess.next(false);
@@ -39,11 +40,11 @@ export class AddressListComponent implements OnInit {
   getAddress() {
     this.loading = true;
     this.addressService.listAddress({ userId: localStorage.getItem('userId') }).subscribe((r: any) => {
-      // console.log(r);
+      console.log(r);
       this.address = r.response.addresses;
       this.address.forEach(address => {
         if (address.defaultAddress) {
-          this.selectedId = address.id;
+          this.selectedId = address.addressId;
         }
       })
       this.loading = false;

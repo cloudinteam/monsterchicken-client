@@ -33,8 +33,9 @@ export class LocalcartService {
     // Update Local_Cart to DB
     if (localStorage.getItem('localCart') != null) {
       if (this.getLocalCart.length > 0) {
-        let localCart = this.getLocalCart;
-        this.cartService.addCart({carts:localCart}).subscribe((r: any) => {
+        let localCart: any[] = [];
+        console.log(this.getLocalCart);
+        this.cartService.addCart({carts: localCart}).subscribe((r: any) => {
           this.cartService.addCartCount();
           localStorage.removeItem('localCart');
         });

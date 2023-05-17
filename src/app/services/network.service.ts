@@ -45,13 +45,13 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
   static verifyNumber(): string {
-    return this.server_url() + this.server_v() + '/login/number-verify';
+    return this.server_url() + this.server_v() + '/web/login/number-verify';
   }
   static verifyOtp(): string {
-    return this.server_url() + this.server_v() + '/login/otp-verify';
+    return this.server_url() + this.server_v() + '/web/login/otp-verify';
   }
   static resendOtp(): string {
-    return this.server_url() + this.server_v() + '/login/resend-otp';
+    return this.server_url() + this.server_v() + '/web/login/resend-otp';
   }
   static Signup(): string {
     return this.server_url() + this.server_v() + '/register';
@@ -69,10 +69,10 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
   static profile(): string {
-    return this.server_url() + this.server_v() + '/profile';
+    return this.server_url() + this.server_v() + '/web/profile';
   }
   static profileEdit(): string {
-    return this.server_url() + this.server_v() + '/profile-update';
+    return this.server_url() + this.server_v() + '/web/profile-update';
   }
 
   //Products
@@ -83,7 +83,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/product/view';
   }
   static getCategory(): string {
-    return this.server_url() + this.server_v() + '/product/category/list';
+    return this.server_url() + this.server_v() + '/web/product/category/list';
   }
   static getSubCat(): string {
     return this.server_url() + this.server_v() + '/login';
@@ -92,10 +92,10 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/banner/list';
   }
   static getProductOptions(): string {
-    return this.server_url() + this.server_v() + '/product/get-product';
+    return this.server_url() + this.server_v() + '/web/product/get-product';
   }
   static getCategoryOptions(): string {
-    return this.server_url() + this.server_v() + '/product/get-product-category';
+    return this.server_url() + this.server_v() + '/web/product/get-product-category';
   }
 
   //Order History
@@ -114,11 +114,8 @@ export class NetworkService {
   static addToCart(): string {
     return this.server_url() + this.server_v() + '/web/cart/store';
   }
-  static clearCart(): string {
-    return this.server_url() + this.server_v() + '/login';
-  }
   static viewCart(): string {
-    return this.server_url() + this.server_v() + '/cart/list';
+    return this.server_url() + this.server_v() + '/web/cart/list';
   }
   static getCart(): string {
     return this.server_url() + this.server_v() + '/web/cart/list';
@@ -146,19 +143,19 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/location-checking';
   }
   static storeAdddress(): string {
-    return this.server_url() + this.server_v() + '/address/store';
+    return this.server_url() + this.server_v() + '/web/address/store';
   }
   static listAdddress(): string {
-    return this.server_url() + this.server_v() + '/address/list';
+    return this.server_url() + this.server_v() + '/web/address/list';
   }
   static viewAdddress(): string {
-    return this.server_url() + this.server_v() + '/address/view';
+    return this.server_url() + this.server_v() + '/web/address/view';
   }
   static deleteAdddress(): string {
-    return this.server_url() + this.server_v() + '/address/delete';
+    return this.server_url() + this.server_v() + '/web/address/delete';
   }
   static setDefault(): string {
-    return this.server_url() + this.server_v() + '/address/default';
+    return this.server_url() + this.server_v() + '/web/address/default';
   }
 
   //File upload
@@ -180,10 +177,6 @@ export class NetworkService {
 
   static getDistrict(): string {
     return this.server_url() + this.server_v() + '/district/list';
-  }
-
-  static getBulkOrder(): string {
-    return this.server_url() + this.server_v() + '/bulkOrder/category-list';
   }
 
   static bulkOrderSubmit(): string {

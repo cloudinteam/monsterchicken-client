@@ -14,10 +14,10 @@
 
     <div class="address-card" *ngFor="let address of address">
       <div class="form-check" >
-        <input class="form-check-input" type="radio" name="selectAddress" [id]="address.id" (change)="onSelect($event)"
-          [(ngModel)]="selectedId" [value]="address.id" />
+        <input class="form-check-input" type="radio" name="selectAddress" [id]="address.addressId" (change)="onSelect($event)"
+          [(ngModel)]="selectedId" [value]="address.addressId" />
       </div>
-      <!-- <label [for]="address.id" style="width: 100%;"> -->
+      <!-- <label [for]="address.addressId" style="width: 100%;"> -->
         <address-card (editAddress)="addressEdit(address)" (removeAddress)="deleteAddress($event)" [address]="address" style="width: 100%;"></address-card>
       <!-- </label> -->
     </div>

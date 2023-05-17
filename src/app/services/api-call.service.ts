@@ -68,7 +68,7 @@ export class ApiCallService {
           }
           let data: any = this.es.unmaskData(err.error);
           this.alert.fireToastF(data.message[0]);
-          return '';
+          return err;
         })
       );
   }
@@ -138,7 +138,7 @@ export class ApiCallService {
           if (err.status == 500 || err.status == 429) {
             this.alert.fireToastF('Something went wrong');
           }
-          return '';
+          return err;
         })
       );
   }

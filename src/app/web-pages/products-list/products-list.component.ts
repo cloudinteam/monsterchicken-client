@@ -16,6 +16,7 @@ export class ProductsListComponent implements OnInit {
   loading = true;
   productList: Product[] = [];
   categories: any[] = [];
+  selectedCategory: string = '';
 
   constructor(
     private router: Router,
@@ -62,10 +63,15 @@ export class ProductsListComponent implements OnInit {
     this.productService.getProducts(data).subscribe((r: any) => {
       this.productList = r.response.products;
       this.categories = r.response.categories;
-      console.debug(r);
+      const index = this.categories.findIndex( (category: any) => {
+        return category.selected === true;
+      });
+      this.selectedCategory = this.categories[index].categoryName;
       this.loading = false;
     });
   }
+
+
 
   // addWishList(id: any) {
   //   let data = { productId: id };
