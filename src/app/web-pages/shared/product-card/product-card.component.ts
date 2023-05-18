@@ -126,13 +126,12 @@ export class ProductCardComponent implements OnInit {
       nearByBranch: product.nearByBranch,
     };
     this.productService.viewProduct(data).subscribe((r: any) => {
-      console.log(r.response.productDetail);
       this.product = r.response.productDetail;
     });
   }
 
-  viewProduct(id: string) {
-    this.router.navigate(['/product/' + id]);
+  viewProduct(product: Product) {
+    this.router.navigate(['/product/' + product.productId], { queryParams: { productId: product.productId, nearByBranch: product.nearByBranch, } });
   }
 
   viewCat(id: string) {

@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
         return true;
       }
       localStorage.setItem('next_url', state.url)
-      this.alert.fireToastF('Login to continue');
+      // this.alert.fireToastF('Login to continue');
       this.headerService.openLogin.next(true);
       //this.route.navigate(['/']); // redirect url
       return false;

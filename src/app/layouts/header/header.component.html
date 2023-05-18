@@ -1,17 +1,19 @@
 <div class="top-bar">
   <div class="container">
-    <div class="row align-items-center g-3">
-      <div class="col-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+    <div class="row align-items-center g-3 justify-content-center">
+
+      <div class="col-4 col-md-6 col-lg-3 col-xl-2 col-xxl-2">
         <a (click)="home()" class="d-inline-block clickable">
-          <img src="assets/images/Logo.png" class="" alt="" style="max-width: 115px">
+          <img src="assets/images/Logo.png" class="head-logo" alt="Monster Chicken">
         </a>
       </div>
-      <div class="col-8 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+
+      <div class="col-8 col-md-6 col-lg-3 col-xl-2 col-xxl-2">
         <div *ngIf="!locationShow" class="text-md-start text-end">
           <span class="clickable text-black" (click)="openLocation()"> <i class="pi pi-map-marker" style="font-size: 15px"></i> Choose location</span>
           <!-- <button type="button"  class="btn btn-sm btn-outline-dark">Choose location</button> -->
         </div>
-        <div class="clickable text-md-start text-end" (click)="openLocation()" *ngIf="locationShow"> <!--[ngbTooltip]="address" placement="bottom"-->
+        <div class="clickable text-lg-start text-end" (click)="openLocation()" *ngIf="locationShow"> <!--[ngbTooltip]="address" placement="bottom"-->
           <div class="loc-district">
             <i class="pi pi-map-marker" style="font-size: 15px"></i>
             <span class="fw-bold"> {{ district }} <i class="pi pi-angle-down" style="font-size: 12px"></i></span>
@@ -22,7 +24,8 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
+
+      <!-- <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
         <div class="p-input-icon-right w-100" (click)="launchSearch()" *ngIf="disableSearch">
           <i class="pi pi-search fw-bold text-dark"></i>
           <input type="text" class="form-control form-control-sm clickable" #searchInput placeholder="Search for any product" style="background-color: #f0f0f0;" [readOnly]="true" />
@@ -30,10 +33,14 @@
         <!-- <div class="p-input-icon-right w-100" *ngIf="!disableSearch">
           <i class="pi pi-search fw-bold text-dark"></i>
           <input type="text" class="form-control form-control-sm" [(ngModel)]="searchString" (keyup)="searchFn()" #searchInput placeholder="Search for any product" />
-        </div> -->
-      </div>
-      <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
+        </div>
+      </div> -->
+
+      <div class="col-12 col-md-12 col-lg-6 col-xl-5 col-xxl-5">
         <ul class="top-nav ">
+
+
+
           <li class="top-nav-item" #categoryMenuId>
             <a class="top-nav-link" (click)="catpanel.toggle($event)"> <i class="pi pi-clone"></i> Categories </a>
             <p-overlayPanel #catpanel [style]="{'width': '300px'}" [showCloseIcon]="true" appendTo="body">
@@ -49,14 +56,25 @@
               </ng-template>
             </p-overlayPanel>
           </li>
+
           <li class="top-nav-item" #profileMenuId>
             <a class="top-nav-link" *ngIf="!logggedIn" (click)="openLogin()"> <i class="pi pi-user"></i> Login </a>
             <a class="top-nav-link" *ngIf="logggedIn" (click)="profileMenu.toggle($event)"> <i class="pi pi-user"></i> Account </a>
             <p-menu #profileMenu appendTo="body" [model]="profileItems" [popup]="true"></p-menu>
           </li>
+
+          <li class="top-nav-item">
+            <div class="p-input-icon-right " (click)="launchSearch()" *ngIf="disableSearch" style="max-width: 87px;">
+              <i class="pi pi-search fw-bold text-dark"></i>
+              <input type="text" class="form-control form-control-sm clickable" #searchInput placeholder="Search" style="background-color: #f0f0f0;" [readOnly]="true" />
+            </div>
+            <!-- <button type="button" class="btn btn-outline-dark btn-sm" style="font-size: 15px;" (click)="launchSearch()"> <i class="pi pi-search fw-bold text-dark"></i> &nbsp; Search</button> -->
+          </li>
+
           <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
             <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
           </li>
+
           <li class="top-nav-item" *ngIf="cartCount.count > 0">
             <a class="cart-total" (click)="openCart()">
               <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px">
@@ -70,8 +88,10 @@
               </div>
             </a>
           </li>
+
         </ul>
       </div>
+
     </div>
   </div>
 </div>
@@ -82,13 +102,17 @@ cart sidebar
 ============================================================================================================================ -->
 
 <ng-template #cartArea let-offcanvas>
-	<div class="offcanvas-header">
-    <span class="cart-close" (click)="closeCart()"> <i class="pi pi-times-circle"></i> </span>
-		<h4 class="offcanvas-title">Order Summary</h4>
-	</div>
-	<div class="offcanvas-body p-2" style="position: relative;">
+
+	<div class="offcanvas-body p-2" style="position: relative; background-image: url(../../../assets/images/chicken-pattern-single-5.jpg); background-repeat: repeat; background-size: 25%;">
+    <div class="offcanvas-header">
+      <span class="cart-close" (click)="closeCart()"> <i class="pi pi-times-circle"></i> </span>
+      <h4 class="offcanvas-title">Cart</h4>
+    </div>
     <div *ngIf="cartCount.count == 0">
-      No items in cart
+      <div class="login-image">
+        <img src="../../../assets/images/chicken-empty-cart.png" alt="" style="max-width: 220px;" class="d-block my-5 mx-auto">
+      </div>
+      <h2 class="fw-bold text-center"> No items in cart</h2>
     </div>
     <div *ngIf="cartCount.count > 0">
       <cart (close)="closeCart()" (login)="openLogin()"></cart>
@@ -98,7 +122,8 @@ cart sidebar
 
 <ng-template #loginArea let-offcanvas class="login-side">
 
-	<div class="offcanvas-body p-2"  fxLayout="column" fxLayoutAlign="space-between stretch" style="position: relative; background-image: url(../../../assets/images/chicken-pattern-single-5.jpg); background-repeat: repeat; background-size: 25%;">
+	<div class="offcanvas-body p-2"  fxLayout="column" fxLayoutAlign="space-between stretch"
+    style="position: relative; background-image: url(../../../assets/images/chicken-pattern-single-5.jpg); background-repeat: repeat; background-size: 25%;">
     <div class="offcanvas-header">
       <span class="cart-close" (click)="closeLogin()"> <i class="pi pi-times-circle"></i> </span>
     </div>

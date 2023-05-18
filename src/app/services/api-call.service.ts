@@ -57,6 +57,7 @@ export class ApiCallService {
           }
         }),
         catchError((err) => {
+          let data: any = this.es.unmaskData(err.error);
           if (err.status == 401) {
             this.router.navigate(['']);
             localStorage.clear();
@@ -66,7 +67,10 @@ export class ApiCallService {
           if (err.status == 500 || err.status == 429) {
             this.alert.fireToastF('Something went wrong');
           }
-          let data: any = this.es.unmaskData(err.error);
+          if (err.status == 422) {
+            this.alert.fireToastN('Invaid Input',data.message[0], 'pi pi-exclamation-circle');
+          }
+
           this.alert.fireToastF(data.message[0]);
           return err;
         })
@@ -129,6 +133,7 @@ export class ApiCallService {
           }
         }),
         catchError((err) => {
+          let data: any = this.es.unmaskData(err.error);
           if (err.status == 401) {
             this.router.navigate(['']);
             localStorage.clear();
@@ -137,6 +142,9 @@ export class ApiCallService {
           }
           if (err.status == 500 || err.status == 429) {
             this.alert.fireToastF('Something went wrong');
+          }
+          if (err.status == 422) {
+            this.alert.fireToastN('Invaid Input',data.message[0], 'pi pi-exclamation-circle');
           }
           return err;
         })
