@@ -2,31 +2,29 @@
 
 <div class="container py-3" *ngIf="!loading">
 
-  <div class="product-trails">
-    <ul>
-      <li> <a routerLink="/" class="pointer"> Home </a> </li>
-      <!-- <li> <a [routerLink]="'/category/'+this.categories[0]?.categoryId"> {{ this.categories[0]?.categoryName }} </a> </li> -->
-      <li> {{ this.selectedCategory }} </li>
-    </ul>
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-12">
+      <div class="product-trails">
+        <ul>
+          <li> <a routerLink="/" class="pointer"> Home </a> </li>
+          <!-- <li> <a [routerLink]="'/category/'+this.categories[0]?.categoryId"> {{ this.categories[0]?.categoryName }} </a> </li> -->
+          <li> {{ this.selectedCategory }} </li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <div class="row justify-content-center">
-
     <div class="col-12 col-md-10" *ngIf="productList.length > 0">
       <div class="row g-4">
-
         <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let product of productList; let i = index;">
-
           <product-card [product]="product" (loaded)="ngOnInit()"></product-card>
-
         </div>
-
       </div>
     </div>
-
     <div class="col-12 col-md-10" *ngIf="productList.length == 0">
       <not-found> </not-found>
     </div>
-
   </div>
+
 </div>

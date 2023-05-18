@@ -129,4 +129,27 @@
       }
     }
   }
+
+  .cart-total {
+    padding: 5px 7px;
+    height: 40px;
+    font-size: 10px;
+    min-width: 80px;
+
+    .item-count {
+      font-size: 10px;
+      line-height: 10px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .item-total {
+      font-size: 10px;
+      line-height: 10px;
+      font-weight: 700;
+      color: #e4002b;
+    }
+  }
+
+
 }

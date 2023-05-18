@@ -63,16 +63,16 @@
             <p-menu #profileMenu appendTo="body" [model]="profileItems" [popup]="true"></p-menu>
           </li>
 
+          <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
+            <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
+          </li>
+
           <li class="top-nav-item">
             <div class="p-input-icon-right " (click)="launchSearch()" *ngIf="disableSearch" style="max-width: 87px;">
               <i class="pi pi-search fw-bold text-dark"></i>
               <input type="text" class="form-control form-control-sm clickable" #searchInput placeholder="Search" style="background-color: #f0f0f0;" [readOnly]="true" />
             </div>
             <!-- <button type="button" class="btn btn-outline-dark btn-sm" style="font-size: 15px;" (click)="launchSearch()"> <i class="pi pi-search fw-bold text-dark"></i> &nbsp; Search</button> -->
-          </li>
-
-          <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
-            <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
           </li>
 
           <li class="top-nav-item" *ngIf="cartCount.count > 0">
