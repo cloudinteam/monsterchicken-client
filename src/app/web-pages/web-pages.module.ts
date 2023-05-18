@@ -20,6 +20,7 @@ import { AddressListComponent } from './address-list/address-list.component';
 import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DropdownModule } from 'primeng/dropdown';
+import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-product.component';
 
 
 
@@ -33,7 +34,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ProductViewComponent,
     ProfileEditComponent,
     AddressListComponent,
-    BullkOrderFormComponent
+    BullkOrderFormComponent,
+    BulkOrderProductComponent
   ],
   imports: [
     CommonModule,

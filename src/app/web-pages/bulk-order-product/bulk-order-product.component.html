@@ -1,0 +1,37 @@
+<div class="row g-2 mb-3" [formGroup]="productForm">
+  <div class="col-12 col-md-4">
+    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
+    <p-dropdown [options]="categoryOptions" optionValue="categoryId" optionLabel="categoryName" [required]="true"
+      formControlName="category" [filter]="true" filterBy="categoryName" [showClear]="false"
+      placeholder="Select a Category" emptyMessage="No categories found"
+      (onChange)="getProductsOptions($event)"></p-dropdown>
+    <div>
+      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['category'].errors">Category is required.</small>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-5">
+    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
+
+    <p-dropdown [options]="productOptions" [readonly]="!productForm.value.category" optionValue="product_id"
+      optionLabel="product_name" [required]="true" formControlName="id" [filter]="true" filterBy="name"
+      [showClear]="false" placeholder="Select a Product" emptyMessage="No products found"></p-dropdown>
+
+    <div>
+      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['id'].errors">Product is
+        required.</small>
+    </div>
+  </div>
+  <div class="col-12 col-md-2">
+    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Quantity*</label> -->
+    <input type="number" formControlName="quantity" (keypress)="keyPressNumbers($event)"
+      class="form-control rounded-2 bulk-input" placeholder="Quantity" [required]="true" />
+    <div>
+        <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['quantity'].errors">Quantity is required.</small>
+      </div>
+  </div>
+  <div class="col-12 col-md-1 text-end">
+    <button type="button" class="btn btn-outline-danger px-3" (click)="remove(index)"> <i
+        class="fa-regular fa-circle-xmark"></i> </button>
+  </div>
+</div>
