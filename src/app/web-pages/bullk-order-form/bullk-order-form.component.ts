@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -17,6 +17,7 @@ export class BullkOrderFormComponent implements OnInit {
   productArray!: FormArray<any>
   isChecked: boolean = false;
   states: any = [];
+  districts: any = [];
   city: any = [];
   country: any = [];
   selectedState: any = null;
@@ -53,6 +54,7 @@ export class BullkOrderFormComponent implements OnInit {
       // bulkOrder: [null, [Validators.required]],
       country: [103, [Validators.required]],
       state: [null, [Validators.required]],
+      district: [null, [Validators.required]],
       city: [null, [Validators.required]],
       pinCode: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(6),] ],
       institutionName: [''],
@@ -71,7 +73,7 @@ export class BullkOrderFormComponent implements OnInit {
   // }
 
   get productFormArray(): FormArray {
-    return this.bulkOrderForm.get("productData") as FormArray;
+    return this.bulkOrderForm.get("productData") as FormArray<FormGroup>;
   }
 
   get form(): any {
@@ -84,6 +86,10 @@ export class BullkOrderFormComponent implements OnInit {
       category: [null, [Validators.required]],
       quantity: [null, [Validators.required]]
     });
+  }
+
+  getFormGroup(control: AbstractControl) {
+    return control as FormGroup;
   }
 
   add() {
@@ -103,6 +109,15 @@ export class BullkOrderFormComponent implements OnInit {
     });
   }
 
+  getDistricts($event: any) {
+    let params = {
+      stateId: $event.value
+    }
+    this.cs.getDistrict(params).subscribe((r: any) => {
+      this.districts = r.response.districts;
+    })
+  }
+
   getCountry() {
     let obj = {
       version: 1,
@@ -112,6 +127,17 @@ export class BullkOrderFormComponent implements OnInit {
       this.country = r.response.countries;
     });
   }
+
+  getCity($event: any) {
+    let obj = {
+      stateId: this.form['state'].value,
+      districtId: $event.value
+    };
+    this.cs.getCity(obj).subscribe((r: any) => {
+      this.city = r.response.cities;
+    });
+  }
+
 
   getCategoryOptions() {
     this.productService.getCategoryOptions({}).subscribe((r: any) => {
@@ -123,21 +149,6 @@ export class BullkOrderFormComponent implements OnInit {
   loadProductOptions($event: any) {
     console.log($event);
     this.getProductOptions($event.value);
-  }
-
-  onChangeHandler(selectedState: any) {
-    this.selectedState = selectedState;
-    this.selectedState === null ? '' : this.getCity();
-  }
-
-  getCity() {
-    let obj = {
-      stateId: this.selectedState,
-    };
-
-    this.cs.getCity(obj).subscribe((r: any) => {
-      this.city = r.response.cities;
-    });
   }
 
   validate(field: any) {
@@ -196,13 +207,14 @@ export class BullkOrderFormComponent implements OnInit {
     }
   }
 
-  optionsProduct(categoryId: string): [] {
-
+  optionsProduct($event: any) {
+    console.log($event);
     let data = {
-      categoryId: categoryId,
+      categoryId: $event.value,
     };
     this.productService.getProductOptions(data).subscribe((r: any) => {
-      // console.log(r)
+      console.log(r)
+      this.productOptions = r.response.products;
       this.totalProductOptions = r.response.totalProducts;
 
       if (r.response.products.length == 0) {
@@ -222,9 +234,9 @@ export class BullkOrderFormComponent implements OnInit {
       categoryId: categoryId,
     };
     this.productService.getProductOptions(data).subscribe((r: any) => {
+      console.log(r);
       this.productOptions = [];
       this.productOptions = r.response.products;
-      // console.log(r)
       this.totalProductOptions = r.response.totalProducts;
 
       if (this.productOptions.length == 0) {
@@ -238,89 +250,6 @@ export class BullkOrderFormComponent implements OnInit {
       this.cdRef.markForCheck();
     });
   }
-  onProductScroll(productSelect: NgSelectComponent) {
-    // console.log("SCroll Triggered");
-    if (this.productOptions.length < this.totalProductOptions) {
-      this.loadMoreProductOptions(productSelect);
-    }
-  }
-  onProductScrollEnd(productSelect: NgSelectComponent) {
-    if (this.productOptions.length < this.totalProductOptions) {
-      this.loadMoreProductOptions(productSelect);
-    }
-  }
-  loadMoreProductOptions(productSelect: NgSelectComponent) {
-    // productSelect.close();
-    this.prPage++;
-    let data = {
-      page: this.prPage,
-    };
-
-    this.productService.getProductOptions(data).subscribe((r: any) => {
-      if (r.response.products.length > 0) {
-        this.prLoading = true;
-
-        r.response.products.forEach((product: any) => {
-          if (!this.productOptions.find((p) => p.id == product.id)) {
-            this.productOptions.push(product);
-          }
-        });
-
-        let len = this.productOptions.length;
-        let more = this.productOptions.slice(
-          len,
-          r.response.products.length + len
-        );
-
-        // using timeout here to simulate backend API delay
-        setTimeout(() => {
-          this.prLoading = false;
-          this.productOptions = this.productOptions.concat(more);
-        }, 200);
-        this.cdRef.markForCheck();
-      }
-      this.cdRef.markForCheck();
-    });
-  }
-  searchPr($event: any) {
-    // console.log($event);
-    let data = {
-      page: 1,
-      search: $event.term,
-    };
-
-    this.productService.getProductOptions(data).subscribe((r: any) => {
-      // console.log(r);
-      if (r.response.products.length > 0) {
-        this.productOptions = [];
-        this.productOptions = r.response.products;
-
-        let len = this.productOptions.length;
-        let more = this.productOptions.slice(
-          len,
-          r.response.products.length + len
-        );
-
-        // using timeout here to simulate backend API delay
-        setTimeout(() => {
-          this.prOptLoaded = false;
-          this.productOptions = this.productOptions.concat(more);
-          // console.info(this.productOptions);
-        }, 200);
-        this.cdRef.markForCheck();
-      }
-    });
-  }
-  poOpen(productSelect: NgSelectComponent) {
-    // if (!this.prOptLoaded) {
-    //   this.prPage = 0;
-    //   this.productOptions = [];
-    //   this.loadMoreProductOptions(productSelect);
-    // }
-    // this.prOptLoaded = true;
-    // this.cdRef.markForCheck();
-  }
-
 
 
 }

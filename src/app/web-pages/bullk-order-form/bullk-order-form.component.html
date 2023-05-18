@@ -9,113 +9,134 @@
             CONTACT US FOR BULK ORDERS
           </div>
           <div class="card-body">
-            <div class="row">
+            <div class="row g-2">
+
               <!-- <div class="col-12">
                 <pre>
                   {{ bulkOrderForm.value | json }}
                 </pre>
               </div> -->
-              <div class="col-12">
 
+              <div class="col-12">
                 <div class="text-end">
                   <button type="button" class="btn btn-danger px-3" (click)="add()">Add product</button>
                 </div>
               </div>
-              <div class="col-12 my-2" formArrayName="productData">
-                <div class="row g-2 mb-3" *ngFor="let productForm of productFormArray.controls; index as productDataFormGroupIndex"
-                  [formGroupName]="productDataFormGroupIndex">
-                  <!-- <div class="col-12">
-                    <pre>
-                      {{ productForm.value | json }}
-                    </pre>
-                  </div> -->
-                  <div class="col-12 col-md-4">
-                    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
-                    <p-dropdown [options]="categoryOptions" optionValue="categoryId" optionLabel="categoryName" [required]="true" formControlName="category" [filter]="true" filterBy="categoryName" [showClear]="false" placeholder="Select a Category" (onChange)="loadProductOptions($event)"></p-dropdown>
+              <div class="col-12 my-2" formArrayName="productData" >
+                <div *ngFor="let productForm of productFormArray.controls; let productDataFormGroupIndex = index" >
+
+                  <bulk-order-product [productForm]="getFormGroup(productForm)" [categoryOptions]="categoryOptions" [index]="productDataFormGroupIndex" [submitted]="submitted" (delete)="delete(productDataFormGroupIndex)"></bulk-order-product>
+
+                  <!-- <div class="col-12 col-md-4">
+                    <p-dropdown [options]="categoryOptions" optionValue="categoryId" optionLabel="categoryName"
+                      [required]="true" formControlName="category" [filter]="true" filterBy="categoryName" [showClear]="false"
+                      placeholder="Select a Category" emptyMessage="No categories found" (onChange)="optionsProduct($event)"></p-dropdown>
                     <div>
-                      <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'id')">Product is required.</small>
+                      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['category'].errors">Category is required.</small>
                     </div>
                   </div>
+
                   <div class="col-12 col-md-5">
-                    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Product*</label> -->
-                    <p-dropdown [options]="productOptions" [readonly]="productForm.value.category? false: true" optionValue="id" optionLabel="name" [required]="true" formControlName="id" [filter]="true" filterBy="name" [showClear]="false" placeholder="Select a Product" emptyMessage="No products found" ></p-dropdown>
+                    <p-dropdown [options]="productOptions" [readonly]="!productForm.value.category" optionValue="product_id"
+                      optionLabel="product_name" [required]="true" formControlName="id" [filter]="true" filterBy="product_name" [showClear]="false"
+                      placeholder="Select a Product" emptyMessage="No products found" [group]="true">
+
+                      <ng-template let-group pTemplate="group">
+                        <div>
+                            <span>{{ group.label }}</span>
+                        </div>
+                    </ng-template>
+
+                    </p-dropdown>
+
                     <div>
-                      <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'id')">Product is required.</small>
+                      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['id'].errors">Product is required.</small>
                     </div>
                   </div>
                   <div class="col-12 col-md-2">
-                    <!-- <label class="h5 fw-bold red-heading fs-6 d-block">Quantity*</label> -->
                     <input type="number" formControlName="quantity" (keypress)="keyPressNumbers($event)"
                       class="form-control rounded-2 bulk-input" placeholder="Quantity" [required]="true"/>
                       <div>
-                        <small class="text-danger ms-1" *ngIf="submitted && validateProduct(productForm ,'quantity')">Quantity is required.</small>
+                        <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['quantity'].errors">Quantity is required.</small>
                       </div>
                   </div>
                   <div class="col-12 col-md-1 text-end">
-                    <button type="button" class="btn btn-danger px-3" (click)="delete(productDataFormGroupIndex)"> <i class="fa-regular fa-circle-xmark"></i> </button>
-                  </div>
+                    <button type="button" class="btn btn-outline-danger px-3" (click)="delete(productDataFormGroupIndex)"> <i class="fa-regular fa-circle-xmark"></i> </button>
+                  </div> -->
+
                 </div>
               </div>
+
               <div class="col-12">
                 <hr>
               </div>
-              <!-- <div class="col-sm-6 col-12 my-2">
-                <div>
-                  <label class="h5 fw-bold red-heading fs-6">Bulk Order*</label>
-                  <select class="form-select shadow-none bulk-input py-2" formControlName="bulkOrder" required>
-                    <option value="null">Order Menu</option>
-                    <option *ngFor="let b of bulkOrder" value="{{ b.value }}">
-                      {{ b.name }}
-                    </option>
-                  </select>
-                  <div>
-                    <small class="text-danger ms-1" *ngIf="submitted && validate('bulkOrder')">Category is required.</small>
-                  </div>
-                </div>
-              </div> -->
-              <!-- <div class="col-sm-6 col-12 my-2">
-                <div>
-                  <label class="h5 fw-bold red-heading fs-6">Country*</label>
-                  <select class="form-select shadow-none bulk-input py-2" formControlName="country"
-                    aria-label="Default select example" required >
-                    <option value="null">Select Country</option>
-                    <option [ngValue]="c.value" *ngFor="let c of country" class="text-dark">
-                      {{ c.name }}
-                    </option>
-                  </select>
-                  <div>
-                    <small class="text-danger ms-1" *ngIf="submitted && validate('country')">value is empty</small>
-                  </div>
-                </div>
-              </div> -->
 
               <div class="col-sm-6 col-12 my-2">
                 <div>
                   <label class="h5 fw-bold red-heading fs-6">State*</label>
-                  <select class="form-select shadow-none bulk-input py-2" formControlName="state"
-                    (ngModelChange)="onChangeHandler($event)" [(ngModel)]="selectedState" required>
-                    <option value="null">Select State</option>
-                    <option value="{{ state.value }}" *ngFor="let state of states" class="text-dark">
-                      {{ state.name }}
-                    </option>
-                  </select>
+                  <p-dropdown [options]="states" optionValue="value" optionLabel="name"
+                      [required]="true" formControlName="state" [filter]="true" filterBy="name" [showClear]="false"
+                      placeholder="Select a State" (onChange)="getDistricts($event)"></p-dropdown>
+
+                  <!-- <ng-select [items]="states" bindLabel="name" bindValue="value" name="name"
+                      formControlName="state" #selectState [virtualScroll]="true" [loading]="prLoading"
+                      [ngClass]="{ 'is-invalid': submitted && form['state'].errors }"
+                      appendTo="body" placeholder="Select State" [readonly]="false" (change)="getDistricts($event)" >
+                      <ng-template ng-loadingspinner-tmp>
+                        <div class="lds-ellipsis">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      </ng-template>
+                    </ng-select> -->
+                    <div>
+                      <small class="text-danger ms-1" *ngIf="submitted && form['state'].errors"> State required </small>
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-12 my-2">
+                <div>
+                  <label class="h5 fw-bold red-heading fs-6">District*</label>
+                  <p-dropdown [options]="districts" optionValue="value" optionLabel="name"
+                      [required]="true" formControlName="district" [filter]="true" filterBy="name" [showClear]="false"
+                      placeholder="Select a District" [readonly]="!form['state'].value" (onChange)="getCity($event)"></p-dropdown>
+
+                  <!-- <ng-select [items]="districts" bindLabel="name" bindValue="value" name="name"
+                      formControlName="district" #selectDistrict [virtualScroll]="true" [loading]="prLoading"
+                      [ngClass]="{ 'is-invalid': submitted && form['district'].errors }"
+                      appendTo="body" placeholder="Select district" [readonly]="!form['state'].value" (change)="getCity($event)" >
+                      <ng-template ng-loadingspinner-tmp>
+                        <div class="lds-ellipsis">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      </ng-template>
+                    </ng-select> -->
                   <div>
-                    <small class="text-danger ms-1" *ngIf="submitted && validate('state')">value is empty</small>
+                    <small class="text-danger ms-1" *ngIf="submitted && form['district'].errors"> District required </small>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-12 my-2">
                 <div>
                   <label class="fw-bold red-heading fs-6">City*</label>
-                  <select class="form-select shadow-none bulk-input py-2" formControlName="city"
+                  <p-dropdown [options]="city" optionValue="value" optionLabel="name"
+                      [required]="true" formControlName="city" [filter]="true" filterBy="name" [showClear]="false"
+                      placeholder="Select a City" [readonly]="!form['district'].value" ></p-dropdown>
+
+                  <!-- <select class="form-select shadow-none bulk-input py-2" formControlName="city"
                     aria-label="Default select example" required>
                     <option value="null">Select City</option>
                     <option *ngFor="let c of city" value="{{ c.value }}">
                       {{ c.name }}
                     </option>
-                  </select>
+                  </select> -->
                   <div>
-                    <small class="text-danger ms-1" *ngIf="submitted && validate('city')">value is empty</small>
+                    <small class="text-danger ms-1" *ngIf="submitted && form['city'].errors">City Required</small>
                   </div>
                 </div>
               </div>
@@ -155,7 +176,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-12 col-12 my-2">
+              <div class="col-sm-6 col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Email Id*</label>
                 <div>
                   <input type="text" formControlName="email" class="form-control rounded-2 bulk-input" required />
