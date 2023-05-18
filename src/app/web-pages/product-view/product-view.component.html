@@ -31,11 +31,12 @@
 
               <div class="pro-price">
                 <span class="pro-unit">
-                  {{ product.unit }}
+                  {{ product.productUnit }}&nbsp;{{ product.productUnitType }}
                 </span>
-                <span> {{ product.price }}</span>
+                <span> {{ product.price | currency:'₹' }}</span>
               </div>
               <div class="pro-action">
+                <span *ngIf="product.stock == 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of Stock</span>
                 <p-inputNumber
                     *ngIf="product.cartProductQuantity > 0"
                     [ngModel]="product.cartProductQuantity"
@@ -51,9 +52,9 @@
                     incrementButtonIcon="pi pi-plus"
                     decrementButtonIcon="pi pi-minus"
                     mode="decimal"
-                    (onInput)="cartNumber($event, product.productId)"
+                    (onInput)="cartNumber($event, product)"
                 ></p-inputNumber>
-                <button type="button" class="add-btn" (click)="addCart(product.productId)" *ngIf="product.cartProductQuantity == 0"> <i class="pi pi-shopping-cart"></i> Add to cart </button>
+                <button type="button" class="add-btn" (click)="addCart(product)" *ngIf="product.cartProductQuantity == 0 && product.stock > 0"> <i class="pi pi-shopping-cart"></i> Add to cart </button>
               </div>
             </div>
           </div>

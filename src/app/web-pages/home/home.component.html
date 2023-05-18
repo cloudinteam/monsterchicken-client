@@ -1,11 +1,10 @@
 <page-loader [loading]="loading"></page-loader>
 
-<div class="container py-5" *ngIf="!loading">
 
+<div class="container-fluid pt-4" *ngIf="!loading">
   <div class="row justify-content-center">
-
-    <div class="col-12 col-md-11" *ngIf="banners.length > 0">
-      <p-carousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="false">
+    <div class="col-12 col-md-12 col-lg-10" *ngIf="banners.length > 0">
+      <p-carousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="false" [autoplayInterval]="3500" [showNavigators]="false">
         <ng-template let-banner pTemplate="item">
           <div class="banner-item">
             <div class="banner-item-content">
@@ -17,6 +16,12 @@
         </ng-template>
       </p-carousel>
     </div>
+  </div>
+</div>
+
+<div class="container pb-5" *ngIf="!loading">
+
+  <div class="row justify-content-center">
 
     <div class="col-12 col-md-10 py-5">
       <div>
