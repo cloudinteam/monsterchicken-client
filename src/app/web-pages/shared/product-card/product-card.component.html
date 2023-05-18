@@ -1,6 +1,4 @@
-<!-- <pre>
-  {{product|json}}
-</pre> -->
+
 <div class="pro-card">
   <div class="ui-blocker" *ngIf="loading" fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
     <div>
@@ -11,6 +9,7 @@
   <div class="pro-img" (click)="viewProduct(product)">
     <img [src]="product.imageUrl[0]" alt="" />
   </div>
+  <span class="badge rounded-pill text-bg-danger me-1">{{ product.brand | titlecase }}</span>
   <span class="pro-category" (click)="viewCat(product.categoryId)"> {{ product.categoryName | titlecase }} </span>
   <div class="pro-desc">
     <span class="pro-title" (click)="viewProduct(product)">
