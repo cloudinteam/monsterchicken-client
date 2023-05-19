@@ -10,7 +10,7 @@
   background-color: #fff;
 
   .head-logo {
-    max-width: 115px;
+    max-width: 70px;
   }
 
   .loc-district {
@@ -78,6 +78,17 @@
   }
 }
 
+.notification-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #a62025;
+  border-radius: 7px;
+  display: block;
+  position: absolute;
+  top: 2px;
+  right: 0.8rem;
+}
+
 // cart ================================================================
 
 .cart-total {
@@ -113,7 +124,7 @@
   .top-bar {
 
     .head-logo {
-      max-width: 75px;
+      max-width: 50px;
     }
   }
 }

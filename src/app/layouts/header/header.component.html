@@ -39,8 +39,6 @@
       <div class="col-12 col-md-12 col-lg-6 col-xl-5 col-xxl-5">
         <ul class="top-nav ">
 
-
-
           <li class="top-nav-item" #categoryMenuId>
             <a class="top-nav-link" (click)="catpanel.toggle($event)"> <i class="pi pi-clone"></i> Categories </a>
             <p-overlayPanel #catpanel [style]="{'width': '300px'}" [showCloseIcon]="true" appendTo="body">
@@ -59,12 +57,19 @@
 
           <li class="top-nav-item" #profileMenuId>
             <a class="top-nav-link" *ngIf="!logggedIn" (click)="openLogin()"> <i class="pi pi-user"></i> Login </a>
-            <a class="top-nav-link" *ngIf="logggedIn" (click)="profileMenu.toggle($event)"> <i class="pi pi-user"></i> Account </a>
+            <a class="top-nav-link" *ngIf="logggedIn" (click)="profileMenu.toggle($event)"> <i class="pi pi-user"></i> </a>
             <p-menu #profileMenu appendTo="body" [model]="profileItems" [popup]="true"></p-menu>
           </li>
 
+          <li class="top-nav-item" *ngIf="logggedIn">
+            <a class="top-nav-link" [routerLink]="'/account/notifications'" [pTooltip]="(notificationsCount > 0) ? 'You have notifications' : 'No notifications'"
+              tooltipPosition="bottom" style="position: relative;"> <i class="pi pi-bell"></i>
+              <span *ngIf="notificationsCount > 0" class="notification-dot"> </span>
+            </a>
+          </li>
+
           <li class="top-nav-item" *ngIf="cartCount.count == 0" > <!--placement="bottom" ngbTooltip="Cart is empty"-->
-            <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> Cart </a>
+            <a class="top-nav-link" pTooltip="Cart is empty" tooltipPosition="bottom"> <i class="pi pi-shopping-cart"></i> </a>
           </li>
 
           <li class="top-nav-item">
@@ -72,7 +77,6 @@
               <i class="pi pi-search fw-bold text-dark"></i>
               <input type="text" class="form-control form-control-sm clickable" #searchInput placeholder="Search" style="background-color: #f0f0f0;" [readOnly]="true" />
             </div>
-            <!-- <button type="button" class="btn btn-outline-dark btn-sm" style="font-size: 15px;" (click)="launchSearch()"> <i class="pi pi-search fw-bold text-dark"></i> &nbsp; Search</button> -->
           </li>
 
           <li class="top-nav-item" *ngIf="cartCount.count > 0">

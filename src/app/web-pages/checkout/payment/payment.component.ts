@@ -79,7 +79,7 @@ export class PaymentComponent implements OnInit {
       }
 
       this.checkoutService.payment(data).subscribe((r: any) => {
-        console.log(r);
+        // console.log(r);
 
         if (r.status) {
           this.alertService.fireToastS('Order placed');
