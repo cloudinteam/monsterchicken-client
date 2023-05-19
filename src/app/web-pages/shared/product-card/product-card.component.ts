@@ -58,7 +58,7 @@ export class ProductCardComponent implements OnInit {
         };
       this.cartService.addCart({carts:[data]}).subscribe((r: any) => {
         this.cartService.addCartCount();
-        this.alert.fireToastS('Prooduct added to cart');
+        this.alert.fireToastS('Item added to cart');
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;
@@ -106,12 +106,14 @@ export class ProductCardComponent implements OnInit {
 
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
+      this.alert.fireToastS('Item added to cart');
       this.loading = false;
     } else {
       localCart.push(cartItem);
       this.product.cartProductQuantity = cartItem.quantity;
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
+      this.alert.fireToastS('Item added to cart');
       this.loading = false;
     }
 
