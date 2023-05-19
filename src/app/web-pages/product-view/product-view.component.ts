@@ -114,12 +114,14 @@ export class ProductViewComponent implements OnInit {
 
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
+      this.alert.fireToastS('Item added to cart');
       this.loading = false;
     } else {
       localCart.push(cartItem);
       this.product.cartProductQuantity = cartItem.quantity;
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
+      this.alert.fireToastS('Item added to cart');
       this.loading = false;
     }
 
@@ -128,7 +130,6 @@ export class ProductViewComponent implements OnInit {
   cartNumber($event: any, product: Product) {
     // console.log($event.value, id);
     this.loading = true;
-
 
     if (this.authService.isLoggedIn()) {
       let data = [{

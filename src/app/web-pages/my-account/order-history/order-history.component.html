@@ -28,7 +28,7 @@
               <div class="head">
                 <div fxLayout="row" class="mb-1" fxLayoutGap="10px" fxLayoutAlign="space-between start">
                   <p class="area"> <span class="item-sn me-2">{{ rowIndex+1 }}</span> #{{ order.order_number }}  </p>
-                  <div> <span class="order-status"> {{ order.status }} </span> </div>
+                  <div> <span class="order-status"> {{ paymentBtn(order) ? 'Payment Pending' : order.status }} </span> </div>
                 </div>
                 <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between start">
                   <span class="text-secondary" style="font-size: 13px;"> {{ order.created_at }} </span>
