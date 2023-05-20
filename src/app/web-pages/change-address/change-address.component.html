@@ -76,7 +76,7 @@
 
       <div class="form-group mb-3">
         <label> State </label>
-        <input type="text" required="" name="state" formControlName="state" placeholder="State" class="form-control" />
+        <input type="text" required="" name="state" formControlName="state" placeholder="State" class="form-control" readonly/>
         <div *ngIf="submitted && addressFormControl.state.errors" class="invalid-error">
           <span *ngIf="addressFormControl.state.errors.required">* Required</span>
         </div>
@@ -84,7 +84,7 @@
 
       <div class="form-group mb-3">
         <label> City </label>
-        <input type="text" required="" name="city" formControlName="city" placeholder="City" class="form-control" />
+        <input type="text" required="" name="city" formControlName="city" placeholder="City" class="form-control" readonly/>
         <div *ngIf="submitted && addressFormControl.city.errors" class="invalid-error">
           <span *ngIf="addressFormControl.city.errors.required">* Required</span>
         </div>
@@ -93,7 +93,7 @@
       <div class="form-group mb-3">
         <label> Postal Code </label>
         <input type="text" required="" name="pinCode" formControlName="pincode" placeholder="Pincode"
-          class="form-control" />
+          class="form-control" readonly/>
         <div *ngIf="submitted && addressFormControl.pincode.errors" class="invalid-error">
           <span *ngIf="addressFormControl.pincode.errors.required">* Required</span>
         </div>
