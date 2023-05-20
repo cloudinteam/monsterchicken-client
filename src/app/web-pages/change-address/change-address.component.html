@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="col-12 mb-2">
-        <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark w-100"><i
-            class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
+        <button type="button" (click)="handlePermission()" class="btn btn-sm btn-outline-dark w-100">
+          <i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>
       </div>
       <div class="col-12">
         <div class="p-input-icon-right w-100 mb-3">
@@ -23,7 +23,6 @@
           <input type="text" class="form-control form-control-md" ngx-google-places-autocomplete
             (onAddressChange)="AddressChange($event)" [(ngModel)]="searchString" #searchInput
             placeholder="Search for your location"  [options]="optionsPlaces" />
-          <!-- #searchInput="ngx-places" (keyup)="searchFn()" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
         </div>
       </div>
     </div>
@@ -37,7 +36,6 @@
   <div class="col-12 col-md-6">
 
     <form [formGroup]="addressForm" (submit)="submit()">
-
 
       <div class="form-group mb-3">
         <label> Area/Locality </label>
@@ -137,15 +135,11 @@
         </div>
       </div>
 
-
-
       <div class="form-group">
         <button type="submit" class="btn btn-dark w-100" [disabled]="!serviceAvailable"> Submit </button>
       </div>
 
     </form>
-
-
 
     <!-- <pre>
         {{ this.geoResult | json }}

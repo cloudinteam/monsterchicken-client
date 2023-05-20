@@ -48,6 +48,7 @@ export class AddressListComponent implements OnInit {
         }
       })
       this.edit = false;
+      this.adEdit = 'new';
       this.loading = false;
       this.cdRef.markForCheck();
     })
@@ -55,8 +56,8 @@ export class AddressListComponent implements OnInit {
 
   addNewAddres() {
     // this.addAddress.emit()
-    this.edit = true;
     this.adEdit = 'new';
+    this.edit = true;
   }
 
   addressEdit(address: any) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AddressService } from 'src/app/services/address.service';
@@ -16,12 +16,14 @@ export class SavedAddressComponent implements OnInit {
   selectedId = '';
   selectedAddress: any;
   edit = false;
+  adEdit = 'new';
 
   constructor(
     private addressService: AddressService,
     private alert: AlertService,
     private activeMenu: ActiveMenuService,
     private router: Router,
+    private cdRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -46,12 +48,17 @@ export class SavedAddressComponent implements OnInit {
   addNewAddres() {
     // this.addAddress.emit()
     this.selectedAddress = null;
+    this.adEdit = 'new';
     this.edit = true;
   }
 
   addressEdit(address: any) {
+    console.log(address);
+
     this.selectedAddress = address;
-    this.edit = true
+    this.adEdit = 'edit';
+    this.edit = true;
+    this.cdRef.markForCheck();
   }
 
   onSelect($event: any) {

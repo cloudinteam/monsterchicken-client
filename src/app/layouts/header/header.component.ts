@@ -126,7 +126,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       this.notificationsCount = count.length;
-      console.log(this.notificationsCount.toString());
     })
   }
 
