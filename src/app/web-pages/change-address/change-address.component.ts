@@ -58,6 +58,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
   @Input() address: any;
   @Output() backToList: EventEmitter<any> = new EventEmitter();
+  @Input() edit = 'new';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,6 +79,11 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     //     number: r.response.userDetail.number,
     //   });
     // });
+
+    if (this.edit = 'new') {
+      this.address = null;
+    }
+
     if (this.address) {
       this.addressService.viewAddress({addressId: this.address.addressId}).subscribe((r: any) => {
         this.editAddress();
