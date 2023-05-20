@@ -34,6 +34,8 @@ export class NotificationComponent implements OnInit {
     this.headerService.notificationUpdate(id).subscribe((r: any) => {
       if (r.status) {
         this.alert.fireToastS('Marked as read');
+        this.getNotifications();
+        this.loading = false;
       }
     })
   }

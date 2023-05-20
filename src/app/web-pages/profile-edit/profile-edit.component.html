@@ -1,7 +1,8 @@
 <page-loader [loading]="loading"></page-loader>
 
 <div class="row" *ngIf="!loading">
-  <div class="col-12" *ngIf="editImage">
+
+  <!-- <div class="col-12" *ngIf="editImage">
     <div class="custom-dropzone" ngx-dropzone [multiple]="false" [accept]="'image/*'" (change)="onSelect($event)">
       <ngx-dropzone-label>
         <div>
@@ -10,7 +11,6 @@
       </ngx-dropzone-label>
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
         [removable]="true" (removed)="onRemove(f)">
-        <!-- <ngx-dropzone-label> {{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
       </ngx-dropzone-image-preview>
     </div>
     <div *ngIf="profileForm.value.image != ''" class="profile-edit-btn" (click)="editImage = false"> cancel </div>
@@ -20,7 +20,8 @@
       <img [src]="profileImage" [alt]="profileForm.value.name" class="profile-img-view">
       <div class="profile-edit-btn" (click)="editImage = true"> edit </div>
     </div>
-  </div>
+  </div> -->
+
   <div class="col-12">
 
     <form [formGroup]="profileForm" (submit)="submit()">

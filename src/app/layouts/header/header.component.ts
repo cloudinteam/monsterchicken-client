@@ -1,6 +1,6 @@
 import { HeaderService } from './../../services/header.service';
 import { Router } from '@angular/router';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
@@ -20,7 +20,7 @@ import { LocalcartService } from 'src/app/services/localcart.service';
   styleUrls: ['./header.component.scss'],
 })
 
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loading = false;
   district = '';
@@ -55,6 +55,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   categories: Category[] = [];
 
   profileItems: MenuItem[] = [];
+  notificationTrigger: any;
+  notificationsCount: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -68,15 +70,21 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private productService: ProductService,
     private activeMenu: ActiveMenuService,
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
     // if (this.authService.isLoggedIn()) {
     //   this.logggedIn = true;
     // }
+
     this.logggedIn = this.authService.isLoggedIn();
+
+    if (this.logggedIn) {
+      this.getNotificationsCount();
+      this.notificationTrigger = window.setInterval(() => {
+        this.getNotificationsCount();
+      }, 300000);
+    }
 
     this.init();
 
@@ -88,9 +96,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.district = currentAddress.district;
       this.locationShow = currentAddress.show;
       this.cdRef.markForCheck();
-    } // else if (localStorage.getItem('current_address') == null) {
-     // this.openLocation();
-   // }
+    }
 
     this.loading = false;
 
@@ -101,6 +107,35 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('current_address') == null) {
       this.openLocation();
     }
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.notificationTrigger)
+  }
+
+  getNotificationsCount() {
+    this.headerService.notificationList().subscribe((r: any) => {
+
+      let notifications = r.response.notifications;
+      let count = [];
+
+      notifications.forEach((msg: any) => {
+        if (msg.is_read == 0) {
+          count.push(msg);
+        }
+      });
+
+      this.notificationsCount = count.length;
+      console.log(this.notificationsCount.toString());
+    })
+  }
+
+  get getMenuCount() {
+    if (this.notificationsCount > 0) {
+      console.log(this.notificationsCount.toString());
+      return this.notificationsCount.toString();
+    }
+    return '';
   }
 
   init() {
@@ -149,14 +184,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/account/order-history']);
         }
       },
-      {
-        label: 'Notifications',
-        icon: 'pi pi-bell',
-        command: () => {
-          // this.activeMenu.checkoutMenu.next('order-history');
-          this.router.navigate(['/account/notifications']);
-        }
-      },
+      // {
+      //   label: 'Notifications <span class="badge badge-pill badge-danger" style="background: #a62025;">' + this.notificationsCount  + ' </span>',
+      //   escape: false,
+      //   icon: 'pi pi-bell',
+      //   iconClass: 'text-danger',
+      //   styleClass: 'text-danger',
+      //   command: () => {
+      //     this.router.navigate(['/account/notifications']);
+      //   }
+      // },
       {
         label: 'Saved Address',
         icon: 'pi pi-home',
@@ -230,7 +267,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   searchFn() {
     setTimeout(() => {
       this.headerService.searchString.next(this.searchString);
-      // console.log(this.searchString);
     }, 1000);
   }
 

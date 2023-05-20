@@ -61,6 +61,7 @@ export class ProductsListComponent implements OnInit {
     };
     // console.log(data);
     this.productService.getProducts(data).subscribe((r: any) => {
+      // console.log(r);
       this.productList = r.response.products;
       this.categories = r.response.categories;
       const index = this.categories.findIndex( (category: any) => {

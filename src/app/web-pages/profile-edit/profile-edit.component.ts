@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -24,12 +24,12 @@ export class ProfileEditComponent implements OnInit {
     private commonServeice: CommonService,
     private authService: AuthService,
     private alert: AlertService,
+    private cdRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.authService.profile({}).subscribe((r: any) => {
-      console.log(r);
       this.profileForm.patchValue({
         email: r.response.userDetail.email,
         image: r.response.userDetail.image,
@@ -61,22 +61,21 @@ export class ProfileEditComponent implements OnInit {
   }
 
   onSelect(event: any) {
-    // console.log(event);
     this.files.push(...event.addedFiles);
+    this.cdRef.markForCheck();
+    console.log(event);
     this.fileUpload();
   }
 
   onRemove(event: any) {
-    // console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
   fileUpload() {
-    console.log('uploader');
     const formData = new FormData();
-    formData.append("uploadFile", this.files[0]);
+    formData.append('uploadFile', this.files[0]);
+    console.log(formData);
     this.commonServeice.upload(formData).subscribe((r) => {
-      console.log(r);
       this.profileImage = r.response.previewUrl;
       this.profileForm.patchValue({ image: r.response.url });
       this.editImage = false;
@@ -84,10 +83,8 @@ export class ProfileEditComponent implements OnInit {
   }
 
   submit() {
-
     if (this.profileForm.invalid) {
       this.submitted = true;
-      // return true;
     }
     this.authService.profileEdit(this.profileForm.value).subscribe((r: any) => {
       if (r.status) {

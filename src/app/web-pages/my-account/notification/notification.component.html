@@ -7,7 +7,7 @@
       <h4> <b>Notifications</b> </h4>
     </div>
 
-    <div class="col-12">
+    <div class="col-12" *ngIf="notifications.length > 0">
 
       <div class="card p-3 mb-2" *ngFor="let message of notifications; let sn = index">
         <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-2">
@@ -21,11 +21,18 @@
 
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <span class="badge rounded-pill text-bg-dark">{{ message.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</span>
-          <span class="badge rounded-pill text-bg-secondary clickable" (click)="update(message.notification_id)"><i class="pi pi-times"></i></span>
+          <span *ngIf="message.is_read == 0" class="badge rounded-pill text-bg-secondary clickable" [ngClass]="(message.is_read == 0) ? 'text-bg-secondary' : 'text-bg-success'" (click)="update(message.notification_id)"><i class="pi pi-check-circle"></i></span>
         </div>
 
       </div>
 
     </div>
+
+    <div class="col-12" *ngIf="notifications.length == 0">
+      <div class="alert alert-info text-center" role="alert">
+        <strong>No notifications</strong>
+      </div>
+    </div>
+
   </div>
 </div>

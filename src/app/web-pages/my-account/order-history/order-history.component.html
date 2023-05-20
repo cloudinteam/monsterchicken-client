@@ -6,6 +6,7 @@
     <div class="col-12 text-center mb-4">
       <h4> <b>Orders History</b> </h4>
     </div>
+
     <div class="col-12" *ngIf="orders.length > 0">
       <p-table [value]="orders" >
         <ng-template pTemplate="header">
@@ -74,10 +75,12 @@
         </ng-template>
       </p-table>
     </div>
+
     <div class="col-12" *ngIf="orders.length == 0">
       <div class="alert alert-info" role="alert">
         <strong>No data found</strong>
       </div>
     </div>
+
   </div>
 </div>
