@@ -17,6 +17,7 @@ export class AddressListComponent implements OnInit {
   selectedId = '';
   selectedAddress: any;
   edit = false;
+  adEdit = 'new';
 
   @Output() addAddress: EventEmitter<any> = new EventEmitter();
   @Output() editAddress: EventEmitter<any> = new EventEmitter();
@@ -46,6 +47,7 @@ export class AddressListComponent implements OnInit {
           this.selectedId = address.addressId;
         }
       })
+      this.edit = false;
       this.loading = false;
       this.cdRef.markForCheck();
     })
@@ -54,11 +56,13 @@ export class AddressListComponent implements OnInit {
   addNewAddres() {
     // this.addAddress.emit()
     this.edit = true;
+    this.adEdit = 'new';
   }
 
   addressEdit(address: any) {
     this.selectedAddress = address;
-    this.edit = true
+    this.edit = true;
+    this.adEdit = 'edit';
     this.cdRef.markForCheck();
   }
 
