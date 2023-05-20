@@ -59,10 +59,18 @@ export class AuthService {
   logout(): any {
     // return this.api.postApiCallAuth(NetworkService.logout(), body);
     this.router.navigate(['/']);
-    localStorage.clear();
+
+    setTimeout(() => {
+      localStorage.clear();
     sessionStorage.clear();
 
     window.location.reload();
+    }, 500)
+
+    // localStorage.clear();
+    // sessionStorage.clear();
+
+    // window.location.reload();
   }
 
   isLoggedIn() {
