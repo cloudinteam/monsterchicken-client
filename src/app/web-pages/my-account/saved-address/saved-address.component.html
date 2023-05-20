@@ -10,7 +10,7 @@
 <!-- <pre> {{ this.address | json }} </pre> -->
 
 <div class="row justify-content-center" *ngIf="!loading && !edit">
-  <div class="col-12 col-md-12">
+  <div class="col-12 col-md-12" *ngIf="address.length > 0">
     <div class="address-card" *ngFor="let address of address">
 
       <!-- <label [for]="address.id" style="width: 100%;"> -->
@@ -22,7 +22,7 @@
 
 <div class="row justify-content-center" *ngIf="!loading && edit">
   <div class="col-12 col-md-12">
-    <change-address  [address]="selectedAddress" (backToList)="edit = false; getAddress();"></change-address>
+    <change-address  [address]="selectedAddress" [edit]="adEdit" (backToList)="edit = false; getAddress();"></change-address>
   </div>
 </div>
 

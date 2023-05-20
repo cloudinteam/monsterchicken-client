@@ -58,7 +58,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
   @Input() address: any;
   @Output() backToList: EventEmitter<any> = new EventEmitter();
-  @Input() edit = 'new';
+  @Input() edit: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,19 +73,23 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
-    // this.authService.profile({}).subscribe((r: any) => {
-    //   this.addressForm.patchValue({
-    //     number: r.response.userDetail.number,
-    //   });
-    // });
 
-    if (this.edit = 'new') {
+    this.initForm();
+    this.authService.profile({}).subscribe((r: any) => {
+      this.addressForm.patchValue({
+        number: r.response.userDetail.number,
+      });
+    });
+
+console.log(this.edit);
+
+    if (this.edit == 'new') {
       this.address = null;
     }
 
     if (this.address) {
-      this.addressService.viewAddress({addressId: this.address.addressId}).subscribe((r: any) => {
+      this.editAddress();
+      this.addressService.viewAddress({ addressId: this.address.addressId }).subscribe((r: any) => {
         this.editAddress();
       })
     }
@@ -100,31 +104,28 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.handlePermission();
 
     this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
 
-        this.searchAuto.addListener('place_changed', () => {
-        // this.searchAuto.addListener('blur', () => {
-        // this.searchAuto.addListener('keydown', () => {
-          this.ngZone.run(() => {
-            const place: any = this.searchAuto?.getPlace();
-            // console.log(place);
+    this.searchAuto.addListener('place_changed', () => {
+    // this.searchAuto.addListener('blur', () => {
+    // this.searchAuto.addListener('keydown', () => {
+      this.ngZone.run(() => {
+        const place: any = this.searchAuto?.getPlace();
+        // console.log(place);
 
-            this.lat = place.geometry.location.lat()
-            this.lng = place.geometry.location.lng()
+        this.lat = place.geometry.location.lat()
+        this.lng = place.geometry.location.lng()
 
-            this.mapMarker = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-            }
-            // console.log(this.mapMarker);
-            // this.geoCode('address', this.searchInput.nativeElement.value);
-            this.geoCode('location')
-          })
-        })
+        this.mapMarker = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        }
 
-
+        // this.geoCode('address', this.searchInput.nativeElement.value);
+        this.geoCode('location')
+      })
+    })
   }
 
   ngOnDestroy() {
@@ -161,25 +162,29 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     // console.log(this.address);
     // this.editAddress = true;
     this.loading = true;
-    this.geoCode('address', this.address.area);
+    // this.geoCode('address', this.address.area);
     this.addressForm.addControl('addressId', new FormControl(this.address.addressId, Validators.required));
 
     this.addressForm.patchValue({
       // addressId: this.address.id,
       area: this.address.area,
-      city: this.address.city,
+      city: this.address.city.name,
       streetName: this.address.streetName,
       landMark: this.address.landMark,
       nickName: this.address.nickName,
       number: this.address.number,
       pincode: this.address.pincode,
-      state: this.address.state,
+      state: this.address.state.name,
       type: this.address.type,
       others: this.address.others,
       latitude: this.address.latitude,
       longitude: this.address.longitude,
       stateCode: this.address.stateCode,
     });
+    this.mapMarker = {
+      lat: Number(this.address.latitude),
+      lng: Number(this.address.longitude),
+    }
     this.loading = false;
   }
 
@@ -187,7 +192,6 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     //setting address from API to local variable
     this.formattedaddress = address.formatted_address;
   }
-
 
   searchFn() {
     setTimeout(() => {
@@ -348,7 +352,6 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   getCoords() {
-    console.log('getCoords Called');
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         navigator.geolocation.getCurrentPosition(
@@ -403,14 +406,13 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     if (this.addressForm.invalid) {
       this.submitted = true;
     }
-    // console.log(this.addressForm.value);
     this.addressService
       .storeAdddress(this.addressForm.value)
       .subscribe((r: any) => {
-        // console.log(r);
         if (r.status) {
           this.alert.fireToastS(r.message[0]);
           this.address = null;
+          this.edit = 'new';
           this.backToList.emit();
         }
       });
