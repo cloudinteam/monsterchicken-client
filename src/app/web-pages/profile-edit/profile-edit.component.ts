@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -24,6 +24,7 @@ export class ProfileEditComponent implements OnInit {
     private commonServeice: CommonService,
     private authService: AuthService,
     private alert: AlertService,
+    private cdRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +62,8 @@ export class ProfileEditComponent implements OnInit {
 
   onSelect(event: any) {
     this.files.push(...event.addedFiles);
-    console.log(this.files[0]);
+    this.cdRef.markForCheck();
+    console.log(event);
     this.fileUpload();
   }
 
@@ -71,7 +73,7 @@ export class ProfileEditComponent implements OnInit {
 
   fileUpload() {
     const formData = new FormData();
-    formData.append("uploadFile", this.files[0]);
+    formData.append('uploadFile', this.files[0]);
     console.log(formData);
     this.commonServeice.upload(formData).subscribe((r) => {
       this.profileImage = r.response.previewUrl;

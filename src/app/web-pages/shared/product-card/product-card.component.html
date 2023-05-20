@@ -30,7 +30,7 @@
 
       <div>
         <div class="pro-action">
-          <span *ngIf="product.stock == 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of Stock</span>
+          <span *ngIf="product.stock <= 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of Stock</span>
           <p-inputNumber
               *ngIf="product.cartProductQuantity > 0"
               [ngModel]="product.cartProductQuantity"
