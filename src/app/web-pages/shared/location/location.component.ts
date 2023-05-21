@@ -10,7 +10,6 @@ import {
   EventEmitter,
   ChangeDetectorRef,
   AfterViewInit,
-  AfterContentChecked,
 } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -100,7 +99,6 @@ export class LocationComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('current_address') != null) {
       let address: any = localStorage.getItem('current_address');
       let currentAddress = JSON.parse(address);
-      // console.log(currentAddress);
       // this.geoCode('address', currentAddress.address);
       this.setFromLocal();
     } else {
@@ -112,7 +110,6 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.handlePermission();
 
     this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
 
@@ -145,43 +142,9 @@ export class LocationComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   addressChange(address: any) {
     //setting address from API to local variable
     this.formattedaddress=address.formatted_address
-  }
-
-  searchFn() {
-    // setTimeout(() => {
-      if (this.searchString != '') {
-
-        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
-
-        this.searchAuto.addListener('place_changed', () => {
-          // this.searchAuto.addListener('blur', () => {
-          // this.searchAuto.addListener('keydown', () => {
-
-
-          this.ngZone.runTask(() => {
-            const place: any = this.searchAuto?.getPlace();
-            console.log(place);
-
-            this.lat = place.geometry.location.lat()
-            this.lng = place.geometry.location.lng()
-
-            this.mapMarker = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-            }
-            // console.log(this.mapMarker);
-            // this.geoCode('address', this.searchInput.nativeElement.value);
-            this.geoCode('location')
-          })
-
-        })
-
-      }
-    // }, 1000);
   }
 
   getPhotoUrl(
@@ -270,11 +233,9 @@ export class LocationComponent implements OnInit, AfterViewInit {
       }
       // console.log(this.mapMarker);
       localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
-      console.log(this.postCode);
 
       if (this.postCode) {
         this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
-          console.log(r);
           if (r.serviceProvider) {
             this.errorAlert = false;
             this.alert.fireToastS(r.message[0])
