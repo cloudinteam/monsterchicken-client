@@ -28,9 +28,6 @@ export class CartProductComponent implements OnInit {
   }
 
   cartNumber($event: any, cartItem: Product, cartId: string) {
-    // console.log($event.value);
-    // console.log(productId);
-    // console.log(cartId);
 
     if (this.authService.isLoggedIn()) {
       let data = [{
@@ -65,18 +62,32 @@ export class CartProductComponent implements OnInit {
       this.update.emit();
     }
 
-
   }
 
   removeItem(productId: string) {
-    let data = [{
-      productId: productId,
+    if (this.authService.isLoggedIn()) {
+      let data = [{
+        productId: productId,
 
-      status: 'remove'
-    }];
-    this.cartService.addCart({carts: data}).subscribe((r: any) => {
+        status: 'remove'
+      }];
+      this.cartService.addCart({ carts: data }).subscribe((r: any) => {
+        this.update.emit();
+      });
+    } else if (!this.authService.isLoggedIn()) {
+      let localCart = this.localCartService.getLocalCart
+      const index = localCart.findIndex( (cart: any) => {
+        return cart.productId === productId;
+      });
+      localCart.splice(index, 1);
+      if (localCart.length > 0) {
+        localStorage.setItem('localCart', JSON.stringify(localCart));
+      } else {
+        localStorage.removeItem('localCart');
+      }
+      this.localCartService.setCartTotal();
       this.update.emit();
-    });
+    }
   }
 
 

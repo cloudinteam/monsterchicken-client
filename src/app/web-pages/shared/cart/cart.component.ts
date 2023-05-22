@@ -72,16 +72,12 @@ export class CartComponent implements OnInit {
       // this.deliveryCharge = r.response.deliveryCharge;
       this.grandTotal = r.response.grandTotal;
       this.cartService.cartCount.next({ count: this.totalCount, total: this.totalCartPrice })
-      this.cartItems();
       this.loading = false;
     });
   }
 
   checkout() {
     if (this.authService.isLoggedIn() && this.cart != null) {
-      let ids: any = localStorage.getItem('cartIds');
-      let cartIds = JSON.parse(ids)
-
       this.close.emit();
       this.router.navigate(['/checkout']);
     } else {
@@ -101,17 +97,6 @@ export class CartComponent implements OnInit {
     } else {
       this.loadLocalCart();
     }
-  }
-
-  cartItems() {
-    localStorage.removeItem('cartIds');
-    let cartIds: any[] = [];
-    this.cart.forEach(item => {
-      cartIds.push(item.cartId);
-    })
-
-    let idString = JSON.stringify(cartIds);
-    localStorage.setItem('cartIds', idString);
   }
 
 }

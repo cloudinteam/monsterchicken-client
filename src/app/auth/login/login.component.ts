@@ -29,10 +29,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private localCartService: LocalcartService,
     private cartService: CartService,
-  ) // private spinner: SpinnerVisibilityService
-  {
-    // spinner.hide();
-  }
+  ) { }
 
   ngOnInit() {
     this.initLoginForm();

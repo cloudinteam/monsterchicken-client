@@ -55,7 +55,6 @@ export class PaymentComponent implements OnInit {
 
   getOrderDetail(orderId: string) {
     this.productService.getOrderDetail(orderId).subscribe((r: any) => {
-      console.log(r);
       this.data = r;
       this.totalCartPrice = r.response.total_amount;
       this.discountPrice = r.response.order.discount_price;
@@ -79,11 +78,9 @@ export class PaymentComponent implements OnInit {
       }
 
       this.checkoutService.payment(data).subscribe((r: any) => {
-        // console.log(r);
-
         if (r.status) {
           this.alertService.fireToastS('Order placed');
-          this.router.navigate(['/']);
+          this.router.navigate(['/account/order-history']);
         }
       })
 

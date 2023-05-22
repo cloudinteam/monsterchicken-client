@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({

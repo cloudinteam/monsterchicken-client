@@ -25,19 +25,13 @@ export class OrderHistoryComponent implements OnInit {
     this.loading = true;
 
     this.productService.getOrderHistory().subscribe((r: any) => {
-      console.log(r.response);
       this.orders = r.response.orders;
       this.loading = false;
     })
   }
 
   viewInvoice(id: string) {
-    // /order/{ orderId } /generate-pdf
-
-    this.productService.getOrderInvoice(id)
     window.open(this.productService.getOrderInvoice(id), '_blank')
-    // console.log(this.productService.getOrderInvoice(id))
-
   }
 
   paymentBtn(order: any) {

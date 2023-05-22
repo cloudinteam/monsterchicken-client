@@ -10,7 +10,7 @@
 <!-- <pre> {{ this.address | json }} </pre> -->
 
 <div class="row justify-content-center" *ngIf="!loading && !edit">
-  <div class="col-12 col-md-12 ">
+  <div class="col-12 col-md-11 ">
 
     <div class="address-card" *ngFor="let address of address">
       <div class="form-check" >
@@ -24,7 +24,7 @@
 
     <div class="row justify-content-center" *ngIf="!loading && this.selectedId != '' && this.address.length != 0">
       <div class="col-12 col-md-12 text-end">
-        <button type="button" (click)="goToSummary()" class="btn btn-danger rounded-0"> Proceed </button>
+        <button type="button" (click)="goToSummary()" class="btn btn-danger rounded-0"> Proceed to checkout </button>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
 </div>
 
 <div class="row justify-content-center" *ngIf="!loading && edit">
-  <div class="col-12 col-md-12">
+  <div class="col-12 col-md-11">
     <change-address  [address]="selectedAddress" [edit]="adEdit" (backToList)="edit = false; getAddress();"></change-address>
   </div>
 </div>

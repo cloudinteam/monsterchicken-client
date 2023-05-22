@@ -35,7 +35,9 @@ export class LocalcartService {
       if (this.getLocalCart.length > 0) {
         let localCart: any[] = [];
         console.log(this.getLocalCart);
-        this.cartService.addCart({carts: localCart}).subscribe((r: any) => {
+        this.cartService.addCart({ carts: this.getLocalCart }).subscribe((r: any) => {
+          console.log(r);
+
           this.cartService.addCartCount();
           localStorage.removeItem('localCart');
         });
