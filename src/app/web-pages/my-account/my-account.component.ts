@@ -22,6 +22,7 @@ export class MyAccountComponent implements OnInit {
     this.activeMenu.checkoutMenu.subscribe((menu) => {
       this.active = menu;
     })
+
     this.loading = false;
     // setTimeout(() => {
     //   this.loading = false;

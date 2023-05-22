@@ -172,7 +172,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         label: 'Profile',
         icon: 'pi pi-user-edit',
         command: () => {
-          // this.activeMenu.checkoutMenu.next('profile');
+          this.activeMenu.checkoutMenu.next('profile');
           this.router.navigate(['/account/profile']);
         }
       },
