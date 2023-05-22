@@ -49,7 +49,7 @@ export class CommonService {
   }
 
   upload(data: any) {
-    return this.api.postApiCallAuthNE(NetworkService.upload(), data);
+    return this.api.postApiCallAuthNEE(NetworkService.upload(), data);
   }
 
   getStates(body: any): any {

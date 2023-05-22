@@ -28,6 +28,7 @@ export class ProfileEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.initForm();
     this.authService.profile({}).subscribe((r: any) => {
       this.profileForm.patchValue({
@@ -44,6 +45,7 @@ export class ProfileEditComponent implements OnInit {
         this.profileImage = r.response.userDetail.previewUrl;
       }
     })
+    this.loading = false;
   }
 
   initForm() {
@@ -63,7 +65,6 @@ export class ProfileEditComponent implements OnInit {
   onSelect(event: any) {
     this.files.push(...event.addedFiles);
     this.cdRef.markForCheck();
-    console.log(event);
     this.fileUpload();
   }
 
@@ -74,7 +75,7 @@ export class ProfileEditComponent implements OnInit {
   fileUpload() {
     const formData = new FormData();
     formData.append('uploadFile', this.files[0]);
-    console.log(formData);
+
     this.commonServeice.upload(formData).subscribe((r) => {
       this.profileImage = r.response.previewUrl;
       this.profileForm.patchValue({ image: r.response.url });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs';
 import { NetworkService } from './network.service';
@@ -180,9 +180,13 @@ export class ApiCallService {
   }
 
   postApiCallAuthNEE(url: string, body: object) {
+    let header = new HttpHeaders({
+      Accept: "application/json",
+      Authorization: "Bearer " + NetworkService.authToken(),
+    }).set('Access-Control-Allow-Origin', '*');
     return this.http
       .post(url, body, {
-        headers: NetworkService.getAuthHeader(),
+        headers: header,
       })
       .pipe(
         map((r: any) => {

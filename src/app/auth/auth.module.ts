@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 
 
@@ -22,7 +23,8 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     FormsModule,
     InputNumberModule,
     InputTextModule,
-    KeyFilterModule
+    KeyFilterModule,
+    AutoFocusModule
   ],
   exports: [
     LoginComponent

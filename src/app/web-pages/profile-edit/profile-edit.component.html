@@ -2,7 +2,7 @@
 
 <div class="row" *ngIf="!loading">
 
-  <!-- <div class="col-12" *ngIf="editImage">
+  <div class="col-12" *ngIf="editImage">
     <div class="custom-dropzone" ngx-dropzone [multiple]="false" [accept]="'image/*'" (change)="onSelect($event)">
       <ngx-dropzone-label>
         <div>
@@ -13,14 +13,14 @@
         [removable]="true" (removed)="onRemove(f)">
       </ngx-dropzone-image-preview>
     </div>
-    <div *ngIf="profileForm.value.image != ''" class="profile-edit-btn" (click)="editImage = false"> cancel </div>
+    <div *ngIf="profileImage !== ''" class="profile-edit-btn" (click)="editImage = false"> cancel </div>
   </div>
   <div class="col-12" *ngIf="!editImage">
     <div class="profile-container">
       <img [src]="profileImage" [alt]="profileForm.value.name" class="profile-img-view">
       <div class="profile-edit-btn" (click)="editImage = true"> edit </div>
     </div>
-  </div> -->
+  </div>
 
   <div class="col-12">
 
