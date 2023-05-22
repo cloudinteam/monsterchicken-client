@@ -19,7 +19,7 @@
         </li>
 
         <li class="chk-menu-li " [ngClass]="menu === 'summary' ? 'active' : summarySuccess? 'active success':''" >
-          <div class="menu-card " [ngClass]="menu === 'summary'? 'active' : summarySuccess? 'active success':''" >
+          <div class="menu-card "  > <!-- [ngClass]="menu === 'summary'? 'active' : summarySuccess? 'active success':''" -->
             <div class="title">
               Order Summary
             </div>
@@ -28,15 +28,15 @@
           </div>
         </li>
 
-        <li class="chk-menu-li " [class]="menu === 'payment' ? 'active' : ''">
-          <div class="menu-card "> <!--  [ngClass]="this.menu == 'payment'? 'active' : ''" -->
+        <!-- <li class="chk-menu-li " [class]="menu === 'payment' ? 'active' : ''">
+          <div class="menu-card ">
             <div class="title">
               Payment
             </div>
             <div class="sub-title">
             </div>
           </div>
-        </li>
+        </li> -->
 
       </ul>
     </div>

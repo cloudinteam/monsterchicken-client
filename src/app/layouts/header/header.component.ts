@@ -153,7 +153,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cartCount.total = r.total;
     })
 
-    if(this.logggedIn) {
+    if (this.logggedIn) {
+      this.localCartService.pushLocalCartToLive();
       this.cartService.getCart().subscribe((r: any) => {
         this.cartCount.count = r.response.cart.length;
         this.cartCount.total = r.response.totalCartPrice;
@@ -261,25 +262,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.router.navigateByUrl('/search');
     this.disableSearch = false;
     this.headerService.disableSearch.next(false);
-  }
-
-  searchFn() {
-    setTimeout(() => {
-      this.headerService.searchString.next(this.searchString);
-    }, 1000);
-  }
-
-  private searchFilter() {
-    fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
-      map((event: any) => {
-        return event.target.value;
-      })
-      , debounceTime(500)
-      , distinctUntilChanged()
-    ).subscribe((searchTerm: string) => {
-      this.searchString = searchTerm;
-      this.headerService.searchString.next(this.searchString);
-    });
   }
 
   openCart() {

@@ -5,6 +5,7 @@ import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'order-summary',
@@ -15,7 +16,6 @@ export class OrderSummaryComponent implements OnInit {
   loading = false;
   submitted = false;
   cart: any;
-  cartIds: any[] = [];
 
   data: any;
   orderSummary: any;
@@ -30,6 +30,7 @@ export class OrderSummaryComponent implements OnInit {
   promoCode: string = '';
   promoCodeId: string = '';
   outOfStock: boolean = true;
+  paymentMethod = '';
 
   constructor(
     private cartService: CartService,
@@ -38,18 +39,12 @@ export class OrderSummaryComponent implements OnInit {
     private router: Router,
     private alert: AlertService,
     private activeMenu: ActiveMenuService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private productService: ProductService,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    let id: any = localStorage.getItem('cartIds');
-    this.cartIds = JSON.parse(id);
-
-    if (this.cartIds == null) {
-      this.alert.fireToastF('Cart empty');
-      this.router.navigate(['/']);
-    }
 
     // this.loadCart();
     this.loadSummary();
@@ -85,16 +80,6 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   loadSummary() {
-    let id: any = localStorage.getItem('cartIds');
-    var cartIds = JSON.parse(id);
-    if (this.cartIds.length == 0 || this.cartIds == null) {
-      this.alert.fireToastF('Cart empty');
-      this.router.navigate(['/']);
-    } else {
-      this.loading = true;
-      let data = {
-        cartId: this.cartIds,
-      }
 
       this.checkoutService.cartSummary().subscribe((r: any) => {
         this.data = r;
@@ -114,7 +99,7 @@ export class OrderSummaryComponent implements OnInit {
         this.loading = false;
         this.cdRef.markForCheck();
       });
-    }
+    // }
   }
 
   applyCoupon() {
@@ -125,16 +110,12 @@ export class OrderSummaryComponent implements OnInit {
     }
 
     if (this.couponForm.value.promoCode !== '') {
-      let id: any = localStorage.getItem('cartIds');
-      let cartIds = JSON.parse(id);
       let data = {
         promoCode: this.couponForm.value.promoCode,
         subTotal: this.totalCartPrice
-      };
-      console.log(this.couponForm.value);
+      }
       this.loading = true;
       this.checkoutService.promoCode(data).subscribe((r: any) => {
-        console.log(r)
         if (r.status) {
           if (r.offer) {
             this.alert.fireToastS(r.message[0]);
@@ -174,23 +155,46 @@ export class OrderSummaryComponent implements OnInit {
 
   checkout() {
     this.loading = true;
-    let id: any = localStorage.getItem('cartIds');
-    let cartIds = JSON.parse(id);
+
     let data = {
-      // cartId: cartIds,
-      // addressId: this.shippingAddress.address.id,
-      // userId: localStorage.getItem('userId'),
       promoCodeId: this.promoCodeId,
-    };
-    console.log(data)
+    }
+
     this.checkoutService.cartCheckout(data).subscribe((r: any) => {
-      console.log(r);
       if (r.status) {
-        localStorage.removeItem('cartIds');
-        this.router.navigate(['/checkout/payment/' + r.orderId]);
+        // this.router.navigate(['/checkout/payment/' + r.orderId]);
+        this.payment(r.orderId);
       }
     });
+
     this.loading = false;
+  }
+
+  payment(orderId: string) {
+    this.loading = true;
+    if (this.paymentMethod == '') {
+      this.alert.fireToastF('Choose payment method');
+    }
+
+    if (this.paymentMethod == "cash_on_delivery") {
+      let data = {
+        order_id: orderId,
+        amount: this.grandTotal,
+        status: 'COD',
+        method: "cash_on_delivery",
+      }
+
+      this.checkoutService.payment(data).subscribe((r: any) => {
+        if (r.status) {
+          this.cartService.addCartCount();
+          this.alert.fireToastS('Order placed');
+          this.router.navigate(['/account/order-history']);
+          this.loading = false;
+        }
+      })
+
+    }
+
   }
 
 }
