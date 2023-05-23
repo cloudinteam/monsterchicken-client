@@ -2,7 +2,6 @@ import { HeaderService } from './../../services/header.service';
 import { Router } from '@angular/router';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from 'src/app/services/cart.service';
 import { MapGeocoder } from '@angular/google-maps';
@@ -12,6 +11,9 @@ import { Category } from 'src/app/models/category.model';
 import { MenuItem } from 'primeng/api';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { LocalcartService } from 'src/app/services/localcart.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { LocationComponent } from 'src/app/web-pages/shared/location/location.component';
+import { LocationAllowComponent } from 'src/app/web-pages/shared/location-allow/location-allow.component';
 
 
 @Component({
@@ -36,21 +38,20 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
-
-  // @ViewChild('searchInput', { static: true }) searchInput = {} as ElementRef;
-
   @ViewChild('loginArea') loginArea!: TemplateRef<any>;
   @ViewChild('cartArea') cartArea!: TemplateRef<any>;
-  @ViewChild('locationModal') locationModal!: TemplateRef<any>;
-  @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
+  // @ViewChild('locationModal') locationModal!: TemplateRef<any>;
+  // @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
   @ViewChild('profileEdit') profileEdit!: TemplateRef<any>;
+
+  locationModal!: DynamicDialogRef;
 
   lat: number = 0;
   lng: number = 0;
   mapMarker: google.maps.LatLngLiteral = {
     lat: 0,
     lng: 0,
-  };
+  }
 
   categories: Category[] = [];
 
@@ -70,12 +71,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private productService: ProductService,
     private activeMenu: ActiveMenuService,
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit(): void {
-    // if (this.authService.isLoggedIn()) {
-    //   this.logggedIn = true;
-    // }
 
     this.logggedIn = this.authService.isLoggedIn();
 
@@ -91,7 +90,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     if (localStorage.getItem("current_address") !== null) {
       let address: any = localStorage.getItem('current_address');
       let currentAddress = JSON.parse(address);
-      // console.log(currentAddress);
+
       this.address = currentAddress.address;
       this.district = currentAddress.district;
       this.locationShow = currentAddress.show;
@@ -103,7 +102,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // this.handlePermission();
     if (localStorage.getItem('current_address') == null) {
       this.openLocation();
     }
@@ -128,14 +126,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.notificationsCount = count.length;
     })
   }
-
-  // get getMenuCount() {
-  //   if (this.notificationsCount > 0) {
-  //     console.log(this.notificationsCount.toString());
-  //     return this.notificationsCount.toString();
-  //   }
-  //   return '';
-  // }
 
   init() {
     this.headerService.disableSearch.subscribe((r) => {
@@ -184,16 +174,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.router.navigate(['/account/order-history']);
         }
       },
-      // {
-      //   label: 'Notifications <span class="badge badge-pill badge-danger" style="background: #a62025;">' + this.notificationsCount  + ' </span>',
-      //   escape: false,
-      //   icon: 'pi pi-bell',
-      //   iconClass: 'text-danger',
-      //   styleClass: 'text-danger',
-      //   command: () => {
-      //     this.router.navigate(['/account/notifications']);
-      //   }
-      // },
       {
         label: 'Saved Address',
         icon: 'pi pi-home',
@@ -236,16 +216,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openLogin() {
     this.closeCart();
-    // this.offcanvasService.dismiss(this.cartArea);
     setTimeout(() => {
       this.offcanvasService.open(this.loginArea, { position: 'end' });
     }, 300);
 
   }
 
-  closeLogin() { // content: TemplateRef<any>
-    // console.log('close login');
-    // this.offcanvasService.dismiss('all')
+  closeLogin() {
     this.offcanvasService.dismiss(this.loginArea);
   }
 
@@ -282,11 +259,30 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openLocation() {
-		this.ngbModal.open(this.locationModal, { fullscreen: false, size: 'xl' });
-	}
+    // this.ngbModal.open(this.locationModal, { fullscreen: false, size: 'xl' });
+
+    this.locationModal = this.dialogService.open(LocationComponent, {
+      header: 'Enter your location to check service availability.',
+      width: '70%',
+      // baseZIndex: 1,
+      contentStyle: { overflow: 'auto' },
+      closable: false,
+      closeOnEscape: false,
+      maximizable: true,
+      keepInViewport: true,
+      autoZIndex: true,
+    })
+
+    this.locationModal.onClose.subscribe( () => {
+      this.showAddress();
+    });
+
+  }
+
+
 
   showAddress() {
-    this.ngbModal.dismissAll(this.locationModal);
+    // this.ngbModal.dismissAll(this.locationModal);
     this.locationShow = true;
     this.cdRef.markForCheck();
   }
@@ -336,6 +332,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handlePermission() {
+    console.log('header');
+
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         this.getCoords();
@@ -356,11 +354,27 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   positionDenied() {
-    this.ngbModal.open(this.locationAllow, { centered: true, size: 'md' });
+    // this.ngbModal.open(this.locationAllow, { centered: true, size: 'md' });
+    let locationAllow: DynamicDialogRef;
+
+    locationAllow = this.dialogService.open(LocationAllowComponent, {
+      header: '',
+      width: '30%',
+      // baseZIndex: 1,
+      contentStyle: { overflow: 'auto' },
+      closable: false,
+      closeOnEscape: false,
+      maximizable: true,
+      keepInViewport: true,
+      autoZIndex: true,
+    })
+    locationAllow.onClose.subscribe( () => {
+      this.handlePermission();
+    });
   }
 
   getCoords() {
-    console.log('getCoords Called');
+
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         navigator.geolocation.getCurrentPosition(
@@ -376,10 +390,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           },
           () => {
-            this.ngbModal.open(this.locationAllow, {
-              centered: true,
-              size: 'md',
-            });
+            this.positionDenied()
           }
         );
       } else if (result.state === 'prompt') {
@@ -396,10 +407,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           },
           () => {
-            this.ngbModal.open(this.locationAllow, {
-              centered: true,
-              size: 'md',
-            });
+            this.positionDenied()
           }
         );
       } else if (result.state === 'denied') {

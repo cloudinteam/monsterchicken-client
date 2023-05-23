@@ -15,11 +15,6 @@ export class CheckoutService {
     return this.api.postApiCallAuth(NetworkService.promoCode(), body);
   }
 
-  // old
-  getCheckout(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getCheckout(), body);
-  }
-
   cartSummary(): any {
     return this.api.getApiCallAuth(NetworkService.getCartSummary())
   }

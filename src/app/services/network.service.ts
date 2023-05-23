@@ -65,9 +65,6 @@ export class NetworkService {
   static SetPassword(): string {
     return this.server_url() + this.server_v() + '/update-password';
   }
-  static logout(): string {
-    return this.server_url() + this.server_v() + '/login';
-  }
   static profile(): string {
     return this.server_url() + this.server_v() + '/web/profile';
   }
@@ -125,9 +122,6 @@ export class NetworkService {
   //Checkout
   static getCartSummary(): string {
     return this.server_url() + this.server_v() + '/web/cart/summary';
-  }
-  static getCheckout(): string {
-    return this.server_url() + this.server_v() + '/checkout/data';
   }
   static cartCheckout(): string {
     return this.server_url() + this.server_v() + '/web/cart/checkout';

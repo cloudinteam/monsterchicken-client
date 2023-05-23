@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlexModule } from '@angular/flex-layout';
 import { GoogleMapsModule } from '@angular/google-maps';
 import {  GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { DialogService } from 'primeng/dynamicdialog';
 
 
 @NgModule({
@@ -25,12 +26,14 @@ import {  GooglePlaceModule } from 'ngx-google-places-autocomplete';
     NgbModule,
     FlexModule,
     GoogleMapsModule,
-    GooglePlaceModule
+    GooglePlaceModule,
   ],
   exports: [
     GooglePlaceModule
   ],
-  providers: [],
+  providers: [
+    DialogService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

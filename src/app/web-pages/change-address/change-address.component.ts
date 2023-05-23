@@ -106,6 +106,9 @@ console.log(this.edit);
   ngAfterViewInit(): void {
 
     this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+    this.searchAuto.setComponentRestrictions({
+      country: ["in"],
+    });
 
     this.searchAuto.addListener('place_changed', () => {
     // this.searchAuto.addListener('blur', () => {
