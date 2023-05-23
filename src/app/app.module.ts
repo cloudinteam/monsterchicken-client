@@ -10,6 +10,8 @@ import { FlexModule } from '@angular/flex-layout';
 import { GoogleMapsModule } from '@angular/google-maps';
 import {  GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -27,12 +29,14 @@ import { DialogService } from 'primeng/dynamicdialog';
     FlexModule,
     GoogleMapsModule,
     GooglePlaceModule,
+    ToastModule
   ],
   exports: [
     GooglePlaceModule
   ],
   providers: [
-    DialogService
+    DialogService,
+    MessageService
   ],
   bootstrap: [AppComponent],
 })

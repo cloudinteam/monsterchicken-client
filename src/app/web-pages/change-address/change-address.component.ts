@@ -15,6 +15,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { MessageService } from 'primeng/api';
 import { AddressService } from 'src/app/services/address.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -70,6 +71,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     private addressService: AddressService,
     private mapService: MapService,
     private cdRef: ChangeDetectorRef,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -311,13 +313,23 @@ console.log(this.edit);
                 latitude: this.mapMarker.lat,
                 longitude: this.mapMarker.lng,
               });
-              this.alert.fireToastS(r.message[0]);
+              // this.alert.fireToastS(r.message[0]);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: r.message[0]
+              })
               this.loading = false;
               this.cdRef.markForCheck();
             }
             if (!r.serviceProvider) {
               this.serviceAvailable = false;
-              this.alert.fireToastF(r.message[0]);
+              // this.alert.fireToastF(r.message[0]);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: r.message[0]
+              })
               this.loading = false;
               this.cdRef.markForCheck();
             }
@@ -413,7 +425,12 @@ console.log(this.edit);
       .storeAdddress(this.addressForm.value)
       .subscribe((r: any) => {
         if (r.status) {
-          this.alert.fireToastS(r.message[0]);
+          // this.alert.fireToastS(r.message[0]);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: r.message[0]
+          })
           this.address = null;
           this.edit = 'new';
           this.backToList.emit();

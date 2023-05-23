@@ -4,6 +4,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ProductService } from 'src/app/services/product.service';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'bullk-order-form',
@@ -38,6 +39,7 @@ export class BullkOrderFormComponent implements OnInit {
     private alert: AlertService,
     private productService: ProductService,
     private cdRef: ChangeDetectorRef,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -189,11 +191,23 @@ export class BullkOrderFormComponent implements OnInit {
 
     this.productService.bulkOrderSubmit(obj.bulkOrderDetails).subscribe((r) => {
       if (r.status) {
-        this.alert.fireToastS(r.message[0]);
+        // this.alert.fireToastS(r.message[0]);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message[0]
+        })
         this.submitted = false;
         this.bulkOrderForm.reset();
         this.ngOnInit();
-      } else this.alert.fireToastF(r.message[0]);
+      } else {
+        // this.alert.fireToastF(r.message[0]);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: r.message[0]
+        })
+      }
     });
   }
 
@@ -218,7 +232,12 @@ export class BullkOrderFormComponent implements OnInit {
       this.totalProductOptions = r.response.totalProducts;
 
       if (r.response.products.length == 0) {
-        this.alert.fireToastN('No products' ,'Category has no products', 'pi pi-exclamation-circle');
+        // this.alert.fireToastN('No products', 'Category has no products', 'pi pi-exclamation-circle');
+        this.messageService.add({
+          severity: 'info',
+          summary: 'No products',
+          detail: 'Category has no products'
+        })
       }
 
       return r.response.products;
@@ -234,13 +253,17 @@ export class BullkOrderFormComponent implements OnInit {
       categoryId: categoryId,
     };
     this.productService.getProductOptions(data).subscribe((r: any) => {
-      console.log(r);
       this.productOptions = [];
       this.productOptions = r.response.products;
       this.totalProductOptions = r.response.totalProducts;
 
       if (this.productOptions.length == 0) {
-        this.alert.fireToastN('No products' ,'Category has no products', 'pi pi-exclamation-circle');
+        // this.alert.fireToastN('No products', 'Category has no products', 'pi pi-exclamation-circle');
+        this.messageService.add({
+          severity: 'info',
+          summary: 'No products',
+          detail: 'Category has no products'
+        })
       }
 
       // this.role = r.role;

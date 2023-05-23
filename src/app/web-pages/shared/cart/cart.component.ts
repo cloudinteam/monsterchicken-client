@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -31,7 +32,8 @@ export class CartComponent implements OnInit {
     private localCartService: LocalcartService,
     private authService: AuthService,
     private router: Router,
-    private alert: AlertService
+    private alert: AlertService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +88,12 @@ export class CartComponent implements OnInit {
         this.close.emit();
       this.router.navigate(['/checkout']);
       } else if (this.cart == null) {
-        this.alert.fireToastF('Cart is empty');
+        // this.alert.fireToastF('Cart is empty');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Cart is empty'
+        })
       }
     }
   }

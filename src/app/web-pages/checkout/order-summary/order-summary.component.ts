@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -41,6 +42,7 @@ export class OrderSummaryComponent implements OnInit {
     private activeMenu: ActiveMenuService,
     private formBuilder: FormBuilder,
     private productService: ProductService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -120,7 +122,12 @@ export class OrderSummaryComponent implements OnInit {
       this.checkoutService.promoCode(data).subscribe((r: any) => {
         if (r.status) {
           if (r.offer) {
-            this.alert.fireToastS(r.message[0]);
+            // this.alert.fireToastS(r.message[0]);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: r.message[0]
+            })
             this.promoCodeId = r.offer.offer_id;
             this.discountPrice = r.offer.cart_discount_amount;
             this.grandTotal = this.totalCartPrice - r.offer.cart_discount_amount;
@@ -128,7 +135,12 @@ export class OrderSummaryComponent implements OnInit {
             this.couponForm.patchValue({
               promoCode: ''
             })
-            this.alert.fireToastF(r.message[0]);
+            // this.alert.fireToastF(r.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: r.message[0]
+            })
           }
         } else if (!r.status) {
           this.loadSummary();
@@ -137,7 +149,12 @@ export class OrderSummaryComponent implements OnInit {
         console.log(error);
       })
     } else {
-      this.alert.fireToastF('Invalid Promocode');
+      // this.alert.fireToastF('Invalid Promocode');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid Promocode'
+      })
     }
     this.loading = false;
   }
@@ -175,7 +192,12 @@ export class OrderSummaryComponent implements OnInit {
   payment(orderId: string) {
     this.loading = true;
     if (this.paymentMethod == '') {
-      this.alert.fireToastF('Choose payment method');
+      // this.alert.fireToastF('Choose payment method');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Choose payment method'
+      })
     }
 
     if (this.paymentMethod == "cash_on_delivery") {
@@ -189,7 +211,12 @@ export class OrderSummaryComponent implements OnInit {
       this.checkoutService.payment(data).subscribe((r: any) => {
         if (r.status) {
           this.cartService.addCartCount();
-          this.alert.fireToastS('Order placed');
+          // this.alert.fireToastS('Order placed');
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Order placed'
+          })
           this.router.navigate(['/account/order-history']);
           this.loading = false;
         }

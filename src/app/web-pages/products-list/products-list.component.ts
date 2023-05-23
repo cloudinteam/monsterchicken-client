@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'products-list',
@@ -23,7 +24,8 @@ export class ProductsListComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private alert: AlertService
+    private alert: AlertService,
+    private messageService: MessageService,
   ) {
 
   }
@@ -84,7 +86,12 @@ export class ProductsListComponent implements OnInit {
   addCart(id: any) {
     let data = { productId: id };
     this.cartService.addCart(data).subscribe((r: any) => {
-      this.alert.fireToastS(r.message[0]);
+      // this.alert.fireToastS(r.message[0]);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: r.message[0]
+      })
       this.cartService.addCartCount();
     });
   }

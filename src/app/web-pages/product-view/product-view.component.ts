@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Navigation, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Product } from 'src/app/models/product.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -27,6 +28,7 @@ export class ProductViewComponent implements OnInit {
     private alert: AlertService,
     private authService: AuthService,
     private localCartService: LocalcartService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +68,12 @@ export class ProductViewComponent implements OnInit {
         };
       this.cartService.addCart({carts:[data]}).subscribe((r: any) => {
         this.cartService.addCartCount();
-        this.alert.fireToastS('Prooduct added to cart');
+        // this.alert.fireToastS('Prooduct added to cart');
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Item added to cart'
+        })
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;
@@ -114,14 +121,24 @@ export class ProductViewComponent implements OnInit {
 
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
-      this.alert.fireToastS('Item added to cart');
+      // this.alert.fireToastS('Item added to cart');
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Item added to cart'
+      })
       this.loading = false;
     } else {
       localCart.push(cartItem);
       this.product.cartProductQuantity = cartItem.quantity;
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
-      this.alert.fireToastS('Item added to cart');
+      // this.alert.fireToastS('Item added to cart');
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Item added to cart'
+      })
       this.loading = false;
     }
 
@@ -139,7 +156,12 @@ export class ProductViewComponent implements OnInit {
       }];
       this.cartService.addCart({carts:data}).subscribe((r: any) => {
         this.cartService.addCartCount();
-        this.alert.fireToastS(r.message[0]);
+        // this.alert.fireToastS(r.message[0]);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message[0]
+        })
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;

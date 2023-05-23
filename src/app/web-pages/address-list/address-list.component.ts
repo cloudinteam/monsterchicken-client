@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AddressService } from 'src/app/services/address.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -27,7 +28,8 @@ export class AddressListComponent implements OnInit {
     private alert: AlertService,
     private activeMenu: ActiveMenuService,
     private router: Router,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -76,7 +78,12 @@ export class AddressListComponent implements OnInit {
     }
     this.addressService.setDefault(data).subscribe((r: any) => {
       if (r.status) {
-        this.alert.fireToastS(r.message[0]);
+        // this.alert.fireToastS(r.message[0]);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message[0]
+        })
         this.getAddress();
       }
     })
@@ -89,7 +96,12 @@ export class AddressListComponent implements OnInit {
     this.addressService.deleteAddress(data).subscribe((r: any) => {
       // console.log(r);
       if (r.status) {
-        this.alert.fireToastS(r.message[0]);
+        // this.alert.fireToastS(r.message[0]);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message[0]
+        })
         this.getAddress();
       }
     })

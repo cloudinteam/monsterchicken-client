@@ -21,6 +21,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
 import { LocationAllowComponent } from '../location-allow/location-allow.component';
+import { MessageService } from 'primeng/api';
 
 // declare const google: any;
 export interface PlaceSearchResult {
@@ -96,6 +97,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     private dialog: DynamicDialogRef,
     private dialogService: DialogService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -232,14 +234,24 @@ export class LocationComponent implements OnInit, AfterViewInit {
         this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
           if (r.serviceProvider) {
             this.errorAlert = false;
-            this.alert.fireToastS(r.message[0])
+            // this.alert.fireToastS(r.message[0])
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: r.message[0]
+            })
             // this.showAddress.emit()
             this.confirmAddress = true;
           }
           if (!r.serviceProvider) {
             this.errorAlert = true;
             this.confirmAddress = false;
-            this.alert.fireToastF(r.message[0])
+            // this.alert.fireToastF(r.message[0])
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: r.message[0]
+            })
           }
         })
       }

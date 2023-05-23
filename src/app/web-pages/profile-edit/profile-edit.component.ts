@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -25,6 +26,7 @@ export class ProfileEditComponent implements OnInit {
     private authService: AuthService,
     private alert: AlertService,
     private cdRef: ChangeDetectorRef,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -89,7 +91,12 @@ export class ProfileEditComponent implements OnInit {
     }
     this.authService.profileEdit(this.profileForm.value).subscribe((r: any) => {
       if (r.status) {
-        this.alert.fireToastS(r.message[0]);
+        // this.alert.fireToastS(r.message[0]);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Updated successfully'
+        })
         this.closeModel.emit();
       }
     });
