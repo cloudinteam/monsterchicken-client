@@ -1,13 +1,13 @@
 <page-loader [loading]="loading"></page-loader>
 
 <div class="container py-4" *ngIf="!loading">
-  <div class="row">
+  <div class="row justify-content-center">
 
-    <div class="col-12 text-center mb-4">
+    <div class="col-12 col-lg-8 col-md-10 text-center mb-4">
       <h4> <b>Notifications</b> </h4>
     </div>
 
-    <div class="col-12" *ngIf="notifications.length > 0">
+    <div class="col-12 col-lg-8 col-md-10" *ngIf="notifications.length > 0">
 
       <div class="card p-3 mb-2" *ngFor="let message of notifications; let sn = index">
         <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-2">
@@ -18,17 +18,35 @@
           <hr class="my-1">
         </div>
         <p> {{ message.notification }} </p>
-
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <span class="badge rounded-pill text-bg-dark">{{ message.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</span>
-          <span *ngIf="message.is_read == 0" class="badge rounded-pill text-bg-secondary clickable" [ngClass]="(message.is_read == 0) ? 'text-bg-secondary' : 'text-bg-success'" (click)="update(message.notification_id)"><i class="pi pi-check-circle"></i></span>
+          <span *ngIf="message.is_read == 0" class="btn btn-success btn-sm" style="line-height: 0;"
+            (click)="update(message.notification_id)"><i class="pi pi-check-circle" style="font-size: 0.8rem;"></i> Mark as read </span>
         </div>
-
       </div>
 
     </div>
 
-    <div class="col-12" *ngIf="notifications.length == 0">
+    <div class="col-12 col-lg-5 col-md-7" *ngIf="notifications.length == 0 && !unread">
+      <div class="alert alert-info text-center" role="alert">
+        <strong>No new notifications. You can <b class="clickable" (click)="unread = !unread" > view </b> previous notifications </strong>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-8 col-md-10" *ngIf="readNotifications.length > 0 && unread"> <!-- #collapse="ngbCollapse" [(ngbCollapse)]="unread" -->
+
+      <div class="card p-3 mb-2" *ngFor="let message of readNotifications">
+        <p class="text-black fw-semibold"> {{ message.notification }} </p>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="text-secondary fw-bold">{{ message.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+          <!-- <span *ngIf="message.is_read == 0" class="btn btn-outline-dark p-2" style="line-height: 0;"
+           (click)="update(message.notification_id)"><i class="pi pi-check-circle"></i></span> -->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-12 col-lg-5 col-md-7" *ngIf="notifications.length == 0 && readNotifications.length == 0">
       <div class="alert alert-info text-center" role="alert">
         <strong>No notifications</strong>
       </div>
