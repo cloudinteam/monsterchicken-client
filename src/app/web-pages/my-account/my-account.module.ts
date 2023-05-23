@@ -27,7 +27,7 @@ import { NotificationComponent } from './notification/notification.component';
     WebPagesModule,
     TableModule,
     FlexModule,
-    TooltipModule
+    TooltipModule,
   ]
 })
 export class MyAccountModule { }

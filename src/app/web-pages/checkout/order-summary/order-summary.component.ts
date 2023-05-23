@@ -81,7 +81,9 @@ export class OrderSummaryComponent implements OnInit {
 
   loadSummary() {
 
-      this.checkoutService.cartSummary().subscribe((r: any) => {
+    this.checkoutService.cartSummary().subscribe((r: any) => {
+        console.log(r);
+
         this.data = r;
         this.shippingAddress = r.response.isAddressAvailable;
         this.orderSummary = r.response.cartData;

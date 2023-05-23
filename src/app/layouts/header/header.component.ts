@@ -129,13 +129,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  get getMenuCount() {
-    if (this.notificationsCount > 0) {
-      console.log(this.notificationsCount.toString());
-      return this.notificationsCount.toString();
-    }
-    return '';
-  }
+  // get getMenuCount() {
+  //   if (this.notificationsCount > 0) {
+  //     console.log(this.notificationsCount.toString());
+  //     return this.notificationsCount.toString();
+  //   }
+  //   return '';
+  // }
 
   init() {
     this.headerService.disableSearch.subscribe((r) => {

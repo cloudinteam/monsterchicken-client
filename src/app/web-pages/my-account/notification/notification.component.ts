@@ -11,6 +11,8 @@ export class NotificationComponent implements OnInit {
 
   loading = false;
   notifications: any[] = [];
+  readNotifications: any[] = [];
+  unread = false;
 
   constructor(
     private headerService: HeaderService,
@@ -24,7 +26,14 @@ export class NotificationComponent implements OnInit {
 
   getNotifications() {
     this.headerService.notificationList().subscribe((r: any) => {
-      this.notifications = r.response.notifications;
+      r.response.notifications.forEach((msg: any) => {
+        if (msg.is_read == 0) {
+          this.notifications.push(msg);
+        }
+        if (msg.is_read == 1) {
+          this.readNotifications.push(msg);
+        }
+      });
       this.loading = false;
     })
   }
@@ -33,7 +42,6 @@ export class NotificationComponent implements OnInit {
     this.loading = true;
     this.headerService.notificationUpdate(id).subscribe((r: any) => {
       if (r.status) {
-        this.alert.fireToastS('Marked as read');
         this.getNotifications();
         this.loading = false;
       }

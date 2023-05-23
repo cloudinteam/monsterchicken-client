@@ -58,8 +58,8 @@
                     <span class="fw-bold text-black"> x{{cartItem.quantity}} </span>
                   </div>
                   <div fxFlex="auto" fxLayoutAlign="end center">
-                    <span *ngIf="cartItem.totalPrice == 0" class="fw-bold px-2 text-white rounded-2 bg-danger">Out Of Stock</span>
-                    <span class="item-price" *ngIf="cartItem.totalPrice !== 0"> {{cartItem.totalPrice | currency: '₹'}} </span>
+                    <span *ngIf="cartItem.stock == 0" class="fw-bold px-2 text-white rounded-2 bg-danger">Out Of Stock</span>
+                    <span class="item-price" *ngIf="cartItem.totalPrice !== 0 && cartItem.stock != 0"> {{cartItem.totalPrice | currency: '₹'}} </span>
                   </div>
                 </div>
               </div>
