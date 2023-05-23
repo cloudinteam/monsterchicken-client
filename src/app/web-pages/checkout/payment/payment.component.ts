@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
@@ -32,6 +33,7 @@ export class PaymentComponent implements OnInit {
     private checkoutService: CheckoutService,
     private alertService: AlertService,
     private router: Router,
+    private messageService: MessageService
   ) {
     this.activeMenu.checkoutMenu.next('payment');
     this.activeMenu.addressSuccess.next(true);
@@ -66,7 +68,13 @@ export class PaymentComponent implements OnInit {
   payment() {
 
     if (this.paymentMethod == '') {
-      this.alertService.fireToastF('Choose payment method');
+      // this.alertService.fireToastF('Choose payment method');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Choose payment method'
+      })
+
     }
 
     if (this.paymentMethod == "cash_on_delivery") {
@@ -79,7 +87,12 @@ export class PaymentComponent implements OnInit {
 
       this.checkoutService.payment(data).subscribe((r: any) => {
         if (r.status) {
-          this.alertService.fireToastS('Order placed');
+          // this.alertService.fireToastS('Order placed');
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Order placed'
+          })
           this.router.navigate(['/account/order-history']);
         }
       })

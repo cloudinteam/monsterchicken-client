@@ -15,10 +15,13 @@ import { MapGeocoder } from '@angular/google-maps';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AlertService } from 'src/app/services/alert.service';
 import { CartService } from 'src/app/services/cart.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
+import { LocationAllowComponent } from '../location-allow/location-allow.component';
+import { MessageService } from 'primeng/api';
 
 // declare const google: any;
 export interface PlaceSearchResult {
@@ -71,7 +74,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
   confirmAddress = false;
 
   optionsPlaces: Options = new Options({
-    componentRestrictions: {country: 'IN'}
+    componentRestrictions: {country: 'in'}
   })
 
   // optionsPlaces: Options = {
@@ -92,19 +95,18 @@ export class LocationComponent implements OnInit, AfterViewInit {
     private alert: AlertService,
     private cdRef: ChangeDetectorRef,
     private cartService: CartService,
+    private dialog: DynamicDialogRef,
+    private dialogService: DialogService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
 
     if (localStorage.getItem('current_address') != null) {
-      let address: any = localStorage.getItem('current_address');
-      let currentAddress = JSON.parse(address);
-      // this.geoCode('address', currentAddress.address);
       this.setFromLocal();
     } else {
       this.handlePermission();
     }
-
     this.cdRef.markForCheck();
 
   }
@@ -112,27 +114,29 @@ export class LocationComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
     this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+    this.searchAuto.setComponentRestrictions({
+      country: ["in"],
+    });
 
-        this.searchAuto.addListener('place_changed', () => {
-        // this.searchAuto.addListener('blur', () => {
-        // this.searchAuto.addListener('keydown', () => {
-          this.ngZone.run(() => {
-            const place: any = this.searchAuto?.getPlace();
-            // console.log(place);
+    this.searchAuto.addListener('place_changed', () => {
+    // this.searchAuto.addListener('blur', () => {
+    // this.searchAuto.addListener('keydown', () => {
+      this.ngZone.run(() => {
+        const place: any = this.searchAuto?.getPlace();
+        // console.log(place);
 
-            this.lat = place.geometry.location.lat()
-            this.lng = place.geometry.location.lng()
+        this.lat = place.geometry.location.lat()
+        this.lng = place.geometry.location.lng()
 
-            this.mapMarker = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-            }
-            // console.log(this.mapMarker);
-            // this.geoCode('address', this.searchInput.nativeElement.value);
-            this.geoCode('location')
-          })
-        })
-
+        this.mapMarker = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        }
+        // console.log(this.mapMarker);
+        // this.geoCode('address', this.searchInput.nativeElement.value);
+        this.geoCode('location')
+      })
+    })
 
   }
 
@@ -145,14 +149,6 @@ export class LocationComponent implements OnInit, AfterViewInit {
   addressChange(address: any) {
     //setting address from API to local variable
     this.formattedaddress=address.formatted_address
-  }
-
-  getPhotoUrl(
-    place: google.maps.places.PlaceResult | undefined
-  ): string | undefined {
-    return place?.photos && place?.photos.length > 0
-      ? place?.photos[0].getUrl({ maxWidth: 500 })
-      : undefined;
   }
 
   moveMap(event: google.maps.MapMouseEvent) {
@@ -238,14 +234,24 @@ export class LocationComponent implements OnInit, AfterViewInit {
         this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
           if (r.serviceProvider) {
             this.errorAlert = false;
-            this.alert.fireToastS(r.message[0])
+            // this.alert.fireToastS(r.message[0])
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: r.message[0]
+            })
             // this.showAddress.emit()
             this.confirmAddress = true;
           }
           if (!r.serviceProvider) {
             this.errorAlert = true;
             this.confirmAddress = false;
-            this.alert.fireToastF(r.message[0])
+            // this.alert.fireToastF(r.message[0])
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: r.message[0]
+            })
           }
         })
       }
@@ -256,13 +262,14 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   handlePermission() {
-    // console.log('handle');
+
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         this.setFromLocal();
       } else if (result.state === 'prompt') {
         this.setFromLocal();
       } else if (result.state === 'denied') {
+        this.dialog.close()
         this.positionDenied();
       }
       result.addEventListener('change', () => {
@@ -271,13 +278,30 @@ export class LocationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  closeBlocker() {
-    this.ngbModal.dismissAll();
-    this.handlePermission();
-  }
+  // closeBlocker() {
+  //   this.ngbModal.dismissAll();
+  //   this.handlePermission();
+  // }
 
   positionDenied() {
-    this.ngbModal.open(this.locationAllow, { centered: true, size: 'md' });
+    // this.ngbModal.open(this.locationAllow, { centered: true, size: 'md' });
+    this.dialog.close()
+    let locationAllow: DynamicDialogRef;
+
+    locationAllow = this.dialogService.open(LocationAllowComponent, {
+      header: '',
+      width: '30%',
+      // baseZIndex: 1,
+      contentStyle: { overflow: 'auto' },
+      closable: false,
+      closeOnEscape: false,
+      maximizable: false,
+      keepInViewport: true,
+      autoZIndex: true,
+    })
+    locationAllow.onClose.subscribe( () => {
+      this.handlePermission();
+    });
   }
 
 
@@ -298,10 +322,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
             }
           },
           () => {
-            this.ngbModal.open(this.locationAllow, {
-              centered: true,
-              size: 'md',
-            });
+            this.positionDenied();
           }
         );
       } else if (result.state === 'prompt') {
@@ -318,10 +339,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
             }
           },
           () => {
-            this.ngbModal.open(this.locationAllow, {
-              centered: true,
-              size: 'md',
-            });
+            this.positionDenied();
           }
         );
       } else if (result.state === 'denied') {
@@ -335,6 +353,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
 
   confirmLocation() {
     this.cartService.productLoad$.next(true);
-    this.showAddress.emit();
+    // this.showAddress.emit();
+    this.dialog.close()
   }
 }

@@ -17,6 +17,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { AddressCardComponent } from './address-card/address-card.component';
 import { UriNotFoundComponent } from './uri-not-found/uri-not-found.component';
+import { LocationAllowComponent } from './location-allow/location-allow.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { UriNotFoundComponent } from './uri-not-found/uri-not-found.component';
     LocationComponent,
     AddressCardComponent,
     UriNotFoundComponent,
+    LocationAllowComponent,
   ],
   imports: [
     CommonModule,

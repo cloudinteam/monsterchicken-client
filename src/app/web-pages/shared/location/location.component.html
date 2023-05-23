@@ -11,8 +11,7 @@
       <i class="pi pi-search fw-bold text-dark"></i>
       <input type="text" class="form-control form-control-md" [options]="optionsPlaces" ngx-google-places-autocomplete
         (onAddressChange)="addressChange($event)" [(ngModel)]="searchString" #searchInput placeholder="Enter your location"
-        (keydown.enter)="$event.preventDefault()"/>
-      <!-- #searchInput="ngx-places" (keyup)="searchFn()" (keyup)="searchFn()" [formControl]="autocompleteInputControl"  -->
+        (keydown.enter)="$event.preventDefault()" autofocus="false"/>
     </div>
   </div>
   <div class="col-12 text-end mb-3">
@@ -38,7 +37,7 @@
 <!-- </div> -->
 
 
-<ng-template #locationAllow role="document" let-modal>
+<!-- <ng-template #locationAllow role="document" let-modal>
 
   <div class="modal-body">
     <div class="text-center">
@@ -50,5 +49,5 @@
     </div>
   </div>
 
-</ng-template>
+</ng-template> -->
 

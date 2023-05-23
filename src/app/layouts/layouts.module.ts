@@ -31,7 +31,7 @@ import { MenuModule } from 'primeng/menu';
     WebPagesModule,
     AuthModule,
     OverlayPanelModule,
-    MenuModule
+    MenuModule,
   ],
   exports: [
     HeaderComponent,

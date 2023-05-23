@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs';
 import { NetworkService } from './network.service';
 import { EncryptService } from './encrypt.service';
 import { AlertService } from './alert.service';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class ApiCallService {
     private http: HttpClient,
     private es: EncryptService,
     private router: Router,
-    private alert: AlertService
+    private alert: AlertService,
+    private messageService: MessageService
   ) {}
 
   hash(): any {
@@ -52,7 +54,12 @@ export class ApiCallService {
           if (result.status == true) {
             return result;
           } else {
-            this.alert.fireToastF(result.message[0]);
+            // this.alert.fireToastF(result.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: result.message[0]
+            })
             return result;
           }
         }),
@@ -65,13 +72,28 @@ export class ApiCallService {
             location.reload();
           }
           if (err.status == 500 || err.status == 429) {
-            this.alert.fireToastF('Something went wrong');
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
           }
           if (err.status == 422) {
-            this.alert.fireToastN('Invaid Input',data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Invaid Input',
+              detail: data.message[0]
+            })
           }
 
-          this.alert.fireToastF(data.message[0]);
+          // this.alert.fireToastF(data.message[0]);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: data.message[0]
+          })
           return err;
         })
       );
@@ -96,7 +118,12 @@ export class ApiCallService {
           if (result.status) {
             return result;
           } else {
-            this.alert.fireToastF(result.message[0]);
+            // this.alert.fireToastF(result.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: result.message[0]
+            })
             return result;
           }
         }),
@@ -108,10 +135,20 @@ export class ApiCallService {
             location.reload();
           }
           if (err.status == 500 || err.status == 429) {
-            this.alert.fireToastF('Something went wrong');
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
           }
           let data: any = this.es.unmaskData(err.error);
-          this.alert.fireToastF(data.message[0]);
+          // this.alert.fireToastF(data.message[0]);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: data.message[0]
+          })
           return '';
         })
       );
@@ -129,7 +166,12 @@ export class ApiCallService {
             return result;
           } else {
             // alert('Failed to ' + errMsg + ' ' + result.response.message[0]);
-            this.alert.fireToastF(result.message[0]);
+            // this.alert.fireToastF(result.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: result.message[0]
+            })
           }
         }),
         catchError((err) => {
@@ -141,10 +183,20 @@ export class ApiCallService {
             location.reload();
           }
           if (err.status == 500 || err.status == 429) {
-            this.alert.fireToastF('Something went wrong');
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
           }
           if (err.status == 422) {
-            this.alert.fireToastN('Invaid Input',data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Invaid Input',
+              detail: data.message[0]
+            })
           }
           return err;
         })
@@ -161,7 +213,12 @@ export class ApiCallService {
           if (r.status == true) {
             return r;
           } else {
-            this.alert.fireToastF(r.message[0]);
+            // this.alert.fireToastF(r.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: r.message[0]
+            })
           }
         }),
         catchError((err) => {
@@ -172,7 +229,12 @@ export class ApiCallService {
             location.reload();
           }
           if (err.status == 500 || err.status == 429) {
-            this.alert.fireToastF('Something went wrong');
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
           }
           return '';
         })
@@ -200,7 +262,12 @@ export class ApiCallService {
         }),
         catchError((err) => {
           let data: any = this.es.unmaskData(err.error);
-          this.alert.fireToastF(data.message[0]);
+          // this.alert.fireToastF(data.message[0]);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: data.message[0]
+          })
           return "";
         })
       );
@@ -223,7 +290,12 @@ export class ApiCallService {
             location.reload();
           }
           if (err.status == 500 || err.status == 429) {
-            this.alert.fireToastF('Something went wrong');
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
           }
           return '';
         })

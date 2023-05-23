@@ -2,6 +2,7 @@ import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalcartService } from 'src/app/services/localcart.service';
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private localCartService: LocalcartService,
     private cartService: CartService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit() {
@@ -69,7 +71,12 @@ export class LoginComponent implements OnInit {
     this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
       // console.log(r);
       if (r.status) {
-        this.alert.fireToastS(r.message);
+        // this.alert.fireToastS(r.message);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message
+        })
 
         this.otpSent = true;
         this.otpFormControl.userId.setValue(r.response.userId);
@@ -111,12 +118,22 @@ export class LoginComponent implements OnInit {
 
   otpVerify() {
     if (this.otpForm.invalid) {
-      this.alert.fireToastF('Invalid OTP');
+      // this.alert.fireToastF('Invalid OTP');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid OTP'
+      })
     }
     this.as.verifyOtp(this.otpForm.value).subscribe((r: any) => {
       // console.log(r);
       if (r.status) {
-        this.alert.fireToastS(r.message);
+        // this.alert.fireToastS(r.message);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message
+        })
 
         // this.otpSent = true;
         // this.otpFormControl.userId.setValue(r.response.userId);
@@ -152,7 +169,12 @@ export class LoginComponent implements OnInit {
     }
     this.as.resendOTP(data).subscribe((r: any) => {
       if (r.status) {
-        this.alert.fireToastS(r.message[0]);
+        // this.alert.fireToastS(r.message[0]);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: r.message[0]
+        })
       }
     })
   }
