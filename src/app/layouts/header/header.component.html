@@ -49,7 +49,8 @@
               <ng-template pTemplate="content">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item clickable" *ngFor="let category of categories">
-                    <div class="clickable" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" (click)="$event.stopPropagation();viewCategory(catpanel, category.categoryId)">
+                    <div class="clickable" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+                      (click)="$event.stopPropagation();viewCategory(catpanel, category.categoryId)">
                       <img [src]="category.imageUrl" [alt]="category.categoryName" width="30px">
                       <span class="text-black fw-semibold"> {{ category.categoryName | titlecase }} </span>
                     </div>
@@ -57,6 +58,10 @@
                 </ul>
               </ng-template>
             </p-overlayPanel>
+          </li>
+
+          <li class="top-nav-item">
+            <a class="top-nav-link" [routerLink]="'/bulk-order'"> <i class="pi pi-truck"></i> Bulk Order </a>
           </li>
 
           <li class="top-nav-item" #profileMenuId>
@@ -77,10 +82,11 @@
           </li>
 
           <li class="top-nav-item">
-            <div class="p-input-icon-right " (click)="launchSearch()" *ngIf="disableSearch" style="max-width: 87px;">
+            <a class="top-nav-link" (click)="launchSearch()"> <i class="pi pi-search fw-bold text-dark"></i> </a>
+            <!-- <div class="p-input-icon-right " (click)="launchSearch()" *ngIf="disableSearch" style="max-width: 87px;">
               <i class="pi pi-search fw-bold text-dark"></i>
               <input type="text" class="form-control form-control-sm clickable" #searchInput placeholder="Search" style="background-color: #f0f0f0;" [readOnly]="true" />
-            </div>
+            </div> -->
           </li>
 
           <li class="top-nav-item" *ngIf="cartCount.count > 0">

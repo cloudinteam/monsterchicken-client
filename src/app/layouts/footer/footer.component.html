@@ -1,6 +1,149 @@
 <div class="shadow footer-container">
   <div class="container">
+
     <div class="row">
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="text-start">
+          <h4 class="menu-title"> Our Address </h4>
+          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
+        </div>
+        <div class="menu-address">
+          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
+            <div>
+              <i class="address-icon fa-solid fa-location-arrow"></i>
+            </div>
+            <div>
+              <b>Annapoorna Foods</b><br>
+              #4/ 27, First Floor,<br>
+              VW Complex, Salem Road,<br>
+              Namakkal - 637 001, Tamilnadu.
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
+            <div>
+              <i class="address-icon fa-solid fa-phone"></i>
+            </div>
+            <div>
+               <a href="tel:+919790581836"> +91 97905 81836 </a>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
+            <div>
+              <i class="address-icon fa-solid fa-envelope"></i>
+            </div>
+            <div>
+              <a href="mailto:vendors@monsterchicken.in"> vendors@monsterchicken.in </a>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
+            <div>
+              <i class="address-icon fa-solid fa-envelope"></i>
+            </div>
+            <div>
+              <a href="mailto:sales@monsterchicken.in"> sales@monsterchicken.in </a>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
+            <div>
+              <i class="address-icon fa-solid fa-envelope"></i>
+            </div>
+            <div>
+              <a href="mailto:customercare@monsterchicken.in"> customercare@monsterchicken.in </a>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <img src="assets/images/GooglePlay.png" alt="Monster Chicken" style="max-width: 100%;">
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="text-start">
+          <h4 class="menu-title"> Our Menu </h4>
+          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
+        </div>
+        <div class="menu-list">
+          <ul>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>FSSC 220000 Certification</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>FSSAI License</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>T&C FAQ</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>Privacy Policy</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>Contact Us</a></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="text-start">
+          <h4 class="menu-title"> Quick Links </h4>
+          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
+        </div>
+        <div class="menu-list">
+          <ul>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>About Us</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>Franchise Outlet</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>Become a Franchise</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>Career</a></span>
+            </li>
+            <li>
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a>Site Map</a></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="text-start">
+          <h4 class="menu-title"> Our Categories </h4>
+          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
+        </div>
+        <div class="menu-list">
+          <ul *ngIf="categories.length > 0">
+            <li *ngFor="let category of categories">
+              <i class="list-icon pi pi-angle-right"></i>
+              <span class="list-text"><a [routerLink]="'/category/' + category.categoryId" > {{ category.categoryName | titlecase }} </a></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row justify-content-center my-4">
+      <div class="col-10">
+        <div class="seperator"></div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!loading">
       <div class="col-12">
         <div class="text-center">
           <h4 class="menu-title"> Place We Serve </h4>
@@ -8,8 +151,17 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
+
+    <div class="row" *ngIf="!loading">
+      <div class="col-12">
+        <div fxLayout="row wrap" class="cities-container" *ngIf="cities.length > 0">
+          <div fxFlex="20" *ngFor="let city of cities" class="mb-1">
+            <i class="place-icon pi pi-angle-right"></i>
+            <span class="place-text"><a >{{city.city}}</a></span> <!-- [routerLink]="'/city/'+city.id" -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col">
         <div class="menu-list">
           <ul>
             <li>
@@ -158,156 +310,9 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="row justify-content-center my-4">
-      <div class="col-8">
-        <div class="seperator"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="text-start">
-          <h4 class="menu-title"> Our Menu </h4>
-          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
-        </div>
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>FSSC 220000 Certification</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>FSSAI License</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>T&C FAQ</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Privacy Policy</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Contact Us</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="text-start">
-          <h4 class="menu-title"> Quick Links </h4>
-          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
-        </div>
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>About Us</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Franchise Outlet</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Become a Franchise</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Career</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Site Map</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="text-start">
-          <h4 class="menu-title"> Our Categories </h4>
-          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
-        </div>
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Broiler Chicken</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Frozen Chicken</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Omega 3 Enriched Chicken</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Omega 3 Enriched Egg</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Egg</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="text-start">
-          <h4 class="menu-title"> Our Address </h4>
-          <img src="assets/images/footer-menu-border.png" alt="---------" class="my-3">
-        </div>
-        <div class="menu-address">
-          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
-            <div>
-              <i class="address-icon fa-solid fa-location-arrow"></i>
-            </div>
-            <div>
-              <b>Annapoorna Foods</b><br>
-              #4/ 27, First Floor,<br>
-              VW Complex, Salem Road,<br>
-              Namakkal - 637 001, Tamilnadu.
-            </div>
-          </div>
-          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
-            <div>
-              <i class="address-icon fa-solid fa-phone"></i>
-            </div>
-            <div>
-               <a href="tel:+919790581836"> +91 97905 81836 </a>
-            </div>
-          </div>
-          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
-            <div>
-              <i class="address-icon fa-solid fa-envelope"></i>
-            </div>
-            <div>
-              <a href="mailto:vendors@monsterchicken.in"> vendors@monsterchicken.in </a>
-            </div>
-          </div>
-          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
-            <div>
-              <i class="address-icon fa-solid fa-envelope"></i>
-            </div>
-            <div>
-              <a href="mailto:sales@monsterchicken.in"> sales@monsterchicken.in </a>
-            </div>
-          </div>
-          <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
-            <div>
-              <i class="address-icon fa-solid fa-envelope"></i>
-            </div>
-            <div>
-              <a href="mailto:customercare@monsterchicken.in"> customercare@monsterchicken.in </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
   <div class="row justify-content-center mt-4">
     <div class="col-12">
@@ -316,7 +321,7 @@
   </div>
   <div class="row justify-content-center">
     <div class="col-8">
-      <div class="copyright"> ©{{ currentYear }} Monster Chicken . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Technologies</a> </div>
+      <div class="copyright"> ©{{ currentYear }} Monster Chicken . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Technologies </a> </div>
     </div>
   </div>
 </div>

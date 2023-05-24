@@ -25,6 +25,9 @@ export class NotificationComponent implements OnInit {
   }
 
   getNotifications() {
+    this.loading = true;
+    this.notifications = [];
+    this.readNotifications= [];
     this.headerService.notificationList().subscribe((r: any) => {
       r.response.notifications.forEach((msg: any) => {
         if (msg.is_read == 0) {
@@ -34,6 +37,9 @@ export class NotificationComponent implements OnInit {
           this.readNotifications.push(msg);
         }
       });
+      // if (this.notifications.length == 0) {
+      //   window.location.reload()
+      // }
       this.loading = false;
     })
   }

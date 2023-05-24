@@ -175,16 +175,25 @@ export class OrderSummaryComponent implements OnInit {
   checkout() {
     this.loading = true;
 
-    let data = {
-      promoCodeId: this.promoCodeId,
+    if (this.paymentMethod == '') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Choose payment method'
+      })
+    } else {
+      let data = {
+        promoCodeId: this.promoCodeId,
+      }
+      this.checkoutService.cartCheckout(data).subscribe((r: any) => {
+        if (r.status) {
+          // this.router.navigate(['/checkout/payment/' + r.orderId]);
+          this.payment(r.orderId);
+        }
+      });
     }
 
-    this.checkoutService.cartCheckout(data).subscribe((r: any) => {
-      if (r.status) {
-        // this.router.navigate(['/checkout/payment/' + r.orderId]);
-        this.payment(r.orderId);
-      }
-    });
+
 
     this.loading = false;
   }
@@ -192,7 +201,6 @@ export class OrderSummaryComponent implements OnInit {
   payment(orderId: string) {
     this.loading = true;
     if (this.paymentMethod == '') {
-      // this.alert.fireToastF('Choose payment method');
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -211,7 +219,6 @@ export class OrderSummaryComponent implements OnInit {
       this.checkoutService.payment(data).subscribe((r: any) => {
         if (r.status) {
           this.cartService.addCartCount();
-          // this.alert.fireToastS('Order placed');
           this.messageService.add({
             severity: 'success',
             summary: 'Success',

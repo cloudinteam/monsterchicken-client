@@ -229,6 +229,8 @@ export class LocationComponent implements OnInit, AfterViewInit {
       }
       // console.log(this.mapMarker);
       localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
+      localStorage.setItem('userLat', JSON.stringify(this.mapMarker.lat));
+      localStorage.setItem('userLong', JSON.stringify(this.mapMarker.lng));
 
       if (this.postCode) {
         this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
@@ -317,7 +319,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
               this.mapMarker = {
                 lat: this.lat,
                 lng: this.lng,
-              };
+              }
               this.geoCode('location');
             }
           },
@@ -334,7 +336,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
               this.mapMarker = {
                 lat: this.lat,
                 lng: this.lng,
-              };
+              }
               this.geoCode('location');
             }
           },
