@@ -46,6 +46,7 @@
           font-weight: 600;
           font-size: 16px;
           cursor: pointer;
+          text-decoration: none;
         }
       }
     }
@@ -66,5 +67,23 @@
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
+  }
+}
+
+.cities-container {
+
+  .place-icon {
+    color: rgb(255, 251, 3);
+    font-size: 13px;
+  }
+
+  .place-text {
+    a {
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+    }
   }
 }

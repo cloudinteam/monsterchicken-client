@@ -1,6 +1,6 @@
 import { HeaderService } from './../../services/header.service';
 import { Router } from '@angular/router';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from 'src/app/services/cart.service';
@@ -24,6 +24,8 @@ import { LocationAllowComponent } from 'src/app/web-pages/shared/location-allow/
 
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @Input() categories: Category[] = [];
+
   loading = false;
   district = '';
   address = '';
@@ -40,8 +42,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
   @ViewChild('loginArea') loginArea!: TemplateRef<any>;
   @ViewChild('cartArea') cartArea!: TemplateRef<any>;
-  // @ViewChild('locationModal') locationModal!: TemplateRef<any>;
-  // @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
   @ViewChild('profileEdit') profileEdit!: TemplateRef<any>;
 
   locationModal!: DynamicDialogRef;
@@ -52,8 +52,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     lat: 0,
     lng: 0,
   }
-
-  categories: Category[] = [];
 
   profileItems: MenuItem[] = [];
   notificationTrigger: any;
@@ -69,7 +67,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private ngbModal: NgbModal,
     private geocoder: MapGeocoder,
     private cdRef: ChangeDetectorRef,
-    private productService: ProductService,
     private activeMenu: ActiveMenuService,
     private dialogService: DialogService,
   ) { }
@@ -153,10 +150,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.localCartService.setCartTotal();
     }
 
-    this.productService.getCategories().subscribe((r: any) => {
-      this.categories = r.response.categories;
-    })
-
     this.profileItems = [
       {
         label: 'Profile',
@@ -179,13 +172,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         icon: 'pi pi-home',
         command: () => {
           this.router.navigate(['/account/saved-address']);
-        }
-      },
-      {
-        label: 'Bulk Order',
-        icon: 'pi pi-truck',
-        command: () => {
-          this.router.navigate(['/bulk-order']);
         }
       },
       {
@@ -265,6 +251,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       header: 'Enter your location to check service availability.',
       width: '70%',
       // baseZIndex: 1,
+      transitionOptions: '100ms',
       contentStyle: { overflow: 'auto' },
       closable: false,
       closeOnEscape: false,
@@ -278,8 +265,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
-
-
 
   showAddress() {
     // this.ngbModal.dismissAll(this.locationModal);

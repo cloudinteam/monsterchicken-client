@@ -16,4 +16,8 @@ export class MapService {
     return this.api.postApiCallAuth(NetworkService.locationCheck(), body);
   }
 
+  getActiveCities() {
+    return this.api.getApiCallAuth(NetworkService.getActiveCities());
+  }
+
 }

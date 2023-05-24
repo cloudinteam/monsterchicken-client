@@ -17,14 +17,14 @@
   <div class="row justify-content-center">
     <div class="col-12 col-sm-10 col-md-11 col-lg-11">
       <div class="row">
-        <div class="col-12 col-sm-12 col-md-6">
+        <div class="col-12 col-sm-12 col-md-4">
           <p-carousel [value]="this.product.imageUrl" [numVisible]="1" [numScroll]="1" [circular]="false" [showIndicators]="true" [showNavigators]="false">
             <ng-template let-image pTemplate="item">
               <img [src]="image" [alt]="this.product.productName" class="w-100">
             </ng-template>
           </p-carousel>
         </div>
-        <div class="col-12 col-sm-12 col-md-6">
+        <div class="col-12 col-sm-12 col-md-8">
           <h1 class="product-title"> {{this.product.productName}} </h1>
           <div class="mt-1">
             <span class="badge rounded-pill text-bg-danger me-1">{{ this.product.brand | titlecase }}</span>
@@ -36,7 +36,6 @@
           </p>
           <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
             <div class="pro-details">
-
               <div class="pro-price">
                 <span class="pro-unit">
                   {{ product.productUnit }}&nbsp;{{ product.productUnitType }}

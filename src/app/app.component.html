@@ -1,8 +1,7 @@
-
-<monster-header></monster-header>
+<monster-header *ngIf="!loading" [categories]="categories"></monster-header>
 
 <router-outlet></router-outlet>
 
-<monster-footer></monster-footer>
+<monster-footer *ngIf="!loading" [categories]="categories"></monster-footer>
 
 <p-toast></p-toast>

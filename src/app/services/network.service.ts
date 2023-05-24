@@ -154,6 +154,9 @@ export class NetworkService {
   static setDefault(): string {
     return this.server_url() + this.server_v() + '/web/address/default';
   }
+  static getActiveCities(): string {
+    return this.server_url() + this.server_v() + '/get-all-active-cities';
+  }
 
   //File upload
   static upload(): string {

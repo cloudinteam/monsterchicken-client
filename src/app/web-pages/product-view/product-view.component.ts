@@ -145,7 +145,6 @@ export class ProductViewComponent implements OnInit {
   }
 
   cartNumber($event: any, product: Product) {
-    // console.log($event.value, id);
     this.loading = true;
 
     if (this.authService.isLoggedIn()) {
@@ -199,8 +198,11 @@ export class ProductViewComponent implements OnInit {
 
   }
 
-  afterCart(id: any) {
-    let data = { productId: id };
+  afterCart(product: Product) {
+    let data = {
+      productId: product.productId,
+      nearByBranch: product.nearByBranch,
+    };
     this.productService.viewProduct(data).subscribe((r: any) => {
       this.product = r.response.productDetail;
       this.cdRef.markForCheck();
