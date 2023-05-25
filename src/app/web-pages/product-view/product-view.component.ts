@@ -72,10 +72,10 @@ export class ProductViewComponent implements OnInit {
     // console.log(data);
     this.productService.getProducts(data).subscribe((r: any) => {
       this.relatedProductsList = r.response.products;
-      // const index = this.relatedProductsList.findIndex( (product: any) => {
-      //   return product.productId === this.product.productId;
-      // });
-      // this.relatedProductsList.splice(index, 1);
+      const index = this.relatedProductsList.findIndex( (product: any) => {
+        return product.productId === this.product.productId;
+      });
+      this.relatedProductsList.splice(index, 1);
       this.cdRef.markForCheck();
       this.loading = false;
     });

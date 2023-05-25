@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutsModule } from './layouts/layouts.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FlexModule } from '@angular/flex-layout';
+import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { GoogleMapsModule } from '@angular/google-maps';
-import {  GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -29,7 +29,8 @@ import { MessageService } from 'primeng/api';
     FlexModule,
     GoogleMapsModule,
     GooglePlaceModule,
-    ToastModule
+    ToastModule,
+    FlexLayoutModule
   ],
   exports: [
     GooglePlaceModule

@@ -21,7 +21,6 @@ import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DropdownModule } from 'primeng/dropdown';
 import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-product.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -52,7 +51,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NgxDropzoneModule,
     NgSelectModule,
     DropdownModule,
-    // FlexLayoutModule
   ],
   exports: [
     ProfileEditComponent,
