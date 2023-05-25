@@ -50,7 +50,7 @@ import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-produ
     InputNumberModule,
     NgxDropzoneModule,
     NgSelectModule,
-    DropdownModule
+    DropdownModule,
   ],
   exports: [
     ProfileEditComponent,

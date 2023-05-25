@@ -61,6 +61,19 @@
   min-height: 200px;
 }
 
+// Related Products Container ==========================================================================
+
+.related-container {
+  width: 100%;
+  overflow-x: scroll;
+  padding: 10px;
+}
+
+.rel-product {
+  // width: 285px;
+  // max-width: 300px;
+  margin-right: 15px;
+}
 
 ::ng-deep {
   .pro-details {
