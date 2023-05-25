@@ -72,10 +72,26 @@
 
       <div class="row mt-5">
         <div class="col-12">
+
           <div>
             <h4 class="fw-bold"> Related products </h4>
           </div>
+
           <div class="seperator"></div>
+
+          <div fxLayout="row" fxLayoutGap="15px" style="overflow-x: scroll;">
+            <ng-container *ngFor="let product of relatedProductsList">
+              <div fxFlex="20%" fxLayout="row" >
+                <product-card [product]="product" ></product-card>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- <p-carousel [value]="relatedProductsList" [numVisible]="3" [numScroll]="1" [circular]="true" [showIndicators]="false" [autoplayInterval]="3500" [showNavigators]="true">
+            <ng-template let-product pTemplate="item">
+              <product-card [product]="product" ></product-card>
+            </ng-template>
+          </p-carousel> -->
         </div>
       </div>
 

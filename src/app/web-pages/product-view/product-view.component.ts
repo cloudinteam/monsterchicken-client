@@ -14,6 +14,8 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-view.component.scss'],
 })
 export class ProductViewComponent implements OnInit {
+
+  relatedProductsList: Product[] = []
   loading = false;
   productId: string = '';
   product!: any;
@@ -53,6 +55,28 @@ export class ProductViewComponent implements OnInit {
   getProduct() {
     this.productService.viewProduct(this.params.params).subscribe((r: any) => {
       this.product = r.response.productDetail;
+      this.getRelatedProducts(this.product.categoryId)
+      this.loading = false;
+    });
+  }
+
+  getRelatedProducts(catId: any) {
+    this.loading = true;
+    let latLngData: any = localStorage.getItem('lat_lng');
+    let latLng = JSON.parse(latLngData)
+    let data = {
+      category: catId,
+      userLat: latLng.lat || '',
+      userLong: latLng.lng || '',
+    };
+    // console.log(data);
+    this.productService.getProducts(data).subscribe((r: any) => {
+      this.relatedProductsList = r.response.products;
+      // const index = this.relatedProductsList.findIndex( (product: any) => {
+      //   return product.productId === this.product.productId;
+      // });
+      // this.relatedProductsList.splice(index, 1);
+      this.cdRef.markForCheck();
       this.loading = false;
     });
   }
@@ -121,7 +145,6 @@ export class ProductViewComponent implements OnInit {
 
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
-      // this.alert.fireToastS('Item added to cart');
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
@@ -133,7 +156,6 @@ export class ProductViewComponent implements OnInit {
       this.product.cartProductQuantity = cartItem.quantity;
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
-      // this.alert.fireToastS('Item added to cart');
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
