@@ -18,6 +18,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { AddressCardComponent } from './address-card/address-card.component';
 import { UriNotFoundComponent } from './uri-not-found/uri-not-found.component';
 import { LocationAllowComponent } from './location-allow/location-allow.component';
+import { CartPageProductComponent } from './cart-page-product/cart-page-product.component';
+import { CartPageComponent } from '../cart-page/cart-page.component';
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import { LocationAllowComponent } from './location-allow/location-allow.componen
     AddressCardComponent,
     UriNotFoundComponent,
     LocationAllowComponent,
+    CartPageProductComponent,
   ],
   imports: [
     CommonModule,
@@ -62,6 +65,7 @@ import { LocationAllowComponent } from './location-allow/location-allow.componen
     LocationComponent,
     GooglePlaceModule,
     AddressCardComponent,
+    CartPageProductComponent
   ]
 })
 export class SharedModule { }

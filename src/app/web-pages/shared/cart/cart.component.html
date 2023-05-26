@@ -9,31 +9,24 @@
 
 <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!billLoading && !loading">
   <div class="bill-heading"> Bill Details </div>
-
   <div fxLayout="column" fxLayoutGap="10px">
-
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <span class="items-title"> Subtotal </span>
       <span class="items-price"> {{totalCartPrice | currency:'₹'}} </span>
     </div>
-
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <span class="items-title"> Delivery Charge </span>
       <span class="items-price"> {{deliveryCharge | currency:'₹'}} </span>
     </div>
-
     <div>
       <hr class="m-0">
     </div>
-
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <span class="items-grand-title"> Total </span>
       <span class="items-grand-total"> {{grandTotal | currency:'₹'}} </span>
     </div>
-
   </div>
 </div>
-
 
 <div class="sticky-footer" *ngIf="!footerLoading && !loading">
   <div fxLayout="row" class="cart-footer">

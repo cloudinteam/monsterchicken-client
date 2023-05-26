@@ -21,8 +21,8 @@ import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DropdownModule } from 'primeng/dropdown';
 import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-product.component';
-
-
+import { CartPageComponent } from './cart-page/cart-page.component';
+import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,8 @@ import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-produ
     ProfileEditComponent,
     AddressListComponent,
     BullkOrderFormComponent,
-    BulkOrderProductComponent
+    BulkOrderProductComponent,
+    CartPageComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +52,8 @@ import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-produ
     NgxDropzoneModule,
     NgSelectModule,
     DropdownModule,
+    // FlexModule,
+    // FlexLayoutModule
   ],
   exports: [
     ProfileEditComponent,
