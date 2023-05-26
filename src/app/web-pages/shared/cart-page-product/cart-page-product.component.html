@@ -1,0 +1,48 @@
+<div class="cart-item">
+  <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="15px">
+
+    <div>
+      <span class="item-sn">{{itemNo+1}}</span>
+    </div>
+
+    <div>
+      <img class="item-img" [src]="cartItem.imageUrl[0]" [alt]="cartItem.productName">
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex="auto" fxLayoutGap="12px">
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+        <div fxFlex="auto" class="item-name">{{cartItem.productName}}</div>
+        <div fxFlex="20px" (click)="removeItem(cartItem.productId)" class="item-del"><i class="pi pi-trash"></i></div>
+      </div>
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+        <div fxFlex="auto" fxLayout="column">
+          <span class="item-price"> {{cartItem.price | currency: '₹'}} </span>
+          <span class="item-unit"> {{cartItem.unit}} {{ cartItem.unitType }} </span>
+        </div>
+        <div fxFlex="auto" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px">
+          <div class="item-action">
+            <p-inputNumber
+              [ngModel]="cartItem.quantity"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              inputId="cartProductCount"
+              spinnerMode="horizontal"
+              [step]="1"
+              [min]="0"
+              [max]="cartItem.maxQuantity"
+              decrementButtonClass="btn-minus"
+              incrementButtonClass="btn-plus"
+              incrementButtonIcon="pi pi-plus"
+              decrementButtonIcon="pi pi-minus"
+              mode="decimal"
+              (onInput)="cartNumber($event, cartItem, cartItem.cartId)"
+            ></p-inputNumber>
+          </div>
+          <span class="item-total"> {{cartItem.totalPrice | currency: '₹'}} </span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

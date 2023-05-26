@@ -228,7 +228,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openCart() {
-		this.offcanvasService.open(this.cartArea, { position: 'end' });
+		// this.offcanvasService.open(this.cartArea, { position: 'end' });
+    this.router.navigate(['cart']);
   }
 
   closeCart() {

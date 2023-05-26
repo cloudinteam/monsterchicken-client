@@ -6,6 +6,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.component';
+import { CartPageComponent } from './cart-page/cart-page.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'category/:id',
     component: ProductsListComponent
+  },
+  {
+    path: 'cart',
+    component: CartPageComponent
   },
   {
     path: 'checkout',
