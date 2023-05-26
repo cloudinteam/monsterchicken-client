@@ -17,10 +17,6 @@
 
     <div class="col-12 col-md-12 col-lg-7">
 
-      <!-- <pre>
-        {{cart | json}}
-      </pre> -->
-
       <cart-page-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem" [itemNo]="sn"
       (update)="updated()"> </cart-page-product>
 

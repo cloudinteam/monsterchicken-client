@@ -1,22 +1,28 @@
 .cart-item {
   padding: 15px 10px;
+  // box-shadow: 0px 4px 8px -4px rgba(0,0,0,0.2);
+  // -webkit-box-shadow: 0px 4px 8px -4px rgba(0,0,0,0.2);
+  // -moz-box-shadow: 0px 4px 8px -4px rgba(0,0,0,0.2);
+  margin-bottom: 25px;
+  border: 1px dashed #9b9b9b;
+  border-radius: 0;
 
   .item-sn {
-    width: 22px;
+    width: 25px;
     padding: 5px 0;
-    line-height: 12px;
-    color: #202020;
-    background-color: #dbdbdb;
-    font-size: 12px;
+    line-height: 15px;
+    color: #171717;
+    background-color: #eaeaea;
+    font-size: 15px;
     text-align: center;
-    font-weight: 600;
-    border-radius: 3px;
+    font-weight: 700;
+    border-radius: 5px;
     display: block;
   }
 
   .item-name {
     display: inline-block;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 700;
     color: #000;
     text-overflow: ellipsis;
@@ -26,29 +32,45 @@
     vertical-align: middle;
   }
 
+  .item-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 7px;
+    object-fit: cover;
+  }
+
   .item-del {
     cursor: pointer;
 
     .pi {
-      font-size: 16px;
-      color: #9f9f9f;
+      font-size: 18px;
+      color: #000;
+      font-weight: 550;
     }
   }
 
   .item-unit {
-    color: #6d6e71;
-    border-radius: 3px;
-    padding: 3px 9px;
-    border: 1px solid #6d6e71;
-    font-size: 13px;
-    margin-right: 8px;
+    color: #565656;
+    // border-radius: 3px;
+    // padding: 3px 9px;
+    // border: 1px solid #6d6e71;
+    font-size: 11px;
+    // margin-right: 8px;
+    font-weight: 600;
   }
 
   .item-price {
-    font-size: 14px;
-    line-height: 14px;
+    font-size: 16px;
     font-weight: 700;
-    color: #e4002b;
+    color: #444444;
+    line-height: 14px;
+  }
+
+  .item-total {
+    font-size: 18px;
+    font-weight: 800;
+    color: #a61f24;
+    line-height: 18px;
   }
 }
 
@@ -57,24 +79,24 @@
     // max-width: 120px;
 
     p-inputnumber {
-      // border-radius: 7px;
-      // overflow: hidden;
-      // border: 2px solid #eee;
+      border-radius: 7px;
+      overflow: hidden;
+      border: 2px solid #eee;
 
       .p-inputtext:enabled:focus {
         box-shadow: 0 0 0;
       }
 
       .p-inputnumber-buttons-horizontal .p-inputnumber-input {
-        width: 32px;
+        width: 46px;
         text-align: center;
         font-weight: 700;
         font-family: "Nunito Sans", sans-serif !important;
         color: #000;
         border: 0;
-        font-size: 13px;
+        font-size: 15px;
         padding: 2px 5px;
-        height: 22px;
+        height: 30px;
       }
 
       .p-component {
@@ -83,21 +105,21 @@
           color: #e4002b;
           background: #fff;
           border: 0;
-          width: 22px;
-          height: 22px;
+          width: 30px;
+          height: 30px;
           padding: 2px;
-          background-color: #ececec;
+          background-color: #fff;
           border-radius: 3px;
         }
 
         .btn-plus {
           .pi {
-            font-size: 13px;
+            font-size: 18px;
           }
         }
         .btn-minus {
           .pi {
-            font-size: 13px;
+            font-size: 18px;
           }
         }
       }

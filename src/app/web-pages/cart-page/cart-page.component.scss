@@ -54,10 +54,12 @@
 
 .items-bill {
   padding: 10px 16px 16px;
-  margin: 20px 0 90px;
+  margin-bottom: 25px;
   border: 1px dashed #9b9b9b;
   background: #fff;
   font-family: "Nunito Sans", sans-serif !important;
+  position: sticky;
+  top: 150px;
 
   .bill-heading {
     font-size: 15px;
