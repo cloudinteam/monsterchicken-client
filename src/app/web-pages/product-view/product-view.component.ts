@@ -21,6 +21,24 @@ export class ProductViewComponent implements OnInit {
   product!: any;
   params!: any;
 
+  responsiveOptions = [
+    {
+        breakpoint: '1400px',
+        numVisible: 3,
+        numScroll: 3
+    },
+    {
+        breakpoint: '990px',
+        numVisible: 2,
+        numScroll: 2
+    },
+    {
+        breakpoint: '600px',
+        numVisible: 1,
+        numScroll: 1
+    }
+];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -55,27 +73,25 @@ export class ProductViewComponent implements OnInit {
   getProduct() {
     this.productService.viewProduct(this.params.params).subscribe((r: any) => {
       this.product = r.response.productDetail;
-      this.getRelatedProducts(this.product.categoryId)
+      this.getRelatedProducts(this.product)
       this.loading = false;
     });
   }
 
-  getRelatedProducts(catId: any) {
+  getRelatedProducts(product: Product) {
     this.loading = true;
     let latLngData: any = localStorage.getItem('lat_lng');
     let latLng = JSON.parse(latLngData)
     let data = {
-      category: catId,
-      userLat: latLng.lat || '',
-      userLong: latLng.lng || '',
-    };
-    // console.log(data);
-    this.productService.getProducts(data).subscribe((r: any) => {
-      this.relatedProductsList = r.response.products;
-      const index = this.relatedProductsList.findIndex( (product: any) => {
-        return product.productId === this.product.productId;
-      });
-      this.relatedProductsList.splice(index, 1);
+      nearByBranch: product.nearByBranch,
+      limit: 10
+    }
+    this.productService.getRelatedProducts(data).subscribe((r: any) => {
+      this.relatedProductsList = r.response.related_products;
+      // const index = this.relatedProductsList.findIndex( (product: any) => {
+      //   return product.productId === this.product.productId;
+      // });
+      // this.relatedProductsList.splice(index, 1);
       this.cdRef.markForCheck();
       this.loading = false;
     });

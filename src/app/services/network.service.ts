@@ -76,6 +76,9 @@ export class NetworkService {
   static getProducts(): string {
     return this.server_url() + this.server_v() + '/web/product/list';
   }
+  static getRelatedProducts(): string {
+    return this.server_url() + this.server_v() + '/web/product/get-related-product';
+  }
   static viewProduct(): string {
     return this.server_url() + this.server_v() + '/web/product/view';
   }

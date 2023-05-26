@@ -155,7 +155,7 @@
     <div class="row" *ngIf="!loading">
       <div class="col-12">
         <div fxLayout="row wrap" class="cities-container" *ngIf="cities.length > 0">
-          <div fxFlex="20" *ngFor="let city of cities" class="mb-1">
+          <div fxFlex="20" fxFlex.lt-md="50" fxFlex.lt-sm="100" *ngFor="let city of cities" class="mb-1">
             <i class="place-icon pi pi-angle-right"></i>
             <span class="place-text"><a >{{city.city}}</a></span> <!-- [routerLink]="'/city/'+city.id" -->
           </div>
