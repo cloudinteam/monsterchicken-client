@@ -1,8 +1,8 @@
 <page-loader [loading]="loading"></page-loader>
 
-<div class="container py-3" *ngIf="!loading">
+<div class="container py-3" *ngIf="!loading && cart.length > 0">
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center" *ngIf="cart.length > 0">
     <div class="col-12 col-sm-10 col-md-11 col-lg-11">
       <div class="product-trails">
         <ul>
@@ -13,15 +13,11 @@
     </div>
   </div>
 
-  <div class="row justify-content-center">
-
+  <div class="row justify-content-center" *ngIf="cart.length > 0">
     <div class="col-12 col-md-12 col-lg-7">
-
       <cart-page-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem" [itemNo]="sn"
       (update)="updated()"> </cart-page-product>
-
     </div>
-
     <div class="col-12 col-md-12 col-lg-4">
       <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!billLoading && !loading">
         <div class="bill-heading"> Bill Details </div>
@@ -44,9 +40,21 @@
           <button type="button" class="btn-checkout" (click)="checkout()"> Proceed to Checkout </button>
         </div>
       </div>
-
     </div>
-
   </div>
+</div>
 
+ <!-- No cart items -->
+<div class="container-fluid" *ngIf="!loading && cart.length == 0">
+  <div class="full-screen">
+    <div class="row justify-content-center py-5">
+      <div class="col-12">
+        <img src="../../../assets/images/chicken-empty-cart.png" alt="" style="max-width: 320px;" class="d-block my-5 mx-auto">
+      </div>
+      <div class="col-12 text-center">
+        <h2 class="fw-bold mb-2"> No items in cart</h2>
+        <button type="button" class="btn btn-danger rounded-0 px-5" [routerLink]="'/'"> <i class="pi pi-home me-1"></i> Back to home </button>
+      </div>
+    </div>
+  </div>
 </div>
