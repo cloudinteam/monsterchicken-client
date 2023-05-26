@@ -20,6 +20,7 @@ import { UriNotFoundComponent } from './uri-not-found/uri-not-found.component';
 import { LocationAllowComponent } from './location-allow/location-allow.component';
 import { CartPageProductComponent } from './cart-page-product/cart-page-product.component';
 import { CartPageComponent } from '../cart-page/cart-page.component';
+import { BranchListBoxComponent } from './branch-list-box/branch-list-box.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { CartPageComponent } from '../cart-page/cart-page.component';
     UriNotFoundComponent,
     LocationAllowComponent,
     CartPageProductComponent,
+    BranchListBoxComponent,
   ],
   imports: [
     CommonModule,

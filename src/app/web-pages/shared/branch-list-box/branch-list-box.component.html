@@ -1,0 +1,20 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container-fluid" *ngIf="!loading">
+  <!-- <pre>
+    {{ city | json }}
+  </pre> -->
+
+  <div class="row g-3">
+
+    <div class="col-12 col-md-6" *ngFor="let branch of branches">
+      <div class="branch-card">
+        <h4 class="fw-semibold text-black"> {{ branch.name }} </h4>
+        <p> {{branch.address}} </p>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
