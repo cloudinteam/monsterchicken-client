@@ -15,6 +15,10 @@ export class ProductService {
     return this.api.postApiCallAuth(NetworkService.getProducts(), body);
   }
 
+  getRelatedProducts(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.getRelatedProducts(), body);
+  }
+
   viewProduct(body: any): any {
     return this.api.postApiCallAuth(NetworkService.viewProduct(), body);
   }
