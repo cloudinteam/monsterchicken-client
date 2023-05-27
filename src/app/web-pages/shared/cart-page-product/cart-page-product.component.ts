@@ -46,6 +46,7 @@ export class CartPageProductComponent {
 
       if ($event.value != 0) {
         localCart[index].quantity = $event.value;
+        localCart[index].totalPrice = $event.value * localCart[index].price;
       } else {
         localCart.splice(index, 1);
       }

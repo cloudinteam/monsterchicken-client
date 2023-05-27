@@ -135,11 +135,14 @@ export class ProductViewComponent implements OnInit {
     let cartItem = {
       productId: product.productId,
       productName: product.productName,
-      unit: product.productUnit + product.productUnitType,
+      unit: product.productUnit,
+      unitType: product.productUnitType,
+      imageUrl: [product.imageUrl[0]],
       maxQuantity: product.maxQuantity,
       categoryId: product.categoryId,
       nearByBranch: product.nearByBranch,
       totalPrice: product.price,
+      price: product.price,
       quantity: (product.cartProductQuantity > 0) ? product.cartProductQuantity : 1,
     }
 
@@ -228,6 +231,7 @@ export class ProductViewComponent implements OnInit {
 
     if ($event.value != 0) {
       localCart[index].quantity = $event.value;
+      localCart[index].totalPrice = $event.value * localCart[index].price;
     } else {
       localCart.splice(index, 1);
       this.product.cartProductQuantity = 0;

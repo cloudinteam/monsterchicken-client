@@ -163,7 +163,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         label: 'My Orders',
         icon: 'pi pi-shopping-bag',
         command: () => {
-          // this.activeMenu.checkoutMenu.next('order-history');
+          this.activeMenu.checkoutMenu.next('order-history');
           this.router.navigate(['/account/order-history']);
         }
       },
