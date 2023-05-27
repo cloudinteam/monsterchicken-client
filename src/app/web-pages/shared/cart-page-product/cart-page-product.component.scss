@@ -74,6 +74,31 @@
   }
 }
 
+@media screen and (max-width: 350px) {
+  .cart-item {
+    padding: 10px 5px;
+
+    .item-sn {
+      width: 20px;
+      line-height: 12px;
+      font-size: 12px;
+    }
+
+    .item-name {
+      font-size: 13px;
+    }
+
+    .item-price {
+      font-size: 13px;
+    }
+
+    .item-total {
+      font-size: 15px;
+      line-height: 15px;
+    }
+  }
+}
+
 ::ng-deep {
   .item-action {
     // max-width: 120px;
@@ -125,4 +150,39 @@
       }
     }
   }
+  @media screen and (max-width: 350px) {
+    .item-action {
+      // max-width: 120px;
+
+      p-inputnumber {
+        border: 1px solid #eee;
+
+        .p-inputnumber-buttons-horizontal .p-inputnumber-input {
+          width: 26px;
+          font-size: 13px;
+          height: 25px;
+        }
+
+        .p-component {
+          .btn-plus,
+          .btn-minus {
+            width: 25px;
+            height: 25px;
+          }
+
+          .btn-plus {
+            .pi {
+              font-size: 13px;
+            }
+          }
+          .btn-minus {
+            .pi {
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
