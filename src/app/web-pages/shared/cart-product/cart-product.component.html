@@ -15,6 +15,7 @@
         </div>
         <div class="item-action">
           <p-inputNumber
+            [disabled]="disableAdd"
             [ngModel]="cartItem.quantity"
             [showButtons]="true"
             buttonLayout="horizontal"

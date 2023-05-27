@@ -15,6 +15,8 @@ export class CartProductComponent implements OnInit {
   @Input() itemNo: number = 1;
   @Output() update: EventEmitter<any> = new EventEmitter();
 
+  disableAdd = false;
+
   constructor(
     private cartService: CartService,
     private authService: AuthService,
@@ -28,7 +30,7 @@ export class CartProductComponent implements OnInit {
   }
 
   cartNumber($event: any, cartItem: Product, cartId: string) {
-
+    this.disableAdd = true;
     if (this.authService.isLoggedIn()) {
       let data = [{
         cartId: cartId,
@@ -36,7 +38,8 @@ export class CartProductComponent implements OnInit {
         quantity: $event.value,
         nearByBranch: cartItem.nearByBranch,
       }];
-      this.cartService.addCart({carts: data}).subscribe((r: any) => {
+      this.cartService.addCart({ carts: data }).subscribe((r: any) => {
+        this.disableAdd = false;
         this.update.emit();
       });
     } else if (!this.authService.isLoggedIn()) {
@@ -59,6 +62,7 @@ export class CartProductComponent implements OnInit {
       }
 
       this.localCartService.setCartTotal();
+      this.disableAdd = false;
       this.update.emit();
     }
 

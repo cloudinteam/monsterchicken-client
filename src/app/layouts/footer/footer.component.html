@@ -157,160 +157,10 @@
         <div fxLayout="row wrap" class="cities-container" *ngIf="cities.length > 0">
           <div fxFlex="20" fxFlex.lt-md="50" fxFlex.lt-sm="100" *ngFor="let city of cities" class="mb-1">
             <i class="place-icon pi pi-angle-right"></i>
-            <span class="place-text"><a >{{city.city}}</a></span> <!-- [routerLink]="'/city/'+city.id" -->
+            <span class="place-text"><a (click)="getBranch(city)">{{city.city}}</a></span> <!-- [routerLink]="'/city/'+city.id" -->
           </div>
         </div>
       </div>
-      <!-- <div class="col">
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Agra</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Ahmedabad</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Bhopal</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Bengaluru</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Bhubaneswar</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Chandigarh</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Erode</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Emakulam</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Gurgaon</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Ghaziabad</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Hosur</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Hyderabad</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Kanpur</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Kochi</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Kottayam</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Kozhikode</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Lucknow</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Madurai</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Mysore</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Nagpur</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Nashik</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>New Delhi</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Panaji</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Pune</a></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="menu-list">
-          <ul>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Thrissur</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Tiruppur</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Trichy</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Vadodara</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Vijayawada</a></span>
-            </li>
-            <li>
-              <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a>Visakhapatnam</a></span>
-            </li>
-          </ul>
-        </div>
-      </div> -->
     </div>
 
   </div>
@@ -321,7 +171,9 @@
   </div>
   <div class="row justify-content-center">
     <div class="col-8">
-      <div class="copyright"> ©{{ currentYear }} Monster Chicken . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Technologies </a> </div>
+      <div class="copyright">
+        ©{{ currentYear }} Monster Chicken . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Technologies </a>
+      </div>
     </div>
   </div>
 </div>
