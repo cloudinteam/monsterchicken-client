@@ -1,5 +1,5 @@
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'home',
@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
   loading = false;
   banners = [];
 
+
   constructor(
     private productService: ProductService,
   ) { }
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
   }
+
 
   loadData() {
     this.productService.getBanners().subscribe((r: any) => {
