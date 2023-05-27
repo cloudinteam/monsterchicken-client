@@ -20,6 +20,7 @@ export class ProductViewComponent implements OnInit {
   productId: string = '';
   product!: any;
   params!: any;
+  disableAdd = false;
 
   responsiveOptions = [
     {
@@ -88,16 +89,17 @@ export class ProductViewComponent implements OnInit {
     }
     this.productService.getRelatedProducts(data).subscribe((r: any) => {
       this.relatedProductsList = r.response.related_products;
-      // const index = this.relatedProductsList.findIndex( (product: any) => {
-      //   return product.productId === this.product.productId;
-      // });
-      // this.relatedProductsList.splice(index, 1);
+      const index = this.relatedProductsList.findIndex( (product: any) => {
+        return product.productId === this.product.productId;
+      });
+      this.relatedProductsList.splice(index, 1);
       this.cdRef.markForCheck();
       this.loading = false;
     });
   }
 
   addCart(product: Product) {
+    this.disableAdd = true;
     this.loading = true;
 
     if (this.authService.isLoggedIn()) {
@@ -117,6 +119,7 @@ export class ProductViewComponent implements OnInit {
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;
+        this.disableAdd = false;
       });
     }
 
@@ -127,7 +130,7 @@ export class ProductViewComponent implements OnInit {
   }
 
   addLocalCart(product: Product) {
-
+    this.disableAdd = true;
     let localCart: any[] = [];
     let cartItem = {
       productId: product.productId,
@@ -167,6 +170,7 @@ export class ProductViewComponent implements OnInit {
         detail: 'Item added to cart'
       })
       this.loading = false;
+      this.disableAdd = false;
     } else {
       localCart.push(cartItem);
       this.product.cartProductQuantity = cartItem.quantity;
@@ -178,11 +182,13 @@ export class ProductViewComponent implements OnInit {
         detail: 'Item added to cart'
       })
       this.loading = false;
+      this.disableAdd = false;
     }
 
   }
 
   cartNumber($event: any, product: Product) {
+    this.disableAdd = true;
     this.loading = true;
 
     if (this.authService.isLoggedIn()) {
@@ -202,6 +208,7 @@ export class ProductViewComponent implements OnInit {
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;
+        this.disableAdd = false;
       });
     }
 
@@ -212,6 +219,7 @@ export class ProductViewComponent implements OnInit {
   }
 
   cartLocalCount($event: any, product: Product) {
+    this.disableAdd = true;
 
     let localCart = this.localCartService.getLocalCart
     const index = localCart.findIndex( (cart: any) => {
@@ -233,6 +241,7 @@ export class ProductViewComponent implements OnInit {
 
     this.localCartService.setCartTotal();
     this.loading = false;
+    this.disableAdd = false;
 
   }
 

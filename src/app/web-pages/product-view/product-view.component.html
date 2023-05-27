@@ -47,7 +47,7 @@
               <div class="pro-action">
                 <span *ngIf="product.stock == 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of
                   Stock</span>
-                <p-inputNumber *ngIf="product.cartProductQuantity > 0" [ngModel]="product.cartProductQuantity"
+                <p-inputNumber [disabled]="disableAdd" *ngIf="product.cartProductQuantity > 0" [ngModel]="product.cartProductQuantity"
                   [showButtons]="true" buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal"
                   [step]="1" [min]="0" [max]="product.maxQuantity" decrementButtonClass="btn-minus"
                   incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"

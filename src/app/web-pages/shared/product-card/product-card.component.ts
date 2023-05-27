@@ -22,6 +22,7 @@ export class ProductCardComponent implements OnInit {
   loading = false;
   cartQuantity: number = 0;
   cartProductCount: number = 0;
+  disableAdd = false;
 
   constructor(
     private cartService: CartService,
@@ -39,17 +40,19 @@ export class ProductCardComponent implements OnInit {
   ngOnInit(): void {
 
     if (localStorage.getItem('localCart') != null) {
-
+      this.disableAdd = true;
       let localCart = this.localCartService.getLocalCart
       localCart.forEach((cartItem: any) => {
         if (cartItem.productId == this.product.productId) {
           this.product.cartProductQuantity = cartItem.quantity;
         }
       })
+      this.disableAdd = false;
     }
   }
 
   addCart(product: Product) {
+    this.disableAdd = true;
     this.loading = true;
 
     if (this.authService.isLoggedIn()) {
@@ -69,6 +72,7 @@ export class ProductCardComponent implements OnInit {
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;
+        this.disableAdd = false;
       });
     }
 
@@ -79,6 +83,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   addLocalCart(product: Product) {
+    this.disableAdd = true;
 
     let localCart: any[] = [];
     let cartItem = {
@@ -120,6 +125,7 @@ export class ProductCardComponent implements OnInit {
         detail: 'Item added to cart'
       })
       this.loading = false;
+      this.disableAdd = false;
     } else {
       localCart.push(cartItem);
       this.product.cartProductQuantity = cartItem.quantity;
@@ -132,6 +138,7 @@ export class ProductCardComponent implements OnInit {
         detail: 'Item added to cart'
       })
       this.loading = false;
+      this.disableAdd = false;
     }
 
 
@@ -159,6 +166,7 @@ export class ProductCardComponent implements OnInit {
 
   cartNumber($event: any, product: Product) {
     // console.log($event.value, id);
+    this.disableAdd = true;
     this.loading = true;
 
 
@@ -179,6 +187,7 @@ export class ProductCardComponent implements OnInit {
         // this.loaded.emit();
         this.afterCart(product);
         this.loading = false;
+        this.disableAdd = false;
       });
     }
 
@@ -189,7 +198,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   cartLocalCount($event: any, product: Product) {
-
+    this.disableAdd = true;
     let localCart = this.localCartService.getLocalCart
     const index = localCart.findIndex( (cart: any) => {
       return cart.productId === product.productId;
@@ -210,6 +219,7 @@ export class ProductCardComponent implements OnInit {
 
     this.localCartService.setCartTotal();
     this.loading = false;
+    this.disableAdd = false;
 
   }
 
