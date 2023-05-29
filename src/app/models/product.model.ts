@@ -7,6 +7,7 @@ export interface Product {
   categoryName: string;
   categoryId: string;
   price: number;
+  totalCartPrice: number;
   discountPrice: number;
   description: string;
   productUnit: number;

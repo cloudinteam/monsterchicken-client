@@ -166,13 +166,13 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   setFromLocal() {
-    if (localStorage.getItem('current_address') != null) {
-      let address: any = localStorage.getItem('current_address');
-      let currentAddress = JSON.parse(address);
+    // if (localStorage.getItem('current_address') != null) {
+    //   let address: any = localStorage.getItem('current_address');
+    //   let currentAddress = JSON.parse(address);
 
-      this.searchString = currentAddress.address;
-      this.confirmAddress = true;
-    }
+    //   this.searchString = currentAddress.address;
+    //   this.confirmAddress = true;
+    // }
     if (localStorage.getItem('current_address') == null) {
       this.getCoords();
     }
@@ -182,10 +182,11 @@ export class LocationComponent implements OnInit, AfterViewInit {
       let currentPosition = JSON.parse(position);
 
       this.mapMarker = currentPosition;
+      this.geoCode('location', '', true);
     }
   }
 
-  geoCode(type: string = 'location', address: string = '') {
+  geoCode(type: string = 'location', address: string = '', serviceCheck = true) {
     // this.loading = true;
     let data = {};
     if (type == 'location') {
@@ -232,16 +233,16 @@ export class LocationComponent implements OnInit, AfterViewInit {
       localStorage.setItem('userLat', JSON.stringify(this.mapMarker.lat));
       localStorage.setItem('userLong', JSON.stringify(this.mapMarker.lng));
 
-      if (this.postCode) {
+      if (this.postCode && serviceCheck) {
         this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
           if (r.serviceProvider) {
             this.errorAlert = false;
             // this.alert.fireToastS(r.message[0])
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: r.message[0]
-            })
+            // this.messageService.add({
+            //   severity: 'success',
+            //   summary: 'Success',
+            //   detail: r.message[0]
+            // })
             // this.showAddress.emit()
             this.confirmAddress = true;
           }

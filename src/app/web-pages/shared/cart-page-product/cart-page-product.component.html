@@ -1,4 +1,4 @@
-<div class="cart-item" [fxHide.lt-sm]="true">
+<div class="cart-item" [fxHide.lt-sm]="true" [fxHide.gt-sm]="false">
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start stretch" fxLayoutGap="15px">
 
         <div>
@@ -39,7 +39,7 @@
 </div>
 
 <!-- for mobile devices -->
-<div class="cart-item" [fxHide.sm]="false">
+<div class="cart-item" [fxHide.sm]="false" [fxHide.gt-sm]="true">
     <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="7px">
         <div>
             <img class="item-img" [src]="cartItem.imageUrl[0]" [alt]="cartItem.productName">
