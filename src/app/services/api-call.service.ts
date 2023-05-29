@@ -89,11 +89,11 @@ export class ApiCallService {
           }
 
           // this.alert.fireToastF(data.message[0]);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: data.message[0]
-          })
+          // this.messageService.add({
+          //   severity: 'error',
+          //   summary: 'Error',
+          //   detail: data.message[0]
+          // })
           return err;
         })
       );

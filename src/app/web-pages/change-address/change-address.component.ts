@@ -81,21 +81,19 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       this.addressForm.patchValue({
         number: r.response.userDetail.number,
       });
-    });
-
-console.log(this.edit);
+    })
 
     if (this.edit == 'new') {
       this.address = null;
     }
 
     if (this.address) {
-      this.editAddress();
       this.addressService.viewAddress({ addressId: this.address.addressId }).subscribe((r: any) => {
-        this.editAddress();
+        console.log(r);
+        // this.address = r.address;
+        this.editAddress(r.response.address);
       })
     }
-
 
     // this.addressService.updateAddress.subscribe((r) => {
     //   this.address = r.location;
@@ -106,12 +104,10 @@ console.log(this.edit);
   }
 
   ngAfterViewInit(): void {
-
     this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
     this.searchAuto.setComponentRestrictions({
       country: ["in"],
-    });
-
+    })
     this.searchAuto.addListener('place_changed', () => {
     // this.searchAuto.addListener('blur', () => {
     // this.searchAuto.addListener('keydown', () => {
@@ -163,28 +159,27 @@ console.log(this.edit);
     return this.addressForm['controls'];
   }
 
-  editAddress() {
-    // console.log(this.address);
+  editAddress(address: any) {
     // this.editAddress = true;
     this.loading = true;
     // this.geoCode('address', this.address.area);
-    this.addressForm.addControl('addressId', new FormControl(this.address.addressId, Validators.required));
+    this.addressForm.addControl('addressId', new FormControl(address.addressId, Validators.required));
 
     this.addressForm.patchValue({
       // addressId: this.address.id,
-      area: this.address.area,
-      city: this.address.city.name,
-      streetName: this.address.streetName,
-      landMark: this.address.landMark,
-      nickName: this.address.nickName,
-      number: this.address.number,
-      pincode: this.address.pincode,
-      state: this.address.state.name,
-      type: this.address.type,
-      others: this.address.others,
+      area: address.area,
+      city: address.city.name,
+      streetName: address.streetName,
+      landMark: address.landMark,
+      nickName: address.nickName,
+      number: address.number,
+      pincode: address.pincode,
+      state: address.state.name,
+      type: address.type,
+      others: address.others,
       latitude: this.address.latitude,
       longitude: this.address.longitude,
-      stateCode: this.address.stateCode,
+      stateCode: address.state.state_code,
     });
     this.mapMarker = {
       lat: Number(this.address.latitude),
@@ -306,7 +301,6 @@ console.log(this.edit);
         this.mapService
           .locationCheck({ cityId: this.addressForm.value.city, pincode: this.addressForm.value.pincode })
           .subscribe((r: any) => {
-            console.log(r);
             if (r.serviceProvider) {
               this.serviceAvailable = true;
               this.addressForm.patchValue({

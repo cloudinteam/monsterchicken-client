@@ -55,7 +55,6 @@ export class SavedAddressComponent implements OnInit {
   }
 
   addressEdit(address: any) {
-    console.log(address);
 
     this.selectedAddress = address;
     this.adEdit = 'edit';
@@ -64,8 +63,6 @@ export class SavedAddressComponent implements OnInit {
   }
 
   onSelect($event: any) {
-    // console.log(this.selectedAddress);
-
     let data = {
       userId: localStorage.getItem('userId'),
       addressId: this.selectedId
