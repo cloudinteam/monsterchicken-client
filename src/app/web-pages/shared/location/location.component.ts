@@ -21,7 +21,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { MapService } from 'src/app/services/map.service';
 import { LocationAllowComponent } from '../location-allow/location-allow.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 // declare const google: any;
 export interface PlaceSearchResult {
@@ -97,7 +97,8 @@ export class LocationComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     private dialog: DynamicDialogRef,
     private dialogService: DialogService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -355,8 +356,18 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   confirmLocation() {
-    this.cartService.productLoad$.next(true);
-    // this.showAddress.emit();
-    this.dialog.close()
+    this.confirmationService.confirm({
+      message: '<b>' + this.searchString + '</b>',
+      header: 'Confirmation your location',
+      icon: 'pi pi-map-marker',
+      accept: () => {
+        this.cartService.productLoad$.next(true);
+        // this.showAddress.emit();
+        this.dialog.close()
+      },
+      // reject: (type) => {
+
+      // }
+    });
   }
 }

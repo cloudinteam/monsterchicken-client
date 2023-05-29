@@ -3,11 +3,13 @@ import { AddressService } from './services/address.service';
 import { CommonService } from './services/common.service';
 import { ProductService } from './services/product.service';
 import { Category } from './models/category.model';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [ConfirmationService]
 })
 export class AppComponent implements OnInit {
 
@@ -27,7 +29,7 @@ export class AppComponent implements OnInit {
     this.loading = true;
     if (localStorage.getItem('userLat') == null || localStorage.getItem('userLong') == null) {
       this.addressService.getPosition().then((pos: any) => {
-        console.log(`Your positon: ${pos.lng} ${pos.lat}`);
+        // console.log(`Your positon: ${pos.lng} ${pos.lat}`);
       });
     }
     this.productService.getCategories().subscribe((r: any) => {

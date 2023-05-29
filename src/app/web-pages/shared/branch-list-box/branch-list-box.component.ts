@@ -1,6 +1,7 @@
 import { getLocaleEraNames } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CartService } from 'src/app/services/cart.service';
 import { HeaderService } from 'src/app/services/header.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -19,7 +20,8 @@ export class BranchListBoxComponent implements OnInit {
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private productService: ProductService,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +50,7 @@ export class BranchListBoxComponent implements OnInit {
     );
     localStorage.setItem('userLat', JSON.stringify(branch.latitude));
     localStorage.setItem('userLong', JSON.stringify(branch.longitude));
+    this.cartService.productLoad$.next(true);
     this.ref.close();
   }
 }

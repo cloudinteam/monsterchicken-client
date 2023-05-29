@@ -19,7 +19,7 @@
       </div>
       <div class="col-12">
         <div class="p-input-icon-right w-100 mb-3">
-          <i class="pi pi-search fw-bold text-dark"></i>
+          <i class="pi pi-search fw-bold text-dark" style="background-color: #fff;padding: 0 3px;"></i>
           <input type="text" class="form-control form-control-md" ngx-google-places-autocomplete
             (onAddressChange)="AddressChange($event)" [(ngModel)]="searchString" #searchInput
             placeholder="Search for your location"  [options]="optionsPlaces" />

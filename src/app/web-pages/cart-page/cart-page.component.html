@@ -14,6 +14,11 @@
   </div>
 
   <div class="row justify-content-center" *ngIf="cart.length > 0">
+    <div class="col-12">
+      <pre>
+        {{cart|json}}
+      </pre>
+    </div>
     <div class="col-12 col-md-12 col-lg-7">
       <cart-page-product *ngFor="let cartItem of cart; let sn = index" [cartItem]="cartItem" [itemNo]="sn"
       (update)="updated()"> </cart-page-product>
