@@ -134,10 +134,11 @@
   <div class="col-12">
     <div class="items-bill" fxLayout="column" fxLayoutGap="20px">
       <div class="bill-heading"> Payment Method </div>
-      <div class="form-check">
+      <div class="form-check" style="align-items: center;display: flex;gap: 15px;">
         <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cash_on_delivery" [(ngModel)]="paymentMethod">
         <label class="form-check-label pay-opt" for="cod">
-          <i class="fa-solid fa-money-bill-1-wave mx-2"></i> Cash On Delivery
+          <!-- <i class="fa-solid fa-money-bill-1-wave mx-2"></i> -->
+          <img src="../../../../assets/images/cod.png" class="mx-2 d-inline-block" style="max-width: 50px;" alt="COD">  Cash On Delivery
         </label>
       </div>
       <!-- <div>

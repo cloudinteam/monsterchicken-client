@@ -21,6 +21,8 @@ import { LocationAllowComponent } from './location-allow/location-allow.componen
 import { CartPageProductComponent } from './cart-page-product/cart-page-product.component';
 import { CartPageComponent } from '../cart-page/cart-page.component';
 import { BranchListBoxComponent } from './branch-list-box/branch-list-box.component';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { BranchListBoxComponent } from './branch-list-box/branch-list-box.compon
     GoogleMapsModule,
     FormsModule,
     ReactiveFormsModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    ConfirmDialogModule
     // NgxGpAutocompleteModule.forRoot({
     //   loaderOptions: { apiKey: 'AIzaSyA26x9clnhzvqzHUOxbeuDyERIFvLrrFlI' }
     // }),
@@ -67,7 +70,11 @@ import { BranchListBoxComponent } from './branch-list-box/branch-list-box.compon
     LocationComponent,
     GooglePlaceModule,
     AddressCardComponent,
-    CartPageProductComponent
+    CartPageProductComponent,
+
+  ],
+  providers: [
+    ConfirmationService
   ]
 })
 export class SharedModule { }

@@ -3,11 +3,13 @@ import { AddressService } from './services/address.service';
 import { CommonService } from './services/common.service';
 import { ProductService } from './services/product.service';
 import { Category } from './models/category.model';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [ConfirmationService]
 })
 export class AppComponent implements OnInit {
 
