@@ -149,7 +149,7 @@ export class BullkOrderFormComponent implements OnInit {
   }
 
   loadProductOptions($event: any) {
-    console.log($event);
+    // console.log($event);
     this.getProductOptions($event.value);
   }
 
@@ -222,12 +222,12 @@ export class BullkOrderFormComponent implements OnInit {
   }
 
   optionsProduct($event: any) {
-    console.log($event);
+    // console.log($event);
     let data = {
       categoryId: $event.value,
     };
     this.productService.getProductOptions(data).subscribe((r: any) => {
-      console.log(r)
+      // console.log(r)
       this.productOptions = r.response.products;
       this.totalProductOptions = r.response.totalProducts;
 
