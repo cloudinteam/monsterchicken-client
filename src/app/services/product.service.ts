@@ -35,6 +35,10 @@ export class ProductService {
     return this.api.getApiCallAuth(NetworkService.getBanners());
   }
 
+  getBranches(id: any): any {
+    return this.api.getApiCallAuth(NetworkService.getBranches(id));
+  }
+
   // search(body: any): any {
   //   return this.api.postApiCallAuth(NetworkService.search(), body);
   // }

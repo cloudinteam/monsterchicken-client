@@ -20,6 +20,9 @@ export class HeaderService {
   private _openLogin = false;
   public openLogin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this._openLogin);
 
+  private _setBranch = { lat: 0, lng: 0 };
+  public setBranch: BehaviorSubject<any> = new BehaviorSubject<any>(this._setBranch);
+
   constructor(
     private api: ApiCallService,
   ) { }

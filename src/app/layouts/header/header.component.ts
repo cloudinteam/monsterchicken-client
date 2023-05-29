@@ -129,6 +129,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.disableSearch = r;
     })
 
+    this.headerService.setBranch.subscribe((r) => {
+      if (r.lat != 0 || r.lng != 0) {
+        this.mapMarker = {
+          lat: r.lat,
+          lng: r.lng
+        }
+        this.geoCode('location');
+        // window.location.reload();
+      }
+    })
+
     this.headerService.currentAddress.subscribe((r) => {
       this.address = r.address;
       this.district = r.district;
@@ -296,7 +307,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.geocoder.geocode(data).subscribe(({ results }) => {
-      let currentAddress = { address: '', district: '' };
+      let currentAddress = { address: '', district: '', show: false };
       currentAddress.address = results[0].formatted_address;
       results[0].address_components.forEach((address) => {
         if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
@@ -305,7 +316,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.address = currentAddress.address;
       this.district = currentAddress.district;
+      currentAddress.show = true;
       this.headerService.currentAddress.next(currentAddress);
+
+      localStorage.setItem('current_address', JSON.stringify(currentAddress));
 
       this.mapMarker = {
         lat: results[0].geometry.location.lat(),
@@ -313,13 +327,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       };
       this.loading = false;
       this.locationShow = true;
-      // console.log(results);
+
     });
   }
 
   handlePermission() {
-    console.log('header');
-
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         this.getCoords();
@@ -360,7 +372,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getCoords() {
-
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         navigator.geolocation.getCurrentPosition(

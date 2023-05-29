@@ -97,6 +97,9 @@ export class NetworkService {
   static getCategoryOptions(): string {
     return this.server_url() + this.server_v() + '/web/product/get-product-category';
   }
+  static getBranches(id: any): string {
+    return this.server_url() + this.server_v() + '/get_branch_bases_active_cities/'+id;
+  }
 
   //Order History
   static getOrderHistory(): string {

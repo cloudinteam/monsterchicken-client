@@ -1,16 +1,13 @@
 <page-loader [loading]="loading"></page-loader>
 
 <div class="container-fluid" *ngIf="!loading">
-  <!-- <pre>
-    {{ city | json }}
-  </pre> -->
-
   <div class="row g-3">
 
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3" *ngFor="let branch of branches">
-      <div class="branch-card">
-        <h4 class="fw-semibold text-black"> {{ branch.name }} </h4>
-        <p class="mb-0"> {{branch.address}} </p>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-4" *ngFor="let branch of branches">
+      <div class="branch-card" (click)="setLocation(branch)">
+        <h5 class="fw-semibold text-black mb-0"> {{ branch.name }} </h5>
+        <p class="mb-0">Phone: <b> {{branch.number}} </b> </p>
+        <p class="mb-0">Email: <b> {{branch.email}} </b> </p>
       </div>
     </div>
 
