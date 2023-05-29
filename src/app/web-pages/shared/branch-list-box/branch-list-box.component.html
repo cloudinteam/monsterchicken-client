@@ -2,7 +2,6 @@
 
 <div class="container-fluid" *ngIf="!loading">
   <div class="row g-3">
-
     <div class="col-12 col-sm-12 col-md-6 col-lg-4" *ngFor="let branch of branches">
       <div class="branch-card" (click)="setLocation(branch)">
         <h5 class="fw-semibold text-black mb-0"> {{ branch.name }} </h5>
@@ -10,7 +9,15 @@
         <p class="mb-0">Email: <b> {{branch.email}} </b> </p>
       </div>
     </div>
-
   </div>
+</div>
 
+<div class="container py-3" *ngIf="!loading && branches.length == 0">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger text-center mt-1" role="alert">
+        No Branches found!
+      </div>
+    </div>
+  </div>
 </div>

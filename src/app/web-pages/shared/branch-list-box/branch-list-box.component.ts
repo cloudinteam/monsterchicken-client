@@ -26,13 +26,11 @@ export class BranchListBoxComponent implements OnInit {
     this.loading = true;
     this.city = this.config.data.city;
     this.getBranches(this.city);
-    this.loading = false;
+    // this.loading = false;
   }
 
   getBranches(city: any) {
-    console.log(city);
     this.productService.getBranches(Number(city.pincode)).subscribe((r: any) => {
-      console.log(r);
       this.branches = r.response.branches;
       this.loading = false;
     });

@@ -39,7 +39,7 @@ export class FooterComponent implements OnInit {
             city: city,
         },
         header: city.city + ' Branches',
-        // width: '50%',
+        width: '80%',
         contentStyle: { overflow: 'auto' },
     });
 
