@@ -360,6 +360,8 @@ export class LocationComponent implements OnInit, AfterViewInit {
       message: '<b>' + this.searchString + '</b>',
       header: 'Confirmation your location',
       icon: 'pi pi-map-marker',
+      acceptButtonStyleClass: 'btn btn-mred rounded-0',
+      rejectButtonStyleClass: 'btn btn-outline-dark rounded-0',
       accept: () => {
         this.cartService.productLoad$.next(true);
         // this.showAddress.emit();
