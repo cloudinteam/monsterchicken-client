@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Product } from 'src/app/models/product.model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -34,7 +34,19 @@ export class ProductCardComponent implements OnInit {
     private authService: AuthService,
     private messageService: MessageService,
   ) {
+    // override the route reuse strategy
+    this.router.routeReuseStrategy.shouldReuseRoute = function(){
+      return false;
+    }
 
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        // if you need to scroll back to top, here is the right place
+        window.scrollTo(0, 0);
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -161,10 +173,12 @@ export class ProductCardComponent implements OnInit {
 
   viewProduct(product: Product) {
     this.router.navigate(['/product/' + product.productId], { queryParams: { productId: product.productId, nearByBranch: product.nearByBranch, } });
+    this.cdRef.markForCheck();
   }
 
   viewCat(id: string) {
     this.router.navigate(['/category/' + id]);
+    this.cdRef.markForCheck();
   }
 
   cartNumber($event: any, product: Product) {

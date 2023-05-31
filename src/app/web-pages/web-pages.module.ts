@@ -5,6 +5,7 @@ import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { CarouselModule } from 'primeng/carousel';
+import { CarouselModule as OwlCarouselModule } from 'ngx-owl-carousel-o';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckoutComponent } from './checkout/checkout.component';
@@ -22,7 +23,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DropdownModule } from 'primeng/dropdown';
 import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-product.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
-import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -52,8 +52,7 @@ import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
     NgxDropzoneModule,
     NgSelectModule,
     DropdownModule,
-    // FlexModule,
-    // FlexLayoutModule
+    OwlCarouselModule,
   ],
   exports: [
     ProfileEditComponent,
