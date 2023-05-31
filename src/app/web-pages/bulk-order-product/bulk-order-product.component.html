@@ -6,7 +6,7 @@
       placeholder="Select a Category" emptyMessage="No categories found"
       (onChange)="getProductsOptions($event)"></p-dropdown>
     <div>
-      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['category'].errors">Category is required.</small>
+      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['category'].errors"> Required </small>
     </div>
   </div>
 
@@ -18,8 +18,7 @@
       [showClear]="false" placeholder="Select a Product" emptyMessage="No products found"></p-dropdown>
 
     <div>
-      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['id'].errors">Product is
-        required.</small>
+      <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['id'].errors"> Required </small>
     </div>
   </div>
   <div class="col-12 col-md-2">
@@ -27,11 +26,11 @@
     <input type="number" formControlName="quantity" (keypress)="keyPressNumbers($event)"
       class="form-control rounded-2 bulk-input" placeholder="Quantity" [required]="true" />
     <div>
-        <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['quantity'].errors">Quantity is required.</small>
+        <small class="text-danger ms-1" *ngIf="submitted && getFormGroup(productForm).controls['quantity'].errors"> Required </small>
       </div>
+
   </div>
-  <div class="col-12 col-md-1 text-end">
-    <button type="button" class="btn btn-outline-danger px-3" (click)="remove(index)"> <i
-        class="fa-regular fa-circle-xmark"></i> </button>
+  <div class="col-12 col-md-1 text-center">
+    <button type="button" class="btn px-3 text-mred w-100" (click)="remove(index)"> <i class="far fa-times-circle fa-lg"></i> </button>
   </div>
 </div>
