@@ -65,7 +65,7 @@
   </div>
 
   <div class="row mt-5 justify-content-center" *ngIf="relatedProductsList.length > 0">
-    <div class="col-12">
+    <div class="col-12 col-md-11 col-lg-10">
       <div>
         <h4 class="fw-bold"> Related products </h4>
       </div>
@@ -77,14 +77,24 @@
           </div>
         </ng-container>
       </div>
-      <p-carousel *ngIf="relatedProductsList.length >= 3" [value]="relatedProductsList" [responsiveOptions]="responsiveOptions" [numVisible]="3" [numScroll]="1"
-        [circular]="true" [showIndicators]="false" [autoplayInterval]="2500" [showNavigators]="true">
+
+      <!-- <p-carousel *ngIf="relatedProductsList.length >= 3" [value]="relatedProductsList" [responsiveOptions]="responsiveOptions" [numVisible]="3" [numScroll]="1"
+        [circular]="true" [showIndicators]="true" [autoplayInterval]="2500" [showNavigators]="false">
         <ng-template let-product pTemplate="item">
           <div class="rel-product">
             <product-card [product]="product"></product-card>
           </div>
         </ng-template>
-      </p-carousel>
+      </p-carousel> -->
+
+      <owl-carousel-o [options]="customOptions" *ngIf="relatedProductsList.length >= 3">
+        <ng-template carouselSlide *ngFor="let product of relatedProductsList">
+          <div class="mx-2">
+            <product-card [product]="product"></product-card>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+
     </div>
   </div>
 
