@@ -66,7 +66,7 @@
 
           <li class="top-nav-item" #profileMenuId>
             <a class="top-nav-link" *ngIf="!logggedIn" (click)="openLogin()"> <i class="pi pi-user"></i> Login </a>
-            <a class="top-nav-link" *ngIf="logggedIn" (click)="profileMenu.toggle($event)"> <i class="pi pi-user"></i> </a>
+            <a class="top-nav-link" *ngIf="logggedIn" (click)="profileMenu.toggle($event)" pTooltip="Account" tooltipPosition="bottom"> <i class="pi pi-user"></i> </a>
             <p-menu #profileMenu appendTo="body" [model]="profileItems" [popup]="true"></p-menu>
           </li>
 
@@ -82,7 +82,7 @@
           </li>
 
           <li class="top-nav-item">
-            <a class="top-nav-link" (click)="launchSearch()"> <i class="pi pi-search fw-bold text-dark"></i> </a>
+            <a class="top-nav-link" (click)="launchSearch()" pTooltip="Search" tooltipPosition="bottom"> <i class="pi pi-search fw-bold text-dark"></i> </a>
             <!-- <div class="p-input-icon-right " (click)="launchSearch()" *ngIf="disableSearch" style="max-width: 87px;">
               <i class="pi pi-search fw-bold text-dark"></i>
               <input type="text" class="form-control form-control-sm clickable" #searchInput placeholder="Search" style="background-color: #f0f0f0;" [readOnly]="true" />
