@@ -75,16 +75,20 @@ export class CartPageProductComponent {
         this.update.emit();
       });
     } else if (!this.authService.isLoggedIn()) {
-      let localCart = this.localCartService.getLocalCart
-      const index = localCart.findIndex( (cart: any) => {
-        return cart.productId === productId;
-      });
-      localCart.splice(index, 1);
-      if (localCart.length > 0) {
-        localStorage.setItem('localCart', JSON.stringify(localCart));
-      } else {
-        localStorage.removeItem('localCart');
+
+      if (localStorage.getItem('localCart') != null) {
+        let localCart = this.localCartService.getLocalCart
+        const index = localCart.findIndex((cart: any) => {
+          return cart.productId === productId;
+        });
+        localCart.splice(index, 1);
+        if (localCart.length > 0) {
+          localStorage.setItem('localCart', JSON.stringify(localCart));
+        } else {
+          localStorage.removeItem('localCart');
+        }
       }
+
       this.localCartService.setCartTotal();
       this.update.emit();
     }
