@@ -66,8 +66,13 @@ export class ApiCallService {
         catchError((err) => {
           let data: any = this.es.unmaskData(err.error);
           if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
             this.router.navigate(['']);
-            localStorage.clear();
+            localStorage.removeItem('accessToken');
             sessionStorage.clear();
             location.reload();
           }
@@ -129,8 +134,13 @@ export class ApiCallService {
         }),
         catchError((err) => {
           if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
             this.router.navigate(['']);
-            localStorage.clear();
+            localStorage.removeItem('accessToken');
             sessionStorage.clear();
             location.reload();
           }
@@ -177,8 +187,13 @@ export class ApiCallService {
         catchError((err) => {
           let data: any = this.es.unmaskData(err.error);
           if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
             this.router.navigate(['']);
-            localStorage.clear();
+            localStorage.removeItem('accessToken');
             sessionStorage.clear();
             location.reload();
           }
@@ -223,8 +238,13 @@ export class ApiCallService {
         }),
         catchError((err) => {
           if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
             this.router.navigate(['']);
-            localStorage.clear();
+            localStorage.removeItem('accessToken');
             sessionStorage.clear();
             location.reload();
           }
@@ -284,8 +304,13 @@ export class ApiCallService {
         }),
         catchError((err) => {
           if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
             this.router.navigate(['']);
-            localStorage.clear();
+            localStorage.removeItem('accessToken');
             sessionStorage.clear();
             location.reload();
           }

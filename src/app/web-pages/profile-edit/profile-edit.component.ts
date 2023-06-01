@@ -77,7 +77,6 @@ export class ProfileEditComponent implements OnInit {
   fileUpload() {
     const formData = new FormData();
     formData.append('uploadFile', this.files[0]);
-
     this.commonServeice.upload(formData).subscribe((r) => {
       this.profileImage = r.response.previewUrl;
       this.profileForm.patchValue({ image: r.response.url });

@@ -61,10 +61,11 @@ export class AuthService {
     this.router.navigate(['/']);
 
     setTimeout(() => {
-      localStorage.clear();
-    sessionStorage.clear();
+      // localStorage.clear();
+      localStorage.removeItem('accessToken');
+      sessionStorage.clear();
 
-    window.location.reload();
+      window.location.reload();
     }, 500)
 
     // localStorage.clear();
