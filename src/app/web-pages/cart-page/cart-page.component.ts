@@ -42,20 +42,29 @@ export class CartPageComponent implements OnInit {
       this.localCartService.pushLocalCartToLive();
       this.loadCart();
     } else {
-      this.loadLocalCart();
+      if (localStorage.getItem('localCart') != null || localStorage.getItem('localCart') != undefined) {
+        this.loadLocalCart();
+      }
+      this.loading = false;
     }
   }
 
   loadLocalCart() {
     this.loading = true;
 
-    let cartData: any = localStorage.getItem('localCart');
-    let localCart = JSON.parse(cartData)
+    if (localStorage.getItem('localCart') != null) {
 
-    this.cart = localCart;
-    this.totalCount = localCart.length;
-    this.totalCartPrice = this.localCartService.getCartGrandTotal - this.deliveryCharge;
-    this.grandTotal = this.localCartService.getCartGrandTotal;
+      let cartData: any = localStorage.getItem('localCart');
+      let localCart = JSON.parse(cartData)
+
+      this.cart = localCart;
+      this.totalCount = localCart.length;
+      this.totalCartPrice = this.localCartService.getCartGrandTotal - this.deliveryCharge;
+      this.grandTotal = this.localCartService.getCartGrandTotal;
+
+    } else {
+      this.cart = [];
+    }
 
     this.loading = false;
 
