@@ -19,10 +19,13 @@ export class LocalcartService {
   get getCartGrandTotal() {
     if (localStorage.getItem('localCart') !== null) {
       let prevCart: any = localStorage.getItem('localCart');
+      console.log(prevCart);
+
       let total: number = 0;
       JSON.parse(prevCart).forEach((cartItem: any) => {
-        total = total + (cartItem.totalPrice * cartItem.quantity);
+        total = total + (cartItem.price * cartItem.quantity);
       });
+      console.log(total);
       return total;
     } else {
       return 0;
