@@ -1,6 +1,18 @@
 <page-loader [loading]="loading"></page-loader>
 
 <div class="container py-3 px-4">
+
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-12">
+      <div class="product-trails">
+        <ul>
+          <li> <a routerLink="/" class="pointer"> Home </a> </li>
+          <li> Bulk Order </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-md-8 col-12">
     <form [formGroup]="bulkOrderForm" (ngSubmit)="bulkOrderSubmit()">
