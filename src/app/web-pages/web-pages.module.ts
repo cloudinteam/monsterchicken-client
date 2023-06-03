@@ -24,6 +24,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-product.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { BecomeAFranchiseComponent } from './become-a-franchise/become-a-franchise.component';
+import { AboutPageComponent } from './about-page/about-page.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { BecomeAFranchiseComponent } from './become-a-franchise/become-a-franchi
     BullkOrderFormComponent,
     BulkOrderProductComponent,
     CartPageComponent,
-    BecomeAFranchiseComponent
+    BecomeAFranchiseComponent,
+    AboutPageComponent
   ],
   imports: [
     CommonModule,
