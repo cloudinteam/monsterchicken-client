@@ -1,0 +1,219 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-3 px-4">
+
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-12">
+      <div class="product-trails">
+        <ul>
+          <li> <a routerLink="/" class="pointer"> Home </a> </li>
+          <li> Become a franchise </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-12">
+      <form [formGroup]="becomeFranchise" (ngSubmit)="franchiseSubmit()">
+        <div class="px-4 py-4 mb-5 shadow">
+
+          <div class="card-title mb-4">
+            <span class="h4 fw-bold text-black">Become A Franchise</span>
+            <p class="text-black-50 fw-semibold"> Monster chicken is launching Broiler chicken, frozen chicken and Egg
+              sales outlets all over india. If you have the dream of launching a successful chicken shop of your own.
+              Monster chicken is there with you.</p>
+          </div>
+
+          <div class="card-title mb-3">
+            <span class="fw-bold text-danger">Fill out your details in the form below and we will get in touch within 48
+              hours</span>
+          </div>
+
+          <div class="card-body">
+            <div class="row g-2">
+
+              <div class="col-sm-6 col-md-4 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Name*</label>
+                <div>
+                  <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['name'].errors">Name is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-4 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Email Id*</label>
+                <div>
+                  <input type="email" formControlName="email" class="form-control rounded-2 bulk-input" required />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['email'].errors">Email Id is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-4 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Phone Number*</label>
+                <div>
+                  <input type="text" formControlName="number" (keypress)="keyPressNumbers($event)" maxlength="10"
+                    class="form-control rounded-2 bulk-input" />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['number'].errors">Phone Number is
+                    Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-4 col-12 my-2">
+                <div>
+                  <label class="fw-bold red-heading fs-6">State*</label>
+                  <p-dropdown [options]="states" optionValue="value" optionLabel="name" [required]="true"
+                    formControlName="state" [filter]="true" filterBy="name" [showClear]="false"
+                    placeholder="Select a State" (onChange)="getDistricts($event)"></p-dropdown>
+
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="submitted && form['state'].errors"> State required </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-4 col-12 my-2">
+                <div>
+                  <label class="fw-bold red-heading fs-6">District*</label>
+                  <p-dropdown [options]="districts" optionValue="value" optionLabel="name" [required]="true"
+                    formControlName="district" [filter]="true" filterBy="name" [showClear]="false"
+                    placeholder="Select a District" [readonly]="!form['state'].value"></p-dropdown>
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="submitted && form['district'].errors"> District required
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-4 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Pin code*</label>
+                <div>
+                  <input type="text" formControlName="pinCode" (keypress)="keyPressNumbers($event)"
+                    class="form-control rounded-2 bulk-input" required />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['pinCode'].errors">Pincode is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Address*</label>
+                <div>
+                  <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3"
+                    required></textarea>
+                  <small class="text-danger ms-1" *ngIf="submitted && form['address'].errors">Address is Invalid</small>
+                </div>
+              </div>
+
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Message</label>
+                <div>
+                  <textarea type="text" formControlName="message" class="form-control rounded-2 bulk-text"
+                    rows="3"></textarea>
+                  <small class="text-danger ms-1" *ngIf="submitted && form['message'].errors">Message is Invalid</small>
+                </div>
+              </div>
+
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-mred w-100 mt-3 px-5 rounded-0 py-3 btn-lg"> Submit </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-12">
+      <div class="mb-5">
+
+        <div class="row">
+
+          <div class="col-12 col-md-12 col-lg-6">
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 1. CUCU CHICKEN Franchise </span>
+              <div class="fw-semibold text-black"> CUCU Chicken is launching Specifically Broiler Chicken and Egg Sales
+                outlet all over India If you have the dream of launching a successful Chicken Shop of your own ,Cucu chicken
+                is there with you. </div>
+            </div>
+
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 2. Business Details </span>
+              <div class="fw-semibold text-black"> A retail chain of outlets of a selling Fresh Chicken, chilled chicken,
+                Eggs and Premium quality chicken , Egg Enriched with Omega 3 in very hygienic conditions and giving
+                customised variety in chicken at affordable price. </div>
+            </div>
+
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 3. Franchise Details </span>
+              <div class="fw-semibold text-black">
+                <ul class="mb-0">
+                  <li>Exclusive territorial rights to a unit franchisee</li>
+                  <li>Performance guarantee to Unit Franchise</li>
+                  <li>Anticipated percentage return on investment</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 4. Investment Requirements </span>
+              <div class="fw-semibold text-black">
+                <ul class="mb-0">
+                  <li>Building advance has to be borne by the franchisee</li>
+                  <li>Floor area requirement300 to 400 sq ft for Outlets</li>
+                  <li>Floor area requirement1000 to 1400 sq ft for Cutting and Outlets</li>
+                  <li>Water point</li>
+                  <li>Exhaust</li>
+                  <li>Drainage point</li>
+                  <li>Power requirement will be around 10 KVA.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-12 col-lg-6">
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 5. Franchise Support </span>
+              <div class="fw-semibold text-black">
+                <ul class="mb-0">
+                  <li>Site Selection.</li>
+                  <li>Assistance in setting up the Outlet.</li>
+                  <li>Recruitment and Training</li>
+                  <li>Marketing and Promotionassistance</li>
+                  <li>Continued Support in Business</li>
+                  <li>From the day you sign the agreement, CUCU CHICKEN will help the franchise to run the business
+                    efficiently and profitably</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 6. CUCU CHICKEN Franchise Investment Details </span>
+              <div class="fw-semibold text-black">
+                <p class="mb-1">Investment includes the following items:</p>
+                <ul class="mb-0">
+                  <li>Franchisee fee</li>
+                  <li>Equipment</li>
+                  <li>Interiors</li>
+                  <li>Branding and signage</li>
+                  <li>Deposit towards supplies (Refundable)</li>
+                  <li>Small wear and POS Machine cost</li>
+                  <li>Misc expenses</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-3 border-start border-4 border-danger mb-3 bg-opacity-10 bg-danger">
+              <span class="h5 fw-bold text-mred"> 7. Investment INR : 5lac - 10lac </span>
+              <div class="fw-semibold text-black">
+                <strong>Note :</strong> This is a tentative investment may change based on the location and city available. Investments are subject to change as per market scenario &amp; Property Condition </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

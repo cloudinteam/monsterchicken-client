@@ -23,6 +23,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DropdownModule } from 'primeng/dropdown';
 import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-product.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
+import { BecomeAFranchiseComponent } from './become-a-franchise/become-a-franchise.component';
+import { AboutPageComponent } from './about-page/about-page.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { CartPageComponent } from './cart-page/cart-page.component';
     AddressListComponent,
     BullkOrderFormComponent,
     BulkOrderProductComponent,
-    CartPageComponent
+    CartPageComponent,
+    BecomeAFranchiseComponent,
+    AboutPageComponent
   ],
   imports: [
     CommonModule,

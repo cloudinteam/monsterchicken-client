@@ -235,7 +235,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
       localStorage.setItem('userLong', JSON.stringify(this.mapMarker.lng));
 
       if (this.postCode && serviceCheck) {
-        this.mapService.locationCheck({ pincode: this.postCode }).subscribe( (r: any) => {
+        this.mapService.locationCheck({ pincode: this.postCode, district: currentAddress.district }).subscribe( (r: any) => {
           if (r.serviceProvider) {
             this.errorAlert = false;
             // this.alert.fireToastS(r.message[0])

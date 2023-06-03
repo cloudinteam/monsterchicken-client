@@ -32,7 +32,7 @@ export class BranchListBoxComponent implements OnInit {
   }
 
   getBranches(city: any) {
-    this.productService.getBranches(Number(city.pincode)).subscribe((r: any) => {
+    this.productService.getBranches(Number(city.id)).subscribe((r: any) => {
       this.branches = r.response.branches;
       this.loading = false;
     });
