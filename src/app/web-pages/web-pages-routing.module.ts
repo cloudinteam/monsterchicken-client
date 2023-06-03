@@ -7,6 +7,7 @@ import { ProductViewComponent } from './product-view/product-view.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
+import { BecomeAFranchiseComponent } from './become-a-franchise/become-a-franchise.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'bulk-order',
     component: BullkOrderFormComponent
+  },
+  {
+    path: 'become-a-franchise',
+    component: BecomeAFranchiseComponent
   }
 ];
 
