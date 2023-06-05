@@ -18,7 +18,7 @@
     <div class="col-12 col-md-10" *ngIf="productList.length > 0">
       <div class="row g-4">
         <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let product of productList; let i = index;">
-          <product-card [product]="product" (loaded)="ngOnInit()"></product-card>
+          <product-card [product]="product" [showCategory]="false" (loaded)="ngOnInit()"></product-card>
         </div>
       </div>
     </div>

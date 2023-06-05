@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/services/common.service';
+import { FormsService } from 'src/app/services/forms.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -31,6 +32,7 @@ export class ContactUsComponent implements OnInit {
     private cs: CommonService,
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
+    private formsService: FormsService,
   ) {}
 
   ngOnInit(): void {
@@ -68,34 +70,25 @@ export class ContactUsComponent implements OnInit {
     if (this.contactForm.invalid) {
       return;
     } else {
-      console.log(this.contactForm.value);
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Form submitted check console'
-      })
+      this.formsService.submitContactForm(this.contactForm.value).subscribe((r: any) => {
+        if (r.status) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'We received your query',
+            detail: 'We will contact you shortly'
+          })
+          this.submitted = false;
+          this.contactForm.reset();
+          this.ngOnInit();
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: r.message[0]
+          })
+        }
+      });
     }
-
-    // this.productService.bulkOrderSubmit(obj.bulkOrderDetails).subscribe((r) => {
-    //   if (r.status) {
-    //     // this.alert.fireToastS(r.message[0]);
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: 'Success',
-    //       detail: r.message[0]
-    //     })
-    //     this.submitted = false;
-    //     this.becomeFranchise.reset();
-    //     this.ngOnInit();
-    //   } else {
-    //     // this.alert.fireToastF(r.message[0]);
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: 'Error',
-    //       detail: r.message[0]
-    //     })
-    //   }
-    // });
 
   }
 

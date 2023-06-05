@@ -123,8 +123,16 @@
                 </div>
               </div>
 
+              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
+                <label class="fw-bold red-heading fs-6"> Quantity* </label>
+                <div>
+                  <input input pInputText pKeyFilter="int" formControlName="quantity" class="form-control rounded-2 bulk-input" />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['quantity'].errors">Quantity is Invalid</small>
+                </div>
+              </div>
+
               <div class="col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Address</label>
+                <label class="fw-bold red-heading fs-6">Address*</label>
                 <div>
                   <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3"
                     required></textarea>

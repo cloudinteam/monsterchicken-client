@@ -196,4 +196,13 @@ export class NetworkService {
   static notificationUpdate(id: string): string {
     return this.server_url() + this.server_v() + '/notification/update/'+id;
   }
+
+  // Forms
+  static submitContactForm(): string {
+    return this.server_url() + this.server_v() + '/web/contact-us/store';
+  }
+  static submitFranchiseForm(): string {
+    return this.server_url() + this.server_v() + '/web/become-a-franchies/store';
+  }
+
 }

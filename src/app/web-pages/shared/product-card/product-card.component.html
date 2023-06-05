@@ -9,13 +9,12 @@
         <img [src]="product.imageUrl[0]" alt="" />
     </div>
     <span class="badge rounded-pill text-bg-danger me-1">{{ product.brand | titlecase }}</span>
-    <span class="pro-category" (click)="viewCat(product.categoryId)"> {{ product.categoryName | titlecase }} </span>
+    <span class="pro-category" *ngIf="showCategory" (click)="viewCat(product.categoryId)"> {{ product.categoryName | titlecase }} </span>
     <div class="pro-desc">
         <span class="pro-title" (click)="viewProduct(product)">
             {{ product.productName }}
         </span>
-        <span class="pro-short-desc" tooltipPosition="top" [pTooltip]="product.description"> {{
-            product.description.substring(0, 35) }}... </span>
+        <span class="pro-short-desc"> {{ product.description.substring(0, 35) }}... </span> <!-- tooltipPosition="top" [pTooltip]="product.description" -->
         <div class="pro-details">
 
             <div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">

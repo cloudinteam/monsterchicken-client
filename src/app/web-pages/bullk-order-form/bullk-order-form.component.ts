@@ -90,6 +90,7 @@ export class BullkOrderFormComponent implements OnInit {
         ],
       ],
       address: ['', [Validators.required, Validators.minLength(15)]],
+      quantity: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       // productData: this.formBuilder.array([]),
     });
   }
