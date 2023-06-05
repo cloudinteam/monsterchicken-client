@@ -8,6 +8,10 @@ import { AuthGuard } from '../guards/auth.guard';
 import { BullkOrderFormComponent } from './bullk-order-form/bullk-order-form.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { BecomeAFranchiseComponent } from './become-a-franchise/become-a-franchise.component';
+import { AboutPageComponent } from './about-page/about-page.component';
+import { CareerPageComponent } from './career-page/career-page.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 const routes: Routes = [
   {
@@ -51,6 +55,22 @@ const routes: Routes = [
   {
     path: 'become-a-franchise',
     component: BecomeAFranchiseComponent
+  },
+  {
+    path: 'about-us',
+    component: AboutPageComponent
+  },
+  {
+    path: 'career',
+    component: CareerPageComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
+  },
+  {
+    path: 'contact-us',
+    component: ContactUsComponent
   }
 ];
 

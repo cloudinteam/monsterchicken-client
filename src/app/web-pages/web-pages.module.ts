@@ -25,6 +25,9 @@ import { BulkOrderProductComponent } from './bulk-order-product/bulk-order-produ
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { BecomeAFranchiseComponent } from './become-a-franchise/become-a-franchise.component';
 import { AboutPageComponent } from './about-page/about-page.component';
+import { CareerPageComponent } from './career-page/career-page.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { AboutPageComponent } from './about-page/about-page.component';
     BulkOrderProductComponent,
     CartPageComponent,
     BecomeAFranchiseComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    CareerPageComponent,
+    PrivacyPolicyComponent,
+    ContactUsComponent
   ],
   imports: [
     CommonModule,
