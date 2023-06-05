@@ -17,6 +17,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductCardComponent implements OnInit {
 
   @Input() product!: Product;
+  @Input() showCategory = true;
   @Output() loaded: EventEmitter<any> = new EventEmitter();
 
   loading = false;

@@ -28,6 +28,7 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { CareerPageComponent } from './career-page/career-page.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     NgSelectModule,
     DropdownModule,
     OwlCarouselModule,
+    KeyFilterModule,
   ],
   exports: [
     ProfileEditComponent,

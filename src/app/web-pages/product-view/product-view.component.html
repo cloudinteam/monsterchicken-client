@@ -17,7 +17,7 @@
   <div class="row justify-content-center">
     <div class="col-12 col-sm-12 col-md-10 col-lg-9">
       <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+        <div class="col-12 col-sm-12 col-md-5 col-lg-4">
           <p-carousel [value]="this.product.imageUrl" [numVisible]="1" [numScroll]="1" [circular]="false"
             [showIndicators]="true" [showNavigators]="false">
             <ng-template let-image pTemplate="item">
@@ -25,7 +25,7 @@
             </ng-template>
           </p-carousel>
         </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-7">
+        <div class="col-12 col-sm-12 col-md-7 col-lg-8">
           <h1 class="product-title"> {{this.product.productName}} </h1>
           <div class="mt-1">
             <span class="badge rounded-pill text-bg-danger me-1">{{ this.product.brand | titlecase }}</span>
@@ -47,7 +47,7 @@
               <div class="pro-action">
                 <span *ngIf="product.stock == 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of
                   Stock</span>
-                <p-inputNumber [disabled]="disableAdd" *ngIf="product.cartProductQuantity > 0" [ngModel]="product.cartProductQuantity"
+                <p-inputNumber [disabled]="disableAdd" *ngIf="product.cartProductQuantity > 0 && product.stock > 0" [ngModel]="product.cartProductQuantity"
                   [showButtons]="true" buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal"
                   [step]="1" [min]="0" [max]="product.maxQuantity" decrementButtonClass="btn-minus"
                   incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
