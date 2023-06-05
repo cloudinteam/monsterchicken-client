@@ -76,28 +76,27 @@ export class ContactUsComponent implements OnInit {
       })
     }
 
+    // this.productService.bulkOrderSubmit(obj.bulkOrderDetails).subscribe((r) => {
+    //   if (r.status) {
+    //     // this.alert.fireToastS(r.message[0]);
+    //     this.messageService.add({
+    //       severity: 'success',
+    //       summary: 'Success',
+    //       detail: r.message[0]
+    //     })
+    //     this.submitted = false;
+    //     this.becomeFranchise.reset();
+    //     this.ngOnInit();
+    //   } else {
+    //     // this.alert.fireToastF(r.message[0]);
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: r.message[0]
+    //     })
+    //   }
+    // });
 
-
-    /* this.productService.bulkOrderSubmit(obj.bulkOrderDetails).subscribe((r) => {
-      if (r.status) {
-        // this.alert.fireToastS(r.message[0]);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: r.message[0]
-        })
-        this.submitted = false;
-        this.becomeFranchise.reset();
-        this.ngOnInit();
-      } else {
-        // this.alert.fireToastF(r.message[0]);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: r.message[0]
-        })
-      }
-    }); */
   }
 
 }
