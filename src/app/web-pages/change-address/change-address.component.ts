@@ -299,7 +299,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
       if (this.addressForm.value.pincode) {
         this.mapService
-          .locationCheck({ cityId: this.addressForm.value.city, pincode: this.addressForm.value.pincode })
+          .locationCheck({ district: this.addressForm.value.district, pincode: this.addressForm.value.pincode })
           .subscribe((r: any) => {
             if (r.serviceProvider) {
               this.serviceAvailable = true;

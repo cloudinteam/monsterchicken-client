@@ -65,7 +65,6 @@
                   <p-dropdown [options]="states" optionValue="value" optionLabel="name" [required]="true"
                     formControlName="state" [filter]="true" filterBy="name" [showClear]="false"
                     placeholder="Select a State" (onChange)="getDistricts($event)"></p-dropdown>
-
                   <div>
                     <small class="text-danger ms-1" *ngIf="submitted && form['state'].errors"> State required </small>
                   </div>
