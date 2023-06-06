@@ -23,7 +23,7 @@ export class ContactUsComponent implements OnInit {
   }
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
-    clickable: false,
+    clickable: true,
   }
   zoom = 17;
 
@@ -61,6 +61,10 @@ export class ContactUsComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  moveMap(event: google.maps.MapMouseEvent) {
+    window.open('https://www.google.com/maps/place/Salem+Rd,+R.P+Pudur,+Namakkal,+Tamil+Nadu+637001/@11.231426,78.162947,14z/data=!4m6!3m5!1s0x3babcefa1f1d9e81:0x257c63bcc33129eb!8m2!3d11.2314256!4d78.1629467!16s%2Fg%2F11ffm04tv4?hl=en&entry=ttu', '_blank')
   }
 
   contactFormSubmit() {

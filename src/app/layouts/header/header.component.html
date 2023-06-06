@@ -71,7 +71,7 @@
           </li>
 
           <li class="top-nav-item" *ngIf="logggedIn">
-            <a class="top-nav-link" [routerLink]="'/account/notifications'" [pTooltip]="(notificationsCount > 0) ? 'You have notifications' : 'No notifications'"
+            <a class="top-nav-link" [routerLink]="'/account/notifications'" [pTooltip]="(notificationsCount > 0) ? 'You have notifications' : 'Notifications'"
               tooltipPosition="bottom" style="position: relative;"> <i class="pi pi-bell"></i>
               <span *ngIf="notificationsCount > 0" class="notification-dot"> </span>
             </a>

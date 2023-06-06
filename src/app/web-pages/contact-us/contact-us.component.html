@@ -17,8 +17,8 @@
     <div class="col-md-10 col-12">
 
       <div class="px-4 py-4 mb-5 shadow">
-        <google-map height="350px" width="100%" [center]="mapMarker" [zoom]="zoom">
-          <map-marker *ngIf="mapMarker" [position]="mapMarker" [options]="markerOptions"></map-marker>
+        <google-map height="350px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)">
+          <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" [options]="markerOptions"></map-marker>
         </google-map>
       </div>
 
