@@ -20,8 +20,6 @@
   </div>
 </div>
 
-<!-- <div *ngIf="apiLoaded | async"> -->
-
 <google-map height="450px" width="100%" [center]="mapMarker" [zoom]="zoom" (mapClick)="moveMap($event)"
   (mapMousemove)="move($event)">
   <map-marker *ngIf="mapMarker" [position]="mapMarker" (mapClick)="moveMap($event)" (mapDragend)="moveMap($event)"
@@ -33,9 +31,6 @@
 <pre>
   {{ geoResult | json }}
 </pre> -->
-
-<!-- </div> -->
-
 
 <!-- <ng-template #locationAllow role="document" let-modal>
 
