@@ -204,5 +204,8 @@ export class NetworkService {
   static submitFranchiseForm(): string {
     return this.server_url() + this.server_v() + '/web/become-a-franchies/store';
   }
+  static submitCareerForm(): string {
+    return this.server_url() + this.server_v() + '/web/career/store';
+  }
 
 }
