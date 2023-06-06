@@ -25,12 +25,18 @@ export class CartPageProductComponent {
 
   cartNumber($event: any, cartItem: Product, cartId: string) {
     this.disableAdd = true;
+    console.log($event.value);
+
+
 
     if (this.authService.isLoggedIn()) {
+      if ($event.value == null) {
+        this.cartItem.quantity = 1;
+      }
       let data = [{
         cartId: cartId,
         productId: cartItem.productId,
-        quantity: $event.value,
+        quantity: ($event.value == null) ? 1 : $event.value,
         nearByBranch: cartItem.nearByBranch,
       }];
       this.cartService.addCart({ carts: data }).subscribe((r: any) => {
@@ -38,6 +44,9 @@ export class CartPageProductComponent {
         this.update.emit();
       });
     } else if (!this.authService.isLoggedIn()) {
+      if ($event.value == null) {
+        this.cartItem.quantity = 1;
+      }
       let localCart = this.localCartService.getLocalCart
 
       const index = localCart.findIndex( (cart: any) => {
@@ -45,7 +54,7 @@ export class CartPageProductComponent {
       });
 
       if ($event.value != 0) {
-        localCart[index].quantity = $event.value;
+        localCart[index].quantity = ($event.value == null) ? 1 : $event.value;
         localCart[index].totalPrice = $event.value * localCart[index].price;
       } else {
         localCart.splice(index, 1);

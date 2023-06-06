@@ -62,7 +62,7 @@
                     <div class="item-action">
                         <p-inputNumber [disabled]="disableAdd" [ngModel]="cartItem.quantity" [showButtons]="true"
                             buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal" [step]="1"
-                            [min]="0" [max]="cartItem.maxQuantity" decrementButtonClass="btn-minus"
+                            [min]="1" [max]="cartItem.maxQuantity" decrementButtonClass="btn-minus"
                             incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus"
                             decrementButtonIcon="pi pi-minus" mode="decimal"
                             (onInput)="cartNumber($event, cartItem, cartItem.cartId)"></p-inputNumber>
