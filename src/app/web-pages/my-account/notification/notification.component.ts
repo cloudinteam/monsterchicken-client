@@ -16,7 +16,6 @@ export class NotificationComponent implements OnInit {
 
   constructor(
     private headerService: HeaderService,
-    private alert: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -26,20 +25,23 @@ export class NotificationComponent implements OnInit {
 
   getNotifications() {
     this.loading = true;
+    this.unread = false;
     this.notifications = [];
     this.readNotifications= [];
     this.headerService.notificationList().subscribe((r: any) => {
-      r.response.notifications.forEach((msg: any) => {
-        if (msg.is_read == 0) {
-          this.notifications.push(msg);
-        }
-        if (msg.is_read == 1) {
-          this.readNotifications.push(msg);
-        }
-      });
-      // if (this.notifications.length == 0) {
-      //   window.location.reload()
-      // }
+
+      if (r.response.notifications.length > 0) {
+        console.log('dfg')
+        r.response.notifications.forEach((msg: any) => {
+          if (msg.is_read == 0) {
+            this.notifications.push(msg);
+          }
+          if (msg.is_read == 1) {
+            this.readNotifications.push(msg);
+          }
+        });
+      }
+
       this.loading = false;
     })
   }

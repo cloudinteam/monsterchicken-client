@@ -60,7 +60,7 @@ export class BullkOrderFormComponent implements OnInit {
       country: [103, [Validators.required]],
       state: [null, [Validators.required]],
       district: [null, [Validators.required]],
-      city: [null, [Validators.required]],
+      // city: [null, [Validators.required]],
       pinCode: [
         '',
         [
