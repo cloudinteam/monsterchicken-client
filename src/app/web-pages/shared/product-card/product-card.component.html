@@ -33,7 +33,7 @@
                         Stock</span>
                     <p-inputNumber [disabled]="disableAdd" *ngIf="product.cartProductQuantity > 0 && product.stock > 0"
                         [ngModel]="product.cartProductQuantity" [showButtons]="true" buttonLayout="horizontal"
-                        inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="0"
+                        inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="1"
                         [max]="product.maxQuantity" decrementButtonClass="btn-minus" incrementButtonClass="btn-plus"
                         incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal"
                         (onInput)="cartNumber($event, product)"></p-inputNumber>

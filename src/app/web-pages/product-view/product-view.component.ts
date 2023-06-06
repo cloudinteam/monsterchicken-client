@@ -227,7 +227,7 @@ export class ProductViewComponent implements OnInit {
       let data = [
         {
           productId: product.productId,
-          quantity: $event.value,
+          quantity: ($event.value == null) ? 1 : $event.value,
           nearByBranch: product.nearByBranch,
         },
       ];
@@ -260,7 +260,7 @@ export class ProductViewComponent implements OnInit {
     });
 
     if ($event.value != 0) {
-      localCart[index].quantity = $event.value;
+      localCart[index].quantity = ($event.value == null) ? 1 : $event.value;
       localCart[index].totalPrice = $event.value * localCart[index].price;
     } else {
       localCart.splice(index, 1);
