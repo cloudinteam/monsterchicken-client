@@ -19,4 +19,8 @@ export class FormsService {
     return this.api.postApiCallAuth(NetworkService.submitFranchiseForm(), body);
   }
 
+  submitCareerForm(body: any): any {
+    return this.api.postApiCallAuth(NetworkService.submitCareerForm(), body);
+  }
+
 }
