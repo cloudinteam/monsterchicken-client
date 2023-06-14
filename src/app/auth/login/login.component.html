@@ -48,6 +48,8 @@
             <p-inputNumber mode="decimal" [useGrouping]="false" [maxlength]="10" formControlName="number" (onInput)="validateNumber($event)" id="number" [autofocus]="true"></p-inputNumber>
             <label htmlFor="number">Mobile Number</label>
           </span>
+          <div class="text-danger ms-1" *ngIf="isSubmitted && loginFormControl['number'].errors?.required">Phone number required</div>
+          <div class="text-danger ms-1" *ngIf="loginFormControl['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
         </div>
 
         <div class="d-grid">
@@ -55,7 +57,7 @@
         </div>
 
         <div class="mt-3 text-center">
-          <span class="login-terms"> By signing in you agree to our <a href="#" target="_blank">terms and conditions</a> </span>
+          <span class="login-terms"> By signing in you agree to our <a href="/privacy-policy" target="_blank">terms and conditions</a> </span>
         </div>
 
       </div>

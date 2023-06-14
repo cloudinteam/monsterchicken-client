@@ -20,6 +20,8 @@ export class ProfileEditComponent implements OnInit {
   editImage = false;
   @Output() closeModel: EventEmitter<any> = new EventEmitter();
 
+  mail: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
   constructor(
     private formBuilder: FormBuilder,
     private commonServeice: CommonService,
@@ -53,8 +55,8 @@ export class ProfileEditComponent implements OnInit {
   initForm() {
     this.profileForm = this.formBuilder.group({
       userId: [localStorage.getItem('userId'), [Validators.required]],
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
       number: [null, [Validators.maxLength(13),Validators.required]],
       image: [null],
       gender: ['', [Validators.required]],

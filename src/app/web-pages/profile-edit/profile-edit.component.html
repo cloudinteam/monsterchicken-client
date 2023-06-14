@@ -29,6 +29,7 @@
       <div class="form-group mb-3">
         <label> Name </label>
         <input type="text" required="" name="name" formControlName="name" placeholder="Full name" class="form-control" />
+        <div class="text-danger invalid-error" *ngIf="profileFormControl['name'].errors?.pattern">Only alphabets and space allowed</div>
         <div *ngIf="submitted && profileFormControl.name.errors" class="invalid-error">
           <span *ngIf="profileFormControl.name.errors.required">Name is Required</span>
         </div>
@@ -37,6 +38,7 @@
       <div class="form-group mb-3">
         <label> Email </label>
         <input type="text" required="" name="email" formControlName="email" placeholder="Email" class="form-control" />
+        <div class="text-danger ms-1" *ngIf="profileFormControl['email'].errors?.pattern">Mail should contain only (a-z), (0-9) and "."</div>
         <div *ngIf="submitted && profileFormControl.email.errors" class="invalid-error">
           <span *ngIf="profileFormControl.email.errors.required">Email Id is Required</span>
         </div>
