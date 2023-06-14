@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       // password: ['?1ionLrUV', [Validators.required, Validators.minLength(8), Validators.pattern(/^\S*$/)]],
       // googleUser: [false],
       // showPassword: [false],
-      number: [null, [Validators.required]]
+      number: [null, [Validators.required, Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10), Validators.minLength(10)]]
     });
   }
   get loginFormControl(): any {

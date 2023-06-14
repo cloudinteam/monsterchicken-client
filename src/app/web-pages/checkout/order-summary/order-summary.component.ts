@@ -84,25 +84,24 @@ export class OrderSummaryComponent implements OnInit {
   loadSummary() {
 
     this.checkoutService.cartSummary().subscribe((r: any) => {
-        // console.log(r);
 
-        this.data = r;
-        this.shippingAddress = r.response.isAddressAvailable;
-        this.orderSummary = r.response.cartData;
-        this.totalCount = r.response.totalCount;
-        this.totalCartPrice = r.response.grandTotal;
-        this.deliveryCharge = r.response.deliveryCharge;
-        this.grandTotal = r.response.grandTotal;
-        this.discountPrice = 0;
-        this.outOfStock = r.response.outOfStock;
-        this.submitted = false;
-        this.couponForm.patchValue({
-          subTotal: this.totalCartPrice
-        })
+      this.data = r;
+      this.shippingAddress = r.response.isAddressAvailable;
+      this.orderSummary = r.response.cartData;
+      this.totalCount = r.response.totalCount;
+      this.totalCartPrice = r.response.grandTotal;
+      this.deliveryCharge = r.response.deliveryCharge;
+      this.grandTotal = r.response.grandTotal;
+      this.discountPrice = 0;
+      this.outOfStock = r.response.outOfStock;
+      this.submitted = false;
+      this.couponForm.patchValue({
+        subTotal: this.totalCartPrice
+      })
 
-        this.loading = false;
-        this.cdRef.markForCheck();
-      });
+      this.loading = false;
+      this.cdRef.markForCheck();
+    });
     // }
   }
 

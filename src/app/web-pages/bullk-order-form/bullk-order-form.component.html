@@ -47,24 +47,27 @@
                 <label class="fw-bold red-heading fs-6">Name*</label>
                 <div>
                   <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="submitted && validate('name')">Name is Invalid</small>
+                  <div class="text-danger ms-1" *ngIf="submitted && validate('name')">Name is Invalid</div>
+                  <div class="text-danger ms-1" *ngIf="form['name'].errors?.pattern">Only alphabets and space allowed</div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Phone Number *</label>
                 <div>
-                  <input type="text" formControlName="number1" (keypress)="keyPressNumbers($event)" maxlength="10"
+                  <input type="text" pKeyFilter="int" formControlName="number1" maxlength="10"
                     class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="submitted && validate('number1')">Phone Number is Invalid</small>
+                  <div class="text-danger ms-1" *ngIf="submitted && validate('number1')">Phone number is Invalid</div>
+                  <div class="text-danger ms-1" *ngIf="form['number1'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Email Id*</label>
+                <label class="fw-bold red-heading fs-6">Email *</label>
                 <div>
-                  <input type="text" formControlName="email" class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="submitted && validate('email')">Email Id is Invalid</small>
+                  <input type="email" formControlName="email" class="form-control rounded-2 bulk-input" required />
+                  <div class="text-danger ms-1" *ngIf="submitted && validate('email')">Email Id is Invalid</div>
+                  <div class="text-danger ms-1" *ngIf="form['email'].errors?.pattern">Mail should contain only (a-z), (0-9) and "."</div>
                 </div>
               </div>
 
@@ -118,8 +121,8 @@
                 <label class="fw-bold red-heading fs-6">Institution Name</label>
                 <div>
                   <input type="text" formControlName="institutionName" class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="submitted && validate('institutionName')">Institution Name is
-                    Invalid</small>
+                  <!-- <div class="text-danger ms-1" *ngIf="submitted && validate('institutionName')">Institution Name is Invalid</div> -->
+                  <div class="text-danger ms-1" *ngIf="form['institutionName'].errors?.pattern">Only alphabets and space allowed</div>
                 </div>
               </div>
 
