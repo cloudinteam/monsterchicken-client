@@ -47,6 +47,7 @@
       <div class="form-group mb-3">
         <label> Mobile </label>
         <input type="text" readonly required="" name="number" formControlName="number" placeholder="Number" class="form-control" />
+        <div class="text-danger invalid-error" *ngIf="profileFormControl['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
         <div *ngIf="submitted && profileFormControl.number.errors" class="invalid-error">
           <span *ngIf="profileFormControl.number.errors.required">Mobile number is Required</span>
         </div>

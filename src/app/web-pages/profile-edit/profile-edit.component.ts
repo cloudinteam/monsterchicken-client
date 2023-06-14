@@ -57,7 +57,7 @@ export class ProfileEditComponent implements OnInit {
       userId: [localStorage.getItem('userId'), [Validators.required]],
       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ]],
       email: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
-      number: [null, [Validators.maxLength(13),Validators.required]],
+      number: [null, [Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10), Validators.minLength(10),Validators.required]],
       image: [null],
       gender: ['', [Validators.required]],
     });

@@ -109,7 +109,6 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       country: ["in"],
     })
     this.searchAuto.addListener('place_changed', () => {
-      console.log('sd');
     // this.searchAuto.addListener('blur', () => {
     // this.searchAuto.addListener('keydown', () => {
       this.ngZone.run(() => {
@@ -131,9 +130,9 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-    if (this.searchAuto) {
-      google.maps.event.clearInstanceListeners(this.searchAuto);
-    }
+    // if (this.searchAuto) {
+    //   google.maps.event.clearInstanceListeners(this.searchAuto);
+    // }
   }
 
 
@@ -144,7 +143,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       area: ['', [Validators.required]],
       streetName: ['', [Validators.required]],
       landMark: [null, [Validators.required]],
-      number: [null, [Validators.maxLength(13), Validators.required]],
+      number: [null, [Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10), Validators.minLength(10), Validators.required]],
       city: [null, [Validators.required]],
       state: [null, [Validators.required]],
       stateCode: [null, [Validators.required]],

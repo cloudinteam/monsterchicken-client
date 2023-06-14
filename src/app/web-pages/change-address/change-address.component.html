@@ -99,8 +99,8 @@
 
       <div class="form-group mb-3">
         <label> Mobile Number </label>
-        <input type="text" required="" name="number" formControlName="number" placeholder="Number"
-          class="form-control" />
+        <input type="text" required="" name="number" pKeyFilter="int" maxlength="10" formControlName="number" placeholder="Number" class="form-control" />
+        <div class="text-danger" *ngIf="addressFormControl['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
         <div *ngIf="submitted && addressFormControl.number.errors" class="invalid-error">
           <span *ngIf="addressFormControl.number.errors.required">* Required</span>
         </div>
