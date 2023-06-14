@@ -38,6 +38,9 @@ export class BullkOrderFormComponent implements OnInit {
 
   categoryOptions: any[] = [];
 
+  // mail: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  mail: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
   constructor(
     private formBuilder: FormBuilder,
     private cs: CommonService,
@@ -70,21 +73,14 @@ export class BullkOrderFormComponent implements OnInit {
           Validators.minLength(6),
         ],
       ],
-      institutionName: [''],
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern(/^[a-zA-Z ]+$/),
-        ],
-      ],
-      email: ['', [Validators.required, Validators.email]],
+      institutionName: ['', [ Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ],],
+      name: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ],],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
       number1: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[0-9]*$/),
+          Validators.pattern(/^[6-9]\d{9}$/),
           Validators.maxLength(10),
           Validators.minLength(10),
         ],
@@ -170,6 +166,18 @@ export class BullkOrderFormComponent implements OnInit {
       // console.debug(r);
       this.categoryOptions = r.response.categories;
     });
+  }
+
+  mailFilter(e: any) {
+    console.log(e);
+
+    var regex = new RegExp("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z-.]");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+      return true;
+    }
+    e.preventDefault();
+    return false;
   }
 
   validate(field: any) {

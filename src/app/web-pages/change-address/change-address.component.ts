@@ -89,7 +89,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
     if (this.address) {
       this.addressService.viewAddress({ addressId: this.address.addressId }).subscribe((r: any) => {
-        console.log(r);
+        // console.log(r);
         // this.address = r.address;
         this.editAddress(r.response.address);
       })
@@ -109,11 +109,12 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       country: ["in"],
     })
     this.searchAuto.addListener('place_changed', () => {
+      console.log('sd');
     // this.searchAuto.addListener('blur', () => {
     // this.searchAuto.addListener('keydown', () => {
       this.ngZone.run(() => {
         const place: any = this.searchAuto?.getPlace();
-        // console.log(place);
+        console.log(place);
 
         this.lat = place.geometry.location.lat()
         this.lng = place.geometry.location.lng()
@@ -134,6 +135,8 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       google.maps.event.clearInstanceListeners(this.searchAuto);
     }
   }
+
+
 
   initForm() {
     this.addressForm = this.formBuilder.group({
@@ -189,23 +192,27 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   AddressChange(address: any) {
+    console.log('sd');
+    console.log(address)
+    this.searchFn();
     //setting address from API to local variable
     this.formattedaddress = address.formatted_address;
   }
 
   searchFn() {
-    setTimeout(() => {
-      // console.log(this.searchString);
-      if (this.searchString != '') {
+    // setTimeout(() => {
+      console.log(this.searchString);
+      // if (this.searchString != '') {
 
         this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
 
         this.searchAuto.addListener('place_changed', () => {
-        // this.searchAuto.addListener('blur', () => {
+          console.log('sd');
+          // this.searchAuto.addListener('blur', () => {
         // this.searchAuto.addListener('keydown', () => {
           this.ngZone.run(() => {
             const place: any = this.searchAuto?.getPlace();
-            // console.log(place);
+            console.log(place);
 
             this.lat = place.geometry.location.lat()
             this.lng = place.geometry.location.lng()
@@ -220,8 +227,8 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
           })
         })
 
-      }
-    }, 1000);
+      // }
+    // }, 800);
   }
 
   moveMap(event: google.maps.MapMouseEvent) {
