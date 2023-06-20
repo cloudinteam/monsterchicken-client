@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/services/common.service';
+import { RegexPattern } from 'src/app/utils/regex';
 
 @Component({
   selector: 'profile-edit',
@@ -20,7 +21,8 @@ export class ProfileEditComponent implements OnInit {
   editImage = false;
   @Output() closeModel: EventEmitter<any> = new EventEmitter();
 
-  mail: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  nameRegex = RegexPattern.username;
+  mail = RegexPattern.email;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,7 +57,7 @@ export class ProfileEditComponent implements OnInit {
   initForm() {
     this.profileForm = this.formBuilder.group({
       userId: [localStorage.getItem('userId'), [Validators.required]],
-      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/)]],
       email: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
       number: [null, [Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10), Validators.minLength(10),Validators.required]],
       image: [null],
@@ -96,7 +98,7 @@ export class ProfileEditComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
-          detail: 'Updated successfully'
+          detail: r.message[0]
         })
         this.closeModel.emit();
       }
