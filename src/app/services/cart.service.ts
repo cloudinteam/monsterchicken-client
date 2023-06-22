@@ -3,6 +3,7 @@ import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { LocalcartService } from './localcart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,11 @@ export class CartService {
   constructor(
     private api: ApiCallService,
     private authService: AuthService,
+    private localCartService: LocalcartService,
   ) { }
 
   getCart() {
-    return this.api.getApiCallAuth(NetworkService.getCart());
+    return this.api.getApiCallAuth(NetworkService.getCart()+'?unique_token='+'this.localCartService.uniqueToken');
   }
 
   addCart(body: any): any {

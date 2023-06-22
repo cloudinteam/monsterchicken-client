@@ -11,6 +11,12 @@ export class LocalcartService {
 
   ) { }
 
+  // get uniqueToken() {
+  //   let token: any = localStorage.getItem('unique_token');
+  //   console.log(token);
+  //   return JSON.parse(token);
+  // }
+
   get getLocalCart() {
     let prevCart: any = localStorage.getItem('localCart');
     return JSON.parse(prevCart);

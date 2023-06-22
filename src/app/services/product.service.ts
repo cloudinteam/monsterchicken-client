@@ -23,8 +23,8 @@ export class ProductService {
     return this.api.postApiCallAuth(NetworkService.getRelatedProducts(), body);
   }
 
-  viewProduct(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.viewProduct(), body);
+  viewProduct(params: any ,uniqTkn: string = ''): any {
+    return this.api.getApiCallAuth(NetworkService.viewProduct()+'/'+params.productId+'/'+params.nearByBranch+'?unique_token='+uniqTkn);
   }
 
   getCategories(): any {

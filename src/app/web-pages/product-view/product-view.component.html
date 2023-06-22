@@ -7,8 +7,8 @@
       <div class="product-trails">
         <ul>
           <li> <a routerLink="/" class="pointer"> Home </a> </li>
-          <li> <a [routerLink]="'/category/'+this.product.categoryId"> {{ this.product.categoryName }} </a> </li>
-          <li> {{ this.product.productName }} </li>
+          <li> <a [routerLink]="'/category/'+this.product.product_category.product_category_id"> {{ this.product.product_category.category }} </a> </li>
+          <li> {{ this.product.name }} </li>
         </ul>
       </div>
     </div>
@@ -18,19 +18,18 @@
     <div class="col-12 col-sm-12 col-md-10 col-lg-9">
       <div class="row">
         <div class="col-12 col-sm-12 col-md-5 col-lg-4">
-          <p-carousel [value]="this.product.imageUrl" [numVisible]="1" [numScroll]="1" [circular]="false"
+          <p-carousel [value]="this.product.image_url" [numVisible]="1" [numScroll]="1" [circular]="false"
             [showIndicators]="true" [showNavigators]="false">
             <ng-template let-image pTemplate="item">
-              <img [src]="image" [alt]="this.product.productName" class="w-100">
+              <img [src]="image.file_url" [alt]="this.product.name" class="w-100">
             </ng-template>
           </p-carousel>
         </div>
         <div class="col-12 col-sm-12 col-md-7 col-lg-8">
-          <h1 class="product-title"> {{this.product.productName}} </h1>
+          <h1 class="product-title"> {{this.product.name}} </h1>
           <div class="mt-1">
-            <span class="badge rounded-pill text-bg-danger me-1">{{ this.product.brand | titlecase }}</span>
-            <span class="clickable text-secondary fw-bold" [routerLink]="'/category/'+this.product.categoryId"> {{
-              product.categoryName | titlecase }} </span>
+            <span class="badge rounded-pill text-bg-danger me-1">{{ this.product.brand.brand | titlecase }}</span>
+            <span class="clickable text-secondary fw-bold" [routerLink]="'/category/'+this.product.product_category.product_category_id"> {{ product.product_category.category | titlecase }} </span>
           </div>
           <div class="seperator"></div>
           <p class="product-description" [innerText]="product.description">
@@ -40,21 +39,20 @@
             <div class="pro-details">
               <div class="pro-price">
                 <span class="pro-unit">
-                  {{ product.productUnit }}&nbsp;{{ product.productUnitType }}
+                  {{ product.unit }}&nbsp;{{ product.mc_unit.name }}
                 </span>
-                <span> {{ product.price | currency:'₹' }}</span>
+                <span> {{ product.price.price | currency:'₹' }}</span>
               </div>
               <div class="pro-action">
                 <span *ngIf="product.stock == 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of
                   Stock</span>
-                <p-inputNumber [disabled]="disableAdd" *ngIf="product.cartProductQuantity > 0 && product.stock > 0" [ngModel]="product.cartProductQuantity"
+                <p-inputNumber [disabled]="disableAdd" *ngIf="product.cart_product_quantity > 0 && product.stock > 0" [ngModel]="product.cart_product_quantity"
                   [showButtons]="true" buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal"
-                  [step]="1" [min]="0" [max]="product.maxQuantity" decrementButtonClass="btn-minus"
+                  [step]="1" [min]="0" [max]="product.max_order_count" decrementButtonClass="btn-minus"
                   incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
                   mode="decimal" (onInput)="cartNumber($event, product)"></p-inputNumber>
                 <button type="button" class="add-btn" (click)="addCart(product)"
-                  *ngIf="product.cartProductQuantity == 0 && product.stock > 0"> <i class="pi pi-shopping-cart"></i> Add
-                  to cart </button>
+                  *ngIf="product.cart_product_quantity == 0 && product.stock > 0"> <i class="pi pi-shopping-cart"></i> Add to cart </button>
               </div>
             </div>
           </div>

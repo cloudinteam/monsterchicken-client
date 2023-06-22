@@ -18,7 +18,7 @@ export class ProductViewComponent implements OnInit {
   relatedProductsList: Product[] = [];
   loading = false;
   product_id: string = '';
-  product!: any;
+  product!: Product;
   params!: any;
   disableAdd = false;
 
@@ -82,7 +82,7 @@ export class ProductViewComponent implements OnInit {
     private alert: AlertService,
     private authService: AuthService,
     private localCartService: LocalcartService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -99,12 +99,15 @@ export class ProductViewComponent implements OnInit {
     this.loading = true;
     this.product_id = this.route.snapshot.paramMap.get('id') || '';
     this.params = this.route.snapshot.queryParamMap || '';
+    // this.params = this.router.getCurrentNavigation()
     this.getProduct();
   }
 
   getProduct() {
+    // console.log(this.params)
     this.productService.viewProduct(this.params.params).subscribe((r: any) => {
-      this.product = r.response.productDetail;
+      // console.log(r);
+      this.product = r.response.products[0];
       this.getRelatedProducts(this.product);
       this.loading = false;
     });
@@ -132,31 +135,37 @@ export class ProductViewComponent implements OnInit {
   addCart(product: Product) {
     this.disableAdd = true;
     this.loading = true;
-
+    let data = {}
     if (this.authService.isLoggedIn()) {
-      let data = {
+      data = {
         product_id: product.product_id,
-        near_by_branch: product.near_by_branch,
+        branch_user_id: product.near_by_branch,
         quantity: 1,
-      };
-      this.cartService.addCart({ carts: [data] }).subscribe((r: any) => {
-        this.cartService.addCartCount();
-        // this.alert.fireToastS('Prooduct added to cart');
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Item added to cart',
-        });
-        // this.loaded.emit();
-        this.afterCart(product);
-        this.loading = false;
-        this.disableAdd = false;
-      });
+      }
     }
 
     if (!this.authService.isLoggedIn()) {
-      this.addLocalCart(product);
+      data = {
+        product_id: product.product_id,
+        branch_user_id: product.near_by_branch,
+        quantity: 1,
+        unique_token: 'this.localCartService.uniqueToken'
+      }
     }
+    this.cartService.addCart(data).subscribe((r: any) => {
+      this.cartService.addCartCount();
+      // this.alert.fireToastS('Prooduct added to cart');
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Item added to cart',
+      });
+      // this.loaded.emit();
+      this.afterCart(product);
+      this.loading = false;
+      this.disableAdd = false;
+    });
+
   }
 
   addLocalCart(product: Product) {
@@ -189,10 +198,10 @@ export class ProductViewComponent implements OnInit {
           return cart.product_id === product.product_id;
         });
         ++localCart[index].quantity;
-        this.product.cartProductQuantity = localCart[index].quantity;
+        this.product.cart_product_quantity = localCart[index].quantity;
       } else if (!status) {
         localCart.push(cartItem);
-        this.product.cartProductQuantity = cartItem.quantity;
+        this.product.cart_product_quantity = cartItem.quantity;
       }
 
       localStorage.setItem('localCart', JSON.stringify(localCart));
@@ -206,7 +215,7 @@ export class ProductViewComponent implements OnInit {
       this.disableAdd = false;
     } else {
       localCart.push(cartItem);
-      this.product.cartProductQuantity = cartItem.quantity;
+      this.product.cart_product_quantity = cartItem.quantity;
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
       this.messageService.add({
@@ -264,7 +273,7 @@ export class ProductViewComponent implements OnInit {
       localCart[index].totalPrice = $event.value * localCart[index].price;
     } else {
       localCart.splice(index, 1);
-      this.product.cartProductQuantity = 0;
+      this.product.cart_product_quantity = 0;
     }
 
     if (localCart.length > 0) {

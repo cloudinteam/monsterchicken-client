@@ -160,8 +160,6 @@ export class ProductCardComponent implements OnInit {
 
   }
 
-
-
   afterCart(product: Product) {
     let data = {
       product_id: product.product_id,

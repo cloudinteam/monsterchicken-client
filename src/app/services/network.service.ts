@@ -86,7 +86,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/product/get-related-product';
   }
   static viewProduct(): string {
-    return this.server_url() + this.server_v() + '/web/product/view';
+    return this.server_url() + this.server_v() + '/mc-web/product';
   }
   static getCategory(): string {
     return this.server_url() + this.server_v() + '/web/product/category/list';
@@ -121,13 +121,13 @@ export class NetworkService {
 
   //cart
   static addToCart(): string {
-    return this.server_url() + this.server_v() + '/web/cart/store';
+    return this.server_url() + this.server_v() + '/mc-web/cart';
   }
   static viewCart(): string {
     return this.server_url() + this.server_v() + '/web/cart/list';
   }
   static getCart(): string {
-    return this.server_url() + this.server_v() + '/web/cart/list';
+    return this.server_url() + this.server_v() + '/mc-web/cart';
   }
 
 
