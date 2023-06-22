@@ -35,9 +35,9 @@ export class CartPageProductComponent {
       }
       let data = [{
         cartId: cartId,
-        productId: cartItem.productId,
+        product_id: cartItem.product_id,
         quantity: ($event.value == null) ? 1 : $event.value,
-        nearByBranch: cartItem.nearByBranch,
+        near_by_branch: cartItem.near_by_branch,
       }];
       this.cartService.addCart({ carts: data }).subscribe((r: any) => {
         this.disableAdd = false;
@@ -50,7 +50,7 @@ export class CartPageProductComponent {
       let localCart = this.localCartService.getLocalCart
 
       const index = localCart.findIndex( (cart: any) => {
-        return cart.productId === cartItem.productId;
+        return cart.product_id === cartItem.product_id;
       });
 
       if ($event.value != 0) {

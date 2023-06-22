@@ -17,7 +17,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductViewComponent implements OnInit {
   relatedProductsList: Product[] = [];
   loading = false;
-  productId: string = '';
+  product_id: string = '';
   product!: any;
   params!: any;
   disableAdd = false;
@@ -97,7 +97,7 @@ export class ProductViewComponent implements OnInit {
 
   init() {
     this.loading = true;
-    this.productId = this.route.snapshot.paramMap.get('id') || '';
+    this.product_id = this.route.snapshot.paramMap.get('id') || '';
     this.params = this.route.snapshot.queryParamMap || '';
     this.getProduct();
   }
@@ -115,13 +115,13 @@ export class ProductViewComponent implements OnInit {
     let latLngData: any = localStorage.getItem('lat_lng');
     let latLng = JSON.parse(latLngData);
     let data = {
-      nearByBranch: product.nearByBranch,
+      near_by_branch: product.near_by_branch,
       limit: 10,
     };
     this.productService.getRelatedProducts(data).subscribe((r: any) => {
       this.relatedProductsList = r.response.related_products;
       const index = this.relatedProductsList.findIndex((product: any) => {
-        return product.productId === this.product.productId;
+        return product.product_id === this.product.product_id;
       });
       this.relatedProductsList.splice(index, 1);
       this.cdRef.markForCheck();
@@ -135,8 +135,8 @@ export class ProductViewComponent implements OnInit {
 
     if (this.authService.isLoggedIn()) {
       let data = {
-        productId: product.productId,
-        nearByBranch: product.nearByBranch,
+        product_id: product.product_id,
+        near_by_branch: product.near_by_branch,
         quantity: 1,
       };
       this.cartService.addCart({ carts: [data] }).subscribe((r: any) => {
@@ -163,30 +163,30 @@ export class ProductViewComponent implements OnInit {
     this.disableAdd = true;
     let localCart: any[] = [];
     let cartItem = {
-      productId: product.productId,
-      productName: product.productName,
-      unit: product.productUnit,
-      unitType: product.productUnitType,
-      imageUrl: [product.imageUrl[0]],
-      maxQuantity: product.maxQuantity,
-      categoryId: product.categoryId,
-      nearByBranch: product.nearByBranch,
+      product_id: product.product_id,
+      name: product.name,
+      unit: product.unit,
+      unitType: product.mc_unit.name,
+      imageUrl: [product.image_url[0].file_url],
+      max_order_count: product.max_order_count,
+      categoryId: product.product_category.product_category_id,
+      near_by_branch: product.near_by_branch,
       totalPrice: product.price,
       price: product.price,
       quantity:
-        product.cartProductQuantity > 0 ? product.cartProductQuantity : 1,
+        product.cart_product_quantity > 0 ? product.cart_product_quantity : 1,
     };
 
     if (localStorage.getItem('localCart') != null) {
       let localCart = this.localCartService.getLocalCart;
 
       var status = localCart.some(function (el: any) {
-        return el.productId === product.productId;
+        return el.product_id === product.product_id;
       });
 
       if (status) {
         const index = localCart.findIndex((cart: any) => {
-          return cart.productId === product.productId;
+          return cart.product_id === product.product_id;
         });
         ++localCart[index].quantity;
         this.product.cartProductQuantity = localCart[index].quantity;
@@ -226,9 +226,9 @@ export class ProductViewComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       let data = [
         {
-          productId: product.productId,
+          product_id: product.product_id,
           quantity: ($event.value == null) ? 1 : $event.value,
-          nearByBranch: product.nearByBranch,
+          near_by_branch: product.near_by_branch,
         },
       ];
       this.cartService.addCart({ carts: data }).subscribe((r: any) => {
@@ -256,7 +256,7 @@ export class ProductViewComponent implements OnInit {
 
     let localCart = this.localCartService.getLocalCart;
     const index = localCart.findIndex((cart: any) => {
-      return cart.productId === product.productId;
+      return cart.product_id === product.product_id;
     });
 
     if ($event.value != 0) {
@@ -280,8 +280,8 @@ export class ProductViewComponent implements OnInit {
 
   afterCart(product: Product) {
     let data = {
-      productId: product.productId,
-      nearByBranch: product.nearByBranch,
+      product_id: product.product_id,
+      near_by_branch: product.near_by_branch,
     };
     this.productService.viewProduct(data).subscribe((r: any) => {
       this.product = r.response.productDetail;

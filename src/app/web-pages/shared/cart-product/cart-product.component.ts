@@ -34,9 +34,9 @@ export class CartProductComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       let data = [{
         cartId: cartId,
-        productId: cartItem.productId,
+        productId: cartItem.product_id,
         quantity: $event.value,
-        nearByBranch: cartItem.nearByBranch,
+        nearByBranch: cartItem.near_by_branch,
       }];
       this.cartService.addCart({ carts: data }).subscribe((r: any) => {
         this.disableAdd = false;
@@ -46,7 +46,7 @@ export class CartProductComponent implements OnInit {
       let localCart = this.localCartService.getLocalCart
 
       const index = localCart.findIndex( (cart: any) => {
-        return cart.productId === cartItem.productId;
+        return cart.productId === cartItem.product_id;
       });
 
       if ($event.value != 0) {

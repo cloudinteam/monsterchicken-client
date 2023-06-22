@@ -71,10 +71,16 @@ export class NetworkService {
   static profileEdit(): string {
     return this.server_url() + this.server_v() + '/web/profile-update';
   }
+  static getUniqueToken(): string {
+    return this.server_url() + this.server_v() + '/mc-web/get-unique-token';
+  }
 
   //Products
+  // static getProducts(): string {
+  //   return this.server_url() + this.server_v() + '/web/product/list';
+  // }
   static getProducts(): string {
-    return this.server_url() + this.server_v() + '/web/product/list';
+    return this.server_url() + this.server_v() + '/mc-web/products';
   }
   static getRelatedProducts(): string {
     return this.server_url() + this.server_v() + '/web/product/get-related-product';
@@ -144,6 +150,9 @@ export class NetworkService {
   // Location Check
   static locationCheck(): string {
     return this.server_url() + this.server_v() + '/web/location-checking';
+  }
+  static checkServiceAvailablity(): string {
+    return this.server_url() + this.server_v() + '/mc-web/check-service-availability';
   }
   static storeAdddress(): string {
     return this.server_url() + this.server_v() + '/web/address/store';

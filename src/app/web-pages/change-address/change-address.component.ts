@@ -304,9 +304,8 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
       };
 
       if (this.addressForm.value.pincode) {
-        this.mapService
-          .locationCheck({ district: this.addressForm.value.district, pincode: this.addressForm.value.pincode })
-          .subscribe((r: any) => {
+        // this.mapService.locationCheck({ district: this.addressForm.value.district, pincode: this.addressForm.value.pincode }).subscribe((r: any) => {
+        this.mapService.checkServiceAvailablity(this.mapMarker.lat, this.mapMarker.lng).subscribe((r: any) => {
             if (r.serviceProvider) {
               this.serviceAvailable = true;
               this.addressForm.patchValue({

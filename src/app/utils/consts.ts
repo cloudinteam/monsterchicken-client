@@ -1,7 +1,7 @@
 export class Consts {
   static Version = '0.0.2';
-  static Production = true;
-  static SERVER_URL_TEST = 'https://api.monsterchicken.cloudinworks.com';
+  static Production = false;
+  static SERVER_URL_TEST = 'https://api.test.monsterchicken.cloudinworks.com';
   static SERVER_URL_PROD = 'https://api.monsterchicken.cloudinworks.com';
 
   static URL(): string {

@@ -60,16 +60,17 @@ export class ProductsListComponent implements OnInit {
       category: catId,
       userLat: latLng.lat || '',
       userLong: latLng.lng || '',
+      uniqTkn: localStorage.getItem('unique_token') ?? ''
     };
     // console.log(data);
-    this.productService.getProducts(data).subscribe((r: any) => {
+    this.productService.getProducts(data.userLat, data.userLong, data.category, data.uniqTkn).subscribe((r: any) => {
       // console.log(r);
       this.productList = r.response.products;
       this.categories = r.response.categories;
       const index = this.categories.findIndex( (category: any) => {
         return category.selected === true;
       });
-      this.selectedCategory = this.categories[index].categoryName;
+      this.selectedCategory = this.categories[index].category;
       this.loading = false;
     });
   }

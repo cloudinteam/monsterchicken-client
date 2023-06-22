@@ -68,6 +68,9 @@ export class CommonService {
     return this.api.postApiCallAuth(NetworkService.getCountry(), body);
   }
 
+  getUniqueToken() {
+    return this.api.getApiCallAuth(NetworkService.getUniqueToken());
+  }
 
 
 }

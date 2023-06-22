@@ -1,7 +1,11 @@
 export interface Category {
-  categoryId: string;
-  categoryName: string;
-  imageUrl: string;
-  productCount: number;
+  product_category_id: string;
+  category: string;
+  image_url: [
+    {
+      file_url: string;
+    }
+  ]
+  product_count: number;
   status: number;
 }

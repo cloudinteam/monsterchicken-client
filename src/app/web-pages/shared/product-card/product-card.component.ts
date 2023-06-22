@@ -56,8 +56,8 @@ export class ProductCardComponent implements OnInit {
       this.disableAdd = true;
       let localCart = this.localCartService.getLocalCart
       localCart.forEach((cartItem: any) => {
-        if (cartItem.productId == this.product.productId) {
-          this.product.cartProductQuantity = cartItem.quantity;
+        if (cartItem.productId == this.product.product_id) {
+          this.product.cart_product_quantity = cartItem.quantity;
         }
       })
       this.disableAdd = false;
@@ -70,8 +70,8 @@ export class ProductCardComponent implements OnInit {
 
     if (this.authService.isLoggedIn()) {
       let data = {
-          productId: product.productId,
-          nearByBranch: product.nearByBranch,
+          productId: product.product_id,
+          nearByBranch: product.near_by_branch,
           quantity: 1,
         };
       this.cartService.addCart({carts:[data]}).subscribe((r: any) => {
@@ -100,17 +100,17 @@ export class ProductCardComponent implements OnInit {
 
     let localCart: any[] = [];
     let cartItem = {
-      productId: product.productId,
-      productName: product.productName,
-      unit: product.productUnit,
-      unitType: product.productUnitType,
-      imageUrl: [product.imageUrl[0]],
-      maxQuantity: product.maxQuantity,
-      categoryId: product.categoryId,
-      nearByBranch: product.nearByBranch,
-      totalPrice: product.price,
+      product_id: product.product_id,
+      name: product.name,
+      unit: product.unit,
+      unitType: product.mc_unit.name,
+      image_url: [product.image_url[0].file_url],
+      max_order_count: product.max_order_count,
+      categoryId: product.product_category.product_category_id,
+      near_by_branch: product.near_by_branch,
+      totalPrice: product.price.price,
       price: product.price,
-      quantity: (product.cartProductQuantity > 0) ? product.cartProductQuantity : 1,
+      quantity: (product.cart_product_quantity > 0) ? product.cart_product_quantity : 1,
     }
 
     if (localStorage.getItem('localCart') != null) {
@@ -118,18 +118,18 @@ export class ProductCardComponent implements OnInit {
       let localCart = this.localCartService.getLocalCart
 
       var status = localCart.some(function(el: any) {
-        return (el.productId === product.productId);
+        return (el.product_id === product.product_id);
       });
 
       if (status) {
         const index = localCart.findIndex( (cart: any) => {
-          return cart.productId === product.productId;
+          return cart.product_id === product.product_id;
         });
         ++localCart[index].quantity;
-        this.product.cartProductQuantity = localCart[index].quantity;
+        this.product.cart_product_quantity = localCart[index].quantity;
       } else if (!status) {
         localCart.push(cartItem);
-        this.product.cartProductQuantity = cartItem.quantity;
+        this.product.cart_product_quantity = cartItem.quantity;
       }
 
       localStorage.setItem('localCart', JSON.stringify(localCart));
@@ -144,7 +144,7 @@ export class ProductCardComponent implements OnInit {
       this.disableAdd = false;
     } else {
       localCart.push(cartItem);
-      this.product.cartProductQuantity = cartItem.quantity;
+      this.product.cart_product_quantity = cartItem.quantity;
       localStorage.setItem('localCart', JSON.stringify(localCart));
       this.localCartService.setCartTotal();
       // this.alert.fireToastS('Item added to cart');
@@ -164,8 +164,8 @@ export class ProductCardComponent implements OnInit {
 
   afterCart(product: Product) {
     let data = {
-      productId: product.productId,
-      nearByBranch: product.nearByBranch,
+      product_id: product.product_id,
+      near_by_branch: product.near_by_branch,
     };
     this.productService.viewProduct(data).subscribe((r: any) => {
       this.product = r.response.productDetail;
@@ -173,7 +173,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   viewProduct(product: Product) {
-    this.router.navigate(['/product/' + product.productId], { queryParams: { productId: product.productId, nearByBranch: product.nearByBranch, } });
+    this.router.navigate(['/product/' + product.product_id], { queryParams: { productId: product.product_id, nearByBranch: product.near_by_branch, } });
     this.cdRef.markForCheck();
   }
 
@@ -190,9 +190,9 @@ export class ProductCardComponent implements OnInit {
 
     if (this.authService.isLoggedIn()) {
       let data = [{
-        productId: product.productId,
+        product_id: product.product_id,
         quantity: $event.value,
-        nearByBranch: product.nearByBranch,
+        near_by_branch: product.near_by_branch,
       }];
       this.cartService.addCart({carts:data}).subscribe((r: any) => {
         this.cartService.addCartCount();
@@ -219,7 +219,7 @@ export class ProductCardComponent implements OnInit {
     this.disableAdd = true;
     let localCart = this.localCartService.getLocalCart
     const index = localCart.findIndex( (cart: any) => {
-      return cart.productId === product.productId;
+      return cart.productId === product.product_id;
     });
 
     if ($event.value != 0) {
@@ -227,7 +227,7 @@ export class ProductCardComponent implements OnInit {
       localCart[index].totalPrice = $event.value * localCart[index].price;
     } else {
       localCart.splice(index, 1);
-      this.product.cartProductQuantity = 0;
+      this.product.cart_product_quantity = 0;
     }
 
     if (localCart.length > 0) {

@@ -11,8 +11,12 @@ export class ProductService {
     private api: ApiCallService,
   ) { }
 
-  getProducts(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getProducts(), body);
+  // getProducts(body: any): any {
+  //   return this.api.postApiCallAuth(NetworkService.getProducts(), body);
+  // }
+
+  getProducts(lat: number, lng: number, catId: string = '', uniqTkn: string = ''): any {
+    return this.api.getApiCallAuth(NetworkService.getProducts()+'?user_latitude='+lat+'&user_longitude='+lng+'&product_category_id='+catId+'&unique_token='+uniqTkn);
   }
 
   getRelatedProducts(body: any): any {

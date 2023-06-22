@@ -16,6 +16,10 @@ export class MapService {
     return this.api.postApiCallAuth(NetworkService.locationCheck(), body);
   }
 
+  checkServiceAvailablity(lat: number, lng: number) {
+    return this.api.getApiCallAuth(NetworkService.checkServiceAvailablity()+"?latitude="+lat+"&longitude="+lng);
+  }
+
   getActiveCities() {
     return this.api.getApiCallAuth(NetworkService.getActiveCities());
   }

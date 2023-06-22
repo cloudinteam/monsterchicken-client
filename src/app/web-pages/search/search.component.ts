@@ -72,7 +72,17 @@ export class SearchComponent implements OnInit {
   getProducts() {
     this.loading = true;
     this.notFound = false;
-    this.productService.getProducts(this.filter).subscribe((r: any) => {
+    let latLngData: any = localStorage.getItem('lat_lng');
+    let latLng = JSON.parse(latLngData)
+    let data = {
+      category: '',
+      userLat: latLng.lat || '',
+      userLong: latLng.lng || '',
+      uniqTkn: localStorage.getItem('unique_token') ?? ''
+    };
+    // console.log(data);
+    this.productService.getProducts(data.userLat, data.userLong, data.category, data.uniqTkn).subscribe((r: any) => {
+    // this.productService.getProducts(this.filter).subscribe((r: any) => {
       // console.log(r);
       if (r.response.products.length == 0) {
         this.productList = [];
