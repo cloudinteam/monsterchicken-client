@@ -139,7 +139,7 @@ export class NetworkService {
 
   //Checkout
   static getCartSummary(): string {
-    return this.server_url() + this.server_v() + '/web/cart/summary';
+    return this.server_url() + this.server_v() + '/mc-web/cart-summary';
   }
   static cartCheckout(): string {
     return this.server_url() + this.server_v() + '/web/cart/checkout';
@@ -172,8 +172,8 @@ export class NetworkService {
   static updateAdddress(): string {
     return this.server_url() + this.server_v() + '/mc-web/address';
   }
-  static deleteAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/delete';
+  static deleteAdddress(addressId: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/address/'+addressId;
   }
   static setDefault(address_id: string): string {
     return this.server_url() + this.server_v() + '/mc-web/address/'+address_id+'/set-default-address';

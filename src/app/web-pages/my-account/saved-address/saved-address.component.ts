@@ -81,10 +81,7 @@ export class SavedAddressComponent implements OnInit {
   }
 
   deleteAddress(id: string) {
-    let data = {
-      addressId: id
-    }
-    this.addressService.deleteAddress(data).subscribe((r: any) => {
+    this.addressService.deleteAddress(id).subscribe((r: any) => {
       // console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message[0]);

@@ -51,8 +51,8 @@ export class AddressService {
     return this.api.putApiCallAuth(NetworkService.updateAdddress() + '/' + body.address_id, body);
   }
 
-  deleteAddress(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.deleteAdddress(), body);
+  deleteAddress(addressId: string) {
+    return this.api.deleteApiCallAuth(NetworkService.deleteAdddress(addressId));
   }
 
   setDefault(body: any): any {
