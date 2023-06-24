@@ -155,8 +155,8 @@
 
   <div class="col-12 text-end">
     <span class="text-secondary fw-semibold clickable me-2" [routerLink]="'/checkout/address'"> Change Address </span>
-    <button type="button" class="btn btn-danger rounded-0" *ngIf="outOfStock" [routerLink]="'/'"> Browse Store </button>
-    <button type="button" class="btn btn-danger rounded-0" *ngIf="!outOfStock" (click)="checkout()"> Place Order </button>
+    <!-- <button type="button" class="btn btn-danger rounded-0" *ngIf="outOfStock" [routerLink]="'/'"> Browse Store </button> -->
+    <button type="button" class="btn btn-danger rounded-0" (click)="checkout()"> Place Order </button>
   </div>
 
 </div>

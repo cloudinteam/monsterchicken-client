@@ -53,26 +53,31 @@ export class CartPageComponent implements OnInit {
 
   checkout() {
     this.loading = true;
-    if (this.authService.isLoggedIn() && this.cart != null) {
-      // this.close.emit();
-      this.loading = false;
-      this.router.navigate(['/checkout']);
-    } else {
-      if (!this.authService.isLoggedIn()) {
-        // this.login.emit();
-        // this.close.emit();
-        this.loading = false;
-        this.router.navigate(['/checkout']);
-      } else if (this.cart == null) {
-        // this.alert.fireToastF('Cart is empty');
-        this.loading = false;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Cart is empty'
-        })
-      }
-    }
+    this.router.navigateByUrl('/checkout');
+
+    // if (this.authService.isLoggedIn() && this.cart != null) {
+    //   console.log('1');
+    //   // this.close.emit();
+    //   this.loading = false;
+    //   this.router.navigate(['/checkout']);
+    // } else {
+    //   if (!this.authService.isLoggedIn()) {
+    //     console.log('2');
+    //     // this.login.emit();
+    //     // this.close.emit();
+    //     this.loading = false;
+    //     this.router.navigate(['/checkout']);
+    //   } else if (this.cart == null) {
+    //     console.log('3');
+    //     // this.alert.fireToastF('Cart is empty');
+    //     this.loading = false;
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: 'Cart is empty'
+    //     })
+    //   }
+    // }
   }
 
   updated() {

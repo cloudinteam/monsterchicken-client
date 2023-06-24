@@ -45,13 +45,13 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
   static verifyNumber(): string {
-    return this.server_url() + this.server_v() + '/web/login/number-verify';
+    return this.server_url() + this.server_v() + '/mc-web/login-with-otp';
   }
   static verifyOtp(): string {
-    return this.server_url() + this.server_v() + '/web/login/otp-verify';
+    return this.server_url() + this.server_v() + '/mc-web/login/otp-verify';
   }
   static resendOtp(): string {
-    return this.server_url() + this.server_v() + '/web/login/resend-otp';
+    return this.server_url() + this.server_v() + '/mc-web/login/resend-otp';
   }
   static Signup(): string {
     return this.server_url() + this.server_v() + '/register';
@@ -142,13 +142,13 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/mc-web/cart-summary';
   }
   static cartCheckout(): string {
-    return this.server_url() + this.server_v() + '/web/cart/checkout';
+    return this.server_url() + this.server_v() + '/mc-web/cart-checkout';
   }
   static payment(): string {
     return this.server_url() + this.server_v() + '/payment';
   }
-  static promoCode(): string {
-    return this.server_url() + this.server_v() + '/web/check-promo-code';
+  static promoCode(data: any): string {
+    return this.server_url() + this.server_v() + '/mc-web/check-promo-code?promo_code='+data.promo_code+'&sub_total='+data.sub_total;
   }
 
 

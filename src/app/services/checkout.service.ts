@@ -11,8 +11,8 @@ export class CheckoutService {
     private api: ApiCallService
   ) { }
 
-  promoCode(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.promoCode(), body);
+  promoCode(data: any) {
+    return this.api.getApiCallAuth(NetworkService.promoCode(data));
   }
 
   cartSummary(): any {
