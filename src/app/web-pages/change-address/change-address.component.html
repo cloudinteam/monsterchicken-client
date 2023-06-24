@@ -39,8 +39,10 @@
 
       <div class="form-group mb-3">
         <label> Area/Locality </label>
-        <input type="text" required="" name="area" formControlName="area" placeholder="Search for Area/Locality"
-          class="form-control" />
+        <!-- <input type="text" required="" name="area" formControlName="area" placeholder="Search for Area/Locality"
+          class="form-control" /> -->
+        <textarea required="" name="area" formControlName="area" placeholder="Search for Area/Locality"
+        class="form-control"></textarea>
         <div *ngIf="submitted && addressFormControl.area.errors" class="invalid-error">
           <span *ngIf="addressFormControl.area.errors.required">Area is Required</span>
         </div>
@@ -48,31 +50,56 @@
 
       <div class="form-group mb-3">
         <label> Name </label>
-        <input type="text" required="" name="nickName" formControlName="nickName" placeholder="Name"
+        <input type="text" required="" name="name" formControlName="name" placeholder="Name"
           class="form-control" />
-        <div *ngIf="submitted && addressFormControl.nickName.errors" class="invalid-error">
-          <span *ngIf="addressFormControl.nickName.errors.required">* Required</span>
+        <div *ngIf="submitted && addressFormControl.name.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.name.errors.required">* Required</span>
         </div>
       </div>
 
       <div class="form-group mb-3">
         <label> Flat no / Building name / Street name </label>
-        <input type="text" name="streetName" formControlName="streetName"
+        <input type="text" name="street_name" formControlName="street_name"
           placeholder="Flat no / Building name / Street name" class="form-control" />
-        <div *ngIf="submitted && addressFormControl.streetName.errors" class="invalid-error">
-          <span *ngIf="addressFormControl.streetName.errors.required">* Required</span>
+        <div *ngIf="submitted && addressFormControl.street_name.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.street_name.errors.required">* Required</span>
         </div>
       </div>
 
       <div class="form-group mb-3">
         <label> Landmark </label>
-        <input type="text" name="landMark" formControlName="landMark" placeholder="Landmark" class="form-control" />
-        <div *ngIf="submitted && addressFormControl.landMark.errors" class="invalid-error">
-          <span *ngIf="addressFormControl.landMark.errors.required">* Required</span>
+        <input type="text" name="landmark" formControlName="landmark" placeholder="Landmark" class="form-control" />
+        <div *ngIf="submitted && addressFormControl.landmark.errors" class="invalid-error">
+          <span *ngIf="addressFormControl.landmark.errors.required">* Required</span>
         </div>
       </div>
 
       <div class="form-group mb-3">
+        <div>
+          <label class="fw-bold red-heading fs-6">State*</label>
+          <p-dropdown [options]="states" optionValue="value" optionLabel="name"
+              [required]="true" formControlName="state_id" [filter]="true" filterBy="name" [showClear]="false"
+              placeholder="Select a State" (onChange)="getDistricts($event)">
+          </p-dropdown>
+          <div>
+            <small class="text-danger ms-1" *ngIf="submitted && addressFormControl.state_id.errors"> State required </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <div>
+          <label class="fw-bold red-heading fs-6">District*</label>
+          <p-dropdown [options]="districts" optionValue="value" optionLabel="name"
+              [required]="true" formControlName="district_id" [filter]="true" filterBy="name" [showClear]="false"
+              placeholder="Select a District" [readonly]="!addressFormControl.state_id.value"></p-dropdown>
+          <div>
+            <small class="text-danger ms-1" *ngIf="submitted && addressFormControl.district_id.errors"> District required </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="form-group mb-3">
         <label> State </label>
         <input type="text" required="" name="state" formControlName="state" placeholder="State" class="form-control" readonly/>
         <div *ngIf="submitted && addressFormControl.state.errors" class="invalid-error">
@@ -86,7 +113,7 @@
         <div *ngIf="submitted && addressFormControl.city.errors" class="invalid-error">
           <span *ngIf="addressFormControl.city.errors.required">* Required</span>
         </div>
-      </div>
+      </div> -->
 
       <div class="form-group mb-3">
         <label> Postal Code </label>
@@ -99,8 +126,8 @@
 
       <div class="form-group mb-3">
         <label> Mobile Number </label>
-        <input type="text" required="" name="number" formControlName="number" placeholder="Number"
-          class="form-control" />
+        <input type="text" required="" name="number" pKeyFilter="int" maxlength="10" formControlName="number" placeholder="Number" class="form-control" />
+        <div class="text-danger" *ngIf="addressFormControl['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
         <div *ngIf="submitted && addressFormControl.number.errors" class="invalid-error">
           <span *ngIf="addressFormControl.number.errors.required">* Required</span>
         </div>
@@ -141,11 +168,11 @@
 
     </form>
 
-    <!-- <pre>
-        {{ this.geoResult | json }}
-      </pre>
-          <pre> {{this.addressForm.value | json}} </pre> -->
+  </div>
 
+  <div class="col-12">
+    <!-- <pre> {{ this.geoResult | json }} </pre> -->
+    <pre> {{this.addressForm.value | json}} </pre>
   </div>
 
 </div>

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
-import { LocalcartService } from 'src/app/services/localcart.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -28,7 +27,6 @@ export class CartPageComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private localCartService: LocalcartService,
     private authService: AuthService,
     private router: Router,
     private messageService: MessageService
@@ -36,80 +34,54 @@ export class CartPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-
-    if (this.authService.isLoggedIn()) {
-      // Update Local_Cart to DB
-      this.localCartService.pushLocalCartToLive();
-      this.loadCart();
-    } else {
-      if (localStorage.getItem('localCart') != null || localStorage.getItem('localCart') != undefined) {
-        this.loadLocalCart();
-      }
-      this.loading = false;
-    }
-  }
-
-  loadLocalCart() {
-    this.loading = true;
-
-    if (localStorage.getItem('localCart') != null) {
-
-      let cartData: any = localStorage.getItem('localCart');
-      let localCart = JSON.parse(cartData)
-
-      this.cart = localCart;
-      this.totalCount = localCart.length;
-      this.totalCartPrice = this.localCartService.getCartGrandTotal - this.deliveryCharge;
-      this.grandTotal = this.localCartService.getCartGrandTotal;
-
-    } else {
-      this.cart = [];
-    }
-
+    this.loadCart();
     this.loading = false;
-
   }
 
   loadCart() {
     this.loading = true;
     this.cartService.getCart().subscribe((r: any) => {
-      // console.log(r);
-      this.cart = r.response.cart;
-      this.totalCount = r.response.totalCartCount;
-      this.totalCartPrice = r.response.totalCartPrice;
+      this.cart = r.response.data.carts;
+      this.totalCount = r.response.data.total_cart_count;
+      this.totalCartPrice = r.response.data.total_cart_price;
       // this.deliveryCharge = r.response.deliveryCharge;
-      this.grandTotal = r.response.grandTotal;
+      this.grandTotal = r.response.data.total_cart_price;
       this.cartService.cartCount.next({ count: this.totalCount, total: this.totalCartPrice })
       this.loading = false;
     });
   }
 
   checkout() {
-    if (this.authService.isLoggedIn() && this.cart != null) {
-      // this.close.emit();
-      this.router.navigate(['/checkout']);
-    } else {
-      if (!this.authService.isLoggedIn()) {
-        // this.login.emit();
-        // this.close.emit();
-      this.router.navigate(['/checkout']);
-      } else if (this.cart == null) {
-        // this.alert.fireToastF('Cart is empty');
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Cart is empty'
-        })
-      }
-    }
+    this.loading = true;
+    this.router.navigateByUrl('/checkout');
+
+    // if (this.authService.isLoggedIn() && this.cart != null) {
+    //   console.log('1');
+    //   // this.close.emit();
+    //   this.loading = false;
+    //   this.router.navigate(['/checkout']);
+    // } else {
+    //   if (!this.authService.isLoggedIn()) {
+    //     console.log('2');
+    //     // this.login.emit();
+    //     // this.close.emit();
+    //     this.loading = false;
+    //     this.router.navigate(['/checkout']);
+    //   } else if (this.cart == null) {
+    //     console.log('3');
+    //     // this.alert.fireToastF('Cart is empty');
+    //     this.loading = false;
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error',
+    //       detail: 'Cart is empty'
+    //     })
+    //   }
+    // }
   }
 
   updated() {
-    if (this.authService.isLoggedIn()) {
-      this.loadCart();
-    } else {
-      this.loadLocalCart();
-    }
+    this.loadCart();
   }
 
 }

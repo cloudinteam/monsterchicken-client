@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { LocalcartService } from 'src/app/services/localcart.service';
 
 @Component({
   selector: 'login',
@@ -28,7 +27,6 @@ export class LoginComponent implements OnInit {
     private as: AuthService,
     private alert: AlertService,
     private router: Router,
-    private localCartService: LocalcartService,
     private cartService: CartService,
     private messageService: MessageService,
   ) { }
@@ -54,7 +52,7 @@ export class LoginComponent implements OnInit {
 
   initOtpForm() {
     this.otpForm = this.fb.group({
-      userId: [null, [Validators.required]],
+      user_id: [null, [Validators.required]],
       otp: [null, [Validators.required]]
     });
   }
@@ -69,7 +67,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
-      // console.log(r);
+      console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message);
         this.messageService.add({
@@ -79,9 +77,9 @@ export class LoginComponent implements OnInit {
         })
 
         this.otpSent = true;
-        this.otpFormControl.userId.setValue(r.response.userId);
+        this.otpFormControl.user_id.setValue(r.response.user_id);
 
-        this.userId = r.response.userId;
+        this.userId = r.response.user_id;
 
         // localStorage.setItem('accessToken', r.response.accessToken);
         // localStorage.setItem('userId', r.response.userId);
@@ -126,7 +124,7 @@ export class LoginComponent implements OnInit {
       })
     }
     this.as.verifyOtp(this.otpForm.value).subscribe((r: any) => {
-      // console.log(r);
+      console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message);
         this.messageService.add({
@@ -138,15 +136,14 @@ export class LoginComponent implements OnInit {
         // this.otpSent = true;
         // this.otpFormControl.userId.setValue(r.response.userId);
 
-        localStorage.setItem('accessToken', r.response.accessToken);
-        localStorage.setItem('userId', r.response.userId);
+        localStorage.setItem('accessToken', r.response.access_token);
+        localStorage.setItem('userId', r.response.user_id);
 
         // this.router.navigate(['/']);
         // if (localStorage.getItem('next_p') === 'cart') {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
         // window.location.reload();
-        this.localCartService.pushLocalCartToLive();
 
         if (localStorage.getItem('next_url') && localStorage.getItem('next_url') != 'undefined') {
 
@@ -165,7 +162,7 @@ export class LoginComponent implements OnInit {
 
   resendOtp() {
     let data = {
-      userId: this.userId
+      user_id: this.userId
     }
     this.as.resendOTP(data).subscribe((r: any) => {
       if (r.status) {

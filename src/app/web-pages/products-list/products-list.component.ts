@@ -1,10 +1,8 @@
 import { CartService } from 'src/app/services/cart.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'products-list',
@@ -20,12 +18,9 @@ export class ProductsListComponent implements OnInit {
   selectedCategory: string = '';
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private alert: AlertService,
-    private messageService: MessageService,
   ) {
 
   }
@@ -60,48 +55,19 @@ export class ProductsListComponent implements OnInit {
       category: catId,
       userLat: latLng.lat || '',
       userLong: latLng.lng || '',
+      uniqTkn: localStorage.getItem('unique_token') ?? ''
     };
     // console.log(data);
-    this.productService.getProducts(data).subscribe((r: any) => {
+    this.productService.getProducts(data.userLat, data.userLong, data.category, data.uniqTkn).subscribe((r: any) => {
       // console.log(r);
       this.productList = r.response.products;
       this.categories = r.response.categories;
       const index = this.categories.findIndex( (category: any) => {
         return category.selected === true;
       });
-      this.selectedCategory = this.categories[index].categoryName;
+      this.selectedCategory = this.categories[index].category;
       this.loading = false;
     });
-  }
-
-
-
-  // addWishList(id: any) {
-  //   let data = { productId: id };
-  //   this.cs.addWishList(data).subscribe((r: any) => {
-  //     this.alert.fireToastS(r.message[0]);
-  //   });
-  // }
-
-  addCart(id: any) {
-    let data = { productId: id };
-    this.cartService.addCart(data).subscribe((r: any) => {
-      // this.alert.fireToastS(r.message[0]);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: r.message[0]
-      })
-      this.cartService.addCartCount();
-    });
-  }
-
-  viewProduct(id: string) {
-    this.router.navigate(['/product/' + id]);
-  }
-
-  viewCat(id: string) {
-    this.router.navigate(['/category/' + id]);
   }
 
 }

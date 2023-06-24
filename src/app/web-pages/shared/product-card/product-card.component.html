@@ -6,39 +6,39 @@
     </div>
 
     <div class="pro-img" (click)="viewProduct(product)">
-        <img [src]="product.imageUrl[0]" alt="" />
+        <img [src]="product.image_url[0].file_url" alt="" />
     </div>
-    <span class="badge rounded-pill text-bg-danger me-1">{{ product.brand | titlecase }}</span>
-    <span class="pro-category" *ngIf="showCategory" (click)="viewCat(product.categoryId)"> {{ product.categoryName | titlecase }} </span>
+    <span class="badge rounded-pill text-bg-danger me-1" *ngIf="product.brand">{{ product.brand.brand | titlecase }}</span>
+    <span class="pro-category" *ngIf="showCategory" (click)="viewCat(product.product_category.product_category_id)"> {{ product.product_category.category | titlecase }} </span>
     <div class="pro-desc">
         <span class="pro-title" (click)="viewProduct(product)">
-            {{ product.productName }}
+            {{ product.name }}
         </span>
         <span class="pro-short-desc"> {{ product.description.substring(0, 35) }}... </span> <!-- tooltipPosition="top" [pTooltip]="product.description" -->
         <div class="pro-details">
 
             <div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
                 <div class="pro-unit">
-                    {{ product.productUnit }} {{ product.productUnitType }}
+                    {{ product.unit }} {{ product.mc_unit.code }}
                 </div>
                 <div class="pro-price">
                     <!-- <span>{{ product.discountPrice }}</span> &nbsp; -->
-                    <span> {{ product.price | currency:'₹' }}</span>
+                    <span> {{ product.price.price | currency:'₹' }}</span>
                 </div>
             </div>
 
             <div>
                 <div class="pro-action">
-                    <span *ngIf="product.stock <= 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of
-                        Stock</span>
-                    <p-inputNumber [disabled]="disableAdd" *ngIf="product.cartProductQuantity > 0 && product.stock > 0"
-                        [ngModel]="product.cartProductQuantity" [showButtons]="true" buttonLayout="horizontal"
-                        inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="1"
-                        [max]="product.maxQuantity" decrementButtonClass="btn-minus" incrementButtonClass="btn-plus"
+                  <!-- [max]="product.maxQuantity" -->
+                    <span *ngIf="product.stock <= 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of Stock</span>
+                    <p-inputNumber [disabled]="disableAdd" *ngIf="product.cart_product_quantity > 0 && product.stock > 0"
+                        [ngModel]="product.cart_product_quantity" [showButtons]="true" buttonLayout="horizontal"
+                        inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="0"
+                        [max]="product.max_order_count" decrementButtonClass="btn-minus" [incrementButtonClass]="(product.cart_product_quantity == product.max_order_count)?'btn-plus max': 'btn-plus'"
                         incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal"
                         (onInput)="cartNumber($event, product)"></p-inputNumber>
                     <button type="button" class="add-btn" (click)="addCart(product)"
-                        *ngIf="product.cartProductQuantity == 0 && product.stock > 0">
+                        *ngIf="product.cart_product_quantity == 0 && product.stock > 0">
                         <i class="pi pi-shopping-cart"></i> Add </button>
                 </div>
             </div>

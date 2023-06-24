@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { ProductService } from 'src/app/services/product.service';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { MessageService } from 'primeng/api';
+import { RegexPattern } from 'src/app/utils/regex';
 
 @Component({
   selector: 'bullk-order-form',
@@ -38,8 +39,10 @@ export class BullkOrderFormComponent implements OnInit {
 
   categoryOptions: any[] = [];
 
-  // mail: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  mail: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  alphaSpace = RegexPattern.username;
+  mail = RegexPattern.email;
+  phone = RegexPattern.phone;
+  numeric = RegexPattern.onlyNumbers;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,25 +71,17 @@ export class BullkOrderFormComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[0-9]*$/),
+          Validators.pattern(this.numeric),
           Validators.maxLength(6),
           Validators.minLength(6),
         ],
       ],
-      institutionName: ['', [ Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ],],
-      name: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/) ],],
+      institutionName: ['', [ Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
+      name: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
       email: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
-      number1: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[6-9]\d{9}$/),
-          Validators.maxLength(10),
-          Validators.minLength(10),
-        ],
-      ],
+      number1: ['', [ Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
       address: ['', [Validators.required, Validators.minLength(15)]],
-      quantity: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      quantity: ['', [Validators.required, Validators.pattern(this.numeric)]],
       // productData: this.formBuilder.array([]),
     });
   }

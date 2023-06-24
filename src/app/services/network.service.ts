@@ -45,13 +45,13 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/login';
   }
   static verifyNumber(): string {
-    return this.server_url() + this.server_v() + '/web/login/number-verify';
+    return this.server_url() + this.server_v() + '/mc-web/login-with-otp';
   }
   static verifyOtp(): string {
-    return this.server_url() + this.server_v() + '/web/login/otp-verify';
+    return this.server_url() + this.server_v() + '/mc-web/login/otp-verify';
   }
   static resendOtp(): string {
-    return this.server_url() + this.server_v() + '/web/login/resend-otp';
+    return this.server_url() + this.server_v() + '/mc-web/login/resend-otp';
   }
   static Signup(): string {
     return this.server_url() + this.server_v() + '/register';
@@ -71,16 +71,22 @@ export class NetworkService {
   static profileEdit(): string {
     return this.server_url() + this.server_v() + '/web/profile-update';
   }
+  static getUniqueToken(): string {
+    return this.server_url() + this.server_v() + '/mc-web/get-unique-token';
+  }
 
   //Products
+  // static getProducts(): string {
+  //   return this.server_url() + this.server_v() + '/web/product/list';
+  // }
   static getProducts(): string {
-    return this.server_url() + this.server_v() + '/web/product/list';
+    return this.server_url() + this.server_v() + '/mc-web/products';
   }
   static getRelatedProducts(): string {
-    return this.server_url() + this.server_v() + '/web/product/get-related-product';
+    return this.server_url() + this.server_v() + '/mc-web/get-related-product';
   }
   static viewProduct(): string {
-    return this.server_url() + this.server_v() + '/web/product/view';
+    return this.server_url() + this.server_v() + '/mc-web/product';
   }
   static getCategory(): string {
     return this.server_url() + this.server_v() + '/web/product/category/list';
@@ -98,7 +104,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/product/get-product-category';
   }
   static getBranches(id: any): string {
-    return this.server_url() + this.server_v() + '/get_branch_bases_active_cities/'+id;
+    return this.server_url() + this.server_v() + '/mc-web/place-we-serve/'+id;
   }
 
   //Order History
@@ -115,28 +121,34 @@ export class NetworkService {
 
   //cart
   static addToCart(): string {
-    return this.server_url() + this.server_v() + '/web/cart/store';
+    return this.server_url() + this.server_v() + '/mc-web/cart';
+  }
+  static updateCart(): string {
+    return this.server_url() + this.server_v() + '/mc-web/cart';
+  }
+  static deleteCart(): string {
+    return this.server_url() + this.server_v() + '/mc-web/cart';
   }
   static viewCart(): string {
     return this.server_url() + this.server_v() + '/web/cart/list';
   }
   static getCart(): string {
-    return this.server_url() + this.server_v() + '/web/cart/list';
+    return this.server_url() + this.server_v() + '/mc-web/cart';
   }
 
 
   //Checkout
   static getCartSummary(): string {
-    return this.server_url() + this.server_v() + '/web/cart/summary';
+    return this.server_url() + this.server_v() + '/mc-web/cart-summary';
   }
   static cartCheckout(): string {
-    return this.server_url() + this.server_v() + '/web/cart/checkout';
+    return this.server_url() + this.server_v() + '/mc-web/cart-checkout';
   }
   static payment(): string {
     return this.server_url() + this.server_v() + '/payment';
   }
-  static promoCode(): string {
-    return this.server_url() + this.server_v() + '/web/check-promo-code';
+  static promoCode(data: any): string {
+    return this.server_url() + this.server_v() + '/mc-web/check-promo-code?promo_code='+data.promo_code+'&sub_total='+data.sub_total;
   }
 
 
@@ -145,23 +157,29 @@ export class NetworkService {
   static locationCheck(): string {
     return this.server_url() + this.server_v() + '/web/location-checking';
   }
+  static checkServiceAvailablity(): string {
+    return this.server_url() + this.server_v() + '/mc-web/check-service-availability';
+  }
   static storeAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/store';
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
   static listAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/list';
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
   static viewAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/view';
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
-  static deleteAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/delete';
+  static updateAdddress(): string {
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
-  static setDefault(): string {
-    return this.server_url() + this.server_v() + '/web/address/default';
+  static deleteAdddress(addressId: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/address/'+addressId;
+  }
+  static setDefault(address_id: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/address/'+address_id+'/set-default-address';
   }
   static getActiveCities(): string {
-    return this.server_url() + this.server_v() + '/get-all-active-cities';
+    return this.server_url() + this.server_v() + '/mc-web/place-we-serve';
   }
 
   //File upload

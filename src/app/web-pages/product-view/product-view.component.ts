@@ -6,7 +6,6 @@ import { Product } from 'src/app/models/product.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
-import { LocalcartService } from 'src/app/services/localcart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -17,8 +16,8 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductViewComponent implements OnInit {
   relatedProductsList: Product[] = [];
   loading = false;
-  productId: string = '';
-  product!: any;
+  product_id: string = '';
+  product!: Product;
   params!: any;
   disableAdd = false;
 
@@ -81,8 +80,7 @@ export class ProductViewComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private alert: AlertService,
     private authService: AuthService,
-    private localCartService: LocalcartService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -97,14 +95,16 @@ export class ProductViewComponent implements OnInit {
 
   init() {
     this.loading = true;
-    this.productId = this.route.snapshot.paramMap.get('id') || '';
+    this.product_id = this.route.snapshot.paramMap.get('id') || '';
     this.params = this.route.snapshot.queryParamMap || '';
+    // this.params = this.router.getCurrentNavigation()
     this.getProduct();
   }
 
   getProduct() {
-    this.productService.viewProduct(this.params.params).subscribe((r: any) => {
-      this.product = r.response.productDetail;
+    this.productService.viewProduct(this.params.params, this.cartService.uniqueToken).subscribe((r: any) => {
+      this.product = r.response.products[0];
+      // console.log(this.product)
       this.getRelatedProducts(this.product);
       this.loading = false;
     });
@@ -112,16 +112,14 @@ export class ProductViewComponent implements OnInit {
 
   getRelatedProducts(product: Product) {
     this.loading = true;
-    let latLngData: any = localStorage.getItem('lat_lng');
-    let latLng = JSON.parse(latLngData);
     let data = {
-      nearByBranch: product.nearByBranch,
-      limit: 10,
+      near_by_branch: product.near_by_branch,
+      uniqueToken: this.cartService.uniqueToken
     };
     this.productService.getRelatedProducts(data).subscribe((r: any) => {
-      this.relatedProductsList = r.response.related_products;
+      this.relatedProductsList = r.response.products;
       const index = this.relatedProductsList.findIndex((product: any) => {
-        return product.productId === this.product.productId;
+        return product.product_id === this.product.product_id;
       });
       this.relatedProductsList.splice(index, 1);
       this.cdRef.markForCheck();
@@ -132,159 +130,84 @@ export class ProductViewComponent implements OnInit {
   addCart(product: Product) {
     this.disableAdd = true;
     this.loading = true;
-
+    let data = {}
     if (this.authService.isLoggedIn()) {
-      let data = {
-        productId: product.productId,
-        nearByBranch: product.nearByBranch,
+      data = {
+        product_id: product.product_id,
+        branch_user_id: product.near_by_branch,
         quantity: 1,
-      };
-      this.cartService.addCart({ carts: [data] }).subscribe((r: any) => {
-        this.cartService.addCartCount();
-        // this.alert.fireToastS('Prooduct added to cart');
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Item added to cart',
-        });
-        // this.loaded.emit();
-        this.afterCart(product);
-        this.loading = false;
-        this.disableAdd = false;
-      });
+      }
     }
 
     if (!this.authService.isLoggedIn()) {
-      this.addLocalCart(product);
-    }
-  }
-
-  addLocalCart(product: Product) {
-    this.disableAdd = true;
-    let localCart: any[] = [];
-    let cartItem = {
-      productId: product.productId,
-      productName: product.productName,
-      unit: product.productUnit,
-      unitType: product.productUnitType,
-      imageUrl: [product.imageUrl[0]],
-      maxQuantity: product.maxQuantity,
-      categoryId: product.categoryId,
-      nearByBranch: product.nearByBranch,
-      totalPrice: product.price,
-      price: product.price,
-      quantity:
-        product.cartProductQuantity > 0 ? product.cartProductQuantity : 1,
-    };
-
-    if (localStorage.getItem('localCart') != null) {
-      let localCart = this.localCartService.getLocalCart;
-
-      var status = localCart.some(function (el: any) {
-        return el.productId === product.productId;
-      });
-
-      if (status) {
-        const index = localCart.findIndex((cart: any) => {
-          return cart.productId === product.productId;
-        });
-        ++localCart[index].quantity;
-        this.product.cartProductQuantity = localCart[index].quantity;
-      } else if (!status) {
-        localCart.push(cartItem);
-        this.product.cartProductQuantity = cartItem.quantity;
+      data = {
+        product_id: product.product_id,
+        branch_user_id: product.near_by_branch,
+        quantity: 1,
+        unique_token: this.cartService.uniqueToken
       }
-
-      localStorage.setItem('localCart', JSON.stringify(localCart));
-      this.localCartService.setCartTotal();
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Item added to cart',
-      });
-      this.loading = false;
-      this.disableAdd = false;
-    } else {
-      localCart.push(cartItem);
-      this.product.cartProductQuantity = cartItem.quantity;
-      localStorage.setItem('localCart', JSON.stringify(localCart));
-      this.localCartService.setCartTotal();
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Item added to cart',
-      });
-      this.loading = false;
-      this.disableAdd = false;
     }
+    this.cartService.addCart(data).subscribe((r: any) => {
+      this.cartService.addCartCount();
+      // this.alert.fireToastS('Prooduct added to cart');
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Item added to cart',
+      });
+      // this.loaded.emit();
+      this.afterCart(product);
+      this.loading = false;
+      this.disableAdd = false;
+    });
+
   }
 
   cartNumber($event: any, product: Product) {
     this.disableAdd = true;
     this.loading = true;
 
+    let data = {}
     if (this.authService.isLoggedIn()) {
-      let data = [
-        {
-          productId: product.productId,
-          quantity: ($event.value == null) ? 1 : $event.value,
-          nearByBranch: product.nearByBranch,
-        },
-      ];
-      this.cartService.addCart({ carts: data }).subscribe((r: any) => {
-        this.cartService.addCartCount();
-        // this.alert.fireToastS(r.message[0]);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: r.message[0],
-        });
-        // this.loaded.emit();
-        this.afterCart(product);
-        this.loading = false;
-        this.disableAdd = false;
-      });
+      data = {
+        product_id: product.product_id,
+        branch_user_id: product.near_by_branch,
+        quantity: $event.value,
+      }
     }
 
     if (!this.authService.isLoggedIn()) {
-      this.cartLocalCount($event, product);
+      data = {
+        product_id: product.product_id,
+        branch_user_id: product.near_by_branch,
+        quantity: $event.value,
+        unique_token: this.cartService.uniqueToken
+      }
     }
-  }
 
-  cartLocalCount($event: any, product: Product) {
-    this.disableAdd = true;
-
-    let localCart = this.localCartService.getLocalCart;
-    const index = localCart.findIndex((cart: any) => {
-      return cart.productId === product.productId;
+    this.cartService.addCart(data).subscribe((r: any) => {
+      this.cartService.addCartCount();
+      // this.alert.fireToastS('Prooduct added to cart');
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Cart updated',
+      });
+      // this.loaded.emit();
+      this.afterCart(product);
+      this.loading = false;
+      this.disableAdd = false;
     });
 
-    if ($event.value != 0) {
-      localCart[index].quantity = ($event.value == null) ? 1 : $event.value;
-      localCart[index].totalPrice = $event.value * localCart[index].price;
-    } else {
-      localCart.splice(index, 1);
-      this.product.cartProductQuantity = 0;
-    }
-
-    if (localCart.length > 0) {
-      localStorage.setItem('localCart', JSON.stringify(localCart));
-    } else {
-      localStorage.removeItem('localCart');
-    }
-
-    this.localCartService.setCartTotal();
-    this.loading = false;
-    this.disableAdd = false;
   }
 
   afterCart(product: Product) {
     let data = {
-      productId: product.productId,
-      nearByBranch: product.nearByBranch,
+      productId: product.product_id,
+      nearByBranch: product.near_by_branch,
     };
-    this.productService.viewProduct(data).subscribe((r: any) => {
-      this.product = r.response.productDetail;
+    this.productService.viewProduct(data, this.cartService.uniqueToken).subscribe((r: any) => {
+      this.product = r.response.products[0];
       this.cdRef.markForCheck();
     });
   }

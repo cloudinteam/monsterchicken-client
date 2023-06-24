@@ -50,16 +50,16 @@
               </div>
               <div fxLayout="column" fxFlex="auto" fxLayoutGap="12px">
                 <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
-                  <div fxFlex="auto" class="item-name">{{cartItem.productName}}</div>
+                  <div fxFlex="auto" class="item-name">{{cartItem.product.name}}</div>
                 </div>
                 <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
                   <div fxFlex="auto">
-                    <span class="item-unit"> {{cartItem.unit}}&nbsp;{{ cartItem.unitType }} </span>
+                    <span class="item-unit"> {{cartItem.product.unit}}&nbsp;{{ cartItem.product.mc_unit.code }} </span>
                     <span class="fw-bold text-black"> x{{cartItem.quantity}} </span>
                   </div>
                   <div fxFlex="auto" fxLayoutAlign="end center">
                     <span *ngIf="cartItem.stock == 0" class="fw-bold px-2 text-white rounded-2 bg-danger">Out Of Stock</span>
-                    <span class="item-price" *ngIf="cartItem.totalPrice !== 0 && cartItem.stock != 0"> {{cartItem.totalPrice | currency: '₹'}} </span>
+                    <span class="item-price" *ngIf="cartItem.total_price !== 0 "> {{cartItem.total_price | currency: '₹'}} </span><!-- && cartItem.stock != 0 -->
                   </div>
                 </div>
               </div>
@@ -76,7 +76,7 @@
       <div fxLayout="column" fxLayoutGap="10px">
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <span class="items-title"> Name: </span>
-          <span class="items-price"> {{  shippingAddress.nickName | titlecase }} </span>
+          <span class="items-price"> {{  shippingAddress.nick_name | titlecase }} </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <span class="items-title"> Phone: </span>
@@ -87,14 +87,14 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <!-- <span class="items-price"> Street Name:  </span> -->
-          <span class="items-price"> {{ shippingAddress.streetName }}, </span>
+          <span class="items-price"> {{ shippingAddress.street_name }}, </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <!-- <span class="items-price"> Landmark: </span> -->
-          <span class="items-price"> {{ shippingAddress.landMark }}, </span>
+          <span class="items-price"> {{ shippingAddress.landmark }}, </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <span class="items-price"> {{ shippingAddress.city.name }}, {{ shippingAddress.state.name }} {{ shippingAddress.pincode }}  </span>
+          <span class="items-price"> {{ shippingAddress.city }}, {{ shippingAddress.district.district }}, {{ shippingAddress.state.state }} {{ shippingAddress.pincode }}  </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <span class="items-title"> Type: </span>
@@ -155,8 +155,8 @@
 
   <div class="col-12 text-end">
     <span class="text-secondary fw-semibold clickable me-2" [routerLink]="'/checkout/address'"> Change Address </span>
-    <button type="button" class="btn btn-danger rounded-0" *ngIf="outOfStock" [routerLink]="'/'"> Browse Store </button>
-    <button type="button" class="btn btn-danger rounded-0" *ngIf="!outOfStock" (click)="checkout()"> Place Order </button>
+    <!-- <button type="button" class="btn btn-danger rounded-0" *ngIf="outOfStock" [routerLink]="'/'"> Browse Store </button> -->
+    <button type="button" class="btn btn-danger rounded-0" (click)="checkout()"> Place Order </button>
   </div>
 
 </div>

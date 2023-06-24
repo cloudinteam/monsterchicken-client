@@ -46,13 +46,14 @@
           <li class="top-nav-item" #categoryMenuId>
             <a class="top-nav-link" (click)="catpanel.toggle($event)" pTooltip="Categories" tooltipPosition="bottom"> <i class="pi pi-list"></i> <span fxHide.lt-sm="true"> Categories </span> </a>
             <p-overlayPanel #catpanel [style]="{'min-width': '250px'}" [showCloseIcon]="true" appendTo="body">
-              <ng-template pTemplate="content" [style]="{'padding': '7px'}">
+              <ng-template pTemplate="content">
+                <!-- [style]="{'padding': '7px'}" -->
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item clickable" *ngFor="let category of categories" style="padding: 8px 8px;">
                     <div class="clickable" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
-                      (click)="$event.stopPropagation();viewCategory(catpanel, category.categoryId)">
-                      <img [src]="category.imageUrl" [alt]="category.categoryName" width="30px" height="30px" class="rounded-circle">
-                      <span class="text-black fw-semibold"> {{ category.categoryName | titlecase }} </span>
+                      (click)="$event.stopPropagation();viewCategory(catpanel, category.product_category_id)">
+                      <img [src]="category.image_url[0].file_url" [alt]="category.category" width="30px" height="30px" class="rounded-circle">
+                      <span class="text-black fw-semibold"> {{ category.category | titlecase }} </span>
                     </div>
                   </li>
                 </ul>

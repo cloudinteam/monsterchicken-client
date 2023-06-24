@@ -110,7 +110,7 @@
           <ul *ngIf="categories.length > 0">
             <li *ngFor="let category of categories">
               <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a [routerLink]="'/category/' + category.categoryId" > {{ category.categoryName | titlecase }} </a></span>
+              <span class="list-text"><a [routerLink]="'/category/' + category.product_category_id" > {{ category.category | titlecase }} </a></span>
             </li>
           </ul>
         </div>

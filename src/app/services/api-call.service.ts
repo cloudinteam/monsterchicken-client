@@ -104,6 +104,77 @@ export class ApiCallService {
       );
   }
 
+  putApiCallAuth(url: string, body: object) {
+    let hash = {
+      deviceId: this.hash(),
+      requestFrom: 'web',
+      userLat: this.lat(),
+      userLong: this.long(),
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + NetworkService.authToken(),
+    };
+    body = Object.assign(hash, body);
+    let obj = this.es.dataIn(body);
+    return this.http
+      .put(url, obj, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          if (result.status == true) {
+            return result;
+          } else {
+            // this.alert.fireToastF(result.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: result.message[0]
+            })
+            return result;
+          }
+        }),
+        catchError((err) => {
+          let data: any = this.es.unmaskData(err.error);
+          if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
+            this.router.navigate(['']);
+            localStorage.removeItem('accessToken');
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
+          }
+          if (err.status == 422) {
+            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Invaid Input',
+              detail: data.message[0]
+            })
+          }
+
+          // this.alert.fireToastF(data.message[0]);
+          // this.messageService.add({
+          //   severity: 'error',
+          //   summary: 'Error',
+          //   detail: data.message[0]
+          // })
+          return err;
+        })
+      );
+  }
+
   postApiCallNoAuth(url: string, body: object) {
     let hash = {
       deviceId: this.hash(),
@@ -326,4 +397,59 @@ export class ApiCallService {
         })
       );
   }
+
+  deleteApiCallAuth(url: string): any {
+    return this.http
+      .delete(url, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          if (result.status == true) {
+            return result;
+          } else {
+            // alert('Failed to ' + errMsg + ' ' + result.response.message[0]);
+            // this.alert.fireToastF(result.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: result.message[0]
+            })
+          }
+        }),
+        catchError((err) => {
+          let data: any = this.es.unmaskData(err.error);
+          if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
+            this.router.navigate(['']);
+            localStorage.removeItem('accessToken');
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
+          }
+          if (err.status == 422) {
+            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Invaid Input',
+              detail: data.message[0]
+            })
+          }
+          return err;
+        })
+      );
+  }
+
 }

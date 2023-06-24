@@ -33,6 +33,6 @@ export class AddressCardComponent {
 
   deleteAddress($event: MouseEvent, address: any) {
     $event.stopPropagation();
-    this.removeAddress.emit(address.addressId);
+    this.removeAddress.emit(address.address_id);
   }
 }

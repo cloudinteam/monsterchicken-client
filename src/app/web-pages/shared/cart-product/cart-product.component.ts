@@ -2,7 +2,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
-import { LocalcartService } from 'src/app/services/localcart.service';
 
 @Component({
   selector: 'cart-product',
@@ -20,7 +19,6 @@ export class CartProductComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private authService: AuthService,
-    private localCartService: LocalcartService,
   ) {
 
   }
@@ -34,39 +32,15 @@ export class CartProductComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       let data = [{
         cartId: cartId,
-        productId: cartItem.productId,
+        productId: cartItem.product_id,
         quantity: $event.value,
-        nearByBranch: cartItem.nearByBranch,
+        nearByBranch: cartItem.near_by_branch,
       }];
       this.cartService.addCart({ carts: data }).subscribe((r: any) => {
         this.disableAdd = false;
         this.update.emit();
       });
-    } else if (!this.authService.isLoggedIn()) {
-      let localCart = this.localCartService.getLocalCart
-
-      const index = localCart.findIndex( (cart: any) => {
-        return cart.productId === cartItem.productId;
-      });
-
-      if ($event.value != 0) {
-        localCart[index].quantity = $event.value;
-        localCart[index].totalPrice = $event.value * localCart[index].price;
-      } else {
-        localCart.splice(index, 1);
-      }
-
-      if (localCart.length > 0) {
-        localStorage.setItem('localCart', JSON.stringify(localCart));
-      } else {
-        localStorage.removeItem('localCart');
-      }
-
-      this.localCartService.setCartTotal();
-      this.disableAdd = false;
-      this.update.emit();
     }
-
   }
 
   removeItem(productId: string) {
@@ -79,19 +53,6 @@ export class CartProductComponent implements OnInit {
       this.cartService.addCart({ carts: data }).subscribe((r: any) => {
         this.update.emit();
       });
-    } else if (!this.authService.isLoggedIn()) {
-      let localCart = this.localCartService.getLocalCart
-      const index = localCart.findIndex( (cart: any) => {
-        return cart.productId === productId;
-      });
-      localCart.splice(index, 1);
-      if (localCart.length > 0) {
-        localStorage.setItem('localCart', JSON.stringify(localCart));
-      } else {
-        localStorage.removeItem('localCart');
-      }
-      this.localCartService.setCartTotal();
-      this.update.emit();
     }
   }
 

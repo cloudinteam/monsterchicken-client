@@ -76,11 +76,17 @@
                   <label class="fw-bold red-heading fs-6">State*</label>
                   <p-dropdown [options]="states" optionValue="value" optionLabel="name"
                       [required]="true" formControlName="state" [filter]="true" filterBy="name" [showClear]="false"
-                      placeholder="Select a State" (onChange)="getDistricts($event)"></p-dropdown>
-
-                    <div>
-                      <small class="text-danger ms-1" *ngIf="submitted && form['state'].errors"> State required </small>
-                    </div>
+                      placeholder="Select a State" (onChange)="getDistricts($event)">
+                      <ng-template pTemplate="filter">
+                        <div class="p-input-icon-right w-100" >
+                          <i class="pi pi-search fw-bold text-dark"></i>
+                          <input type="text" class="form-control form-control" placeholder="Search state" autofocus/>
+                        </div>
+                      </ng-template>
+                  </p-dropdown>
+                  <div>
+                    <small class="text-danger ms-1" *ngIf="submitted && form['state'].errors"> State required </small>
+                  </div>
                 </div>
               </div>
 

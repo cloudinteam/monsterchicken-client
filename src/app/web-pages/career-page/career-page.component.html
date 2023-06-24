@@ -35,35 +35,35 @@
               <div class="col-sm-6 col-md-4 col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Name*</label>
                 <div>
-                  <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="submitted && form['name'].errors">Name is Invalid</small>
+                  <input type="text" formControlName="name" [pKeyFilter]="alphaSpace" class="form-control rounded-2 bulk-input" />
+                  <div class="text-danger ms-1" *ngIf="form['name'].errors?.pattern">Only alphabets and space allowed</div>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['name'].errors.required">Name is required</div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-4 col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Email Id*</label>
                 <div>
-                  <input type="email" formControlName="email" class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="submitted && form['email'].errors">Email Id is Invalid</small>
+                  <input type="email" formControlName="email" [pKeyFilter]="mailPattern" [pValidateOnly]="true" class="form-control rounded-2 bulk-input" required />
+                  <!-- <div class="text-danger ms-1" *ngIf="form['email'].errors?.pattern">Mail should contain only (a-z), (0-9) and "."</div> -->
+                  <div class="text-danger ms-1" *ngIf="submitted && form['email'].errors.required">Email Id is required</div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-4 col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Phone Number*</label>
                 <div>
-                  <input type="text" formControlName="number" (keypress)="keyPressNumbers($event)" maxlength="10"
-                    class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="submitted && form['number'].errors">Phone Number is
-                    Invalid</small>
+                  <input type="text" formControlName="number" [pKeyFilter]="phone" maxlength="10" class="form-control rounded-2 bulk-input" />
+                  <div class="text-danger ms-1" *ngIf="form['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['number'].errors.required">Phone Number is required</div>
                 </div>
               </div>
 
               <div class="col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Address*</label>
                 <div>
-                  <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3"
-                    required></textarea>
-                  <small class="text-danger ms-1" *ngIf="submitted && form['address'].errors">Address is Invalid</small>
+                  <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3" required></textarea>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['address'].errors">Address is required</div>
                 </div>
               </div>
 

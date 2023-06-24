@@ -84,14 +84,14 @@ export class OrderSummaryComponent implements OnInit {
   loadSummary() {
 
     this.checkoutService.cartSummary().subscribe((r: any) => {
-
+      console.log(r);
       this.data = r;
-      this.shippingAddress = r.response.isAddressAvailable;
-      this.orderSummary = r.response.cartData;
+      this.shippingAddress = r.response.is_address_available;
+      this.orderSummary = r.response.cart_data;
       this.totalCount = r.response.totalCount;
-      this.totalCartPrice = r.response.grandTotal;
-      this.deliveryCharge = r.response.deliveryCharge;
-      this.grandTotal = r.response.grandTotal;
+      this.totalCartPrice = r.response.grand_total;
+      this.deliveryCharge = r.response.delivery_charge;
+      this.grandTotal = r.response.grand_total;
       this.discountPrice = 0;
       this.outOfStock = r.response.outOfStock;
       this.submitted = false;
@@ -114,8 +114,8 @@ export class OrderSummaryComponent implements OnInit {
 
     if (this.couponForm.value.promoCode !== '') {
       let data = {
-        promoCode: this.couponForm.value.promoCode,
-        subTotal: this.totalCartPrice
+        promo_code: this.couponForm.value.promoCode,
+        sub_total: this.totalCartPrice
       }
       this.loading = true;
       this.checkoutService.promoCode(data).subscribe((r: any) => {
@@ -173,7 +173,6 @@ export class OrderSummaryComponent implements OnInit {
 
   checkout() {
     this.loading = true;
-
     if (this.paymentMethod == '') {
       this.messageService.add({
         severity: 'error',
@@ -182,18 +181,16 @@ export class OrderSummaryComponent implements OnInit {
       })
     } else {
       let data = {
-        promoCodeId: this.promoCodeId,
+        promo_code: this.promoCodeId,
       }
       this.checkoutService.cartCheckout(data).subscribe((r: any) => {
+        console.log(r);
         if (r.status) {
           // this.router.navigate(['/checkout/payment/' + r.orderId]);
           this.payment(r.orderId);
         }
       });
     }
-
-
-
     this.loading = false;
   }
 

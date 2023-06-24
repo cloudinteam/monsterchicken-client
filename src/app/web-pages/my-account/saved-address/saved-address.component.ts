@@ -35,12 +35,12 @@ export class SavedAddressComponent implements OnInit {
 
   getAddress() {
     this.loading = true;
-    this.addressService.listAddress({userId: localStorage.getItem('userId')}).subscribe((r: any) => {
+    this.addressService.listAddress().subscribe((r: any) => {
       // console.log(r);
       this.address = r.response.addresses;
       this.address.forEach(address => {
-        if (address.defaultAddress) {
-          this.selectedId = address.id;
+        if (address.default_address) {
+          this.selectedId = address.address_id;
         }
       })
       this.loading = false;
@@ -81,10 +81,7 @@ export class SavedAddressComponent implements OnInit {
   }
 
   deleteAddress(id: string) {
-    let data = {
-      addressId: id
-    }
-    this.addressService.deleteAddress(data).subscribe((r: any) => {
+    this.addressService.deleteAddress(id).subscribe((r: any) => {
       // console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message[0]);

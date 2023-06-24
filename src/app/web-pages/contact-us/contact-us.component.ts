@@ -41,10 +41,10 @@ export class ContactUsComponent implements OnInit {
 
   initForm() {
     this.contactForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
-      email: ['', [Validators.required, Validators.email]],
-      number: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)]],
-      company: ['', [Validators.minLength(3)] ],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]+$/)] ],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)]],
+      number: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10), Validators.minLength(10)]],
+      company: ['', [Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9\s]+$/)]],
       message: [null],
     })
   }

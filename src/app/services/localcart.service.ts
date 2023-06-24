@@ -32,19 +32,6 @@ export class LocalcartService {
     }
   }
 
-  pushLocalCartToLive() {
-    // Update Local_Cart to DB
-    if (localStorage.getItem('localCart') != null) {
-      if (this.getLocalCart.length > 0) {
-        let localCart: any[] = [];
-        this.cartService.addCart({ carts: this.getLocalCart }).subscribe((r: any) => {
-          this.cartService.addCartCount();
-          localStorage.removeItem('localCart');
-        });
-      }
-    }
-  }
-
   setCartTotal() {
     if (localStorage.getItem('localCart') !== null) {
       let cartData: any = localStorage.getItem('localCart');

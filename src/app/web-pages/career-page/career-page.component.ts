@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/services/common.service';
 import { FormsService } from 'src/app/services/forms.service';
+import { RegexPattern } from 'src/app/utils/regex';
 
 @Component({
   selector: 'app-career-page',
@@ -16,6 +17,10 @@ export class CareerPageComponent implements OnInit {
   submitted = false;
   files: File[] = [];
   fileError: string = '';
+
+  alphaSpace = RegexPattern.username;
+  mailPattern = RegexPattern.email;
+  phone = RegexPattern.phone;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,9 +36,9 @@ export class CareerPageComponent implements OnInit {
 
   initForm() {
     this.careerForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]+$/)] ],
-      email: ['', [Validators.required, Validators.email]],
-      number: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(10), Validators.minLength(10)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(this.mailPattern)]],
+      number: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
       address: ['', [Validators.required, Validators.minLength(15)] ],
       message: [null],
       resume: [null]
@@ -61,11 +66,11 @@ export class CareerPageComponent implements OnInit {
     let type = event.target.files[0].type;
 
     if (type != "application/pdf") {
-      this.fileError = 'Only PDF format accepted';
+      this.fileError = 'Only PDF file accepted';
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: 'Only PDF format accepted'
+        detail: 'Only PDF file accepted'
       })
     }
 

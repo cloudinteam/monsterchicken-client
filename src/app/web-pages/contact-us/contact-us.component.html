@@ -141,7 +141,8 @@
                     <label class="fw-bold red-heading fs-6">Name*</label>
                     <div>
                       <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" />
-                      <small class="text-danger ms-1" *ngIf="submitted && form['name'].errors">Name is Invalid</small>
+                      <div class="text-danger ms-1" *ngIf="form['name'].errors?.pattern">Only alphabets and space allowed</div>
+                      <div class="text-danger ms-1" *ngIf="submitted && form['name'].errors">Name is Invalid</div>
                     </div>
                   </div>
 
@@ -149,18 +150,18 @@
                     <label class="fw-bold red-heading fs-6">Email Id*</label>
                     <div>
                       <input type="email" formControlName="email" class="form-control rounded-2 bulk-input" required />
-                      <small class="text-danger ms-1" *ngIf="submitted && form['email'].errors">Email Id is
-                        Invalid</small>
+                      <div class="text-danger ms-1" *ngIf="submitted && form['email'].errors">Email Id is Invalid</div>
+                      <div class="text-danger ms-1" *ngIf="form['email'].errors?.pattern">Mail should contain only (a-z), (0-9) and "."</div>
                     </div>
                   </div>
 
                   <div class="col-sm-6 col-md-6 col-12 my-2">
                     <label class="fw-bold red-heading fs-6">Phone Number*</label>
                     <div>
-                      <input type="text" formControlName="number" (keypress)="keyPressNumbers($event)" maxlength="10"
+                      <input type="text" formControlName="number" pKeyFilter="int" maxlength="10"
                         class="form-control rounded-2 bulk-input" />
-                      <small class="text-danger ms-1" *ngIf="submitted && form['number'].errors">Phone Number is
-                        Invalid</small>
+                      <div class="text-danger ms-1" *ngIf="submitted && form['number'].errors">Phone Number is Invalid</div>
+                      <div class="text-danger ms-1" *ngIf="form['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
                     </div>
                   </div>
 
@@ -168,8 +169,8 @@
                     <label class="fw-bold red-heading fs-6">Company</label>
                     <div>
                       <input type="text" formControlName="company" class="form-control rounded-2 bulk-input" />
-                      <small class="text-danger ms-1" *ngIf="submitted && form['company'].errors">Company is
-                        Invalid</small>
+                      <div class="text-danger ms-1" *ngIf="form['company'].errors?.pattern">Only alphabets, numbers and space allowed</div>
+                      <div class="text-danger ms-1" *ngIf="submitted && form['company'].errors">Company is Invalid</div>
                     </div>
                   </div>
 

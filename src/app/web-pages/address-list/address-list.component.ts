@@ -42,11 +42,11 @@ export class AddressListComponent implements OnInit {
 
   getAddress() {
     this.loading = true;
-    this.addressService.listAddress({ userId: localStorage.getItem('userId') }).subscribe((r: any) => {
+    this.addressService.listAddress().subscribe((r: any) => {
       this.address = r.response.addresses;
       this.address.forEach(address => {
-        if (address.defaultAddress) {
-          this.selectedId = address.addressId;
+        if (address.default_address) {
+          this.selectedId = address.address_id;
         }
       })
       this.edit = false;
@@ -74,7 +74,7 @@ export class AddressListComponent implements OnInit {
 
     let data = {
       userId: localStorage.getItem('userId'),
-      addressId: this.selectedId
+      address_id: this.selectedId
     }
     this.addressService.setDefault(data).subscribe((r: any) => {
       if (r.status) {
@@ -90,10 +90,7 @@ export class AddressListComponent implements OnInit {
   }
 
   deleteAddress(id: string) {
-    let data = {
-      addressId: id
-    }
-    this.addressService.deleteAddress(data).subscribe((r: any) => {
+    this.addressService.deleteAddress(id).subscribe((r: any) => {
       // console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message[0]);

@@ -107,6 +107,11 @@
             .p-component {
 
               .btn-plus {
+
+                &.max {
+                  color: #b5b5b5 !important;
+                }
+
                 color: #e4002b;
                 background: #fff;
                 border: 0;
