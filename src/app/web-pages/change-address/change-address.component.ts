@@ -19,7 +19,9 @@ import { MessageService } from 'primeng/api';
 import { AddressService } from 'src/app/services/address.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CommonService } from 'src/app/services/common.service';
 import { MapService } from 'src/app/services/map.service';
+import { RegexPattern } from 'src/app/utils/regex';
 
 @Component({
   selector: 'change-address',
@@ -31,6 +33,8 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput') searchInput!: ElementRef;
 
   loading = false;
+  states: any = [];
+  districts: any = [];
 
   lat: number = 0;
   lng: number = 0;
@@ -71,11 +75,12 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     private addressService: AddressService,
     private mapService: MapService,
     private cdRef: ChangeDetectorRef,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cs: CommonService,
   ) {}
 
   ngOnInit(): void {
-
+    this.getStates();
     this.initForm();
     this.authService.profile({}).subscribe((r: any) => {
       this.addressForm.patchValue({
@@ -88,10 +93,17 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     }
 
     if (this.address) {
-      this.addressService.viewAddress({ addressId: this.address.addressId }).subscribe((r: any) => {
-        // console.log(r);
-        // this.address = r.address;
+      this.addressService.viewAddress(this.address.address_id ).subscribe((r: any) => {
+        this.address = r.response.address;
+        console.log(this.address);
+        let params = {
+          stateId: this.address.state.id,
+        };
+        this.cs.getDistrict(params).subscribe((r: any) => {
+          this.districts = r.response.districts;
+        });
         this.editAddress(r.response.address);
+
       })
     }
 
@@ -140,48 +152,73 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   initForm() {
     this.addressForm = this.formBuilder.group({
       userId: [localStorage.getItem('userId'), [Validators.required]],
-      area: ['', [Validators.required]],
-      streetName: ['', [Validators.required]],
-      landMark: [null, [Validators.required]],
-      number: [null, [Validators.pattern(/^[6-9]\d{9}$/), Validators.maxLength(10), Validators.minLength(10), Validators.required]],
-      city: [null, [Validators.required]],
-      state: [null, [Validators.required]],
-      stateCode: [null, [Validators.required]],
-      district: [null],
-      pincode: [null],
-      country: [null],
-      type: [null],
-      others: [null],
-      nickName: [null],
+
+      name: [null],
       latitude: [null, [Validators.required]],
       longitude: [null, [Validators.required]],
+      area: ['', [Validators.required]],
+      number: [null, [Validators.pattern(RegexPattern.phone), Validators.maxLength(10), Validators.minLength(10), Validators.required]],
+      city: [null, [Validators.required]],
+      type: [null],
+      others: [null],
+      street_name: ['', [Validators.required]],
+      landmark: [null, [Validators.required]],
+      pincode: [null],
+      state_id: [null, [Validators.required]],
+      district_id: [null, [Validators.required]],
+
+      // district: [null],
+      // state: [null, [Validators.required]],
+      // stateCode: [null, [Validators.required]],
+      // country: [null],
     });
   }
   get addressFormControl(): any {
     return this.addressForm['controls'];
   }
 
+  getStates() {
+    let obj = {
+      version: 0.1,
+    };
+    this.cs.getStates(obj).subscribe((r: any) => {
+      this.states = r.response.states;
+    });
+  }
+
+  getDistricts($event: any) {
+    let params = {
+      stateId: $event.value,
+    };
+    this.cs.getDistrict(params).subscribe((r: any) => {
+      this.districts = r.response.districts;
+    });
+  }
+
   editAddress(address: any) {
     // this.editAddress = true;
     this.loading = true;
     // this.geoCode('address', this.address.area);
-    this.addressForm.addControl('addressId', new FormControl(address.addressId, Validators.required));
+    this.addressForm.addControl('address_id', new FormControl(address.address_id, Validators.required));
 
     this.addressForm.patchValue({
       // addressId: this.address.id,
-      area: address.area,
-      city: address.city.name,
-      streetName: address.streetName,
-      landMark: address.landMark,
-      nickName: address.nickName,
-      number: address.number,
-      pincode: address.pincode,
-      state: address.state.name,
-      type: address.type,
-      others: address.others,
+      name: address.nick_name,
       latitude: this.address.latitude,
       longitude: this.address.longitude,
-      stateCode: address.state.state_code,
+      area: address.area,
+      number: address.number,
+      city: address.city,
+      type: address.type,
+      others: address.others,
+      street_name: address.street_name,
+      landmark: address.landmark,
+      pincode: address.pincode,
+      state_id: address.state.id,
+      district_id: address.district.id,
+
+      // state: address.state.state,
+      // stateCode: address.state.state_code,
     });
     this.mapMarker = {
       lat: Number(this.address.latitude),
@@ -191,48 +228,34 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   AddressChange(address: any) {
-    console.log('sd');
-    console.log(address)
     this.searchFn();
     //setting address from API to local variable
     this.formattedaddress = address.formatted_address;
   }
 
   searchFn() {
-    // setTimeout(() => {
-      console.log(this.searchString);
-      // if (this.searchString != '') {
+    this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
 
-        this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+    this.searchAuto.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: any = this.searchAuto?.getPlace();
 
-        this.searchAuto.addListener('place_changed', () => {
-          console.log('sd');
-          // this.searchAuto.addListener('blur', () => {
-        // this.searchAuto.addListener('keydown', () => {
-          this.ngZone.run(() => {
-            const place: any = this.searchAuto?.getPlace();
-            console.log(place);
+        this.lat = place.geometry.location.lat()
+        this.lng = place.geometry.location.lng()
 
-            this.lat = place.geometry.location.lat()
-            this.lng = place.geometry.location.lng()
-
-            this.mapMarker = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-            }
-            // console.log(this.mapMarker);
-            // this.geoCode('address', this.searchInput.nativeElement.value);
-            this.geoCode('location')
-          })
-        })
-
-      // }
-    // }, 800);
+        this.mapMarker = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        }
+        // console.log(this.mapMarker);
+        // this.geoCode('address', this.searchInput.nativeElement.value);
+        this.geoCode('location')
+      })
+    })
   }
 
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) {
-      // console.log(event.latLng.toJSON());
       this.mapMarker = event.latLng.toJSON();
       this.geoCode('location');
     }
@@ -420,9 +443,9 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     if (this.addressForm.invalid) {
       this.submitted = true;
     }
-    this.addressService
-      .storeAdddress(this.addressForm.value)
-      .subscribe((r: any) => {
+
+    if (this.edit == 'new') {
+      this.addressService.storeAdddress(this.addressForm.value).subscribe((r: any) => {
         if (r.status) {
           // this.alert.fireToastS(r.message[0]);
           this.messageService.add({
@@ -435,5 +458,20 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
           this.backToList.emit();
         }
       });
+    } else {
+      this.addressService.putAddress(this.addressForm.value).subscribe((r: any) => {
+        if (r.status) {
+          // this.alert.fireToastS(r.message[0]);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: r.message[0]
+          })
+          this.address = null;
+          this.edit = 'new';
+          this.backToList.emit();
+        }
+      });
+    }
   }
 }

@@ -6,30 +6,30 @@
         </div>
 
         <div>
-            <img class="item-img" [src]="cartItem.imageUrl[0]" [alt]="cartItem.productName">
+            <img class="item-img" [src]="cartItem.product.image_url[0].file_url" [alt]="cartItem.product.name">
         </div>
 
         <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex="auto" fxLayoutGap="12px">
             <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
-                <div fxFlex="auto" class="item-name">{{cartItem.productName}}</div>
-                <div fxFlex="20px" (click)="removeItem(cartItem.productId)" class="item-del"><i class="pi pi-trash"></i>
+                <div fxFlex="auto" class="item-name">{{cartItem.product.name}}</div>
+                <div fxFlex="20px" (click)="removeItem(cartItem.cart_id)" class="item-del"><i class="pi pi-trash"></i>
                 </div>
             </div>
             <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
                 <div fxFlex="auto" fxLayout="column">
                     <span class="item-price"> {{cartItem.price | currency: '₹'}} </span>
-                    <span class="item-unit"> {{cartItem.unit}} {{ cartItem.unitType }} </span>
+                    <span class="item-unit"> {{cartItem.product.unit}} {{ cartItem.product.mc_unit.code }} </span>
                 </div>
                 <div fxFlex="auto" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px">
                     <div class="item-action">
-                        <p-inputNumber [disabled]="disableAdd" [ngModel]="cartItem.quantity" [showButtons]="true"
-                            buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal" [step]="1"
-                            [min]="0" [max]="cartItem.maxQuantity" decrementButtonClass="btn-minus"
-                            incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus"
-                            decrementButtonIcon="pi pi-minus" mode="decimal"
-                            (onInput)="cartNumber($event, cartItem, cartItem.cartId)"></p-inputNumber>
+                      <p-inputNumber [disabled]="disableAdd" [ngModel]="cartItem.quantity" [showButtons]="true"
+                          buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal" [step]="1"
+                          [min]="1" [max]="cartItem.product.max_order_count" decrementButtonClass="btn-minus"
+                          incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus"
+                          decrementButtonIcon="pi pi-minus" mode="decimal"
+                          (onInput)="cartNumber($event, cartItem, cartItem.cart_id)"></p-inputNumber>
                     </div>
-                    <span class="item-total"> {{cartItem.totalPrice | currency: '₹'}} </span>
+                    <span class="item-total"> {{cartItem.total_amount | currency: '₹'}} </span>
                 </div>
 
             </div>
@@ -42,21 +42,21 @@
 <div class="cart-item" [fxHide.sm]="false" [fxHide.gt-sm]="true">
     <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="7px">
         <div>
-            <img class="item-img" [src]="cartItem.imageUrl[0]" [alt]="cartItem.productName">
+            <img class="item-img" [src]="cartItem.product.image_url[0].file_url" [alt]="cartItem.product.name">
         </div>
         <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex="auto" fxLayoutGap="5px">
             <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="6px">
                 <div>
                     <span class="item-sn">{{itemNo+1}}</span>
                 </div>
-                <div fxFlex="auto" class="item-name">{{cartItem.productName}}</div>
-                <div fxFlex="20px" (click)="removeItem(cartItem.productId)" class="item-del"><i class="pi pi-trash"></i>
+                <div fxFlex="auto" class="item-name">{{cartItem.product.name}}</div>
+                <div fxFlex="20px" (click)="removeItem(cartItem.cart_id)" class="item-del"><i class="pi pi-trash"></i>
                 </div>
             </div>
             <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="5px">
                 <div fxFlex="auto" fxLayout="column">
                     <span class="item-price"> {{cartItem.price | currency: '₹'}} </span>
-                    <span class="item-unit"> {{cartItem.unit}} {{ cartItem.unitType }} </span>
+                    <span class="item-unit"> {{cartItem.product.unit}} {{ cartItem.product.mc_unit.code }} </span>
                 </div>
                 <div fxFlex="auto" fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="5px">
                     <div class="item-action">
@@ -65,9 +65,9 @@
                             [min]="1" [max]="cartItem.maxQuantity" decrementButtonClass="btn-minus"
                             incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus"
                             decrementButtonIcon="pi pi-minus" mode="decimal"
-                            (onInput)="cartNumber($event, cartItem, cartItem.cartId)"></p-inputNumber>
+                            (onInput)="cartNumber($event, cartItem, cartItem.cart_id)"></p-inputNumber>
                     </div>
-                    <span class="item-total"> {{cartItem.totalPrice | currency: '₹'}} </span>
+                    <span class="item-total"> {{cartItem.total_amount | currency: '₹'}} </span>
                 </div>
 
             </div>

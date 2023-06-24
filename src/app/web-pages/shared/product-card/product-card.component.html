@@ -8,7 +8,7 @@
     <div class="pro-img" (click)="viewProduct(product)">
         <img [src]="product.image_url[0].file_url" alt="" />
     </div>
-    <span class="badge rounded-pill text-bg-danger me-1">{{ product.brand.brand | titlecase }}</span>
+    <span class="badge rounded-pill text-bg-danger me-1" *ngIf="product.brand">{{ product.brand.brand | titlecase }}</span>
     <span class="pro-category" *ngIf="showCategory" (click)="viewCat(product.product_category.product_category_id)"> {{ product.product_category.category | titlecase }} </span>
     <div class="pro-desc">
         <span class="pro-title" (click)="viewProduct(product)">
@@ -19,7 +19,7 @@
 
             <div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
                 <div class="pro-unit">
-                    {{ product.unit }} {{ product.mc_unit.name }}
+                    {{ product.unit }} {{ product.mc_unit.code }}
                 </div>
                 <div class="pro-price">
                     <!-- <span>{{ product.discountPrice }}</span> &nbsp; -->
@@ -33,7 +33,7 @@
                     <span *ngIf="product.stock <= 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of Stock</span>
                     <p-inputNumber [disabled]="disableAdd" *ngIf="product.cart_product_quantity > 0 && product.stock > 0"
                         [ngModel]="product.cart_product_quantity" [showButtons]="true" buttonLayout="horizontal"
-                        inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="1"
+                        inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="0"
                         [max]="product.max_order_count" decrementButtonClass="btn-minus" [incrementButtonClass]="(product.cart_product_quantity == product.max_order_count)?'btn-plus max': 'btn-plus'"
                         incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal"
                         (onInput)="cartNumber($event, product)"></p-inputNumber>

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { LocalcartService } from 'src/app/services/localcart.service';
 
 @Component({
   selector: 'login',
@@ -28,7 +27,6 @@ export class LoginComponent implements OnInit {
     private as: AuthService,
     private alert: AlertService,
     private router: Router,
-    private localCartService: LocalcartService,
     private cartService: CartService,
     private messageService: MessageService,
   ) { }
@@ -146,7 +144,6 @@ export class LoginComponent implements OnInit {
         //   this.router.navigate(['/cart']);
         // } else this.router.navigate(['/']);
         // window.location.reload();
-        this.localCartService.pushLocalCartToLive();
 
         if (localStorage.getItem('next_url') && localStorage.getItem('next_url') != 'undefined') {
 

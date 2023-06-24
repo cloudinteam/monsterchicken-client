@@ -40,16 +40,13 @@ export class BranchListBoxComponent implements OnInit {
 
   setLocation(branch: any) {
     this.headerService.setBranch.next({
-      lat: branch.latitude,
-      lng: branch.longitude,
+      lat: branch.address[0].latitude,
+      lng: branch.address[0].longitude,
     });
 
-    localStorage.setItem(
-      'lat_lng',
-      JSON.stringify({ lat: branch.latitude, lng: branch.longitude })
-    );
-    localStorage.setItem('userLat', JSON.stringify(branch.latitude));
-    localStorage.setItem('userLong', JSON.stringify(branch.longitude));
+    localStorage.setItem('lat_lng', JSON.stringify({ lat: branch.address[0].latitude, lng: branch.address[0].longitude }));
+    localStorage.setItem('userLat', JSON.stringify(branch.address[0].latitude));
+    localStorage.setItem('userLong', JSON.stringify(branch.address[0].longitude));
     this.cartService.productLoad$.next(true);
     this.ref.close();
   }

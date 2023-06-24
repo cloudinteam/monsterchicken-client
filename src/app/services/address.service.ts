@@ -39,12 +39,16 @@ export class AddressService {
     return this.api.postApiCallAuth(NetworkService.storeAdddress(), body);
   }
 
-  listAddress(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.listAdddress(), body);
+  listAddress() {
+    return this.api.getApiCallAuth(NetworkService.listAdddress());
   }
 
-  viewAddress(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.viewAdddress(), body);
+  viewAddress(addressId: string): any {
+    return this.api.getApiCallAuth(NetworkService.viewAdddress()+'/'+addressId+'/edit');
+  }
+
+  putAddress(body: any): any {
+    return this.api.putApiCallAuth(NetworkService.updateAdddress() + '/' + body.address_id, body);
   }
 
   deleteAddress(body: any): any {
@@ -52,7 +56,8 @@ export class AddressService {
   }
 
   setDefault(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.setDefault(), body);
+    console.log(body);
+    return this.api.putApiCallAuth(NetworkService.setDefault(body.address_id), body);
   }
 
 }

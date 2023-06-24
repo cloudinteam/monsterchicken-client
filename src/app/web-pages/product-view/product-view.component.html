@@ -28,7 +28,7 @@
         <div class="col-12 col-sm-12 col-md-7 col-lg-8">
           <h1 class="product-title"> {{this.product.name}} </h1>
           <div class="mt-1">
-            <span class="badge rounded-pill text-bg-danger me-1">{{ this.product.brand.brand | titlecase }}</span>
+            <span class="badge rounded-pill text-bg-danger me-1" *ngIf="product.brand">{{ this.product.brand.brand | titlecase }}</span>
             <span class="clickable text-secondary fw-bold" [routerLink]="'/category/'+this.product.product_category.product_category_id"> {{ product.product_category.category | titlecase }} </span>
           </div>
           <div class="seperator"></div>
@@ -39,7 +39,7 @@
             <div class="pro-details">
               <div class="pro-price">
                 <span class="pro-unit">
-                  {{ product.unit }}&nbsp;{{ product.mc_unit.name }}
+                  {{ product.unit }}&nbsp;{{ product.mc_unit.code }}
                 </span>
                 <span> {{ product.price.price | currency:'₹' }}</span>
               </div>

@@ -83,7 +83,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/mc-web/products';
   }
   static getRelatedProducts(): string {
-    return this.server_url() + this.server_v() + '/web/product/get-related-product';
+    return this.server_url() + this.server_v() + '/mc-web/get-related-product';
   }
   static viewProduct(): string {
     return this.server_url() + this.server_v() + '/mc-web/product';
@@ -104,7 +104,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/product/get-product-category';
   }
   static getBranches(id: any): string {
-    return this.server_url() + this.server_v() + '/get_branch_bases_active_cities/'+id;
+    return this.server_url() + this.server_v() + '/mc-web/place-we-serve/'+id;
   }
 
   //Order History
@@ -121,6 +121,12 @@ export class NetworkService {
 
   //cart
   static addToCart(): string {
+    return this.server_url() + this.server_v() + '/mc-web/cart';
+  }
+  static updateCart(): string {
+    return this.server_url() + this.server_v() + '/mc-web/cart';
+  }
+  static deleteCart(): string {
     return this.server_url() + this.server_v() + '/mc-web/cart';
   }
   static viewCart(): string {
@@ -155,22 +161,25 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/mc-web/check-service-availability';
   }
   static storeAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/store';
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
   static listAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/list';
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
   static viewAdddress(): string {
-    return this.server_url() + this.server_v() + '/web/address/view';
+    return this.server_url() + this.server_v() + '/mc-web/address';
+  }
+  static updateAdddress(): string {
+    return this.server_url() + this.server_v() + '/mc-web/address';
   }
   static deleteAdddress(): string {
     return this.server_url() + this.server_v() + '/web/address/delete';
   }
-  static setDefault(): string {
-    return this.server_url() + this.server_v() + '/web/address/default';
+  static setDefault(address_id: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/address/'+address_id+'/set-default-address';
   }
   static getActiveCities(): string {
-    return this.server_url() + this.server_v() + '/get-all-active-cities';
+    return this.server_url() + this.server_v() + '/mc-web/place-we-serve';
   }
 
   //File upload

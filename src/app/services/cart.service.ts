@@ -3,7 +3,6 @@ import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
-import { LocalcartService } from './localcart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +21,28 @@ export class CartService {
   constructor(
     private api: ApiCallService,
     private authService: AuthService,
-    private localCartService: LocalcartService,
   ) { }
 
+  get uniqueToken() {
+    let token: any = localStorage.getItem('unique_token');
+    // console.log(token);
+    return token;
+  }
+
   getCart() {
-    return this.api.getApiCallAuth(NetworkService.getCart()+'?unique_token='+'this.localCartService.uniqueToken');
+    return this.api.getApiCallAuth(NetworkService.getCart()+'?unique_token='+this.uniqueToken);
   }
 
   addCart(body: any): any {
     return this.api.postApiCallAuth(NetworkService.addToCart(), body);
+  }
+
+  updateCart(body: any, cartId: string): any {
+    return this.api.putApiCallAuth(NetworkService.updateCart()+'/'+cartId, body);
+  }
+
+  deleteCart(cartId: string) {
+    return this.api.deleteApiCallAuth(NetworkService.deleteCart()+'/'+cartId);
   }
 
   getCartCount() {
@@ -42,24 +54,20 @@ export class CartService {
   }
 
   addCartCount() {
-    if (this.authService.isLoggedIn()) {
-      this.getCart().subscribe((r: any) => {
-        this._cartCount.count = r.response.cart.length;
-        this._cartCount.total = r.response.totalCartPrice;
-        this.cartCount.next(this._cartCount);
-      })
-    }
+    this.getCart().subscribe((r: any) => {
+      this._cartCount.count = r.response.data.total_cart_count;
+      this._cartCount.total = r.response.data.total_cart_price;
+      this.cartCount.next(this._cartCount);
+    })
 
   }
 
   reduceCartCount() {
-    if (this.authService.isLoggedIn()) {
-      this.getCart().subscribe((r: any) => {
-        this._cartCount.count = r.response.cart.length;
-        this._cartCount.total = r.response.totalCartPrice;
-        this.cartCount.next(this._cartCount);
-      })
-    }
+    this.getCart().subscribe((r: any) => {
+      this._cartCount.count = r.response.data.total_cart_count;
+      this._cartCount.total = r.response.data.total_cart_price;
+      this.cartCount.next(this._cartCount);
+    })
   }
   setCartProducts(products: any) {
     this.cartProducts = products;

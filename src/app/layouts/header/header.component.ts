@@ -10,7 +10,6 @@ import { ProductService } from 'src/app/services/product.service';
 import { Category } from 'src/app/models/category.model';
 import { MenuItem } from 'primeng/api';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
-import { LocalcartService } from 'src/app/services/localcart.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LocationComponent } from 'src/app/web-pages/shared/location/location.component';
 import { LocationAllowComponent } from 'src/app/web-pages/shared/location-allow/location-allow.component';
@@ -63,7 +62,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private headerService: HeaderService,
     private offcanvasService: NgbOffcanvas,
     private cartService: CartService,
-    private localCartService: LocalcartService,
     private ngbModal: NgbModal,
     private geocoder: MapGeocoder,
     private cdRef: ChangeDetectorRef,
@@ -151,15 +149,19 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cartCount.total = r.total;
     })
 
-    if (this.logggedIn) {
-      this.localCartService.pushLocalCartToLive();
-      this.cartService.getCart().subscribe((r: any) => {
-        this.cartCount.count = r.response.cart.length;
-        this.cartCount.total = r.response.totalCartPrice;
-      })
-    } else {
-      this.localCartService.setCartTotal();
-    }
+    // if (this.logggedIn) {
+    //   // this.localCartService.pushLocalCartToLive();
+    //   this.cartService.getCart().subscribe((r: any) => {
+    //     this.cartCount.count = r.response.cart.length;
+    //     this.cartCount.total = r.response.totalCartPrice;
+    //   })
+    // } else {
+    //   this.localCartService.setCartTotal();
+    // }
+    this.cartService.getCart().subscribe((r: any) => {
+      this.cartCount.count = r.response.data.total_cart_count;
+      this.cartCount.total = r.response.data.total_cart_price;
+    })
 
     this.profileItems = [
       {

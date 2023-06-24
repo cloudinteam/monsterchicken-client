@@ -20,7 +20,7 @@ export class ProductService {
   }
 
   getRelatedProducts(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getRelatedProducts(), body);
+    return this.api.getApiCallAuth(NetworkService.getRelatedProducts()+'/'+body.near_by_branch+'?unique_token='+body.uniqueToken);
   }
 
   viewProduct(params: any ,uniqTkn: string = ''): any {

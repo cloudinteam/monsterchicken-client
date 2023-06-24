@@ -26,7 +26,7 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.mapService.getActiveCities().subscribe((r: any) => {
-        this.cities = r.response.cities;
+        this.cities = r.response.districts;
         this.loading = false;
     });
   }
