@@ -85,7 +85,7 @@ export class PaymentComponent implements OnInit {
         method: "cash_on_delivery",
       }
 
-      this.checkoutService.payment(data).subscribe((r: any) => {
+      this.checkoutService.payment(data, this.orderId).subscribe((r: any) => {
         if (r.status) {
           // this.alertService.fireToastS('Order placed');
           this.messageService.add({

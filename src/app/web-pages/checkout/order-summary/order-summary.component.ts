@@ -184,7 +184,6 @@ export class OrderSummaryComponent implements OnInit {
         promo_code: this.promoCodeId,
       }
       this.checkoutService.cartCheckout(data).subscribe((r: any) => {
-        console.log(r);
         if (r.status) {
           // this.router.navigate(['/checkout/payment/' + r.orderId]);
           this.payment(r.orderId);
@@ -212,7 +211,7 @@ export class OrderSummaryComponent implements OnInit {
         method: "cash_on_delivery",
       }
 
-      this.checkoutService.payment(data).subscribe((r: any) => {
+      this.checkoutService.payment(data, orderId).subscribe((r: any) => {
         if (r.status) {
           this.cartService.addCartCount();
           this.messageService.add({

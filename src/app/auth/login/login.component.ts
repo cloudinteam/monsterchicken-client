@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.as.verifyNumber(this.loginForm.value).subscribe((r: any) => {
-      console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message);
         this.messageService.add({
@@ -99,16 +98,12 @@ export class LoginComponent implements OnInit {
   }
 
   validateNumber($event: any) {
-    // console.log($event);
-    // console.log($event.value.toString().length);
     if ($event.value != null && $event.value.toString().length == 10) {
       this.btnLogin = false;
     }
   }
 
   validateOtp($event: any) {
-    // console.log($event);
-    // console.log($event.value.toString().length);
     if ($event.value != null && $event.value.toString().length == 6) {
       this.btnOtp = false;
     }
@@ -124,7 +119,6 @@ export class LoginComponent implements OnInit {
       })
     }
     this.as.verifyOtp(this.otpForm.value).subscribe((r: any) => {
-      console.log(r);
       if (r.status) {
         // this.alert.fireToastS(r.message);
         this.messageService.add({
@@ -133,26 +127,15 @@ export class LoginComponent implements OnInit {
           detail: r.message
         })
 
-        // this.otpSent = true;
-        // this.otpFormControl.userId.setValue(r.response.userId);
-
         localStorage.setItem('accessToken', r.response.access_token);
         localStorage.setItem('userId', r.response.user_id);
 
-        // this.router.navigate(['/']);
-        // if (localStorage.getItem('next_p') === 'cart') {
-        //   this.router.navigate(['/cart']);
-        // } else this.router.navigate(['/']);
-        // window.location.reload();
-
         if (localStorage.getItem('next_url') && localStorage.getItem('next_url') != 'undefined') {
-
           this.router.navigate([localStorage.getItem('next_url')]);
           localStorage.removeItem('next_url');
           setTimeout(() => {
             window.location.reload();
           }, 100)
-
         } else {
           window.location.reload();
         }
