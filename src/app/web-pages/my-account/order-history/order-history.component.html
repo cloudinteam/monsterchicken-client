@@ -7,6 +7,12 @@
       <h4> <b>Orders History</b> </h4>
     </div>
 
+    <!-- <div class="col-12">
+      <pre>
+        {{ orders | json }}
+      </pre>
+    </div> -->
+
     <div class="col-12" *ngIf="orders.length > 0">
       <p-table [value]="orders" >
         <ng-template pTemplate="header">
@@ -21,25 +27,22 @@
         </ng-template>
         <ng-template pTemplate="body" let-order let-rowIndex="rowIndex">
           <div class="address-card">
-            <!-- <pre>
-              {{ order | json }}
-            </pre> -->
             <div class="a-card">
 
               <div class="head">
                 <div fxLayout="row" class="mb-1" fxLayoutGap="10px" fxLayoutAlign="space-between start">
                   <p class="area"> <span class="item-sn me-2">{{ rowIndex+1 }}</span> #{{ order.order_number }}  </p>
-                  <div> <span class="order-status"> {{ paymentBtn(order) ? 'Payment Pending' : order.status }} </span> </div>
+                  <div> <span class="order-status"> {{ paymentBtn(order) ? 'Payment Pending' : order.status.name }} </span> </div>
                 </div>
                 <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between start">
-                  <span class="text-secondary" style="font-size: 13px;"> {{ order.created_at }} </span>
+                  <span class="text-secondary" style="font-size: 13px;"> {{ order.created_at | date:'medium' }} </span>
                   <span> {{ order.supplier_name }} </span>
                 </div>
               </div>
 
 
               <div fxLayout="row wrap" fxLayoutGap="10px">
-                <div class="street" *ngFor="let product of order.products"> <b class="me-1">{{ product.quantity }}x</b>  {{ product.product_name }} </div>
+                <div class="street" *ngFor="let product of order.order_items"> <b class="me-1">{{ product.quantity }}x</b>  {{ product.product.name }} </div>
               </div>
 
               <div>
@@ -48,7 +51,7 @@
 
               <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
                 <div>
-                  <span class="text-secondary">Total:</span> <b> {{ order.total_price }} </b>
+                  <span class="text-secondary">Total:</span> <b> {{ order.total_amount | currency:'₹' }} </b>
                 </div>
                 <div fxLayoutGap="10px">
                   <span class="badge rounded-pill text-bg-secondary clickable" (click)="viewInvoice(order.order_id)"> <!-- pTooltip="Download Invoice" tooltipPosition="top" -->
@@ -57,7 +60,6 @@
                     <i class="fa-regular fa-credit-card"></i> Proceed to pay </span>
                 </div>
               </div>
-
 
             </div>
 

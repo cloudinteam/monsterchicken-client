@@ -23,6 +23,10 @@ export class NetworkService {
       deviceId: this.hash(),
     }).set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
+      // .set('Access-Control-Allow-Origin', 'http://localhost:4200/')
+      // .set('Access-Control-Allow-Origin', 'https://monsterchicken-client-test.vercel.app/')
+      // .set('Access-Control-Allow-Origin', 'https://api.test.monsterchicken.cloudinworks.com/');
+
     return header;
   }
 
@@ -30,6 +34,9 @@ export class NetworkService {
     let header = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
+      //.set('Access-Control-Allow-Origin', 'http://localhost:4200/')
+      //.set('Access-Control-Allow-Origin', 'https://monsterchicken-client-test.vercel.app/')
+      //.set('Access-Control-Allow-Origin', 'https://api.test.monsterchicken.cloudinworks.com/');
     return header;
   }
 
@@ -112,7 +119,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/order-history';
   }
   static getOrderInvoice(id: string): string {
-    return this.server_url() + '/api/admin/order/'+ id +'/generate-pdf';
+    return this.server_url() + '/mc-web/order/'+ id +'/invoice';
   }
   static getOrderDetail(id: string): string {
     return this.server_url() + this.server_v()+ '/web/order-history/' + id;
@@ -144,8 +151,8 @@ export class NetworkService {
   static cartCheckout(): string {
     return this.server_url() + this.server_v() + '/mc-web/cart-checkout';
   }
-  static payment(): string {
-    return this.server_url() + this.server_v() + '/payment';
+  static payment(orderId: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/payment/'+orderId;
   }
   static promoCode(data: any): string {
     return this.server_url() + this.server_v() + '/mc-web/check-promo-code?promo_code='+data.promo_code+'&sub_total='+data.sub_total;

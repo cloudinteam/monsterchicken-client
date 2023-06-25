@@ -23,8 +23,8 @@ export class CheckoutService {
     return this.api.postApiCallAuth(NetworkService.cartCheckout(), body);
   }
 
-  payment(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.payment(), body);
+  payment(body: any, orderId: string): any {
+    return this.api.postApiCallAuth(NetworkService.payment(orderId), body);
   }
 
 }
