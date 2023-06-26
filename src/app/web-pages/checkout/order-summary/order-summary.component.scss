@@ -1,7 +1,7 @@
 .cart-item {
   padding: 15px 10px;
   border-bottom: 1px solid #ddd;
-background-color: #f7f7f7;
+  background-color: #f7f7f7;
 
   .item-sn {
     width: 22px;
@@ -84,5 +84,19 @@ background-color: #f7f7f7;
     color: #e4002b;
     font-weight: 900;
     line-height: 14px;
+  }
+}
+
+.promo-chip {
+  background: #dfdfdf;
+  padding: 2px 3px 2px 12px;
+  display: inline-block;
+  border-radius: 50px;
+  font-weight: 800;
+  border: 1px solid #000;
+  color: #202020;
+
+  .close-btn {
+    cursor: pointer;
   }
 }
