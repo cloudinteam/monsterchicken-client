@@ -216,10 +216,10 @@ export class NetworkService {
 
   // Notification
   static notificationList(): string {
-    return this.server_url() + this.server_v() + '/notification/my-notifications';
+    return this.server_url() + this.server_v() + '/mc-web/notification/my-notifications';
   }
   static notificationUpdate(id: string): string {
-    return this.server_url() + this.server_v() + '/notification/update/'+id;
+    return this.server_url() + this.server_v() + '/mc-web/notification/update/'+id;
   }
 
   // Forms
