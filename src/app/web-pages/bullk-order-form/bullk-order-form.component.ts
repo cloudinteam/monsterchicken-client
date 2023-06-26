@@ -1,15 +1,8 @@
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators, } from '@angular/forms';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { ProductService } from 'src/app/services/product.service';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import { MessageService } from 'primeng/api';
 import { RegexPattern } from 'src/app/utils/regex';
 
@@ -19,23 +12,17 @@ import { RegexPattern } from 'src/app/utils/regex';
   styleUrls: ['./bullk-order-form.component.scss'],
 })
 export class BullkOrderFormComponent implements OnInit {
+
   loading = false;
   bulkOrderForm!: FormGroup;
   productArray!: FormArray<any>;
   isChecked: boolean = false;
   states: any = [];
   districts: any = [];
-  city: any = [];
-  country: any = [];
-  selectedState: any = null;
-  bulkOrder: any = [];
+
   submitted = false;
 
   productOptions: any[] = [];
-  prPage = 1;
-  prLoading = false;
-  totalProductOptions!: number;
-  prOptLoaded = false;
 
   categoryOptions: any[] = [];
 
@@ -55,33 +42,26 @@ export class BullkOrderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStates();
-    this.getCategoryOptions();
+    this.getBulkProducts();
     this.initForm();
     // this.add();
   }
 
   initForm() {
     this.bulkOrderForm = this.formBuilder.group({
-      // bulkOrder: [null, [Validators.required]],
-      country: [103, [Validators.required]],
-      state: [null, [Validators.required]],
-      district: [null, [Validators.required]],
-      // city: [null, [Validators.required]],
-      pinCode: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.numeric),
-          Validators.maxLength(6),
-          Validators.minLength(6),
-        ],
-      ],
-      institutionName: ['', [ Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
-      name: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
-      email: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
-      number1: ['', [ Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
+      state_id: [null, [Validators.required]],
+      district_id: [null, [Validators.required]],
+      taluk: ['', [Validators.required, Validators.minLength(3), Validators.pattern(this.alphaSpace)]],
+      pincode: ['', [Validators.required, Validators.pattern(this.numeric), Validators.maxLength(6), Validators.minLength(6)]],
       address: ['', [Validators.required, Validators.minLength(15)]],
+      phone_no_1: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
+      phone_no_2: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
+      mail: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
+      message: ['', [Validators.minLength(10)]],
+      product_id: [null, [Validators.required]],
       quantity: ['', [Validators.required, Validators.pattern(this.numeric)]],
+
       // productData: this.formBuilder.array([]),
     });
   }
@@ -136,43 +116,10 @@ export class BullkOrderFormComponent implements OnInit {
     });
   }
 
-  getCountry() {
-    let obj = {
-      version: 1,
-    };
-
-    this.cs.getCountry(obj).subscribe((r: any) => {
-      this.country = r.response.countries;
-    });
-  }
-
-  getCity($event: any) {
-    let obj = {
-      stateId: this.form['state'].value,
-      districtId: $event.value,
-    };
-    this.cs.getCity(obj).subscribe((r: any) => {
-      this.city = r.response.cities;
-    });
-  }
-
-  getCategoryOptions() {
-    this.productService.getCategoryOptions({}).subscribe((r: any) => {
-      // console.debug(r);
-      this.categoryOptions = r.response.categories;
-    });
-  }
-
-  mailFilter(e: any) {
-    console.log(e);
-
-    var regex = new RegExp("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z-.]");
-    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-    if (regex.test(str)) {
-      return true;
-    }
-    e.preventDefault();
-    return false;
+  getBulkProducts() {
+    this.productService.getBulkProductOptions().subscribe((r: any) => {
+      this.productOptions = r.response.products;
+    })
   }
 
   validate(field: any) {
@@ -202,11 +149,7 @@ export class BullkOrderFormComponent implements OnInit {
       return;
     }
 
-    let obj = {
-      bulkOrderDetails: this.bulkOrderForm.value,
-    };
-
-    this.productService.bulkOrderSubmit(obj.bulkOrderDetails).subscribe((r) => {
+    this.productService.bulkOrderSubmit(this.bulkOrderForm.value).subscribe((r) => {
       if (r.status) {
         // this.alert.fireToastS(r.message[0]);
         this.messageService.add({
@@ -226,39 +169,5 @@ export class BullkOrderFormComponent implements OnInit {
         });
       }
     });
-  }
-
-  public keyPressNumbers(w: any) {
-    var charCode = w.which ? w.which : w.keyCode;
-    if (charCode < 48 || charCode > 57) {
-      w.preventDefault();
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  optionsProduct($event: any) {
-    // console.log($event);
-    let data = {
-      categoryId: $event.value,
-    };
-    this.productService.getProductOptions(data).subscribe((r: any) => {
-      // console.log(r)
-      this.productOptions = r.response.products;
-      this.totalProductOptions = r.response.totalProducts;
-
-      if (r.response.products.length == 0) {
-        // this.alert.fireToastN('No products', 'Category has no products', 'pi pi-exclamation-circle');
-        this.messageService.add({
-          severity: 'info',
-          summary: 'No products',
-          detail: 'Category has no products',
-        });
-      }
-
-      return r.response.products;
-    });
-    return [];
   }
 }

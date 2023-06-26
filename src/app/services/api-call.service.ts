@@ -452,4 +452,58 @@ export class ApiCallService {
       );
   }
 
+  optionsApiCallAuth(url: string): any {
+    return this.http
+      .options(url, {
+        headers: NetworkService.getAuthHeader(),
+      })
+      .pipe(
+        map((r: any) => {
+          let result: any = this.es.unmaskData(r);
+          if (result.status == true) {
+            return result;
+          } else {
+            // alert('Failed to ' + errMsg + ' ' + result.response.message[0]);
+            // this.alert.fireToastF(result.message[0]);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: result.message[0]
+            })
+          }
+        }),
+        catchError((err) => {
+          let data: any = this.es.unmaskData(err.error);
+          if (err.status == 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Unauthorized'
+            })
+            this.router.navigate(['']);
+            localStorage.removeItem('accessToken');
+            sessionStorage.clear();
+            location.reload();
+          }
+          if (err.status == 500 || err.status == 429) {
+            // this.alert.fireToastF('Something went wrong');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong'
+            })
+          }
+          if (err.status == 422) {
+            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Invaid Input',
+              detail: data.message[0]
+            })
+          }
+          return err;
+        })
+      );
+  }
+
 }

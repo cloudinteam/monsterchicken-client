@@ -107,6 +107,9 @@ export class NetworkService {
   static getProductOptions(): string {
     return this.server_url() + this.server_v() + '/web/product/get-product';
   }
+  static getBulkProductOptions(): string {
+    return this.server_url() + this.server_v() + '/mc-web/products/bulk_order_product';
+  }
   static getCategoryOptions(): string {
     return this.server_url() + this.server_v() + '/web/product/get-product-category';
   }
