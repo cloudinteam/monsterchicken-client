@@ -8,7 +8,7 @@
         <ul>
           <li> <a routerLink="/" class="pointer"> Home </a> </li>
           <!-- <li> <a [routerLink]="'/category/'+this.categories[0]?.categoryId"> {{ this.categories[0]?.categoryName }} </a> </li> -->
-          <li> {{ this.selectedCategory }} </li>
+          <li> {{ this.selectedCategory | titlecase }} </li>
         </ul>
       </div>
     </div>
