@@ -7,8 +7,8 @@
       <div class="product-trails">
         <ul>
           <li> <a routerLink="/" class="pointer"> Home </a> </li>
-          <li> <a [routerLink]="'/category/'+this.product.product_category.product_category_id"> {{ this.product.product_category.category }} </a> </li>
-          <li> {{ this.product.name }} </li>
+          <li> <a [routerLink]="'/category/'+this.product.product_category.product_category_id"> {{ this.product.product_category.category | titlecase }} </a> </li>
+          <li> {{ this.product.name | titlecase }} </li>
         </ul>
       </div>
     </div>
@@ -48,7 +48,7 @@
                   Stock</span>
                 <p-inputNumber [disabled]="disableAdd" *ngIf="product.cart_product_quantity > 0 && product.stock > 0" [ngModel]="product.cart_product_quantity"
                   [showButtons]="true" buttonLayout="horizontal" inputId="cartProductCount" spinnerMode="horizontal"
-                  [step]="1" [min]="0" [max]="product.max_order_count" decrementButtonClass="btn-minus"
+                  [step]="1" [min]="1" [max]="product.max_order_count" decrementButtonClass="btn-minus"
                   incrementButtonClass="btn-plus" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
                   mode="decimal" (onInput)="cartNumber($event, product)"></p-inputNumber>
                 <button type="button" class="add-btn" (click)="addCart(product)"
