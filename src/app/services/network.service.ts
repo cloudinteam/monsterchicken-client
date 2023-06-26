@@ -119,7 +119,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/order-history';
   }
   static getOrderInvoice(id: string): string {
-    return this.server_url() + '/mc-web/order/'+ id +'/invoice';
+    return this.server_url() + this.server_v() + '/mc-web/order/'+ id +'/invoice';
   }
   static getOrderDetail(id: string): string {
     return this.server_url() + this.server_v()+ '/web/order-history/' + id;
@@ -216,10 +216,10 @@ export class NetworkService {
 
   // Notification
   static notificationList(): string {
-    return this.server_url() + this.server_v() + '/notification/my-notifications';
+    return this.server_url() + this.server_v() + '/mc-web/notification/my-notifications';
   }
   static notificationUpdate(id: string): string {
-    return this.server_url() + this.server_v() + '/notification/update/'+id;
+    return this.server_url() + this.server_v() + '/mc-web/notification/update/'+id;
   }
 
   // Forms

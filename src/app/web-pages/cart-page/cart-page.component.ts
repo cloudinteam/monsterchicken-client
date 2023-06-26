@@ -35,7 +35,7 @@ export class CartPageComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.loadCart();
-    this.loading = false;
+    // this.loading = false;
   }
 
   loadCart() {

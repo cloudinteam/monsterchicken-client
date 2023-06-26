@@ -7,7 +7,7 @@
 
 <div class="row g-3" *ngIf="!loading">
 
-  <div class="col-12" *ngIf="!outOfStock">
+  <div class="col-12">
     <div class="items-bill">
       <div class="bill-heading mb-3"> Do you have a coupon ? </div>
       <form (ngSubmit)="applyCoupon()" [formGroup]="couponForm">
@@ -19,13 +19,14 @@
               <div *ngIf="submitted && couponFormControls['promoCode'].errors" class="invalid-error">
                 <span *ngIf="couponFormControls['promoCode'].errors.required">Coupon Code is Required</span>
               </div>
-              <div *ngIf="submitted && promoCode == null||''" class="invalid-error">
-                <span *ngIf="promoCode == null||''">Coupon Code is Required</span>
-              </div>
             </div>
           </div>
           <div class="col-12 col-sm-6 col-md-2"> <!-- (click)="applyCoupon()" -->
             <button type="submit"  class="btn btn-danger w-100 rounded-0"> Apply </button>
+          </div>
+          <div class="col-12" *ngIf="promoCode !== ''">
+            <span class="promo-chip"> {{ promoCode }}
+              <span (click)="removePromo()" class="close-btn"> <i class="fas fa-times-circle fa-lg text-danger"></i> </span> </span>
           </div>
         </div>
       </form>

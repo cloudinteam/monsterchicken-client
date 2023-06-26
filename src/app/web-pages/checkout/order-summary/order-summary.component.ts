@@ -84,7 +84,6 @@ export class OrderSummaryComponent implements OnInit {
   loadSummary() {
 
     this.checkoutService.cartSummary().subscribe((r: any) => {
-      console.log(r);
       this.data = r;
       this.shippingAddress = r.response.is_address_available;
       this.orderSummary = r.response.cart_data;
@@ -127,9 +126,14 @@ export class OrderSummaryComponent implements OnInit {
               summary: 'Success',
               detail: r.message[0]
             })
+            this.promoCode = this.couponFormControls.promoCode.value;
             this.promoCodeId = r.offer.offer_id;
             this.discountPrice = r.offer.cart_discount_amount;
             this.grandTotal = this.totalCartPrice - r.offer.cart_discount_amount;
+            this.submitted = false;
+            this.couponForm.patchValue({
+              promoCode: ''
+            })
           } else {
             this.couponForm.patchValue({
               promoCode: ''
@@ -226,6 +230,13 @@ export class OrderSummaryComponent implements OnInit {
 
     }
 
+  }
+
+  removePromo() {
+    this.loading = true;
+    this.promoCode = '';
+    this.promoCodeId = '';
+    this.loadSummary();
   }
 
 }

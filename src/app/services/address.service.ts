@@ -56,7 +56,6 @@ export class AddressService {
   }
 
   setDefault(body: any): any {
-    console.log(body);
     return this.api.putApiCallAuth(NetworkService.setDefault(body.address_id), body);
   }
 

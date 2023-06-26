@@ -29,9 +29,7 @@ export class NotificationComponent implements OnInit {
     this.notifications = [];
     this.readNotifications= [];
     this.headerService.notificationList().subscribe((r: any) => {
-
       if (r.response.notifications.length > 0) {
-        console.log('dfg')
         r.response.notifications.forEach((msg: any) => {
           if (msg.is_read == 0) {
             this.notifications.push(msg);
@@ -41,7 +39,6 @@ export class NotificationComponent implements OnInit {
           }
         });
       }
-
       this.loading = false;
     })
   }
