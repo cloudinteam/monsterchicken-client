@@ -81,7 +81,7 @@ export class SearchComponent implements OnInit {
       uniqTkn: localStorage.getItem('unique_token') ?? ''
     };
     // console.log(data);
-    this.productService.getProducts(data.userLat, data.userLong, data.category, data.uniqTkn).subscribe((r: any) => {
+    this.productService.getProducts(data.userLat, data.userLong, data.category, data.uniqTkn, this.filter.search).subscribe((r: any) => {
     // this.productService.getProducts(this.filter).subscribe((r: any) => {
       // console.log(r);
       if (r.response.products.length == 0) {
