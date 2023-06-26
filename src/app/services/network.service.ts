@@ -119,7 +119,7 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/order-history';
   }
   static getOrderInvoice(id: string): string {
-    return this.server_url() + '/mc-web/order/'+ id +'/invoice';
+    return this.server_url() + this.server_v() + '/mc-web/order/'+ id +'/invoice';
   }
   static getOrderDetail(id: string): string {
     return this.server_url() + this.server_v()+ '/web/order-history/' + id;
