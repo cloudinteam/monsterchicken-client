@@ -19,7 +19,11 @@
         <div class="px-4 py-4 mb-5 shadow">
 
           <div class="card-title h4 mb-4 fw-bold text-dark">
-            Contact Us For Bulk cull bird purchase
+            Contact Us For Bulk purchase
+          </div>
+
+          <div class="card-title mb-3">
+            <span class="fw-bold text-danger">Fill out the form below and we will get in touch within 48 hours</span>
           </div>
 
           <div class="card-body">
@@ -43,62 +47,131 @@
                 <hr>
               </div> -->
 
-              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Name*</label>
+              <div class="col-sm-12 col-md-6 col-lg-6 col-12 my-2">
                 <div>
-                  <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" required />
-                  <div class="text-danger ms-1" *ngIf="submitted && validate('name')">Name is Invalid</div>
-                  <div class="text-danger ms-1" *ngIf="form['name'].errors?.pattern">Only alphabets and space allowed</div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Phone Number *</label>
-                <div>
-                  <input type="text" pKeyFilter="int" formControlName="number1" maxlength="10"
-                    class="form-control rounded-2 bulk-input" />
-                  <div class="text-danger ms-1" *ngIf="submitted && validate('number1')">Phone number is Invalid</div>
-                  <div class="text-danger ms-1" *ngIf="form['number1'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Email *</label>
-                <div>
-                  <input type="email" formControlName="email" class="form-control rounded-2 bulk-input" required />
-                  <div class="text-danger ms-1" *ngIf="submitted && validate('email')">Email Id is Invalid</div>
-                  <div class="text-danger ms-1" *ngIf="form['email'].errors?.pattern">Mail should contain only (a-z), (0-9) and "."</div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
-                <div>
-                  <label class="fw-bold red-heading fs-6">State*</label>
-                  <p-dropdown [options]="states" optionValue="value" optionLabel="name"
-                      [required]="true" formControlName="state" [filter]="true" filterBy="name" [showClear]="false"
-                      placeholder="Select a State" (onChange)="getDistricts($event)">
-                      <ng-template pTemplate="filter">
+                  <label class="fw-bold red-heading fs-6">Product*</label>
+                  <p-dropdown [options]="productOptions" optionValue="product_id" optionLabel="name"
+                      [required]="true" formControlName="product_id" [filter]="false" filterBy="name" [showClear]="false"
+                      placeholder="Select a product">
+                      <!-- <ng-template pTemplate="filter">
                         <div class="p-input-icon-right w-100" >
                           <i class="pi pi-search fw-bold text-dark"></i>
                           <input type="text" class="form-control form-control" placeholder="Search state" autofocus/>
                         </div>
-                      </ng-template>
+                      </ng-template> -->
                   </p-dropdown>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['product_id'].errors?.required"> Product required </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6"> Quantity* </label>
+                <div>
+                  <input input pInputText pKeyFilter="int" formControlName="quantity" class="form-control rounded-2 bulk-input" />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['quantity'].errors?.required">Quantity is required</small>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <hr>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Name*</label>
+                <div>
+                  <input type="text" formControlName="name" class="form-control rounded-2 bulk-input" required />
+                  <!-- <div class="text-danger ms-1" *ngIf="submitted && validate('name')">Name is Invalid</div> -->
+                  <div class="text-danger ms-1" *ngIf="submitted && form['name'].errors?.required">Name is required</div>
+                  <div class="text-danger ms-1" *ngIf="form['name'].errors?.pattern">Only alphabets and space allowed</div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Email*</label>
+                <div>
+                  <input type="email" formControlName="mail" class="form-control rounded-2 bulk-input" required />
+                  <div class="text-danger ms-1" *ngIf="submitted && form['mail'].errors?.required">Email Id is required</div>
+                  <div class="text-danger ms-1" *ngIf="form['mail'].errors?.pattern">Mail should contain only (a-z), (0-9) and "."</div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Phone Number*</label>
+                <div>
+                  <input type="text" pKeyFilter="int" formControlName="phone_no_1" maxlength="10" class="form-control rounded-2 bulk-input" />
+                  <div class="text-danger ms-1" *ngIf="submitted && form['phone_no_1'].errors?.required">Phone number is required</div>
+                  <div class="text-danger ms-1" *ngIf="form['phone_no_1'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Alternate Phone Number *</label>
+                <div>
+                  <input type="text" pKeyFilter="int" formControlName="phone_no_2" maxlength="10" class="form-control rounded-2 bulk-input" />
+                  <div class="text-danger ms-1" *ngIf="submitted && form['phone_no_2'].errors?.required">Alternate Phone number is required</div>
+                  <div class="text-danger ms-1" *ngIf="form['phone_no_2'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
+                </div>
+              </div>
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Address*</label>
+                <div>
+                  <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3" required></textarea>
+                  <small class="text-danger ms-1" *ngIf="submitted && form['address'].errors?.required">Address is required</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <div>
+                  <label class="fw-bold red-heading fs-6">State*</label>
+                  <p-dropdown [options]="states" optionValue="value" optionLabel="name"
+                      [required]="true" formControlName="state_id" [filter]="true" filterBy="name" [showClear]="false"
+                      placeholder="Select a State" (onChange)="getDistricts($event)">
+                      <!-- <ng-template pTemplate="filter">
+                        <div class="p-input-icon-right w-100" >
+                          <i class="pi pi-search fw-bold text-dark"></i>
+                          <input type="text" class="form-control form-control" placeholder="Search state" autofocus/>
+                        </div>
+                      </ng-template> -->
+                  </p-dropdown>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['state_id'].errors?.required"> State required </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <div>
+                  <label class="fw-bold red-heading fs-6">District*</label>
+                  <p-dropdown [options]="districts" optionValue="value" optionLabel="name"
+                      [required]="true" formControlName="district_id" [filter]="true" filterBy="name" [showClear]="false"
+                      placeholder="Select a District" [readonly]="!form['state_id'].value"></p-dropdown>
                   <div>
-                    <small class="text-danger ms-1" *ngIf="submitted && form['state'].errors"> State required </small>
+                    <small class="text-danger ms-1" *ngIf="submitted && form['district_id'].errors?.required"> District required </small>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Taluk*</label>
                 <div>
-                  <label class="fw-bold red-heading fs-6">District*</label>
-                  <p-dropdown [options]="districts" optionValue="value" optionLabel="name"
-                      [required]="true" formControlName="district" [filter]="true" filterBy="name" [showClear]="false"
-                      placeholder="Select a District" [readonly]="!form['state'].value" (onChange)="getCity($event)"></p-dropdown>
-                  <div>
-                    <small class="text-danger ms-1" *ngIf="submitted && form['district'].errors"> District required </small>
-                  </div>
+                  <input type="text" formControlName="taluk" class="form-control rounded-2 bulk-input" required />
+                  <div class="text-danger ms-1" *ngIf="submitted && form['taluk'].errors?.required">Taluk is required</div>
+                  <div class="text-danger ms-1" *ngIf="form['taluk'].errors?.pattern">Only alphabets and space allowed</div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Pincode*</label>
+                <div>
+                  <input type="text" formControlName="pincode" pKeyFilter="int" maxlength="6" class="form-control rounded-2 bulk-input" required />
+                  <small class="text-danger ms-1" *ngIf="submitted && form['pincode'].errors?.required">Pincode is required</small>
+                </div>
+              </div>
+
+              <div class="col-12 my-2">
+                <label class="fw-bold red-heading fs-6">Message</label>
+                <div>
+                  <textarea type="text" formControlName="message" class="form-control rounded-2 bulk-text" rows="3" required></textarea>
+                  <small class="text-danger ms-1" *ngIf="submitted && form['message'].errors?.minLength">Message should be atleast 10 characters</small>
                 </div>
               </div>
 
@@ -113,41 +186,6 @@
                   </div>
                 </div>
               </div> -->
-
-              <div class="col-sm-6 col-md-6 col-lg-4 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Pin code*</label>
-                <div>
-                  <input type="text" formControlName="pinCode" (keypress)="keyPressNumbers($event)"
-                    class="form-control rounded-2 bulk-input" required />
-                  <small class="text-danger ms-1" *ngIf="submitted && validate('pinCode')">Pincode is Invalid</small>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-12 col-lg-8 col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Institution Name</label>
-                <div>
-                  <input type="text" formControlName="institutionName" class="form-control rounded-2 bulk-input" />
-                  <!-- <div class="text-danger ms-1" *ngIf="submitted && validate('institutionName')">Institution Name is Invalid</div> -->
-                  <div class="text-danger ms-1" *ngIf="form['institutionName'].errors?.pattern">Only alphabets and space allowed</div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-12 col-lg-4 col-12 my-2">
-                <label class="fw-bold red-heading fs-6"> Quantity* </label>
-                <div>
-                  <input input pInputText pKeyFilter="int" formControlName="quantity" class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="submitted && form['quantity'].errors">Quantity is Invalid</small>
-                </div>
-              </div>
-
-              <div class="col-12 my-2">
-                <label class="fw-bold red-heading fs-6">Address*</label>
-                <div>
-                  <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3"
-                    required></textarea>
-                  <small class="text-danger ms-1" *ngIf="submitted && validate('address')">Address is Invalid</small>
-                </div>
-              </div>
 
               <div class="col-12 text-center">
                 <button type="submit" class="btn btn-mred w-100 mt-3 px-5 rounded-0 py-3 btn-lg"> Place order </button>

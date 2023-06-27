@@ -43,14 +43,9 @@ export class ProductService {
     return this.api.getApiCallAuth(NetworkService.getBranches(id));
   }
 
-  // search(body: any): any {
-  //   return this.api.postApiCallAuth(NetworkService.search(), body);
-  // }
-
-  // dashboard(body: any): any {
-  //   return this.api.postApiCallAuth(NetworkService.dashboard(), body);
-  // }
-
+  getBulkProductOptions(): any {
+    return this.api.optionsApiCallAuth(NetworkService.getBulkProductOptions());
+  }
 
   getCategoryOptions(body: any): any {
     return this.api.postApiCallAuth(NetworkService.getCategoryOptions(), body);
