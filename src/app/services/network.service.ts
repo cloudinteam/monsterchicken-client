@@ -214,7 +214,7 @@ export class NetworkService {
   }
 
   static bulkOrderSubmit(): string {
-    return this.server_url() + this.server_v() + '/bulkOrder/store';
+    return this.server_url() + this.server_v() + '/mc-web/bulk-order';
   }
 
   // Notification
