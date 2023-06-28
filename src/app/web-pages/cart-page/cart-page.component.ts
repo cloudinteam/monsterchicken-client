@@ -52,7 +52,7 @@ export class CartPageComponent implements OnInit {
   }
 
   checkout() {
-    this.loading = true;
+    // this.loading = true;
     this.router.navigateByUrl('/checkout');
 
     // if (this.authService.isLoggedIn() && this.cart != null) {
