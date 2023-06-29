@@ -198,7 +198,7 @@ export class NetworkService {
   }
 
   static getState(): string {
-    return this.server_url() + this.server_v() + '/state/list';
+    return this.server_url() + this.server_v() + '/mc-web/states';
   }
 
   static getCountry(): string {
@@ -209,8 +209,8 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/city/list';
   }
 
-  static getDistrict(): string {
-    return this.server_url() + this.server_v() + '/district/list';
+  static getDistrict(stateId: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/districts/'+stateId;
   }
 
   static bulkOrderSubmit(): string {

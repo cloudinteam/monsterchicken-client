@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Meta } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,7 +40,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   providers: [
     DialogService,
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    Meta
   ],
   bootstrap: [AppComponent],
 })
