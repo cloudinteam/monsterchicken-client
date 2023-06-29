@@ -134,6 +134,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([localStorage.getItem('next_url')]);
           localStorage.removeItem('next_url');
           setTimeout(() => {
+            localStorage.removeItem('next_url');
             window.location.reload();
           }, 100)
         } else {

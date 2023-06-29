@@ -99,7 +99,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
         let params = {
           stateId: this.address.state.id,
         };
-        this.cs.getDistrict(params).subscribe((r: any) => {
+        this.cs.getDistrict(params.stateId).subscribe((r: any) => {
           this.districts = r.response.districts;
         });
         this.editAddress(r.response.address);
@@ -178,10 +178,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   getStates() {
-    let obj = {
-      version: 0.1,
-    };
-    this.cs.getStates(obj).subscribe((r: any) => {
+    this.cs.getStates().subscribe((r: any) => {
       this.states = r.response.states;
     });
   }
@@ -190,7 +187,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     let params = {
       stateId: $event.value,
     };
-    this.cs.getDistrict(params).subscribe((r: any) => {
+    this.cs.getDistrict(params.stateId).subscribe((r: any) => {
       this.districts = r.response.districts;
     });
   }

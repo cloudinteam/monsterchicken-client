@@ -52,16 +52,16 @@ export class CommonService {
     return this.api.postApiCallAuthNEE(NetworkService.upload(), data);
   }
 
-  getStates(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getState(), body);
+  getStates(): any {
+    return this.api.optionsApiCallAuth(NetworkService.getState());
   }
 
   getCity(body: any): any {
     return this.api.postApiCallAuth(NetworkService.getCity(), body);
   }
 
-  getDistrict(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getDistrict(), body);
+  getDistrict(stateId: string): any {
+    return this.api.optionsApiCallAuth(NetworkService.getDistrict(stateId));
   }
 
   getCountry(body: any): any {

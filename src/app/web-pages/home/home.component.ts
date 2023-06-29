@@ -1,6 +1,7 @@
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ProductService } from './../../services/product.service';
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'home',
@@ -59,9 +60,14 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private titleService: Title,
+    private metaService: Meta,
   ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Home - Monster Chicken');
+    this.metaService.updateTag({ name: 'keywords', content: 'Chicken, Boneless Chicken, Leg peice' });
+    this.metaService.updateTag({ name: 'description', content: 'This is the page description.' });
     this.loadData();
   }
 

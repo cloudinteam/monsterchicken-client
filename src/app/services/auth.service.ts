@@ -63,6 +63,7 @@ export class AuthService {
     setTimeout(() => {
       // localStorage.clear();
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('next_url');
       sessionStorage.clear();
 
       window.location.reload();

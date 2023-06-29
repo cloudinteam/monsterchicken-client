@@ -48,10 +48,7 @@ export class BecomeAFranchiseComponent implements OnInit {
   }
 
   getStates() {
-    let obj = {
-      version: 0.1,
-    };
-    this.cs.getStates(obj).subscribe((r: any) => {
+    this.cs.getStates().subscribe((r: any) => {
       this.states = r.response.states;
     });
   }
@@ -60,7 +57,7 @@ export class BecomeAFranchiseComponent implements OnInit {
     let params = {
       stateId: $event.value
     }
-    this.cs.getDistrict(params).subscribe((r: any) => {
+    this.cs.getDistrict(params.stateId).subscribe((r: any) => {
       this.districts = r.response.districts;
     })
   }

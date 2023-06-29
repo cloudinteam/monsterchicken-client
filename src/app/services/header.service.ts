@@ -33,7 +33,7 @@ export class HeaderService {
   }
 
   notificationUpdate(id: string): any {
-    return this.api.getApiCallAuth(NetworkService.notificationUpdate(id));
+    return this.api.postApiCallAuth(NetworkService.notificationUpdate(id), {});
   }
 
 }
