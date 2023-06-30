@@ -65,7 +65,13 @@ export class ProductViewComponent implements OnInit {
       740: {
         items: 2
       },
+      800: {
+        items: 3
+      },
       940: {
+        items: 3
+      },
+      1980: {
         items: 3
       }
     },
@@ -106,7 +112,7 @@ export class ProductViewComponent implements OnInit {
 
   getProduct() {
     this.productService.viewProduct(this.params.params, this.cartService.uniqueToken).subscribe((r: any) => {
-      console.log(r)
+      // console.log(r)
       this.product = r.response.products[0];
 
       this.titleService.setTitle(this.product.meta_tag.title_tag);

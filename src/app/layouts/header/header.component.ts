@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getNotificationsCount() {
     this.headerService.notificationList().subscribe((r: any) => {
-
+      // console.log(r);
       let notifications = r.response.notifications;
       let count = [];
 
