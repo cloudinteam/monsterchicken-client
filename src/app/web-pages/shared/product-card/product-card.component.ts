@@ -108,24 +108,35 @@ export class ProductCardComponent implements OnInit {
     let data = {
       product_id: product.product_id,
       branch_user_id: product.near_by_branch,
-      quantity: $event.value,
+      quantity: ($event.value > 0) ? $event.value : ($event.value <= 0) ?? 1,
       unique_token: this.cartService.uniqueToken
     }
 
-    this.cartService.addCart(data).subscribe((r: any) => {
-      this.cartService.addCartCount();
-      // this.alert.fireToastS('Prooduct added to cart');
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Cart updated',
+    if ($event.value > 0) {
+      this.cartService.addCart(data).subscribe((r: any) => {
+        this.cartService.addCartCount();
+        // this.alert.fireToastS('Prooduct added to cart');
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Cart updated',
+        });
+        // this.loaded.emit();
+        this.afterCart(product);
+        this.loading = false;
+        this.disableAdd = false;
       });
-      // this.loaded.emit();
-      this.afterCart(product);
+    } else {
+      this.product.cart_product_quantity == 1;
       this.loading = false;
       this.disableAdd = false;
-    });
+    }
 
+
+  }
+
+  disableKey(event: KeyboardEvent) {
+    event.preventDefault();
   }
 
 }

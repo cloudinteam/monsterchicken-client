@@ -3,6 +3,7 @@ import { ApiCallService } from './api-call.service';
 import { NetworkService } from './network.service';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,25 @@ export class CartService {
   constructor(
     private api: ApiCallService,
     private authService: AuthService,
+    private commonService: CommonService,
   ) { }
 
   get uniqueToken() {
+    if (localStorage.getItem('unique_token') == null || localStorage.getItem('unique_token') == undefined) {
+      this.setUniqueToken();
+    }
     let token: any = localStorage.getItem('unique_token');
     // console.log(token);
     return token;
+  }
+
+  setUniqueToken() {
+    this.commonService.getUniqueToken().subscribe((r: any) => {
+      // console.log(r);
+      if (localStorage.getItem('unique_token') == null) {
+        localStorage.setItem('unique_token', r.response.unique_token)
+      }
+    })
   }
 
   getCart() {

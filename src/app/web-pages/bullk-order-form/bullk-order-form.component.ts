@@ -58,7 +58,7 @@ export class BullkOrderFormComponent implements OnInit {
       phone_no_1: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
       phone_no_2: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
       mail: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
-      message: ['', [Validators.minLength(10)]],
+      message: [''],
       product_id: [null, [Validators.required]],
       quantity: ['', [Validators.required, Validators.pattern(this.numeric)]],
 

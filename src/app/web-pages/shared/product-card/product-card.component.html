@@ -7,8 +7,9 @@
 
     <div class="pro-img" (click)="viewProduct(product)">
         <img [src]="product.image_url[0].file_url" alt="" />
+        <span class="brand-tag badge rounded-pill text-bg-danger me-1" *ngIf="product.brand">{{ product.brand.brand | titlecase }}</span>
     </div>
-    <span class="badge rounded-pill text-bg-danger me-1" *ngIf="product.brand">{{ product.brand.brand | titlecase }}</span>
+    <!-- <span class="badge rounded-pill text-bg-danger me-1" *ngIf="product.brand">{{ product.brand.brand | titlecase }}</span> -->
     <span class="pro-category" *ngIf="showCategory" (click)="viewCat(product.product_category.product_category_id)"> {{ product.product_category.category | titlecase }} </span>
     <div class="pro-desc">
         <span class="pro-title" (click)="viewProduct(product)">
@@ -23,7 +24,7 @@
                 </div>
                 <div class="pro-price">
                     <!-- <span>{{ product.discountPrice }}</span> &nbsp; -->
-                    <span> {{ product.price.price | currency:'₹' }}</span>
+                    <span> {{ product.sale_price | currency:'₹' }}</span>
                 </div>
             </div>
 
@@ -31,7 +32,8 @@
                 <div class="pro-action">
                   <!-- [max]="product.maxQuantity" -->
                     <span *ngIf="product.stock <= 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of Stock</span>
-                    <p-inputNumber [disabled]="disableAdd" *ngIf="product.cart_product_quantity > 0 && product.stock > 0"
+                    <p-inputNumber [readonly]="false" [allowEmpty]="false" (keyPress)="$event.stopPropagation()" [disabled]="disableAdd"
+                        *ngIf="product.cart_product_quantity > 0 && product.stock > 0"
                         [ngModel]="product.cart_product_quantity" [showButtons]="true" buttonLayout="horizontal"
                         inputId="cartProductCount" spinnerMode="horizontal" [step]="1" [min]="1"
                         [max]="product.max_order_count" decrementButtonClass="btn-minus" [incrementButtonClass]="(product.cart_product_quantity == product.max_order_count)?'btn-plus max': 'btn-plus'"

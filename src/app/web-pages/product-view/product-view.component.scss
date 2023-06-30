@@ -78,6 +78,8 @@
           font-family: "Nunito Sans", sans-serif !important;
           color: #000;
           border: 0;
+          cursor: not-allowed;
+          pointer-events: none;
         }
 
         .p-component {

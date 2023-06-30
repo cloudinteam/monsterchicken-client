@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'products-list',
@@ -21,6 +22,8 @@ export class ProductsListComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
+    private titleService: Title,
+    private metaService: Meta,
   ) {
 
   }
@@ -55,14 +58,18 @@ export class ProductsListComponent implements OnInit {
       category: catId,
       userLat: latLng.lat || '',
       userLong: latLng.lng || '',
-      uniqTkn: localStorage.getItem('unique_token') ?? ''
+      uniqTkn: this.cartService.uniqueToken
     };
     // console.log(data);
     this.productService.getProducts(data.userLat, data.userLong, data.category, data.uniqTkn).subscribe((r: any) => {
       // console.log(r);
       this.productList = r.response.products;
       this.categories = r.response.categories;
-      const index = this.categories.findIndex( (category: any) => {
+      const index = this.categories.findIndex((category: any) => {
+        this.titleService.setTitle(category.meta_tag.title_tag);
+        this.metaService.updateTag({ name: 'title', content: category.meta_tag.title_tag });
+        this.metaService.updateTag({ name: 'keywords', content: category.meta_tag.keywords });
+        this.metaService.updateTag({ name: 'description', content: category.meta_tag.description });
         return category.selected === true;
       });
       this.selectedCategory = this.categories[index].category;

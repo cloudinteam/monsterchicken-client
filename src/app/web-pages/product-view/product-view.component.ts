@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { MessageService } from 'primeng/api';
@@ -81,6 +82,8 @@ export class ProductViewComponent implements OnInit {
     private alert: AlertService,
     private authService: AuthService,
     private messageService: MessageService,
+    private titleService: Title,
+    private metaService: Meta,
   ) {}
 
   ngOnInit(): void {
@@ -103,7 +106,14 @@ export class ProductViewComponent implements OnInit {
 
   getProduct() {
     this.productService.viewProduct(this.params.params, this.cartService.uniqueToken).subscribe((r: any) => {
+      console.log(r)
       this.product = r.response.products[0];
+
+      this.titleService.setTitle(this.product.meta_tag.title_tag);
+      this.metaService.updateTag({ name: 'title', content: this.product.meta_tag.title_tag });
+      this.metaService.updateTag({ name: 'keywords', content: this.product.meta_tag.keywords });
+      this.metaService.updateTag({ name: 'description', content: this.product.meta_tag.description });
+
       // console.log(this.product)
       this.getRelatedProducts(this.product);
       this.loading = false;
@@ -130,23 +140,29 @@ export class ProductViewComponent implements OnInit {
   addCart(product: Product) {
     this.disableAdd = true;
     this.loading = true;
-    let data = {}
-    if (this.authService.isLoggedIn()) {
-      data = {
-        product_id: product.product_id,
-        branch_user_id: product.near_by_branch,
-        quantity: 1,
-      }
+    let data = {
+      product_id: product.product_id,
+      branch_user_id: product.near_by_branch,
+      quantity: 1,
+      unique_token: this.cartService.uniqueToken
     }
+    // if (this.authService.isLoggedIn()) {
+    //   data = {
+    //     product_id: product.product_id,
+    //     branch_user_id: product.near_by_branch,
+    //     quantity: 1,
+    //     unique_token: this.cartService.uniqueToken
+    //   }
+    // }
 
-    if (!this.authService.isLoggedIn()) {
-      data = {
-        product_id: product.product_id,
-        branch_user_id: product.near_by_branch,
-        quantity: 1,
-        unique_token: this.cartService.uniqueToken
-      }
-    }
+    // if (!this.authService.isLoggedIn()) {
+    //   data = {
+    //     product_id: product.product_id,
+    //     branch_user_id: product.near_by_branch,
+    //     quantity: 1,
+    //     unique_token: this.cartService.uniqueToken
+    //   }
+    // }
     this.cartService.addCart(data).subscribe((r: any) => {
       this.cartService.addCartCount();
       // this.alert.fireToastS('Prooduct added to cart');
@@ -167,23 +183,28 @@ export class ProductViewComponent implements OnInit {
     this.disableAdd = true;
     this.loading = true;
 
-    let data = {}
-    if (this.authService.isLoggedIn()) {
-      data = {
-        product_id: product.product_id,
-        branch_user_id: product.near_by_branch,
-        quantity: $event.value,
-      }
+    let data = {
+      product_id: product.product_id,
+      branch_user_id: product.near_by_branch,
+      quantity: ($event.value > 0) ? $event.value : ($event.value <= 0) ?? 1,
+      unique_token: this.cartService.uniqueToken
     }
+    // if (this.authService.isLoggedIn()) {
+    //   data = {
+    //     product_id: product.product_id,
+    //     branch_user_id: product.near_by_branch,
+    //     quantity: $event.value,
+    //   }
+    // }
 
-    if (!this.authService.isLoggedIn()) {
-      data = {
-        product_id: product.product_id,
-        branch_user_id: product.near_by_branch,
-        quantity: $event.value,
-        unique_token: this.cartService.uniqueToken
-      }
-    }
+    // if (!this.authService.isLoggedIn()) {
+    //   data = {
+    //     product_id: product.product_id,
+    //     branch_user_id: product.near_by_branch,
+    //     quantity: $event.value,
+    //     unique_token: this.cartService.uniqueToken
+    //   }
+    // }
 
     this.cartService.addCart(data).subscribe((r: any) => {
       this.cartService.addCartCount();

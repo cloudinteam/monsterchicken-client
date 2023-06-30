@@ -188,7 +188,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   geoCode(type: string = 'location', address: string = '', serviceCheck = true) {
-    // this.loading = true;
+    this.loading = true;
     let data = {};
     if (type == 'location') {
       data = {
@@ -237,7 +237,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
       if (this.postCode && serviceCheck) {
         // this.mapService.locationCheck({ pincode: this.postCode, district: currentAddress.district }).subscribe((r: any) => {
         this.mapService.checkServiceAvailablity(this.mapMarker.lat, this.mapMarker.lng).subscribe((r: any) => {
-          console.log(r);
+          // console.log(r);
 
           if (r.serviceProvider) {
             this.errorAlert = false;
