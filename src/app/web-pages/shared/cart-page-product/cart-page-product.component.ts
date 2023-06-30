@@ -26,7 +26,7 @@ export class CartPageProductComponent {
     let data = {
       product_id: cartItem.product.product_id,
       branch_user_id: cartItem.branch_user.user_id,
-      quantity: $event.value,
+      quantity: ($event.value > 0) ? $event.value : ($event.value <= 0) ?? 1,
       unique_token: this.cartService.uniqueToken
     }
     this.cartService.updateCart(data, cartId).subscribe((r: any) => {

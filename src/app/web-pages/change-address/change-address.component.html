@@ -1,5 +1,11 @@
 <page-loader [loading]="loading"></page-loader>
 
+  <div class="ui-blocker" *ngIf="maploading" fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+      <div>
+          <i class="pi pi-spin pi-spinner"></i>
+      </div>
+  </div>
+
 <div class="row" *ngIf="!loading">
 
   <div class="col-12 text-end">
@@ -38,7 +44,7 @@
     <form [formGroup]="addressForm" (submit)="submit()">
 
       <div class="form-group mb-3">
-        <label> Area/Locality </label>
+        <label> Area/Locality* </label>
         <!-- <input type="text" required="" name="area" formControlName="area" placeholder="Search for Area/Locality"
           class="form-control" /> -->
         <textarea required="" name="area" formControlName="area" placeholder="Search for Area/Locality"
@@ -49,7 +55,7 @@
       </div>
 
       <div class="form-group mb-3">
-        <label> Name </label>
+        <label> Name* </label>
         <input type="text" required="" name="name" formControlName="name" placeholder="Name"
           class="form-control" />
         <div *ngIf="submitted && addressFormControl.name.errors" class="invalid-error">
@@ -58,7 +64,7 @@
       </div>
 
       <div class="form-group mb-3">
-        <label> Flat no / Building name / Street name </label>
+        <label> Flat no / Building name / Street name* </label>
         <input type="text" name="street_name" formControlName="street_name"
           placeholder="Flat no / Building name / Street name" class="form-control" />
         <div *ngIf="submitted && addressFormControl.street_name.errors" class="invalid-error">
@@ -67,7 +73,7 @@
       </div>
 
       <div class="form-group mb-3">
-        <label> Landmark </label>
+        <label> Landmark* </label>
         <input type="text" name="landmark" formControlName="landmark" placeholder="Landmark" class="form-control" />
         <div *ngIf="submitted && addressFormControl.landmark.errors" class="invalid-error">
           <span *ngIf="addressFormControl.landmark.errors.required">* Required</span>
@@ -116,7 +122,7 @@
       </div> -->
 
       <div class="form-group mb-3">
-        <label> Postal Code </label>
+        <label> Postal Code* </label>
         <input type="text" required="" name="pinCode" formControlName="pincode" placeholder="Pincode"
           class="form-control" readonly/>
         <div *ngIf="submitted && addressFormControl.pincode.errors" class="invalid-error">
@@ -125,7 +131,7 @@
       </div>
 
       <div class="form-group mb-3">
-        <label> Mobile Number </label>
+        <label> Mobile Number* </label>
         <input type="text" required="" name="number" pKeyFilter="int" maxlength="10" formControlName="number" placeholder="Number" class="form-control" />
         <div class="text-danger" *ngIf="addressFormControl['number'].errors?.pattern">Must start with 6 to 9 and must be 10 digits</div>
         <div *ngIf="submitted && addressFormControl.number.errors" class="invalid-error">
@@ -135,7 +141,7 @@
 
       <div class="form-group mb-3">
         <div>
-          <label> Type </label>
+          <label> Type* </label>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" formControlName="type" type="radio" id="home" value="home">
@@ -176,7 +182,6 @@
   </div> -->
 
 </div>
-
 
 
 

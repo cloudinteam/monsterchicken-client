@@ -41,7 +41,7 @@
                 <span class="pro-unit">
                   {{ product.unit }}&nbsp;{{ product.mc_unit.code }}
                 </span>
-                <span> {{ product.price.price | currency:'₹' }}</span>
+                <span> {{ product.sale_price | currency:'₹' }}</span>
               </div>
               <div class="pro-action">
                 <span *ngIf="product.stock == 0" class="fw-bold px-2 py-1 text-white rounded-2 bg-danger">Out Of

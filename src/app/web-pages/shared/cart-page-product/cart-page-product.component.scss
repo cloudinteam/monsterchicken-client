@@ -123,6 +123,8 @@
         font-size: 15px;
         padding: 2px 5px;
         height: 30px;
+        cursor: not-allowed;
+        pointer-events: none;
       }
 
       .p-component {
@@ -162,6 +164,8 @@
           width: 26px;
           font-size: 13px;
           height: 25px;
+          cursor: not-allowed;
+          pointer-events: none;
         }
 
         .p-component {

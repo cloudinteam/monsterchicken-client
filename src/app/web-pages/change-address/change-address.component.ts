@@ -49,6 +49,8 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   geoResult: any;
   display: any;
 
+  maploading = false;
+
   searchString: string = '';
   searchAuto: google.maps.places.Autocomplete | undefined;
   formattedaddress = ' ';
@@ -153,17 +155,17 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     this.addressForm = this.formBuilder.group({
       userId: [localStorage.getItem('userId'), [Validators.required]],
 
-      name: [null],
+      name: [null, [Validators.required]],
       latitude: [null, [Validators.required]],
       longitude: [null, [Validators.required]],
       area: ['', [Validators.required]],
       number: [null, [Validators.pattern(RegexPattern.phone), Validators.maxLength(10), Validators.minLength(10), Validators.required]],
       city: [null, [Validators.required]],
-      type: [null],
+      type: [null, [Validators.required]],
       others: [null],
       street_name: ['', [Validators.required]],
       landmark: [null, [Validators.required]],
-      pincode: [null],
+      pincode: [null, [Validators.required]],
       state_id: [null, [Validators.required]],
       district_id: [null, [Validators.required]],
 
@@ -266,6 +268,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
 
   geoCode(type: string = 'location', address: string = '') {
     this.loading = true;
+    this.maploading = true;
     let data = {};
     if (type == 'location') {
       data = {
@@ -354,7 +357,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
             }
           });
       }
-
+      this.maploading = false
       this.loading = false;
       this.cdRef.markForCheck();
       // console.log(results);
@@ -386,6 +389,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
   }
 
   getCoords() {
+    this.maploading = true;
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'granted') {
         navigator.geolocation.getCurrentPosition(
@@ -434,41 +438,44 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
         console.log(result.state);
       });
     });
+    this.maploading = false;
   }
 
   submit() {
     if (this.addressForm.invalid) {
+      console.log('Invalid Form');
       this.submitted = true;
+    } else {
+      if (this.edit == 'new') {
+        this.addressService.storeAdddress(this.addressForm.value).subscribe((r: any) => {
+          if (r.status) {
+            // this.alert.fireToastS(r.message[0]);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: r.message[0]
+            })
+            this.address = null;
+            this.edit = 'new';
+            this.backToList.emit();
+          }
+        });
+      } else {
+        this.addressService.putAddress(this.addressForm.value).subscribe((r: any) => {
+          if (r.status) {
+            // this.alert.fireToastS(r.message[0]);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: r.message[0]
+            })
+            this.address = null;
+            this.edit = 'new';
+            this.backToList.emit();
+          }
+        });
+      }
     }
 
-    if (this.edit == 'new') {
-      this.addressService.storeAdddress(this.addressForm.value).subscribe((r: any) => {
-        if (r.status) {
-          // this.alert.fireToastS(r.message[0]);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: r.message[0]
-          })
-          this.address = null;
-          this.edit = 'new';
-          this.backToList.emit();
-        }
-      });
-    } else {
-      this.addressService.putAddress(this.addressForm.value).subscribe((r: any) => {
-        if (r.status) {
-          // this.alert.fireToastS(r.message[0]);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: r.message[0]
-          })
-          this.address = null;
-          this.edit = 'new';
-          this.backToList.emit();
-        }
-      });
-    }
   }
 }

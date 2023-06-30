@@ -3,6 +3,13 @@ export interface Product {
   name: string;
   stock: number;
   max_order_count: number;
+  sale_price: number;
+  meta_tag: {
+    description: string,
+    keywords: string,
+    ​​​​​meta_tag: string,
+    ​​​​​title_tag: string,
+  }
   product_category: {
     category: string,
     category_code: string,

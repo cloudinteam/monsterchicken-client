@@ -185,7 +185,7 @@ export class OrderSummaryComponent implements OnInit {
       })
     } else {
       let data = {
-        promo_code: this.promoCodeId,
+        promo_code_id: this.promoCodeId,
       }
       this.checkoutService.cartCheckout(data).subscribe((r: any) => {
         if (r.status) {

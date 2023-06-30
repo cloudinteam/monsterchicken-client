@@ -91,18 +91,21 @@ export class ProfileEditComponent implements OnInit {
   submit() {
     if (this.profileForm.invalid) {
       this.submitted = true;
+    } else {
+      this.authService.profileEdit(this.profileForm.value).subscribe((r: any) => {
+        if (r.status) {
+          // this.alert.fireToastS(r.message[0]);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            // detail: r.message[0]
+            detail: 'Profile updated successfully'
+          })
+          this.closeModel.emit();
+        }
+      });
     }
-    this.authService.profileEdit(this.profileForm.value).subscribe((r: any) => {
-      if (r.status) {
-        // this.alert.fireToastS(r.message[0]);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: r.message[0]
-        })
-        this.closeModel.emit();
-      }
-    });
+
   }
 
 }

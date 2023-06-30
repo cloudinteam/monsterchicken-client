@@ -67,8 +67,9 @@
               <div class="col-sm-12 col-md-6 col-lg-6 col-12 my-2">
                 <label class="fw-bold red-heading fs-6"> Quantity* </label>
                 <div>
-                  <input input pInputText pKeyFilter="int" formControlName="quantity" class="form-control rounded-2 bulk-input" />
-                  <small class="text-danger ms-1" *ngIf="submitted && form['quantity'].errors?.required">Quantity is required</small>
+                  <input type="text" pKeyFilter="int" formControlName="quantity" class="form-control rounded-2 bulk-input" />
+                  <div class="text-danger ms-1" *ngIf="form['quantity'].errors?.pattern">Only positive integers allowed</div>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['quantity'].errors?.required">Quantity is required</div>
                 </div>
               </div>
 
