@@ -70,7 +70,7 @@ export class ProductCardComponent implements OnInit {
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
-        detail: 'Item added to cart',
+        detail: 'Product added to cart successfully',
       });
       // this.loaded.emit();
       this.afterCart(product);
