@@ -31,6 +31,7 @@ export class OrderSummaryComponent implements OnInit {
   promoCode: string = '';
   promoCodeId: string = '';
   outOfStock: boolean = true;
+  placeOrderBtn: boolean = false;
   paymentMethod = '';
 
   constructor(
@@ -46,6 +47,7 @@ export class OrderSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.placeOrderBtn = false;
     this.loading = true;
 
     // this.loadCart();
@@ -124,7 +126,8 @@ export class OrderSummaryComponent implements OnInit {
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
-              detail: r.message[0]
+              // detail: r.message[0],
+              detail: 'Promo code applied successfully'
             })
             this.promoCode = this.couponFormControls.promoCode.value;
             this.promoCodeId = r.offer.offer_id;
@@ -176,6 +179,7 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   checkout() {
+    this.placeOrderBtn = true;
     this.loading = true;
     if (this.paymentMethod == '') {
       this.messageService.add({
@@ -183,6 +187,7 @@ export class OrderSummaryComponent implements OnInit {
         summary: 'Error',
         detail: 'Choose payment method'
       })
+      this.placeOrderBtn = false;
     } else {
       let data = {
         promo_code_id: this.promoCodeId,
@@ -205,6 +210,7 @@ export class OrderSummaryComponent implements OnInit {
         summary: 'Error',
         detail: 'Choose payment method'
       })
+      this.placeOrderBtn = false;
     }
 
     if (this.paymentMethod == "cash_on_delivery") {
@@ -225,6 +231,7 @@ export class OrderSummaryComponent implements OnInit {
           })
           this.router.navigate(['/account/order-history']);
           this.loading = false;
+          this.placeOrderBtn = false;
         }
       })
 
