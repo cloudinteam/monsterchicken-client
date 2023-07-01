@@ -1,6 +1,6 @@
 <page-loader [loading]="loading"></page-loader>
 
-<div class="row" *ngIf="!loading">
+<div class="row" [fxHide]="loading">
   <div class="col-12" *ngIf="errorAlert">
     <div class="alert alert-danger" role="alert">
       Service not available! Please Choose different location
@@ -11,8 +11,10 @@
       <i class="pi pi-search fw-bold text-dark"></i>
       <input type="text" class="form-control form-control-md" [options]="optionsPlaces" ngx-google-places-autocomplete
         (onAddressChange)="addressChange($event)" [(ngModel)]="searchString" #searchInput placeholder="Enter your location"
-        (keydown.enter)="$event.preventDefault()" autofocus="false"/>
+        autofocus="false" />
+        <!-- (keydown.enter)="$event.preventDefault()" (keydown.enter)="searchFn()" -->
     </div>
+    <!-- {{searchString}} -->
   </div>
   <div class="col-12 text-end mb-3">
     <button type="button" (click)="getCoords()" class="btn btn-sm btn-outline-dark me-1"><i class="fa-solid fa-location-crosshairs mr-1"></i> Use Current Location</button>

@@ -127,7 +127,7 @@ export class ChangeAddressComponent implements OnInit, AfterViewInit {
     // this.searchAuto.addListener('keydown', () => {
       this.ngZone.run(() => {
         const place: any = this.searchAuto?.getPlace();
-        console.log(place);
+        // console.log(place);
 
         this.lat = place.geometry.location.lat()
         this.lng = place.geometry.location.lng()
