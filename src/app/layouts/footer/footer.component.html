@@ -1,6 +1,32 @@
 <div class="shadow footer-container">
   <div class="container">
 
+    <div class="row" *ngIf="!loading">
+      <div class="col-12">
+        <div class="text-center">
+          <h4 class="menu-title"> Place We Serve </h4>
+          <img src="assets/images/footer-menu-border.png" alt="---------" class="d-block mx-auto my-3">
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!loading">
+      <div class="col-12">
+        <div fxLayout="row wrap" class="cities-container" *ngIf="cities.length > 0">
+          <div fxFlex="20" fxFlex.lt-md="50" fxFlex.lt-sm="100" *ngFor="let city of cities" class="mb-1">
+            <i class="place-icon pi pi-angle-right"></i>
+            <span class="place-text"><a (click)="getBranch(city)">{{city.district}}</a></span> <!-- [routerLink]="'/city/'+city.id" -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center my-4" *ngIf="cities.length > 0">
+      <div class="col-10">
+        <div class="seperator"></div>
+      </div>
+    </div>
+
     <div class="row">
 
       <div class="col-12 col-sm-6 col-md-3">
@@ -81,10 +107,10 @@
               <i class="list-icon pi pi-angle-right"></i>
               <span class="list-text"><a>T&C FAQ</a></span>
             </li>
-            <li>
+            <!-- <li>
               <i class="list-icon pi pi-angle-right"></i>
               <span class="list-text"><a>Franchise Outlet</a></span>
-            </li>
+            </li> -->
             <li>
               <i class="list-icon pi pi-angle-right"></i>
               <span class="list-text"><a [routerLink]="'/become-a-franchise'">Become A Franchise</a></span>
@@ -93,10 +119,10 @@
               <i class="list-icon pi pi-angle-right"></i>
               <span class="list-text"><a [routerLink]="'/career'">Career</a></span>
             </li>
-            <li>
+            <!-- <li>
               <i class="list-icon pi pi-angle-right"></i>
               <span class="list-text"><a>Site Map</a></span>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -127,33 +153,9 @@
 
     </div>
 
-    <div class="row justify-content-center my-4" *ngIf="cities.length > 0">
-      <div class="col-10">
-        <div class="seperator"></div>
-      </div>
-    </div>
-
-    <div class="row" *ngIf="!loading">
-      <div class="col-12">
-        <div class="text-center">
-          <h4 class="menu-title"> Place We Serve </h4>
-          <img src="assets/images/footer-menu-border.png" alt="---------" class="d-block mx-auto my-3">
-        </div>
-      </div>
-    </div>
-
-    <div class="row" *ngIf="!loading">
-      <div class="col-12">
-        <div fxLayout="row wrap" class="cities-container" *ngIf="cities.length > 0">
-          <div fxFlex="20" fxFlex.lt-md="50" fxFlex.lt-sm="100" *ngFor="let city of cities" class="mb-1">
-            <i class="place-icon pi pi-angle-right"></i>
-            <span class="place-text"><a (click)="getBranch(city)">{{city.district}}</a></span> <!-- [routerLink]="'/city/'+city.id" -->
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- Copyrights Section -->
   <div class="row justify-content-center mt-4">
     <div class="col-12">
       <div class="seperator mb-0"></div>

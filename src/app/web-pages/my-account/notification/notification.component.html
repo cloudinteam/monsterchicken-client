@@ -3,11 +3,11 @@
 <div class="container py-4" *ngIf="!loading">
   <div class="row justify-content-center">
 
-    <div class="col-12 col-lg-8 col-md-10 text-center mb-4">
+    <div class="col-12 text-center mb-4">
       <h4> <b>Notifications</b> </h4>
     </div>
 
-    <div class="col-12 col-lg-8 col-md-10" *ngIf="notifications.length > 0">
+    <div class="col-12" *ngIf="notifications.length > 0">
 
       <div class="card p-3 mb-2" *ngFor="let message of notifications; let sn = index">
         <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-2">
@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="col-12 col-lg-5 col-md-7" *ngIf="notifications.length == 0 && !unread && readNotifications.length > 0">
+    <div class="col-12 " *ngIf="notifications.length == 0 && !unread && readNotifications.length > 0">
       <div class="alert alert-info text-center" role="alert">
         <strong>No new notifications. You can <b class="clickable" (click)="unread = !unread" > view </b> previous notifications </strong>
       </div>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-lg-8 col-md-10" *ngIf="readNotifications.length > 0 && unread"> <!-- #collapse="ngbCollapse" [(ngbCollapse)]="unread" -->
+    <div class="col-12 " *ngIf="readNotifications.length > 0 && unread"> <!-- #collapse="ngbCollapse" [(ngbCollapse)]="unread" -->
 
       <div class="card p-3 mb-2" *ngFor="let message of readNotifications">
         <p class="text-black fw-semibold"> {{ message.notification }} </p>
@@ -52,7 +52,7 @@
 
     </div>
 
-    <div class="col-12 col-lg-5 col-md-7" *ngIf="notifications.length == 0 && readNotifications.length == 0">
+    <div class="col-12 " *ngIf="notifications.length == 0 && readNotifications.length == 0">
       <div class="alert alert-info text-center" role="alert">
         <strong>No notifications</strong>
       </div>
