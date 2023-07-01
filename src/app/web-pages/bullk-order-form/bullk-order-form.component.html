@@ -118,7 +118,8 @@
                 <label class="fw-bold red-heading fs-6">Address*</label>
                 <div>
                   <textarea type="text" formControlName="address" class="form-control rounded-2 bulk-text" rows="3" required></textarea>
-                  <small class="text-danger ms-1" *ngIf="submitted && form['address'].errors?.required">Address is required</small>
+                  <div class="text-danger ms-1" *ngIf="form['address'].errors?.minlength">Minimum 15 characters</div>
+                  <div class="text-danger ms-1" *ngIf="submitted && form['address'].errors?.required">Address is required</div>
                 </div>
               </div>
 
