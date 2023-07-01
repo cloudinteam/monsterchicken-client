@@ -40,7 +40,8 @@ export interface PlaceSearchResult {
 export class LocationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('locationAllow') locationAllow!: TemplateRef<any>;
-  @ViewChild('searchInput') searchInput!: ElementRef;
+  @ViewChild('searchInput', {static: false}) searchInput!: ElementRef<any>;
+  // @ViewChild('searchInput', { static: false }) searchInput!: ElementRef<any>;
   // @ViewChild('searchInput') searchInput!: GooglePlaceDirective;
   // @ViewChild("placesRef") placesRef: NgxGpAutocompleteDirective;
   // autocompleteInputControl: FormControl = new FormControl<string>('');
@@ -102,6 +103,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = false;
 
     if (localStorage.getItem('current_address') != null) {
       this.setFromLocal();
@@ -109,10 +111,13 @@ export class LocationComponent implements OnInit, AfterViewInit {
       this.handlePermission();
     }
     this.cdRef.markForCheck();
-
+    // console.log(this.searchInput);
   }
 
   ngAfterViewInit(): void {
+    // console.log('Init');
+    this.cdRef.markForCheck();
+    // console.log(this.searchInput.nativeElement);
 
     this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
     this.searchAuto.setComponentRestrictions({
@@ -142,12 +147,13 @@ export class LocationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-    if (this.searchAuto) {
-      google.maps.event.clearInstanceListeners(this.searchAuto);
-    }
+    // if (this.searchAuto) {
+    //   google.maps.event.clearInstanceListeners(this.searchAuto);
+    // }
   }
 
   addressChange(address: any) {
+    this.searchFn();
     //setting address from API to local variable
     this.formattedaddress=address.formatted_address
   }
@@ -164,6 +170,27 @@ export class LocationComponent implements OnInit, AfterViewInit {
     if (event.latLng != null) {
       this.display = event.latLng.toJSON();
     }
+  }
+
+  searchFn() {
+    this.searchAuto = new google.maps.places.Autocomplete(this.searchInput.nativeElement);
+
+    this.searchAuto.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: any = this.searchAuto?.getPlace();
+
+        this.lat = place.geometry.location.lat()
+        this.lng = place.geometry.location.lng()
+
+        this.mapMarker = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        }
+        // console.log(this.mapMarker);
+        // this.geoCode('address', this.searchInput.nativeElement.value);
+        this.geoCode('location')
+      })
+    })
   }
 
   setFromLocal() {
