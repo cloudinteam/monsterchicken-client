@@ -247,9 +247,9 @@ export class LocationComponent implements OnInit, AfterViewInit {
       });
       currentAddress.address = this.searchString;
       currentAddress.show = true;
-      this.headerService.currentAddress.next(currentAddress);
+      // this.headerService.currentAddress.next(currentAddress);
 
-      localStorage.setItem('current_address', JSON.stringify(currentAddress));
+      // localStorage.setItem('current_address', JSON.stringify(currentAddress));
 
 
       this.mapMarker = {
@@ -257,9 +257,9 @@ export class LocationComponent implements OnInit, AfterViewInit {
         lng: results[0].geometry.location.lng(),
       }
       // console.log(this.mapMarker);
-      localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
-      localStorage.setItem('userLat', JSON.stringify(this.mapMarker.lat));
-      localStorage.setItem('userLong', JSON.stringify(this.mapMarker.lng));
+      // localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
+      // localStorage.setItem('userLat', JSON.stringify(this.mapMarker.lat));
+      // localStorage.setItem('userLong', JSON.stringify(this.mapMarker.lng));
 
       if (this.postCode && serviceCheck) {
         // this.mapService.locationCheck({ pincode: this.postCode, district: currentAddress.district }).subscribe((r: any) => {
@@ -267,6 +267,37 @@ export class LocationComponent implements OnInit, AfterViewInit {
           // console.log(r);
 
           if (r.serviceProvider) {
+
+            this.geoResult = results[0];
+            this.searchString = results[0].formatted_address;
+            let currentAddress = { address: '', district: '', show: false };
+            results[0].address_components.forEach((address) => {
+              if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
+                currentAddress.district = address.long_name;
+              }
+              if (address.types.includes("locality") && address.types.includes("political")) {
+                this.city = address.long_name;
+              }
+              if (address.types.includes("postal_code")) {
+                this.postCode = Number(address.long_name);
+              }
+            });
+            currentAddress.address = this.searchString;
+            currentAddress.show = true;
+            this.headerService.currentAddress.next(currentAddress);
+
+            localStorage.setItem('current_address', JSON.stringify(currentAddress));
+
+
+            this.mapMarker = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng(),
+            }
+            // console.log(this.mapMarker);
+            localStorage.setItem('lat_lng', JSON.stringify(this.mapMarker));
+            localStorage.setItem('userLat', JSON.stringify(this.mapMarker.lat));
+            localStorage.setItem('userLong', JSON.stringify(this.mapMarker.lng));
+
             this.errorAlert = false;
             // this.alert.fireToastS(r.message[0])
             // this.messageService.add({
