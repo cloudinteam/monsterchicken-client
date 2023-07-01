@@ -128,10 +128,10 @@
                   <p-dropdown [options]="states" optionValue="value" optionLabel="name"
                       [required]="true" formControlName="state_id" [filter]="true" filterBy="name" [showClear]="false"
                       placeholder="Select a State" (onChange)="getDistricts($event)">
-                      <!-- <ng-template pTemplate="filter">
+                      <!-- <ng-template pTemplate="filter"> [filterMatchMode]="'custom'"
                         <div class="p-input-icon-right w-100" >
                           <i class="pi pi-search fw-bold text-dark"></i>
-                          <input type="text" class="form-control form-control" placeholder="Search state" autofocus/>
+                          <input type="text" class="form-control form-control" placeholder="Search state" autofocus (input)="filterStates($event)"/>
                         </div>
                       </ng-template> -->
                   </p-dropdown>
@@ -171,7 +171,7 @@
               <div class="col-12 my-2">
                 <label class="fw-bold red-heading fs-6">Message</label>
                 <div>
-                  <textarea type="text" formControlName="message" class="form-control rounded-2 bulk-text" rows="3" required></textarea>
+                  <textarea type="text" formControlName="message" class="form-control rounded-2 bulk-text" rows="3"></textarea>
                   <small class="text-danger ms-1" *ngIf="submitted && form['message'].errors?.minLength">Message should be atleast 10 characters</small>
                 </div>
               </div>

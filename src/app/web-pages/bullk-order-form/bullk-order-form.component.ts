@@ -122,6 +122,16 @@ export class BullkOrderFormComponent implements OnInit {
     })
   }
 
+  filterStates($event: any) {
+    console.log($event.target.value);
+    // Implement your custom filter logic here
+    // Update the filtered options based on the filter value
+    // In this example, we filter based on the car label
+    // this.selectedCar = null; // Reset the selected car if necessary
+
+    this.states.filter((state: any) => state.name.toLowerCase().includes($event.target.value.toLowerCase()));
+  }
+
   validate(field: any) {
     if (
       ((this.isChecked && this.bulkOrderForm.controls[field].invalid) ||
