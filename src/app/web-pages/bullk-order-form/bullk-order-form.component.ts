@@ -99,9 +99,6 @@ export class BullkOrderFormComponent implements OnInit {
   // }
 
   getStates() {
-    let obj = {
-      version: 0.1,
-    };
     this.cs.getStates().subscribe((r: any) => {
       this.states = r.response.states;
     });
@@ -129,7 +126,17 @@ export class BullkOrderFormComponent implements OnInit {
     // In this example, we filter based on the car label
     // this.selectedCar = null; // Reset the selected car if necessary
 
-    this.states.filter((state: any) => state.name.toLowerCase().includes($event.target.value.toLowerCase()));
+    return this.states.filter((state: any) => state.name.toLowerCase().includes($event.target.value.toLowerCase()));
+
+    // console.log(this.states.filter((state: any) => {
+    //   console.log(state.name);
+    //   state.name.toLowerCase().includes($event.target.value.toLowerCase())
+    // }));
+
+    console.log(this.states.filter((state: any) =>
+      // console.log(state.name);
+      state.name === $event.target.value
+    ));
   }
 
   validate(field: any) {
