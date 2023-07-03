@@ -33,6 +33,7 @@ export class ProductsListComponent implements OnInit {
     this.route.params.subscribe((r) => {
       this.catId = this.route.snapshot.paramMap.get('id') || '';
       this.getProduct(this.catId);
+      this.cartService.addCartCount();
     })
 
     this.cartService.productLoad$.subscribe((r) => {
@@ -48,6 +49,7 @@ export class ProductsListComponent implements OnInit {
     this.loading = true;
     this.catId = this.route.snapshot.paramMap.get('id') || '';
     this.getProduct(this.catId);
+
   }
 
   getProduct(catId: any) {

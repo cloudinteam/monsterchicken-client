@@ -108,6 +108,7 @@ export class ProductViewComponent implements OnInit {
     this.params = this.route.snapshot.queryParamMap || '';
     // this.params = this.router.getCurrentNavigation()
     this.getProduct();
+    this.cartService.addCartCount();
   }
 
   getProduct() {

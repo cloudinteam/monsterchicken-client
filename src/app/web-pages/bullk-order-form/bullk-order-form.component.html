@@ -126,10 +126,11 @@
               <div class="col-sm-6 col-md-6 col-lg-6 col-12 my-2">
                 <div>
                   <label class="fw-bold red-heading fs-6">State*</label>
+                  <!--  [filter]="true" filterBy="name" [filterMatchMode]="'custom'" -->
                   <p-dropdown [options]="states" optionValue="value" optionLabel="name"
-                      [required]="true" formControlName="state_id" [filter]="true" filterBy="name" [showClear]="false"
+                      [required]="true" formControlName="state_id" [showClear]="false" [filter]="true" filterBy="name"
                       placeholder="Select a State" (onChange)="getDistricts($event)">
-                      <!-- <ng-template pTemplate="filter"> [filterMatchMode]="'custom'"
+                      <!-- <ng-template pTemplate="filter">
                         <div class="p-input-icon-right w-100" >
                           <i class="pi pi-search fw-bold text-dark"></i>
                           <input type="text" class="form-control form-control" placeholder="Search state" autofocus (input)="filterStates($event)"/>
