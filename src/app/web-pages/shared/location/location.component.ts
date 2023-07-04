@@ -270,7 +270,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
 
             this.geoResult = results[0];
             this.searchString = results[0].formatted_address;
-            let currentAddress = { address: '', district: '', show: false };
+            let currentAddress = { address: '', district: '', pincode: 0, show: false };
             results[0].address_components.forEach((address) => {
               if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
                 currentAddress.district = address.long_name;
@@ -280,6 +280,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
               }
               if (address.types.includes("postal_code")) {
                 this.postCode = Number(address.long_name);
+                currentAddress.pincode = Number(address.long_name);
               }
             });
             currentAddress.address = this.searchString;

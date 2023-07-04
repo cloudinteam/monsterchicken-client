@@ -13,6 +13,7 @@ import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LocationComponent } from 'src/app/web-pages/shared/location/location.component';
 import { LocationAllowComponent } from 'src/app/web-pages/shared/location-allow/location-allow.component';
+import { MapService } from 'src/app/services/map.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   district = '';
   address = '';
   locationShow = false;
+  serviceAvailable = false;
   logggedIn = false;
 
   disableSearch = true;
@@ -67,6 +69,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private activeMenu: ActiveMenuService,
     private dialogService: DialogService,
+    private mapService: MapService,
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +92,25 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.address = currentAddress.address;
       this.district = currentAddress.district;
       this.locationShow = currentAddress.show;
+
+      let latLngData: any = localStorage.getItem('lat_lng');
+      let latLng = JSON.parse(latLngData)
+      let data = {
+        userLat: latLng.lat || '',
+        userLong: latLng.lng || '',
+      };
+
+      this.mapService.checkServiceAvailablity(data.userLat, data.userLong).subscribe((r: any) => {
+        // console.log(r);
+        if (r.serviceProvider) {
+          this.serviceAvailable = true;
+        }
+        if (!r.serviceProvider) {
+          this.serviceAvailable = false;
+          this.openLocation();
+        }
+      })
+
       this.cdRef.markForCheck();
     }
 
@@ -265,9 +287,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       header: 'Enter your location to check service availability.',
       width: '70%',
       // baseZIndex: 1,
-      transitionOptions: '500ms',
+      transitionOptions: '100ms',
       contentStyle: { overflow: 'auto' },
-      closable: (this.address) ? true : false,
+      closable: this.serviceAvailable,
       closeOnEscape: false,
       maximizable: true,
       keepInViewport: true,
@@ -309,11 +331,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.geocoder.geocode(data).subscribe(({ results }) => {
-      let currentAddress = { address: '', district: '', show: false };
+      let currentAddress = { address: '', district: '', pincode: 0, show: false };
       currentAddress.address = results[0].formatted_address;
       results[0].address_components.forEach((address) => {
         if (address.types.includes("administrative_area_level_3") && address.types.includes("political")) {
           currentAddress.district = address.long_name;
+        }
+        if (address.types.includes("postal_code")) {
+          currentAddress.pincode = Number(address.long_name);
         }
       });
       this.address = currentAddress.address;
