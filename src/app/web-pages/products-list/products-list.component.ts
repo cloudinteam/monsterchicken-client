@@ -49,7 +49,6 @@ export class ProductsListComponent implements OnInit {
     this.loading = true;
     this.catId = this.route.snapshot.paramMap.get('id') || '';
     this.getProduct(this.catId);
-
   }
 
   getProduct(catId: any) {
