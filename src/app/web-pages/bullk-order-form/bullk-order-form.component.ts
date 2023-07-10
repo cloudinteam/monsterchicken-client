@@ -56,7 +56,7 @@ export class BullkOrderFormComponent implements OnInit {
       pincode: ['', [Validators.required, Validators.pattern(this.numeric), Validators.maxLength(6), Validators.minLength(6)]],
       address: ['', [Validators.required, Validators.minLength(15)]],
       phone_no_1: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
-      phone_no_2: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
+      // phone_no_2: ['', [Validators.required, Validators.pattern(this.phone), Validators.maxLength(10), Validators.minLength(10)]],
       mail: ['', [Validators.required, Validators.email, Validators.pattern(this.mail)]],
       message: [''],
       product_id: [null, [Validators.required]],
