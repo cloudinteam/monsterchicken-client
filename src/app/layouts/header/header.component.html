@@ -26,7 +26,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <!-- <div class="col-12 col-md-4 col-lg-3 col-xl-4 col-xxl-4">
@@ -40,11 +39,13 @@
         </div>
       </div> -->
 
-      <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+      <div class="col-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
         <ul class="top-nav ">
-
+          
           <li class="top-nav-item" #categoryMenuId>
-            <a class="top-nav-link" (click)="catpanel.toggle($event)" pTooltip="Categories" tooltipPosition="bottom"> <i class="pi pi-list"></i> <span fxHide.lt-sm="true"> Categories </span> </a>
+            <a class="top-nav-link" (click)="catpanel.toggle($event)" pTooltip="Categories" tooltipPosition="bottom">
+              <i class="pi pi-list"></i> <span fxHide.lt-sm="true"> Categories </span>
+            </a>
             <p-overlayPanel #catpanel [style]="{'min-width': '250px'}" [showCloseIcon]="true" appendTo="body">
               <ng-template pTemplate="content">
                 <!-- [style]="{'padding': '7px'}" -->
@@ -62,7 +63,9 @@
           </li>
 
           <li class="top-nav-item">
-            <a class="top-nav-link" [routerLink]="'/bulk-order'" pTooltip="Bulk Order" tooltipPosition="bottom"> <i class="pi pi-truck"></i> <span fxHide.lt-sm="true"> Bulk Order </span> </a>
+            <a class="top-nav-link" [routerLink]="'/bulk-order'" pTooltip="Bulk Order" tooltipPosition="bottom">
+              <i class="pi pi-truck"></i> <span fxHide.lt-sm="true"> Bulk Order </span>
+            </a>
           </li>
 
           <li class="top-nav-item" #profileMenuId>

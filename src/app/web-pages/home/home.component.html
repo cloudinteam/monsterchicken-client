@@ -3,7 +3,7 @@
 
 <div class="container pt-4" *ngIf="!loading">
   <div class="row justify-content-center">
-    <div class="col-12 col-md-10" *ngIf="banners.length > 0">
+    <div class="col-12 col-md-12" *ngIf="banners.length > 0">
       <p-carousel #bannerCarousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="false" [autoplayInterval]="3500" [showNavigators]="false">
         <ng-template let-banner pTemplate="item">
           <div class="banner-item">
@@ -23,9 +23,9 @@
 
   <div class="row justify-content-center">
 
-    <div class="col-12 col-md-10 py-5">
+    <div class="col-12 col-md-12 py-5">
       <div>
-        <h4 class="fw-bold"> Shop by categories </h4>
+        <h4 class="fw-bold"> Our categories </h4>
         <p> Freshest meats and much more! </p>
       </div>
       <div>
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <!-- <div class="col-12 col-md-10 py-5">
+    <div class="col-12 col-md-12 py-5">
       <div>
         <h4 class="fw-bold"> Find best deals </h4>
       </div>
@@ -46,7 +46,16 @@
           </ng-template>
         </owl-carousel-o>
       </div>
-    </div> -->
+    </div>
+
+    <div class="col-12 col-md-12 py-5">
+      <div>
+        <h4 class="fw-bold"> Become a franchise </h4>
+      </div>
+      <div>
+        <img class="franchise-ad" src="https://placehold.co/1300x400" alt="Become a franchise">
+      </div>
+    </div>
 
   </div>
 </div>
