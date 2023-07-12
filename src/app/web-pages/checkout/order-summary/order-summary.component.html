@@ -106,6 +106,64 @@
   </div>
 
   <div class="col-12">
+    <div class="items-bill" fxLayout="column"  fxLayoutGap="20px" *ngIf="!loading">
+      <div class="bill-heading"> Choose date and time slot </div>
+
+      <div fxLayout="column" fxLayoutGap="15px">
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" >
+          <input type="radio" class="btn-check" name="schDate" id="schDate1" [(ngModel)]="selectedDate" autocomplete="off" value="today" *ngIf="currectDate.getHours() < 19">
+          <label class="btn btn-sm btn-outline-danger rounded-0 fw-bold" for="schDate1" *ngIf="currectDate.getHours() < 19"> {{ currectDate | date }} </label>
+
+          <input type="radio" class="btn-check" name="schDate" id="schDate2" [(ngModel)]="selectedDate" autocomplete="off" value="tomorrow">
+          <label class="btn btn-sm btn-outline-danger rounded-0 fw-bold" for="schDate2"> {{ tomorrowDate | date }} </label>
+        </div>
+
+        <div>
+          <!-- <pre>{{selectedDate}}</pre> -->
+          <hr class="m-0">
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" *ngIf="selectedDate == 'today'">
+          <input type="radio" class="btn-check" name="currentDate" id="currectDate1" autocomplete="off" *ngIf="currectDate.getHours() < 10" (click)="selectedSlot(currectDate, '08:00:00', '10:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="currectDate1" *ngIf="currectDate.getHours() < 10"> 08:00 to 10:00 </label>
+
+          <input type="radio" class="btn-check" name="currentDate" id="currectDate2" autocomplete="off" *ngIf="currectDate.getHours() < 12" (click)="selectedSlot(currectDate, '10:00:00', '12:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="currectDate2" *ngIf="currectDate.getHours() < 12"> 10:00 to 12:00 </label>
+
+          <input type="radio" class="btn-check" name="currentDate" id="currectDate3" autocomplete="off" *ngIf="currectDate.getHours() < 14" (click)="selectedSlot(currectDate, '12:00:00', '14:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="currectDate3" *ngIf="currectDate.getHours() < 14"> 12:00 to 14:00 </label>
+
+          <input type="radio" class="btn-check" name="currentDate" id="currectDate4" autocomplete="off" *ngIf="currectDate.getHours() < 16" (click)="selectedSlot(currectDate, '14:00:00', '16:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="currectDate4" *ngIf="currectDate.getHours() < 16"> 14:00 to 16:00 </label>
+
+          <input type="radio" class="btn-check" name="currentDate" id="currectDate5" autocomplete="off" *ngIf="currectDate.getHours() < 19" (click)="selectedSlot(currectDate, '16:00:00', '19:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="currectDate5" *ngIf="currectDate.getHours() < 19"> 16:00 to 19:00 </label>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" *ngIf="selectedDate == 'tomorrow'">
+          <input type="radio" class="btn-check" name="tomorrow" id="tomorrow1" autocomplete="off" (click)="selectedSlot(tomorrowDate, '08:00:00', '10:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="tomorrow1"> 08:00 to 10:00 </label>
+
+          <input type="radio" class="btn-check" name="tomorrow" id="tomorrow2" autocomplete="off" (click)="selectedSlot(tomorrowDate, '10:00:00', '12:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="tomorrow2"> 10:00 to 12:00 </label>
+
+          <input type="radio" class="btn-check" name="tomorrow" id="tomorrow3" autocomplete="off" (click)="selectedSlot(tomorrowDate, '12:00:00', '14:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="tomorrow3"> 12:00 to 14:00 </label>
+
+          <input type="radio" class="btn-check" name="tomorrow" id="tomorrow4" autocomplete="off" (click)="selectedSlot(tomorrowDate, '14:00:00', '16:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="tomorrow4"> 14:00 to 16:00 </label>
+
+          <input type="radio" class="btn-check" name="tomorrow" id="tomorrow5" autocomplete="off" (click)="selectedSlot(tomorrowDate, '16:00:00', '19:00:00')">
+          <label class="btn btn-sm btn-outline-dark rounded-0 fw-bold" for="tomorrow5"> 16:00 to 19:00 </label>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12">
     <div class="items-bill" fxLayout="column" fxLayoutGap="20px" *ngIf="!loading">
       <div class="bill-heading"> Bill Details </div>
       <div fxLayout="column" fxLayoutGap="10px">

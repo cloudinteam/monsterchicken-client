@@ -34,6 +34,16 @@ export class OrderSummaryComponent implements OnInit {
   placeOrderBtn: boolean = false;
   paymentMethod = '';
 
+  currectDate: Date = new Date();
+  tomorrowDate: Date = new Date();
+  selectedDate = (this.currectDate.getHours() < 19) ? 'today' : 'tomorrow';
+
+  deliverySlot = {
+    schedule_date: '',
+    schedule_from_time: '',
+    schedule_to_time: ''
+  };
+
   constructor(
     private cartService: CartService,
     private checkoutService: CheckoutService,
@@ -47,6 +57,8 @@ export class OrderSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.tomorrowDate.setDate(this.currectDate.getDate() + 1);
+
     this.placeOrderBtn = false;
     this.loading = true;
 
@@ -178,6 +190,14 @@ export class OrderSummaryComponent implements OnInit {
     return false;
   }
 
+  selectedSlot(date: Date, from: string, to: string) {
+    this.deliverySlot = {
+      schedule_date: date.toDateString(),
+      schedule_from_time: from,
+      schedule_to_time: to
+    }
+  }
+
   checkout() {
     this.placeOrderBtn = true;
     this.loading = true;
@@ -188,12 +208,27 @@ export class OrderSummaryComponent implements OnInit {
         detail: 'Choose payment method'
       })
       this.placeOrderBtn = false;
+    } else if (this.deliverySlot.schedule_from_time == '') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Choose delivery slot'
+      })
+      this.placeOrderBtn = false;
     } else {
       let data = {
         promo_code_id: this.promoCodeId,
+        schedule_date: this.deliverySlot.schedule_date,
+        schedule_from_time: this.deliverySlot.schedule_from_time,
+        schedule_to_time: this.deliverySlot.schedule_to_time
       }
       this.checkoutService.cartCheckout(data).subscribe((r: any) => {
         if (r.status) {
+          this.deliverySlot = {
+            schedule_date: '',
+            schedule_from_time: '',
+            schedule_to_time: ''
+          }
           // this.router.navigate(['/checkout/payment/' + r.orderId]);
           this.payment(r.orderId);
         }
