@@ -12,6 +12,8 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { CareerPageComponent } from './career-page/career-page.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { BlogComponent } from './blog/blog.component';
+import { BlogViewComponent } from './blog-view/blog-view.component';
 
 const routes: Routes = [
   {
@@ -59,6 +61,14 @@ const routes: Routes = [
   {
     path: 'about-us',
     component: AboutPageComponent
+  },
+  {
+    path: 'blog',
+    component: BlogComponent
+  },
+  {
+    path: 'blog/:id',
+    component: BlogViewComponent
   },
   {
     path: 'career',

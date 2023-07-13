@@ -236,4 +236,12 @@ export class NetworkService {
     return this.server_url() + this.server_v() + '/web/career/store';
   }
 
+  // Blogs
+  static getPosts(page: number = 1): string {
+    return this.server_url() + this.server_v() + '/mc-web/post?page='+page;
+  }
+  static viewPost(id: string): string {
+    return this.server_url() + this.server_v() + '/mc-web/post/'+id;
+  }
+
 }

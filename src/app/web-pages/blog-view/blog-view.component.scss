@@ -1,0 +1,12 @@
+.cover-img {
+  margin-bottom: 25px;
+  img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0px 2px 10px -15px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0px 2px 10px -15px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0px 2px 10px -15px rgba(0, 0, 0, 0.08);
+  }
+}

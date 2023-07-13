@@ -1,0 +1,30 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-3" *ngIf="!loading">
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-12">
+      <div class="product-trails">
+        <ul>
+          <li> <a routerLink="/" class="pointer"> Home </a> </li>
+          <li> <a [routerLink]="'/blog'"> Blog </a> </li>
+          <li> {{ blog.title | titlecase }} </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-12">
+
+      <div class="cover-img">
+        <img [src]="blog.image_url.file_url" [alt]="blog.title" />
+      </div>
+
+      <div [innerHTML]="blog.content" class="mb-5">
+      </div>
+
+    </div>
+  </div>
+
+</div>
