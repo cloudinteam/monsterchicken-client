@@ -28,7 +28,6 @@ export class BlogViewComponent implements OnInit {
     this.loading = true;
 
     this.posts.viewPost(this.postt_id).subscribe((r: any) => {
-      console.log(r);
       this.blog = r.response.post;
       this.loading = false;
     })
