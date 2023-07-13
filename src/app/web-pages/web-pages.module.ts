@@ -29,6 +29,9 @@ import { CareerPageComponent } from './career-page/career-page.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { BlogComponent } from './blog/blog.component';
+import { PaginatorModule } from 'primeng/paginator';
+import { BlogViewComponent } from './blog-view/blog-view.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,9 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     AboutPageComponent,
     CareerPageComponent,
     PrivacyPolicyComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    BlogComponent,
+    BlogViewComponent
   ],
   imports: [
     CommonModule,
@@ -65,6 +70,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     DropdownModule,
     OwlCarouselModule,
     KeyFilterModule,
+    PaginatorModule
   ],
   exports: [
     ProfileEditComponent,

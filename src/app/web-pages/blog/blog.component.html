@@ -1,0 +1,44 @@
+<page-loader [loading]="loading"></page-loader>
+
+<div class="container py-3" *ngIf="!loading">
+
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-12">
+      <div class="product-trails">
+        <ul>
+          <li> <a routerLink="/" class="pointer"> Home </a> </li>
+          <!-- <li> <a [routerLink]="'/category/'+this.categories[0]?.categoryId"> {{ this.categories[0]?.categoryName }} </a> </li> -->
+          <li> Blogs </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="blog.length > 0">
+    <div class="col-12 col-sm-6 col-md-3" *ngFor="let post of blog">
+      <!-- <pre>{{ post | json }}</pre> -->
+      <div class="pro-card">
+
+        <div class="pro-img" (click)="viewBlog(post.post_id)">
+            <img [src]="post.image_url.file_url" alt="" />
+        </div>
+        <div class="pro-desc">
+            <span class="pro-title" (click)="viewBlog(post.post_id)">
+                {{ post.title | titlecase }}
+            </span>
+            <div class="pro-action">
+              <button type="button" class="btn btn-dark btn-sm rounded-0" (click)="viewBlog(post.post_id)"> View post </button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [totalRecords]="total"></p-paginator>
+    </div>
+  </div>
+
+</div>
