@@ -15,20 +15,20 @@ export class HomeComponent implements OnInit {
   promotionalAds = [
     {
       name: 'One',
-      img: 'https://placehold.co/600x400'
+      img: '/assets/images/stock-photo-grilled-chicken-178089785.jpg'
     },
     {
       name: 'Two',
-      img: 'https://placehold.co/600x400'
+      img: '/assets/images/stock-photo-hands-holding-fried-chicken-isolated-on-yellow-background-tasty-crispy-fried-chicken-drumstick-2312640781.jpg'
     },
     {
       name: 'Three',
-      img: 'https://placehold.co/600x400'
+      img: '/assets/images/stock-photo-traditional-italian-deep-fried-chicken-piccata-with-capper-and-lemon-slices-offered-as-top-view-in-2260249485.jpg'
     },
-    {
-      name: 'Four',
-      img: 'https://placehold.co/600x400'
-    }
+    // {
+    //   name: 'Four',
+    //   img: '/assets/images/stock-photo-grilled-chicken-178089785.jpg'
+    // }
   ]
 
   customOptions: OwlOptions = {
