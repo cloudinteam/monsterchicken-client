@@ -59,6 +59,16 @@ export class OrderSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.tomorrowDate.setDate(this.currectDate.getDate() + 1);
 
+    console.log((this.currectDate.getHours() >= 14 && this.currectDate.getHours() < 16));
+
+
+    (this.currectDate.getHours() >= 8 && this.currectDate.getHours() < 10) ? this.selectedSlot(this.currectDate, '08:00:00', '10:00:00'): '';
+    (this.currectDate.getHours() >= 10 && this.currectDate.getHours() < 12) ? this.selectedSlot(this.currectDate, '10:00:00', '12:00:00'): '';
+    (this.currectDate.getHours() == 12 && this.currectDate.getHours() < 14) ? this.selectedSlot(this.currectDate, '12:00:00', '14:00:00'): '';
+    (this.currectDate.getHours() >= 14 && this.currectDate.getHours() < 16) ? this.selectedSlot(this.currectDate, '14:00:00', '16:00:00'): '';
+    (this.currectDate.getHours() >= 16 && this.currectDate.getHours() < 19) ? this.selectedSlot(this.currectDate, '16:00:00', '19:00:00'): '';
+    (this.currectDate.getHours() >= 19 && this.currectDate.getHours() > 19) ? this.selectedSlot(this.tomorrowDate, '08:00:00', '10:00:00'): '';
+
     this.placeOrderBtn = false;
     this.loading = true;
 
@@ -191,8 +201,9 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   selectedSlot(date: Date, from: string, to: string) {
+    console.log(date);
     this.deliverySlot = {
-      schedule_date: date.toDateString(),
+      schedule_date: date.toISOString().slice(0,10),
       schedule_from_time: from,
       schedule_to_time: to
     }
