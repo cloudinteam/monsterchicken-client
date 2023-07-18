@@ -4,11 +4,12 @@
 <div class="container pt-4" *ngIf="!loading">
   <div class="row justify-content-center">
     <div class="col-12 col-md-12" *ngIf="banners.length > 0">
-      <p-carousel #bannerCarousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="false" [autoplayInterval]="3500" [showNavigators]="false">
+      <p-carousel #bannerCarousel [value]="banners" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="false"
+       [autoplayInterval]="3500" [showNavigators]="false">
         <ng-template let-banner pTemplate="item">
           <div class="banner-item">
             <div class="banner-item-content">
-              <div class="mb-3">
+              <div class="mb-3" style="border-radius: 15px;">
                 <img [src]="banner" class="banner-image" />
               </div>
             </div>
