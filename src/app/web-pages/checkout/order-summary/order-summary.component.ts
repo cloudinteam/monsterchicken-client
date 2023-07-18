@@ -201,7 +201,6 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   selectedSlot(date: Date, from: string, to: string) {
-    console.log(date);
     this.deliverySlot = {
       schedule_date: date.toISOString().slice(0,10),
       schedule_from_time: from,
