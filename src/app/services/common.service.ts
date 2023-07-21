@@ -56,16 +56,8 @@ export class CommonService {
     return this.api.optionsApiCallAuth(NetworkService.getState());
   }
 
-  getCity(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getCity(), body);
-  }
-
   getDistrict(stateId: string): any {
     return this.api.optionsApiCallAuth(NetworkService.getDistrict(stateId));
-  }
-
-  getCountry(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.getCountry(), body);
   }
 
   getUniqueToken() {
