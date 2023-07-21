@@ -13,10 +13,6 @@ export class AuthService {
     private router: Router,
   ) { }
 
-  login(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.login(), body);
-  }
-
   verifyNumber(body: any): any {
     return this.api.postApiCallAuth(NetworkService.verifyNumber(), body);
   }
@@ -27,21 +23,6 @@ export class AuthService {
 
   resendOtp(body: any): any {
     return this.api.postApiCallAuth(NetworkService.resendOtp(), body);
-  }
-
-  signup(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.Signup(), body);
-  }
-  forgotPassword(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.forgotPassword(), body);
-  }
-
-  setPassword(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.SetPassword(), body);
-  }
-
-  updatePassword(body: any): any {
-    return this.api.postApiCallAuth(NetworkService.ChangePassword(), body);
   }
 
   resendOTP(body: any): any {

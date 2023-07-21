@@ -48,9 +48,6 @@ export class NetworkService {
   }
 
   // Authentication
-  static login(): string {
-    return this.server_url() + this.server_v() + '/login';
-  }
   static verifyNumber(): string {
     return this.server_url() + this.server_v() + '/mc-web/login-with-otp';
   }
@@ -59,18 +56,6 @@ export class NetworkService {
   }
   static resendOtp(): string {
     return this.server_url() + this.server_v() + '/mc-web/login/resend-otp';
-  }
-  static Signup(): string {
-    return this.server_url() + this.server_v() + '/register';
-  }
-  static forgotPassword(): string {
-    return this.server_url() + this.server_v() + '/forget-password';
-  }
-  static ChangePassword(): string {
-    return this.server_url() + this.server_v() + '/change-password';
-  }
-  static SetPassword(): string {
-    return this.server_url() + this.server_v() + '/update-password';
   }
   static profile(): string {
     return this.server_url() + this.server_v() + '/web/profile';
@@ -97,9 +82,6 @@ export class NetworkService {
   }
   static getCategory(): string {
     return this.server_url() + this.server_v() + '/web/product/category/list';
-  }
-  static getSubCat(): string {
-    return this.server_url() + this.server_v() + '/login';
   }
   static getBanners(): string {
     return this.server_url() + this.server_v() + '/web/banner/list';
@@ -138,9 +120,6 @@ export class NetworkService {
   }
   static deleteCart(): string {
     return this.server_url() + this.server_v() + '/mc-web/cart';
-  }
-  static viewCart(): string {
-    return this.server_url() + this.server_v() + '/web/cart/list';
   }
   static getCart(): string {
     return this.server_url() + this.server_v() + '/mc-web/cart';
@@ -199,14 +178,6 @@ export class NetworkService {
 
   static getState(): string {
     return this.server_url() + this.server_v() + '/mc-web/states';
-  }
-
-  static getCountry(): string {
-    return this.server_url() + this.server_v() + '/country/list';
-  }
-
-  static getCity(): string {
-    return this.server_url() + this.server_v() + '/city/list';
   }
 
   static getDistrict(stateId: string): string {
