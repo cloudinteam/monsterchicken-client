@@ -38,7 +38,7 @@ export class BlogComponent implements OnInit {
     this.loading = true;
 
     this.posts.getPosts(this.first).subscribe((r: any) => {
-      // console.log(r);
+      console.log(r);
       this.blog = r.response.Post.data;
       this.total = r.response.Post.total;
       this.loading = false;
@@ -47,7 +47,7 @@ export class BlogComponent implements OnInit {
   }
 
   viewBlog(id: string) {
-    console.log(id);
+    // console.log(id);
     this.router.navigate(['/blog/' + id]);
   }
 
