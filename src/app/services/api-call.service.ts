@@ -85,10 +85,10 @@ export class ApiCallService {
             })
           }
           if (err.status == 422) {
-            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invalid Input', data.message[0], 'pi pi-exclamation-circle');
             this.messageService.add({
               severity: 'info',
-              summary: 'Invaid Input',
+              summary: 'Invalid Input',
               detail: data.message[0]
             })
           }
@@ -156,10 +156,10 @@ export class ApiCallService {
             })
           }
           if (err.status == 422) {
-            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invalid Input', data.message[0], 'pi pi-exclamation-circle');
             this.messageService.add({
               severity: 'info',
-              summary: 'Invaid Input',
+              summary: 'Invalid Input',
               detail: data.message[0]
             })
           }
@@ -277,10 +277,10 @@ export class ApiCallService {
             })
           }
           if (err.status == 422) {
-            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invalid Input', data.message[0], 'pi pi-exclamation-circle');
             this.messageService.add({
               severity: 'info',
-              summary: 'Invaid Input',
+              summary: 'Invalid Input',
               detail: data.message[0]
             })
           }
@@ -440,10 +440,10 @@ export class ApiCallService {
             })
           }
           if (err.status == 422) {
-            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invalid Input', data.message[0], 'pi pi-exclamation-circle');
             this.messageService.add({
               severity: 'info',
-              summary: 'Invaid Input',
+              summary: 'Invalid Input',
               detail: data.message[0]
             })
           }
@@ -494,10 +494,10 @@ export class ApiCallService {
             })
           }
           if (err.status == 422) {
-            // this.alert.fireToastN('Invaid Input', data.message[0], 'pi pi-exclamation-circle');
+            // this.alert.fireToastN('Invalid Input', data.message[0], 'pi pi-exclamation-circle');
             this.messageService.add({
               severity: 'info',
-              summary: 'Invaid Input',
+              summary: 'Invalid Input',
               detail: data.message[0]
             })
           }
