@@ -1,9 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { catchError, map } from 'rxjs';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { NetworkService } from 'src/app/services/network.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -25,6 +29,13 @@ export class PaymentComponent implements OnInit {
 
   paymentMethod = '';
 
+  currentUser = {
+    email: '',
+    gender: '',
+    name: '',
+    number: null,
+  }
+
   constructor(
     private cdRef: ChangeDetectorRef,
     private activeMenu: ActiveMenuService,
@@ -32,6 +43,8 @@ export class PaymentComponent implements OnInit {
     private productService: ProductService,
     private checkoutService: CheckoutService,
     private alertService: AlertService,
+    private authService: AuthService,
+    private http: HttpClient,
     private router: Router,
     private messageService: MessageService
   ) {
@@ -48,6 +61,8 @@ export class PaymentComponent implements OnInit {
       this.getOrderDetail(this.orderId);
     })
 
+    this.loadCurrentUser();
+
     // this.activeMenu.checkoutMenu.next('payment');
     // this.activeMenu.addressSuccess.next(true);
     // this.activeMenu.summarySuccess.next(true);
@@ -59,9 +74,20 @@ export class PaymentComponent implements OnInit {
     this.productService.getOrderDetail(orderId).subscribe((r: any) => {
       this.data = r;
       this.totalCartPrice = r.response.total_amount;
-      this.discountPrice = r.response.order.discount_price;
+      this.discountPrice = r.response.order.discount_amount;
       this.deliveryCharge = r.response.order.delivery_charge;
-      this.grandTotal = r.response.order.grand_total;
+      this.grandTotal = r.response.order.total_amount;
+    })
+  }
+
+  loadCurrentUser() {
+    this.authService.profile({}).subscribe((r: any) => {
+      this.currentUser = {
+        email: r.response.userDetail.email,
+        gender: r.response.userDetail.gender,
+        name: r.response.userDetail.name,
+        number: r.response.userDetail.number,
+      }
     })
   }
 
@@ -97,6 +123,38 @@ export class PaymentComponent implements OnInit {
         }
       })
 
+    }
+
+    if (this.paymentMethod == "online_pay") {
+      alert('Online Payment');
+      let data = {
+        order_id: this.orderId,
+        amount: this.grandTotal,
+        status: 'Online Payment',
+        method: "online_pay",
+      }
+
+      let body = JSON.stringify({
+        amount: this.grandTotal,
+        udf: this.orderId,
+        contact_number: this.currentUser.number,
+        email_id: this.currentUser.email,
+        currency: 'INR',
+        mtx: this.orderId
+      })
+
+      this.checkoutService.onlinePayment(body).subscribe((r: any) => {
+        console.log(r);
+        // if (r.status) {
+        //   // this.alertService.fireToastS('Order placed');
+        //   this.messageService.add({
+        //     severity: 'success',
+        //     summary: 'Success',
+        //     detail: 'Order placed'
+        //   })
+        //   this.router.navigate(['/account/order-history']);
+        // }
+      })
     }
 
   }

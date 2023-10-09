@@ -1,11 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { catchError, map } from 'rxjs';
 import { ActiveMenuService } from 'src/app/services/active-menu.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { NetworkService } from 'src/app/services/network.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -44,6 +48,13 @@ export class OrderSummaryComponent implements OnInit {
     schedule_to_time: ''
   };
 
+  currentUser = {
+    email: '',
+    gender: '',
+    name: '',
+    number: null,
+  }
+
   constructor(
     private cartService: CartService,
     private checkoutService: CheckoutService,
@@ -52,15 +63,16 @@ export class OrderSummaryComponent implements OnInit {
     private alert: AlertService,
     private activeMenu: ActiveMenuService,
     private formBuilder: FormBuilder,
+    private http: HttpClient,
     private productService: ProductService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.tomorrowDate.setDate(this.currectDate.getDate() + 1);
 
     console.log((this.currectDate.getHours() >= 14 && this.currectDate.getHours() < 16));
-
 
     (this.currectDate.getHours() >= 8 && this.currectDate.getHours() < 10) ? this.selectedSlot(this.currectDate, '08:00:00', '10:00:00'): '';
     (this.currectDate.getHours() >= 10 && this.currectDate.getHours() < 12) ? this.selectedSlot(this.currectDate, '10:00:00', '12:00:00'): '';
@@ -92,6 +104,7 @@ export class OrderSummaryComponent implements OnInit {
   init() {
     // this.loadCart();
     this.initCouponForm();
+    this.loadCurrentUser();
   }
 
   initCouponForm() {
@@ -103,6 +116,17 @@ export class OrderSummaryComponent implements OnInit {
   }
   get couponFormControls(): any {
     return this.couponForm['controls'];
+  }
+
+  loadCurrentUser() {
+    this.authService.profile({}).subscribe((r: any) => {
+      this.currentUser = {
+        email: r.response.userDetail.email,
+        gender: r.response.userDetail.gender,
+        name: r.response.userDetail.name,
+        number: r.response.userDetail.number,
+      }
+    })
   }
 
   loadSummary() {
@@ -124,6 +148,9 @@ export class OrderSummaryComponent implements OnInit {
 
       this.loading = false;
       this.cdRef.markForCheck();
+      if (this.orderSummary.length <= 0) {
+        this.router.navigate(['/account/order-history']);
+      }
     });
     // }
   }
@@ -279,7 +306,38 @@ export class OrderSummaryComponent implements OnInit {
           this.placeOrderBtn = false;
         }
       })
+    }
 
+    if (this.paymentMethod == "online_pay") {
+      alert('Online Payment');
+      let data = {
+        order_id: orderId,
+        amount: this.grandTotal,
+        status: 'Online Payment',
+        method: "online_pay",
+      }
+
+      let body = JSON.stringify({
+        amount: this.grandTotal,
+        udf: orderId,
+        contact_number: this.currentUser.number,
+        email_id: this.currentUser.email,
+        currency: 'INR',
+        mtx: orderId
+      })
+
+      this.checkoutService.onlinePayment(body).subscribe((r: any) => {
+        console.log(r);
+        // if (r.status) {
+        //   // this.alertService.fireToastS('Order placed');
+        //   this.messageService.add({
+        //     severity: 'success',
+        //     summary: 'Success',
+        //     detail: 'Order placed'
+        //   })
+        //   this.router.navigate(['/account/order-history']);
+        // }
+      })
     }
 
   }
