@@ -1,0 +1,12 @@
+{
+  "/api": {
+      "target": "https://monsterchicken.cloudindigital.tech/",
+      "secure": false,
+      "logLevel": "debug"
+  },
+  "/*": {
+    "target": "https://icp-api.bankopen.co/api/",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

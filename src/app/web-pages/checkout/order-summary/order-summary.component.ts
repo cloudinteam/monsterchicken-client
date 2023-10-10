@@ -72,7 +72,7 @@ export class OrderSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.tomorrowDate.setDate(this.currectDate.getDate() + 1);
 
-    console.log((this.currectDate.getHours() >= 14 && this.currectDate.getHours() < 16));
+    // console.log((this.currectDate.getHours() >= 14 && this.currectDate.getHours() < 16));
 
     (this.currectDate.getHours() >= 8 && this.currectDate.getHours() < 10) ? this.selectedSlot(this.currectDate, '08:00:00', '10:00:00'): '';
     (this.currectDate.getHours() >= 10 && this.currectDate.getHours() < 12) ? this.selectedSlot(this.currectDate, '10:00:00', '12:00:00'): '';
@@ -274,7 +274,7 @@ export class OrderSummaryComponent implements OnInit {
     this.loading = false;
   }
 
-  payment(orderId: string) {
+  async payment(orderId: string) {
     this.loading = true;
     if (this.paymentMethod == '') {
       this.messageService.add({
@@ -309,7 +309,6 @@ export class OrderSummaryComponent implements OnInit {
     }
 
     if (this.paymentMethod == "online_pay") {
-      alert('Online Payment');
       let data = {
         order_id: orderId,
         amount: this.grandTotal,
@@ -319,15 +318,22 @@ export class OrderSummaryComponent implements OnInit {
 
       let body = JSON.stringify({
         amount: this.grandTotal,
-        udf: orderId,
+        udf: 'status',
         contact_number: this.currentUser.number,
         email_id: this.currentUser.email,
         currency: 'INR',
         mtx: orderId
       })
 
-      this.checkoutService.onlinePayment(body).subscribe((r: any) => {
-        console.log(r);
+      try {
+        const data = await this.checkoutService.onlinePayment(body);
+        console.log(data); // 'Data from Promise'
+      } catch (error) {
+        console.error(error); // Handle errors if necessary
+      }
+
+      // this.checkoutService.onlinePayment(body).subscribe((r: any) => {
+      //   console.log(r);
         // if (r.status) {
         //   // this.alertService.fireToastS('Order placed');
         //   this.messageService.add({
@@ -337,7 +343,7 @@ export class OrderSummaryComponent implements OnInit {
         //   })
         //   this.router.navigate(['/account/order-history']);
         // }
-      })
+      // })
     }
 
   }

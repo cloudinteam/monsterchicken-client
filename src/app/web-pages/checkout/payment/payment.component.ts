@@ -91,7 +91,7 @@ export class PaymentComponent implements OnInit {
     })
   }
 
-  payment() {
+  async payment() {
 
     if (this.paymentMethod == '') {
       // this.alertService.fireToastF('Choose payment method');
@@ -126,7 +126,6 @@ export class PaymentComponent implements OnInit {
     }
 
     if (this.paymentMethod == "online_pay") {
-      alert('Online Payment');
       let data = {
         order_id: this.orderId,
         amount: this.grandTotal,
@@ -136,15 +135,22 @@ export class PaymentComponent implements OnInit {
 
       let body = JSON.stringify({
         amount: this.grandTotal,
-        udf: this.orderId,
+        udf: 'status',
         contact_number: this.currentUser.number,
         email_id: this.currentUser.email,
         currency: 'INR',
         mtx: this.orderId
       })
 
-      this.checkoutService.onlinePayment(body).subscribe((r: any) => {
-        console.log(r);
+      try {
+        const data = await this.checkoutService.onlinePayment(body);
+        console.log(data); // 'Data from Promise'
+      } catch (error) {
+        console.error(error); // Handle errors if necessary
+      }
+
+      // this.checkoutService.onlinePayment(body).subscribe((r: any) => {
+        // console.log(r);
         // if (r.status) {
         //   // this.alertService.fireToastS('Order placed');
         //   this.messageService.add({
@@ -154,7 +160,7 @@ export class PaymentComponent implements OnInit {
         //   })
         //   this.router.navigate(['/account/order-history']);
         // }
-      })
+      // })
     }
 
   }

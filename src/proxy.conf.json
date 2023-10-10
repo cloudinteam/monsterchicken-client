@@ -1,0 +1,12 @@
+{
+  "/api": {
+      "target": "http://localhost:4200",
+      "secure": false,
+      "logLevel": "debug"
+  },
+  "/*": {
+    "target": "https://sandbox-icp-api.bankopen.co/api/",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
