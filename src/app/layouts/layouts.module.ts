@@ -12,6 +12,7 @@ import { WebPagesModule } from '../web-pages/web-pages.module';
 import { AuthModule } from '../auth/auth.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenuModule } from 'primeng/menu';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -32,6 +33,7 @@ import { MenuModule } from 'primeng/menu';
     AuthModule,
     OverlayPanelModule,
     MenuModule,
+    DialogModule
   ],
   exports: [
     HeaderComponent,

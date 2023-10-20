@@ -40,6 +40,22 @@ export class NetworkService {
     return header;
   }
 
+  static getPaymentHeader(): HttpHeaders {
+    let header = new HttpHeaders({
+      Accept: 'application/json',
+      Authorization: 'Bearer d82a5fe0-6671-11ee-a5bf-9fc783d04255:2d27e0ccd0c10a569fe04f62d13357b7bf8b0102',
+    }).set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer d82a5fe0-6671-11ee-a5bf-9fc783d04255:2d27e0ccd0c10a569fe04f62d13357b7bf8b0102')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Access-Control-Allow-Origin', 'https://bankopen.co')
+      .set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+      .set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+      .set('Access-Control-Allow-Origin', 'https://sandbox-icp-api.bankopen.co/api/')
+      .set('Access-Control-Allow-Origin', 'https://icp-api.bankopen.co/api/');
+
+    return header;
+  }
+
   static authToken(): any {
     return localStorage.getItem('accessToken') || undefined;
   }

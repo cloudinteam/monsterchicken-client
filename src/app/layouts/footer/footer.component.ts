@@ -16,6 +16,7 @@ export class FooterComponent implements OnInit {
 
   loading = false;
   cities: any[] = [];
+  visible = false;
 
   constructor(
     private mapService: MapService,
@@ -44,5 +45,9 @@ export class FooterComponent implements OnInit {
     });
 
     ref.onClose.subscribe(() => {});
+  }
+
+  showAppdialog() {
+    this.visible = true;
   }
 }
