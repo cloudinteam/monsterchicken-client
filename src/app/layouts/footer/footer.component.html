@@ -168,13 +168,13 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div class="copyright">
-        ©{{ currentYear }} Monster Foods . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Technologies </a>
+        ©{{ currentYear }} Monster Foods . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Labs </a>
       </div>
     </div>
   </div>
 </div>
 
-<p-dialog header="Coming Soon" [(visible)]="visible" [modal]="true" [style]="{ width: '45vw' }" [ngStyle.lt-sm]="{ width: '80vw' }" [draggable]="false" [resizable]="false">
+<p-dialog header="Coming Soon" [(visible)]="visible" [modal]="true" [breakpoints]="{ '960px': '85vw' }" [style]="{ width: '45vw' }" [draggable]="false" [resizable]="false">
 
   <div class="alert alert-warning mb-0" role="alert">
     <b class="m-0">
