@@ -40,10 +40,11 @@
               <i class="address-icon fa-solid fa-location-arrow"></i>
             </div>
             <div>
-              <b>Annapoorna Foods</b><br>
-              #4/ 27, First Floor,<br>
-              VW Complex, Salem Road,<br>
-              Namakkal - 637 001, Tamilnadu.
+              <b>Annapurna Foods</b> <br />
+              First Floor 4/ 127/3, <br />
+              VW COMPLEX Salem Road, <br />
+              Namakkal - 637001 <br />
+              Tamilnadu, INDIA
             </div>
           </div>
           <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
@@ -51,7 +52,7 @@
               <i class="address-icon fa-solid fa-phone"></i>
             </div>
             <div>
-               <a href="tel:+919790581836"> +91 97905 81836 </a>
+              <a href="tel:+919790581836"> +91 97905 81836 </a>
             </div>
           </div>
           <div fxLayout="row" fxLayoutGap="10px" class="mb-2">
@@ -140,7 +141,7 @@
           <ul *ngIf="categories.length > 0">
             <li *ngFor="let category of categories">
               <i class="list-icon pi pi-angle-right"></i>
-              <span class="list-text"><a [routerLink]="'/category/' + category.product_category_id" > {{ category.category | titlecase }} </a></span>
+              <span class="list-text"><a [routerLink]="'/category/' + category.product_category_id"> {{ category.category | titlecase }} </a></span>
             </li>
           </ul>
         </div>
@@ -168,13 +169,15 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div class="copyright">
-        ©{{ currentYear }} Monster Foods . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer"> Cloudin Labs </a>
+        ©{{ currentYear }} Monster Foods . All Rights Reserved. Made with ♥ at <a href="https://www.cloudintechnologies.com/" target="_blank" rel="noopener noreferrer">
+          Cloudin Labs </a>
       </div>
     </div>
   </div>
 </div>
 
-<p-dialog header="Coming Soon" [(visible)]="visible" [modal]="true" [breakpoints]="{ '960px': '85vw' }" [style]="{ width: '45vw' }" [draggable]="false" [resizable]="false">
+<p-dialog header="Coming Soon" [(visible)]="visible" [modal]="true" [breakpoints]="{ '960px': '85vw' }" [style]="{ width: '45vw' }" [draggable]="false"
+  [resizable]="false">
 
   <div class="alert alert-warning mb-0" role="alert">
     <b class="m-0">
